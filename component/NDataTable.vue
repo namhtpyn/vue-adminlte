@@ -82,7 +82,7 @@
 <script lang="ts">
 import { Component, Vue, Prop, PropSync } from "vue-property-decorator";
 import NPagination from "./NPagination.vue";
-@Component({ components: { NPagination } })
+@Component({ components: { NPagination }, inheritAttrs: false })
 export default class NDataTable extends Vue {
   @Prop(Array) headers!: any[];
   @Prop(Array) items!: any[];

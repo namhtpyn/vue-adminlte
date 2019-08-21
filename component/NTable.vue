@@ -9,8 +9,8 @@
         </tr>
       </thead>
       <tbody v-if="hasItems">
-        <tr v-for="(item,rowIndex) in items" :key="rowIndex">
-          <td v-for="(header,colIndex) in headers" :key="colIndex">
+        <tr :class="rowCssClass" v-for="(item,rowIndex) in pageItems" :key="rowIndex">
+          <td :class="cellCssClass" v-for="(header,colIndex) in headers" :key="colIndex">
             <slot :name="`item.${header.value}`" :item="item">{{ item[header.value] }}</slot>
           </td>
         </tr>
@@ -21,8 +21,8 @@
         </tr>
       </tbody>
       <tfoot>
-        <tr>
-          <td v-for="(header,colIndex) in headers" :key="colIndex">
+        <tr :class="footerRowCssClass">
+          <td :class="footerCellCssClass" v-for="(header,colIndex) in headers" :key="colIndex">
             <slot :name="`item.${header.value}`"></slot>
           </td>
         </tr>
@@ -61,7 +61,7 @@ import { TableHeader } from "../types/Table";
 import isEmpty from "lodash/isEmpty";
 import { VNode } from "vue";
 import NPagination from "./NPagination.vue";
-@Component({ components: { NPagination } })
+@Component({ inheritAttrs: false, components: { NPagination } })
 export default class NTable extends Vue {
   @Prop({ type: Boolean, default: true }) bordered!: boolean;
   @Prop({ type: Boolean, default: true }) hovered!: boolean;
@@ -89,9 +89,29 @@ export default class NTable extends Vue {
   get headerCellCssClass() {
     return this.getCssClass("header-cell") || "";
   }
+  get rowCssClass() {
+    return this.getCssClass("row") || "";
+  }
+  get cellCssClass() {
+    return this.getCssClass("cell") || "";
+  }
+  get footerRowCssClass() {
+    return this.getCssClass("footer-row") || "";
+  }
+  get footerCellCssClass() {
+    return this.getCssClass("footer-cell") || "";
+  }
   get hasItems() {
     return !isEmpty(this.items);
   }
+  get pageItems() {
+    let items = this.items;
+    return items.slice(
+      (this.page - 1) * this.itemPerPage,
+      this.page * this.itemPerPage
+    );
+  }
+
   /**pagination */
   itemPerPage = 5;
   page = 1;

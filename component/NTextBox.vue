@@ -37,7 +37,7 @@ import {
   Emit,
   Model
 } from "vue-property-decorator";
-@Component({ components: { NIcon } })
+@Component({ components: { NIcon }, inheritAttrs: false })
 export default class NTextBox extends Vue {
   @Prop({ type: String, default: "text" }) type!: string;
   @Prop(String) cssClass!: string;

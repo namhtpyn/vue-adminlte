@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop, PropSync, Emit } from "vue-property-decorator";
-@Component({})
+@Component({ inheritAttrs: false })
 export default class NDataTable extends Vue {
   @Prop(String) cssClass!: string;
   @Prop({ type: String, default: "default" }) color!: string;

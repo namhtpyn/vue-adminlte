@@ -18,7 +18,7 @@ import {
   Emit,
   Model
 } from "vue-property-decorator";
-@Component({ components: { NIcon } })
+@Component({ components: { NIcon }, inheritAttrs: false })
 export default class NSelect extends Vue {
   @Prop(String) label!: string;
   @Prop(String) cssClass!: string;
