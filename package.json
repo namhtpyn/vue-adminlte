@@ -1,0 +1,37 @@
+{
+  "name": "vue-adminlte",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./dist/NDataTable.js",
+  "scripts": {
+    "serve": "cross-env NODE_ENV=development webpack-dev-server",
+    "build": "npm run clean && cross-env NODE_ENV=production rollup -c",
+    "clean": "rimraf dist"
+  },
+  "author": "Nam Hoang",
+  "license": "ISC",
+  "devDependencies": {
+    "cross-env": "^5.2.0",
+    "css-loader": "^3.2.0",
+    "html-webpack-plugin": "^3.2.0",
+    "rimraf": "^3.0.0",
+    "rollup": "^1.19.4",
+    "rollup-plugin-commonjs": "^10.0.2",
+    "rollup-plugin-multi-input": "^1.0.2",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-replace": "^2.2.0",
+    "rollup-plugin-typescript": "^1.0.1",
+    "rollup-plugin-vue": "^5.0.1",
+    "ts-loader": "^6.0.4",
+    "typescript": "^3.5.3",
+    "vue": "^2.6.10",
+    "vue-loader": "^15.7.1",
+    "vue-property-decorator": "^8.2.1",
+    "vue-style-loader": "^4.1.2",
+    "vue-template-compiler": "^2.6.10",
+    "webpack": "^4.39.2",
+    "webpack-cli": "^3.3.7",
+    "webpack-dev-server": "^3.8.0",
+    "webpack-node-externals": "^1.7.2"
+  }
+}
