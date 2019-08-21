@@ -23,25 +23,24 @@
       <tfoot>
         <tr :class="footerRowCssClass">
           <td :class="footerCellCssClass" v-for="(header,colIndex) in headers" :key="colIndex">
-            <slot :name="`item.${header.value}`"></slot>
+            <slot :name="`footer.${header.value}`" :item="items"></slot>
           </td>
         </tr>
       </tfoot>
     </table>
 
-    <div style="display:flex">
+    <div style="display:flex; padding:10px 5px">
       <div
-        class="summary hidden-xs form-inline form-group form-group-sm"
-        style="display:inline-block"
-      >
-        <div class="form-control-static">Trang {{ page }}/{{ pageLength}} ({{ items.length}} mục)</div>
-      </div>
+        class="hidden-xs"
+        style="height: 30px;min-height: 32px;padding: 6px 10px 6px 0px;font-size: 12px; line-height: 1.5;"
+      >Trang {{ page }}/{{ pageLength}} ({{ items.length}} mục)</div>
+
       <div style="flex:auto">
         <n-pagination :length="pageLength" v-model="page" small class="no-margin"></n-pagination>
       </div>
       <div>
-        <n-select></n-select>
         <select
+          @change="changeItemPerPage"
           class="form-control"
           style="width:70px;display: inline-block; height:30px;  padding: 6px 6px"
         >
@@ -50,6 +49,7 @@
           <option value="25">25</option>
           <option value="50">50</option>
           <option value="100">100</option>
+          <option value="-1">Tất cả</option>
         </select>
       </div>
     </div>
@@ -75,9 +75,9 @@ export default class NTable extends Vue {
   @Prop(Array) headers: TableHeader[];
   @Prop(Array) items: any[];
 
-  /** Computed */
+  /** css classes */
   get tableCssClass() {
-    let css = "table ";
+    let css = "table no-margin ";
     css += this.bordered ? "table-bordered " : "";
     css += this.hovered ? "table-hover " : "";
     css += this.densed ? "table-condensed " : "";
@@ -103,22 +103,29 @@ export default class NTable extends Vue {
   get footerCellCssClass() {
     return this.getCssClass("footer-cell") || "";
   }
+
+  /**Items */
   get hasItems() {
     return !isEmpty(this.items);
   }
   get pageItems() {
     let items = this.items;
-    return items.slice(
-      (this.page - 1) * this.itemPerPage,
-      this.page * this.itemPerPage
-    );
+    if (this.itemPerPage > 0)
+      items = items.slice(
+        (this.page - 1) * this.itemPerPage,
+        this.page * this.itemPerPage
+      );
+    return items;
   }
 
   /**pagination */
-  itemPerPage = 5;
+  itemPerPage = 10;
   page = 1;
   get pageLength() {
     return Math.ceil(this.items.length / this.itemPerPage);
+  }
+  changeItemPerPage(e) {
+    this.itemPerPage = e.target.value;
   }
 
   mounted() {

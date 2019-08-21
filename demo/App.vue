@@ -23,8 +23,16 @@
     <n-pagination :length="10" v-model="page"></n-pagination>
 
     <n-table :headers="tableHeaders" :items="tableItems">
-      <css-class header-row="bg-green" header-cell="text-red"></css-class>
+      <css-class
+        header-row="bg-blue"
+        header-cell="text-white"
+        footer-row="bg-blue"
+        footer-cell="text-white"
+      ></css-class>
+      <template v-slot:footer.fat="{item}">{{item.reduce((a, b) => a + (b.fat || 0), 0)}}</template>
+      <template v-slot:footer.calories="{item}">{{item.reduce((a, b) => a + (b.calories || 0), 0)}}</template>
     </n-table>
+
     <n-select2 :items="selectItems" item-text="name" item-value="fat"></n-select2>
   </div>
 </template>

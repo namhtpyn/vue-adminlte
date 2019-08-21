@@ -65,7 +65,7 @@
       <div>
         <select
           @change="itemPerPageChange"
-          class="form-control pull-right"
+          class="form-control"
           style="width:70px;display: inline-block; height:30px;  padding: 6px 6px"
         >
           <option value="5">5</option>
