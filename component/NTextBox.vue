@@ -1,6 +1,6 @@
 <template>
-  <div :class="'form-group ' + (!valid ? 'has-error': '')">
-    <label class="control-label">{{ label }}</label>
+  <div :class="{'form-group': form, 'has-error': !valid}">
+    <label v-if="hasLabel" class="control-label">{{ label }}</label>
     <div :class="inputGroup ? 'input-group': '' ">
       <span v-if="prefix" class="input-group-addon">{{ prefix }}</span>
       <span v-if="prependIcon" class="input-group-addon">
@@ -37,6 +37,7 @@ import {
   Emit,
   Model
 } from "vue-property-decorator";
+import isEmpty from "lodash/isEmpty";
 @Component({ components: { NIcon }, inheritAttrs: false })
 export default class NTextBox extends Vue {
   @Prop({ type: String, default: "text" }) type!: string;
@@ -46,6 +47,7 @@ export default class NTextBox extends Vue {
   @Prop(Array) rules!: any[];
   @Prop(Boolean) readonly!: boolean;
   @Prop({ type: String, default: "default" }) color!: string;
+  @Prop({ type: Boolean, default: true }) form!: string;
   @Prop(String) prefix!: string;
   @Prop(String) prependIcon!: string;
   @Prop(String) suffix!: string;
@@ -55,7 +57,9 @@ export default class NTextBox extends Vue {
     this.validate(e);
   }
   valid: boolean = true;
-
+  get hasLabel() {
+    return !isEmpty(this.label);
+  }
   get appendButton() {
     return this.$slots.appendButton;
   }
