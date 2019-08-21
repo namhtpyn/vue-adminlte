@@ -25,6 +25,7 @@
     <n-table :headers="tableHeaders" :items="tableItems">
       <css-class header-row="bg-green" header-cell="text-red"></css-class>
     </n-table>
+    <n-select2 :items="selectItems" item-text="name" item-value="fat"></n-select2>
   </div>
 </template>
 
@@ -38,8 +39,11 @@ import NPagination from "../component/NPagination.vue";
 import { TableHeader } from "../types/Table";
 import axios from "axios";
 import jsonData from "./data.json";
+import NSelect2 from "../component/NSelect2.vue";
 
-@Component({ components: { NDataTable, NBtn, NIcon, NPagination, NTable } })
+@Component({
+  components: { NDataTable, NBtn, NIcon, NPagination, NTable, NSelect2 }
+})
 export default class extends Vue {
   //pagination
   page = 1;
@@ -56,6 +60,9 @@ export default class extends Vue {
     { text: "Protein (g)", value: "protein" }
   ];
   tableItems: any[] = jsonData;
+
+  //Select
+  selectItems: any[] = jsonData;
 
   message = "hello world";
 

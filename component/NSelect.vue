@@ -1,15 +1,16 @@
 <template>
   <div :class="'form-group ' + (!valid ? 'has-error': '')">
-    <label css="control-label">{{ label }}</label>
+    <label v-if="!hideDetails" class="control-label">{{ label }}</label>
     <select :class="cCssClass" :value="vModel" @input="(e) => input(e.target.value)">
       <option v-for="(item, idx) in items" :key="idx" :value="item[itemValue]">{{ item[itemText] }}</option>
     </select>
-    <span v-if="!valid" class="help-block">{{ errorText }}</span>
+    <span v-if="!valid && !hideDetails" class="help-block">{{ errorText }}</span>
   </div>
 </template>
 
 <script lang="ts">
 import NIcon from "../component/NIcon.vue";
+import isEmpty from "lodash/isEmpty";
 import {
   Component,
   Vue,
@@ -20,6 +21,7 @@ import {
 } from "vue-property-decorator";
 @Component({ components: { NIcon }, inheritAttrs: false })
 export default class NSelect extends Vue {
+  @Prop({ type: Boolean, default: false }) hideDetails!: boolean;
   @Prop(String) label!: string;
   @Prop(String) cssClass!: string;
   @Prop(Array) items!: any[];
@@ -34,6 +36,9 @@ export default class NSelect extends Vue {
   get cCssClass() {
     let css = "form-control " + this.cssClass;
     return css;
+  }
+  get hasLabel() {
+    return !isEmpty(this.label);
   }
   get errorText() {
     if (this.rules) {

@@ -4,13 +4,15 @@
   "description": "",
   "main": "./dist/NDataTable.js",
   "scripts": {
-    "serve": "cross-env NODE_ENV=development webpack-dev-server",
+    "serve": "cross-env NODE_ENV=development webpack-dev-server --port 8888",
     "build": "npm run clean && cross-env NODE_ENV=production rollup -c",
     "clean": "rimraf dist"
   },
   "author": "Nam Hoang",
   "license": "ISC",
   "devDependencies": {
+    "@types/jquery": "^3.3.31",
+    "@types/select2": "^4.0.48",
     "axios": "^0.19.0",
     "cross-env": "^5.2.0",
     "css-loader": "^3.2.0",

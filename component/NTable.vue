@@ -40,6 +40,7 @@
         <n-pagination :length="pageLength" v-model="page" small class="no-margin"></n-pagination>
       </div>
       <div>
+        <n-select></n-select>
         <select
           class="form-control"
           style="width:70px;display: inline-block; height:30px;  padding: 6px 6px"
@@ -61,7 +62,8 @@ import { TableHeader } from "../types/Table";
 import isEmpty from "lodash/isEmpty";
 import { VNode } from "vue";
 import NPagination from "./NPagination.vue";
-@Component({ inheritAttrs: false, components: { NPagination } })
+import NSelect from "./NSelect.vue";
+@Component({ inheritAttrs: false, components: { NPagination, NSelect } })
 export default class NTable extends Vue {
   @Prop({ type: Boolean, default: true }) bordered!: boolean;
   @Prop({ type: Boolean, default: true }) hovered!: boolean;
