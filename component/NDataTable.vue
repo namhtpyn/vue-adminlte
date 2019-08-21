@@ -137,14 +137,17 @@ export default class NDataTable extends Vue {
   }
 
   //Header
+  get cHeaders() {
+    return this.headers;
+  }
   get cHeaderRowCount() {
-    return this.getArrayDepth(this.headers);
+    return this.getArrayDepth(this.cHeaders);
   }
   get cHeadersChildren() {
-    return this.getArrayChildren(this.headers);
+    return this.getArrayChildren(this.cHeaders);
   }
   getHeadersAtLevel(level: number) {
-    return this.getArrayAtLevel(this.headers, level);
+    return this.getArrayAtLevel(this.cHeaders, level);
   }
 
   //Header sort

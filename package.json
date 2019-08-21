@@ -11,6 +11,7 @@
   "author": "Nam Hoang",
   "license": "ISC",
   "devDependencies": {
+    "axios": "^0.19.0",
     "cross-env": "^5.2.0",
     "css-loader": "^3.2.0",
     "html-webpack-plugin": "^3.2.0",
