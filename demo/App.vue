@@ -4,7 +4,7 @@
       <n-icon color="yellow">play</n-icon>Play
     </n-btn>
 
-    <n-data-table caption="Title here" :headers="headers" :items="items" enable-search bordered>
+    <!-- <n-data-table caption="Title here" :headers="headers" :items="items" enable-search bordered>
       <template v-slot:item.action>aaaaa</template>
       <template v-slot:item.iron="{item}">
         <span class="badge bg-red">{{item.iron}}</span>
@@ -12,11 +12,11 @@
       <template v-slot:item.protein="{item}">
         <span class="badge bg-green">{{item.protein}}</span>
       </template>
-    </n-data-table>
+    </n-data-table>-->
 
     <n-pagination :length="10" v-model="page"></n-pagination>
 
-    <n-table
+    <n-data-table
       :headers="tableHeaders"
       :items="tableItems"
       caption="Table"
@@ -40,7 +40,7 @@
       </template>
       <template v-slot:footer.fat="{item}">{{item.reduce((a, b) => a + (b.fat || 0), 0)}}</template>
       <template v-slot:footer.calories="{item}">{{item.reduce((a, b) => a + (b.calories || 0), 0)}}</template>
-    </n-table>
+    </n-data-table>
 
     <n-select2 :items="selectItems" item-text="name" item-value="fat"></n-select2>
     <n-modal caption="OK" v-model="modalVisibility" hide-footer>tui thu ne haha</n-modal>
@@ -50,7 +50,6 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import NTable from "../component/NTable.vue";
 import NDataTable from "../component/NDataTable.vue";
 import NBtn from "../component/NBtn.vue";
 import NIcon from "../component/NIcon.vue";
@@ -62,7 +61,7 @@ import NSelect2 from "../component/NSelect2.vue";
 import NModal from "../component/NModal.vue";
 
 @Component({
-  components: { NDataTable, NBtn, NIcon, NPagination, NTable, NSelect2, NModal }
+  components: { NDataTable, NBtn, NIcon, NPagination, NSelect2, NModal }
 })
 export default class extends Vue {
   //pagination

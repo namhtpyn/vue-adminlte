@@ -1,247 +1,271 @@
 <template>
-  <div :class="cBoxCssClass">
-    <div class="box-header" style="display:flex">
-      <h3 class="box-title" style="flex:auto">{{caption}}</h3>
-
-      <div>
-        <div v-if="enableSearch" class="input-group input-group-sm" style="width: 250px;">
-          <input
-            type="text"
-            name="table_search"
-            class="form-control pull-right"
-            v-model="nSearch"
-            placeholder="Tìm kiếm"
-          />
-
-          <div class="input-group-btn">
-            <button type="submit" class="btn btn-default">
-              <i class="fa fa-search"></i>
-            </button>
-          </div>
+  <div>
+    <div class="tbl-header">
+      <div class="title" v-if="caption" style="flex:auto">{{caption}}</div>
+      <div v-if="searchable" class="has-feedback" style="flex:auto">
+        <div class="has-feedback">
+          <input type="text" class="form-control" v-model="searchText" />
+          <span class="glyphicon glyphicon-search form-control-feedback"></span>
         </div>
       </div>
+      <div v-if="!caption && !searchable" style="flex:auto"></div>
+      <div v-if="creatable">
+        <n-btn :class="buttonAddCssClass" @click="createClick">
+          <n-icon>plus</n-icon>
+          <span class="hidden-xs">Thêm</span>
+        </n-btn>
+      </div>
+      <slot name="top.append"></slot>
     </div>
-    <div class="box-body no-padding">
-      <table :class="cTableCssClass">
-        <slot name="head" :headers="headers">
-          <thead>
-            <tr v-for="level in cHeaderRowCount" :key="level">
-              <th
-                v-for="(header,index) in getHeadersAtLevel(level)"
-                :key="index"
-                @click="sort(header.value)"
-                :colspan="header.children ? getArrayChildren(header.children).length: 1"
-                :rowspan="header.children ? 1: cHeaderRowCount"
-                :class="{
-                'sortable': header.sortable||false,
-                'asc': (nSortObject.field===header.value && nSortObject.asc),
-                'desc': (nSortObject.field===header.value && !nSortObject.asc),
-              }"
-              >{{header.text}}</th>
-            </tr>
-          </thead>
-        </slot>
-        <tbody>
-          <tr v-for="(row,rowIndex) in cItemsInPage" :key="rowIndex">
-            <td v-for="(col,colIndex) in cHeadersChildren" :key="colIndex">
-              <slot :name="`item.${col.value}`" :item="row">{{ row[col.value] }}</slot>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="box-footer" style="display:flex">
+    <table :class="tableCssClass">
+      <thead>
+        <tr :class="headerRowCssClass">
+          <th
+            v-for="(header,index) in tableHeaders"
+            :key="index"
+            :class="headerCellCssClass"
+            :style="(header.width?'width: ' + header.width + '; ':'') + (header.align? 'text-align: ' + header.align:'')"
+          >
+            <slot :name="`header.${header.value}`" :item="header">{{header.text}}</slot>
+          </th>
+        </tr>
+      </thead>
+      <tbody v-if="hasItems">
+        <tr :class="rowCssClass" v-for="(item,rowIndex) in pageItems" :key="rowIndex">
+          <td
+            :class="cellCssClass"
+            :style="(header.width?'width: ' + header.width + '; ':'') + (header.align? 'text-align: ' + header.align:'')"
+            v-for="(header,colIndex) in tableHeaders"
+            :key="colIndex"
+          >
+            <slot
+              v-if="header.value !== 'action'"
+              :name="`item.${header.value}`"
+              :item="item"
+            >{{ item[header.value] }}</slot>
+            <div :class="header.align? 'text-${header.align}':''" v-else>
+              <n-btn v-if="updatable" @click="updateClick(item)">
+                <n-icon>pencil</n-icon>
+              </n-btn>
+              <n-btn v-if="deletable" @click="remove(item)">
+                <n-icon>trash</n-icon>
+              </n-btn>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+      <tbody v-else>
+        <tr>
+          <td class="text-center">{{noDataText}}</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr :class="footerRowCssClass">
+          <td :class="footerCellCssClass" v-for="(header,colIndex) in tableHeaders" :key="colIndex">
+            <slot :name="`footer.${header.value}`" :item="items"></slot>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+
+    <div style="display:flex; padding:10px 5px; align-items: center;">
+      <div
+        class="hidden-xs"
+        style="height: 30px;min-height: 32px;padding: 6px 10px 6px 0px;font-size: 12px; line-height: 1.5;"
+      >Trang {{ page }}/{{ pageLength}} ({{ items.length}} mục)</div>
+
       <div style="flex:auto">
-        <div
-          class="summary hidden-xs form-inline form-group form-group-sm pull-left"
-          style="display:inline-block"
-        >
-          <div
-            class="form-control-static"
-          >Trang {{ nPage }}/{{ cPageLength}} ({{ items.length}} mục)</div>
-        </div>
-        <n-pagination :length="cPageLength" v-model="nPage" small class="no-margin pull-left"></n-pagination>
+        <n-pagination :length="pageLength" v-model="page" small class="no-margin"></n-pagination>
       </div>
       <div>
         <select
-          @change="itemPerPageChange"
+          @change="changeItemPerPage"
           class="form-control"
           style="width:70px;display: inline-block; height:30px;  padding: 6px 6px"
+          :value="itemPerPage"
         >
           <option value="5">5</option>
           <option value="10">10</option>
           <option value="25">25</option>
           <option value="50">50</option>
           <option value="100">100</option>
+          <option value="-1">Tất cả</option>
         </select>
       </div>
     </div>
+
+    <n-modal v-model="modal.visible">
+      <slot name="modal" :modal="modal">OK</slot>
+      <template v-slot:footer>
+        <n-btn color="primary" @click="save">Lưu</n-btn>
+      </template>
+    </n-modal>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, PropSync } from "vue-property-decorator";
+import { Vue, Component, Prop, Emit } from "vue-property-decorator";
+import { TableHeader } from "../types/Table";
+import isEmpty from "lodash/isEmpty";
+import cloneDeep from "lodash/cloneDeep";
+import { VNode } from "vue";
 import NPagination from "./NPagination.vue";
-@Component({ components: { NPagination }, inheritAttrs: false })
+import NSelect from "./NSelect.vue";
+import NBtn from "./NBtn.vue";
+import NIcon from "./NIcon.vue";
+import NModal from "./NModal.vue";
+@Component({
+  inheritAttrs: false,
+  components: { NPagination, NSelect, NBtn, NIcon, NModal }
+})
 export default class NDataTable extends Vue {
-  @Prop(Array) headers!: any[];
-  @Prop(Array) items!: any[];
-  @Prop(String) caption!: string;
-  @Prop(Boolean) enableSearch!: boolean;
-  @Prop({ type: Boolean, default: false }) boxFlat!: boolean;
   @Prop({ type: Boolean, default: true }) bordered!: boolean;
   @Prop({ type: Boolean, default: true }) hovered!: boolean;
-  @Prop({ type: Boolean, default: false }) condensed!: boolean;
-  @Prop({ type: Boolean, default: true }) striped!: boolean;
-  nPage = 1;
-  nItemPerPage: number = 5;
-  nSortObject = { field: "", asc: true };
-  nSearch = "";
+  @Prop({ type: Boolean, default: false }) densed!: boolean;
+  @Prop({ type: Boolean, default: false }) striped!: boolean;
 
-  //boxCssClass
-  get cBoxCssClass() {
-    let css = "box ";
-    css += this.boxFlat ? "box-flat " : "box-bordered ";
-    return css;
+  @Prop({ type: Boolean, default: false }) searchable!: boolean;
+  @Prop({ type: Boolean, default: false }) creatable!: boolean;
+  @Prop({ type: Boolean, default: false }) updatable!: boolean;
+  @Prop({ type: Boolean, default: false }) deletable!: boolean;
+
+  @Prop(String) caption!: string;
+  @Prop({ type: String, default: "Không có dữ liệu" }) noDataText!: string;
+
+  @Prop(Array) headers: TableHeader[];
+  @Prop(Array) items: any[];
+
+  @Emit() createClick(e) {
+    this.modal.visible = true;
+    this.modal.data = {};
+    this.modal.isNew = true;
   }
-  //tableClass
-  get cTableCssClass() {
-    let css = "table ";
+  @Emit() updateClick(e) {
+    this.modal.visible = true;
+    this.modal.data = cloneDeep(e);
+    this.modal.isNew = false;
+  }
+
+  @Emit("delete") remove(e) {}
+  save() {
+    if (this.modal.isNew) this.$emit("create", this.modal);
+    else this.$emit("update", this.modal);
+  }
+
+  /** css classes */
+  get tableCssClass() {
+    let css = "table no-margin ";
     css += this.bordered ? "table-bordered " : "";
     css += this.hovered ? "table-hover " : "";
-    css += this.condensed ? "table-condensed " : "";
+    css += this.densed ? "table-condensed " : "";
     css += this.striped ? "table-striped " : "";
+    css += this.getCssClass("table") || "";
     return css;
   }
+  get headerRowCssClass() {
+    return this.getCssClass("header-row") || "";
+  }
+  get headerCellCssClass() {
+    return this.getCssClass("header-cell") || "";
+  }
+  get rowCssClass() {
+    return this.getCssClass("row") || "";
+  }
+  get cellCssClass() {
+    return this.getCssClass("cell") || "";
+  }
+  get footerRowCssClass() {
+    return this.getCssClass("footer-row") || "";
+  }
+  get footerCellCssClass() {
+    return this.getCssClass("footer-cell") || "";
+  }
+  get buttonAddCssClass() {
+    return this.getCssClass("button-add") || "";
+  }
 
-  //Data body
-  get cItemsInPage() {
-    let items = this.items.slice();
-    if (this.nSearch) {
+  /**Items */
+  get hasItems() {
+    return !isEmpty(this.items);
+  }
+  get pageItems() {
+    let items = cloneDeep(this.items);
+    if (this.searchText)
       items = items.filter(r =>
         Object.values(r).some(c =>
           c
             .toString()
             .toUpperCase()
-            .includes(this.nSearch.toUpperCase())
+            .includes(this.searchText.toUpperCase())
         )
       );
-    }
-    if (this.nSortObject.field !== "")
-      items = items.sort(this.compare).map(o => o);
 
-    return items.slice(
-      (this.nPage - 1) * this.nItemPerPage,
-      this.nPage * this.nItemPerPage
-    );
+    if (this.itemPerPage > 0)
+      items = items.slice(
+        (this.page - 1) * this.itemPerPage,
+        this.page * this.itemPerPage < this.items.length
+          ? this.page * this.itemPerPage
+          : this.items.length
+      );
+    return items;
   }
+  /** search */
+  searchText: string = "";
 
-  //Header
-  get cHeaders() {
-    return this.headers;
+  /**pagination */
+  itemPerPage = 10;
+  page = 1;
+  get pageLength() {
+    return Math.ceil(this.items.length / this.itemPerPage);
   }
-  get cHeaderRowCount() {
-    return this.getArrayDepth(this.cHeaders);
-  }
-  get cHeadersChildren() {
-    return this.getArrayChildren(this.cHeaders);
-  }
-  getHeadersAtLevel(level: number) {
-    return this.getArrayAtLevel(this.cHeaders, level);
-  }
-
-  //Header sort
-  sort(field: string) {
-    let hfield = this.cHeadersChildren.find(o => (o.value || "") === field);
-
-    if (!hfield || (hfield.sortable || false) !== true) return;
-    if (this.nSortObject.field !== field) {
-      this.nSortObject.field = field;
-      this.nSortObject.asc = true;
-    } else if (this.nSortObject.asc) {
-      this.nSortObject.asc = false;
-    } else {
-      this.nSortObject.field = "";
-    }
-  }
-  compare(a: any, b: any) {
-    if (this.nSortObject.field === "") return 0;
-
-    const genreA = a[this.nSortObject.field];
-    const genreB = b[this.nSortObject.field];
-
-    let comparison = 0;
-    if (genreA > genreB) {
-      comparison = this.nSortObject.asc ? 1 : -1;
-    } else if (genreA < genreB) {
-      comparison = this.nSortObject.asc ? -1 : 1;
-    }
-    return comparison;
+  changeItemPerPage(e) {
+    this.itemPerPage = e.target.value;
   }
 
-  //Pagination
-  get cPageLength() {
-    return Math.ceil(this.items.length / this.nItemPerPage);
-  }
-  itemPerPageChange(e: any) {
-    this.nItemPerPage = Number(e.target.value);
-    this.nPage = 1;
+  /** headers */
+  get tableHeaders() {
+    let headers: TableHeader[] = cloneDeep(this.headers);
+    if (this.updatable || this.deletable)
+      headers.push({
+        text: "Tác vụ",
+        value: "action",
+        width: "10%",
+        align: "center"
+      });
+    return headers;
   }
 
-  //Helper
-  getArrayDepth(value: any[], childrenField = "children") {
-    let hasChildren = value.filter(o => o.hasOwnProperty(childrenField));
-    if (hasChildren.length <= 0) return 1;
-    return Array.isArray(value)
-      ? 1 +
-          Math.max(
-            ...hasChildren.map(o =>
-              this.getArrayDepth(o[childrenField], childrenField)
-            )
-          )
-      : 0;
-  }
-  getArrayAtLevel(array: any, level = 1, childrenField = "children") {
-    let ar = array;
-    for (let i = 1; i < level; i++)
-      ar = ar
-        .filter((a: any) => a.hasOwnProperty(childrenField))
-        .flatMap((a: any) => a[childrenField]);
-    return ar;
-  }
-  getArrayChildren(array: any[], childrenField = "children") {
-    let save: any[] = []; //array.filter((o: any) => !o.hasOwnProperty("children"));
-    array.forEach((item: any) => {
-      if (!item.hasOwnProperty(childrenField)) save.push(item);
-      if (Array.isArray(item[childrenField]))
-        save = save.concat(
-          this.getArrayChildren(item[childrenField], childrenField)
-        );
-    });
-    return save;
-  }
+  /** Edit modal */
+  modal = {
+    visible: false,
+    data: {},
+    isNew: false
+  };
+
   mounted() {
-    console.log(this.getArrayChildren(this.headers));
+    console.log(this.$slots.default.find(node => node.tag === "css-class"));
+  }
+
+  /**helper function */
+  getCssClass(tag: string) {
+    let css = this.$slots.default.find(node => node.tag === "css-class");
+    if (!css.data) return "";
+    if (!css.data.hasOwnProperty("attrs") || !css.data.attrs) return "";
+    if (!css.data.attrs.hasOwnProperty(tag)) return "";
+    return css.data.attrs[tag];
   }
 }
 </script>
 
 <style scoped>
-.table thead .sortable {
-  cursor: pointer;
+.tbl-header {
+  display: flex;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  align-items: center;
 }
-.table thead .sortable.asc:after {
-  content: "↓";
-}
-.table thead .sortable.desc:after {
-  content: "↑";
-}
-.box-flat {
-  border: unset;
-  box-shadow: unset;
-}
-.box-bordered {
-  border: 1px solid #d2d6de;
-  box-shadow: unset;
+.tbl-header > * {
+  padding-left: 5px;
+  padding-right: 5px;
 }
 </style>
