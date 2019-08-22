@@ -22,7 +22,7 @@ import {
   Model
 } from "vue-property-decorator";
 @Component({ inheritAttrs: false })
-export default class NDataTable extends Vue {
+export default class NPagination extends Vue {
   @Prop(String) cssClass!: string;
   @Prop(Boolean) small!: boolean;
 

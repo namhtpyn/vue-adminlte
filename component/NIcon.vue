@@ -1,13 +1,14 @@
 <template>
-  <i :class="cCssClass"></i>
+  <i :class="cCssClass" @click="iconClick"></i>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop, PropSync, Emit } from "vue-property-decorator";
-@Component({ inheritAttrs: false })
-export default class NDataTable extends Vue {
+@Component({})
+export default class NIcon extends Vue {
   @Prop(String) cssClass!: string;
   @Prop({ type: String, default: "default" }) color!: string;
+  @Emit("click") iconClick(e) {}
 
   get cCssClass() {
     let css = "fa ";
