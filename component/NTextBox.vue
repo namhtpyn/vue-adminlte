@@ -10,9 +10,9 @@
         :type="type"
         :class="cCssClass"
         :placeholder="hint"
-        :value="vModel"
+        :value="value"
         @input="(e)=>input(e.target.value)"
-        @blur="validate(vModel)"
+        @blur="validate(value)"
         :disabled="readonly"
       />
       <span v-if="suffix" class="input-group-addon">{{ suffix }}</span>
@@ -52,7 +52,7 @@ export default class NTextBox extends Vue {
   @Prop(String) prependIcon!: string;
   @Prop(String) suffix!: string;
   @Prop(String) appendIcon!: string;
-  @Model("input", { type: String }) vModel: string;
+  @Model("input", { type: String }) value: string;
   @Emit() input(e) {
     this.validate(e);
   }
@@ -77,15 +77,17 @@ export default class NTextBox extends Vue {
     return css;
   }
   get errorText() {
-    if (this.rules) {
-      let f = this.rules.find(r => r(this.vModel) !== true);
-      return f ? f(this.vModel) : "";
+    if (!this.valid && this.rules) {
+      let f = this.rules.find(r => r(this.value) !== true);
+      return f ? f(this.value) : "";
     }
     return "";
   }
-  validate(text) {
-    if (this.rules) this.valid = !this.rules.some(e => e(text) !== true);
+
+  validate(value) {
     this.valid = true;
+    if (this.rules) this.valid = !this.rules.some(e => e(value) !== true);
+    return this.valid;
   }
 }
 </script>
