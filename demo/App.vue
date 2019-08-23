@@ -29,7 +29,6 @@
       @update="doAdd"
       @delete="doAdd"
     >
-      <css-class header-row="bg-blue" header-cell="text-white" footer-row="bg-blue" footer-cell="text-white"></css-class>
       <template v-slot:modal="{ modal }">
         <input class="form-control" autofocus v-model="modal.data.name" />
         <input class="form-control" v-model="modal.data.fat" />

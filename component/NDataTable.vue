@@ -234,12 +234,11 @@ export default class NDataTable extends Vue {
     isNew: false
   }
 
-  mounted() {
-    console.log(this.$slots.default.find(node => node.tag === 'css-class'))
-  }
+  mounted() {}
 
   /**helper function */
   getCssClass(tag: string) {
+    if (!this.$slots.default) return ''
     const css = this.$slots.default.find(node => node.tag === 'css-class')
     if (!css.data) return ''
     if (!Object.prototype.hasOwnProperty.call(css.data, 'attrs') || !css.data.attrs) return ''
