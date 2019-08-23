@@ -1,8 +1,6 @@
 <template>
   <div>
-    <n-btn app color="primary" text-color="white" @click="abc">
-      <n-icon color="yellow">play</n-icon>Play
-    </n-btn>
+    <n-btn app color="primary" text-color="white" @click="abc"> <n-icon color="yellow">play</n-icon>Play </n-btn>
 
     <!-- <n-data-table caption="Title here" :headers="headers" :items="items" enable-search bordered>
       <template v-slot:item.action>aaaaa</template>
@@ -28,104 +26,95 @@
       @update="doAdd"
       @delete="doAdd"
     >
-      <css-class
-        header-row="bg-blue"
-        header-cell="text-white"
-        footer-row="bg-blue"
-        footer-cell="text-white"
-      ></css-class>
-      <template v-slot:modal="{modal}">
+      <css-class header-row="bg-blue" header-cell="text-white" footer-row="bg-blue" footer-cell="text-white"></css-class>
+      <template v-slot:modal="{ modal }">
         <input class="form-control" autofocus v-model="modal.data.name" />
         <input class="form-control" v-model="modal.data.fat" />
       </template>
-      <template v-slot:footer.fat="{item}">{{item.reduce((a, b) => a + (b.fat || 0), 0)}}</template>
-      <template v-slot:footer.calories="{item}">{{item.reduce((a, b) => a + (b.calories || 0), 0)}}</template>
+      <template v-slot:footer.fat="{ item }">{{ item.reduce((a, b) => a + (b.fat || 0), 0) }}</template>
+      <template v-slot:footer.calories="{ item }">{{ item.reduce((a, b) => a + (b.calories || 0), 0) }}</template>
     </n-data-table>
 
     <n-select2 :items="selectItems" item-text="name" item-value="fat"></n-select2>
     <n-modal caption="OK" v-model="modalVisibility" hide-footer>tui thu ne haha</n-modal>
-    <n-btn @click="modalVisibility=!modalVisibility">Click</n-btn>
+    <n-btn @click="modalVisibility = !modalVisibility">Click</n-btn>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-import NDataTable from "../component/NDataTable.vue";
-import NBtn from "../component/NBtn.vue";
-import NIcon from "../component/NIcon.vue";
-import NPagination from "../component/NPagination.vue";
-import { TableHeader } from "../types/Table";
-import axios from "axios";
-import jsonData from "./data.json";
-import NSelect2 from "../component/NSelect2.vue";
-import NModal from "../component/NModal.vue";
+import { Component, Vue } from 'vue-property-decorator'
+import NDataTable from '../component/NDataTable.vue'
+import NBtn from '../component/NBtn.vue'
+import NIcon from '../component/NIcon.vue'
+import NPagination from '../component/NPagination.vue'
+import { TableHeader } from '../types/Table'
+import jsonData from './data.json'
+import NSelect2 from '../component/NSelect2.vue'
+import NModal from '../component/NModal.vue'
 
 @Component({
   components: { NDataTable, NBtn, NIcon, NPagination, NSelect2, NModal }
 })
 export default class extends Vue {
   //pagination
-  page = 1;
+  page = 1
 
   //Table
   tableHeaders: TableHeader[] = [
     {
-      text: "Dessert (100g serving)",
-      value: "name"
+      text: 'Dessert (100g serving)',
+      value: 'name'
     },
-    { text: "Calories", value: "calories" },
-    { text: "Fat (g)", value: "fat", sortable: true },
-    { text: "Carbs (g)", value: "carbs" },
-    { text: "Protein (g)", value: "protein" }
-  ];
-  tableItems: any[] = jsonData;
+    { text: 'Calories', value: 'calories' },
+    { text: 'Fat (g)', value: 'fat', sortable: true },
+    { text: 'Carbs (g)', value: 'carbs' },
+    { text: 'Protein (g)', value: 'protein' }
+  ]
+  tableItems: any[] = jsonData
   doAdd(modal) {
-    console.log(modal);
-    modal.visible = false;
+    console.log(modal)
+    modal.visible = false
   }
 
   //Select
-  selectItems: any[] = jsonData;
+  selectItems: any[] = jsonData
 
   //Modal
-  modalVisibility = false;
+  modalVisibility = false
 
-  message = "hello world";
+  message = 'hello world'
 
   abc(a) {
-    console.log(a);
+    console.log(a)
   }
   headers = [
     {
-      text: "Dessert (100g serving)",
-      value: "name"
+      text: 'Dessert (100g serving)',
+      value: 'name'
     },
     {
-      text: "abc",
+      text: 'abc',
       children: [
-        { text: "Calories", value: "calories" },
-        { text: "Fat (g)", value: "fat", sortable: true },
+        { text: 'Calories', value: 'calories' },
+        { text: 'Fat (g)', value: 'fat', sortable: true },
         {
-          text: "def",
+          text: 'def',
           children: [
-            { text: "Carbs (g)", value: "carbs" },
-            { text: "Protein (g)", value: "protein" },
+            { text: 'Carbs (g)', value: 'carbs' },
+            { text: 'Protein (g)', value: 'protein' },
             {
-              text: "def",
-              children: [
-                { text: "Carbs (g)", value: "carbs" },
-                { text: "Protein (g)", value: "protein" }
-              ]
+              text: 'def',
+              children: [{ text: 'Carbs (g)', value: 'carbs' }, { text: 'Protein (g)', value: 'protein' }]
             }
           ]
         }
       ]
     },
 
-    { text: "Iron (%))", value: "iron" },
-    { text: "Action", value: "action" }
-  ];
-  items: any[] = jsonData;
+    { text: 'Iron (%))', value: 'iron' },
+    { text: 'Action', value: 'action' }
+  ]
+  items: any[] = jsonData
 
   mounted() {}
 }
@@ -134,7 +123,7 @@ export default class extends Vue {
 <style>
 #app {
   font-size: 18px;
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
   color: blue;
 }
 </style>
