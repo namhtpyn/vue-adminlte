@@ -1,5 +1,8 @@
 <template>
   <div>
+    <n-radio label="radio 1" value="1"></n-radio>
+    <n-checkbox form label="checkbox" v-model="checkbox"></n-checkbox>
+    {{ checkbox }}
     <n-btn app color="primary" text-color="white" @click="abc"> <n-icon color="yellow">play</n-icon>Play </n-btn>
 
     <!-- <n-data-table caption="Title here" :headers="headers" :items="items" enable-search bordered>
@@ -51,11 +54,16 @@ import { TableHeader } from '../types/Table'
 import jsonData from './data.json'
 import NSelect2 from '../component/NSelect2.vue'
 import NModal from '../component/NModal.vue'
+import NCheckbox from '../component/NCheckbox.vue'
+import NRadio from '../component/NRadio.vue'
 
 @Component({
-  components: { NDataTable, NBtn, NIcon, NPagination, NSelect2, NModal }
+  components: { NDataTable, NBtn, NIcon, NPagination, NSelect2, NModal, NCheckbox, NRadio }
 })
 export default class extends Vue {
+  //checkbox
+  checkbox: boolean = true
+
   //pagination
   page = 1
 
