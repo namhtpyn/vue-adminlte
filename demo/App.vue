@@ -1,6 +1,17 @@
 <template>
   <div>
-    <n-btn app color="primary" text-color="white" @click="abc">
+    <n-form ref="form" v-model="valid">
+      <div class="box-body">
+        <n-text-box form v-model="email" label="Email" :rules="emailRules"></n-text-box>
+      </div>
+      <div class="box-footer">
+        <n-btn @click="submit">submit</n-btn>
+        <n-btn @click="validate">validate</n-btn>
+        <n-btn @click="resetValidation">reset validation</n-btn>
+      </div>
+    </n-form>
+    valid: {{valid}}
+    <!-- <n-btn app color="primary" text-color="white" @click="abc">
       <n-icon color="yellow">play</n-icon>Play
     </n-btn>
 
@@ -44,7 +55,7 @@
 
     <n-select2 :items="selectItems" item-text="name" item-value="fat"></n-select2>
     <n-modal caption="OK" v-model="modalVisibility" hide-footer>tui thu ne haha</n-modal>
-    <n-btn @click="modalVisibility=!modalVisibility">Click</n-btn>
+    <n-btn @click="modalVisibility=!modalVisibility">Click</n-btn>-->
   </div>
 </template>
 
@@ -60,11 +71,40 @@ import axios from "axios";
 import jsonData from "./data.json";
 import NSelect2 from "../component/NSelect2.vue";
 import NModal from "../component/NModal.vue";
+import NForm from "../component/NForm.vue";
+import NTextBox from "../component/NTextBox.vue";
 
 @Component({
-  components: { NDataTable, NBtn, NIcon, NPagination, NTable, NSelect2, NModal }
+  components: {
+    NDataTable,
+    NBtn,
+    NIcon,
+    NPagination,
+    NTable,
+    NSelect2,
+    NModal,
+    NForm,
+    NTextBox
+  }
 })
 export default class extends Vue {
+  valid = false;
+  email = "";
+  emailRules = [
+    v => !!v || "Không được bỏ trống",
+    v => v.includes("@") || "Format email không đúng"
+  ];
+  validate() {
+    return (this.$refs.form as NForm).validate();
+  }
+  resetValidation() {
+    (this.$refs.form as NForm).resetValidation();
+  }
+  submit() {
+    if (this.validate()) {
+      console.log("make request");
+    }
+  }
   //pagination
   page = 1;
 
