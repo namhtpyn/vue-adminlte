@@ -6,19 +6,26 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Document</title>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/admin-lte@2.4.17/dist/js/adminlte.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@2.4.17/dist/css/AdminLTE.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@2.4.17/dist/css/skins/_all-skins.min.css" />
   </head>
   <body>
     <div id="app">
-      <n-data-table caption="Title here" :headers="headers" :items="items" :enable-search="true">
-        <template v-slot:item.action
-          >aaaaa</template
-        >
-        <template v-slot:item.iron="{item}">
-          <span class="badge bg-red">{{ item.iron }}</span>
+      <n-data-table :headers="headers" :items="items" caption="Table" searchable creatable updatable deletable>
+        <template v-slot:modal="{ modal }">
+          <input class="form-control" autofocus v-model="modal.data.name" />
+          <input class="form-control" v-model="modal.data.fat" />
         </template>
-        <template v-slot:item.protein="{item}">
-          <span class="badge bg-green">{{ item.protein }}</span>
-        </template>
+        <template v-slot:footer.fat="{ item }">{{ item.reduce((a, b) => a + (b.fat || 0), 0) }}</template>
+        <template v-slot:footer.calories="{ item }">{{ item.reduce((a, b) => a + (b.calories || 0), 0) }}</template>
       </n-data-table>
     </div>
     <script src="../dist/NDataTable.js"></script>
@@ -33,27 +40,10 @@
               text: 'Dessert (100g serving)',
               value: 'name'
             },
-            {
-              text: 'abc',
-              children: [
-                { text: 'Calories', value: 'calories' },
-                { text: 'Fat (g)', value: 'fat' },
-                {
-                  text: 'def',
-                  children: [
-                    { text: 'Carbs (g)', value: 'carbs' },
-                    { text: 'Protein (g)', value: 'protein' },
-                    {
-                      text: 'def',
-                      children: [{ text: 'Carbs (g)', value: 'carbs' }, { text: 'Protein (g)', value: 'protein' }]
-                    }
-                  ]
-                }
-              ]
-            },
-
-            { text: 'Iron (%))', value: 'iron' },
-            { text: 'Action', value: 'action' }
+            { text: 'Calories', value: 'calories' },
+            { text: 'Fat (g)', value: 'fat', sortable: true },
+            { text: 'Carbs (g)', value: 'carbs' },
+            { text: 'Protein (g)', value: 'protein' }
           ],
           items: [
             {
