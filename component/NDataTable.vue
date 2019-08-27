@@ -89,7 +89,7 @@
       </div>
     </div>
 
-    <n-modal v-model="modal.visible">
+    <n-modal :caption="modal.isNew ? 'Thêm' : 'Sửa'" v-model="modal.visible">
       <slot name="modal" :modal="modal">OK</slot>
       <template v-slot:footer>
         <n-btn color="primary" @click="save">Lưu</n-btn>
