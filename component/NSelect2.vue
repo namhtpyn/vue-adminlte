@@ -47,7 +47,7 @@ export default class NSelect2 extends Vue {
     return ''
   }
   get select2Data() {
-    return this.items.map(item => {
+    return (this.items || []).map(item => {
       return { id: item[this.itemValue], text: item[this.itemText] }
     })
   }
