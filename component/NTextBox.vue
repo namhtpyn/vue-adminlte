@@ -45,7 +45,7 @@ export default class NTextBox extends Vue {
   @Prop(String) prependIcon!: string
   @Prop(String) suffix!: string
   @Prop(String) appendIcon!: string
-  @Model('input', { type: String }) value: string
+  @Model('input', { type: [String, Number] }) value!: string | number
   @Emit() input(e) {
     this.validate(e)
   }

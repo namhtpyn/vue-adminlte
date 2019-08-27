@@ -75,4 +75,8 @@ export default class NSelect2 extends Vue {
 }
 </script>
 
-<style></style>
+<style>
+span.select2-container {
+  width: 100% !important
+}
+</style>

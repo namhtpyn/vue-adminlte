@@ -89,7 +89,7 @@
       </div>
     </div>
 
-    <n-modal v-model="modal.visible">
+    <n-modal :caption="modal.isNew ? 'Thêm' : 'Sửa'" v-model="modal.visible">
       <slot name="modal" :modal="modal">OK</slot>
       <template v-slot:footer>
         <n-btn color="primary" @click="save">Lưu</n-btn>
@@ -104,13 +104,12 @@ import { TableHeader } from '../types/Table'
 import isEmpty from 'lodash/isEmpty'
 import cloneDeep from 'lodash/cloneDeep'
 import NPagination from './NPagination.vue'
-import NSelect from './NSelect.vue'
 import NBtn from './NBtn.vue'
 import NIcon from './NIcon.vue'
 import NModal from './NModal.vue'
 @Component({
   inheritAttrs: false,
-  components: { NPagination, NSelect, NBtn, NIcon, NModal }
+  components: { NPagination, NBtn, NIcon, NModal }
 })
 export default class NDataTable extends Vue {
   @Prop({ type: Boolean, default: true }) bordered!: boolean
@@ -129,15 +128,17 @@ export default class NDataTable extends Vue {
   @Prop(Array) headers: TableHeader[]
   @Prop(Array) items: any[]
 
-  @Emit() createClick(e) {
+  createClick(e) {
     this.modal.visible = true
     this.modal.data = {}
     this.modal.isNew = true
+    this.$emit('create-click', this.modal)
   }
-  @Emit() updateClick(e) {
+  updateClick(e) {
     this.modal.visible = true
     this.modal.data = cloneDeep(e)
     this.modal.isNew = false
+    this.$emit('update-click', this.modal)
   }
 
   @Emit('delete') remove(e) {}

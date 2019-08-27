@@ -7,7 +7,7 @@
 <script lang="ts">
 import { Component, Vue, Prop, Emit, Model } from 'vue-property-decorator'
 import isEmpty from 'lodash/isEmpty'
-@Component({})
+@Component({ inheritAttrs: false })
 export default class NForm extends Vue {
   @Prop({ type: Boolean, default: false }) lazyValidation!: boolean
   @Model('input', { type: Boolean, default: false }) value!: boolean
@@ -37,11 +37,11 @@ export default class NForm extends Vue {
         this.findDeep(obj[i])
       }
     } else {
-      if (!isEmpty(obj['children'])) {
-        this.findDeep(obj['children'])
+      if (Object.hasOwnProperty.call(obj, 'componentInstance') && !isEmpty(obj.componentInstance) && obj.componentInstance.form) {
+        this.vueComponents.push(obj.componentInstance)
       }
-      if (obj['componentInstance'] instanceof Vue && obj['componentInstance'].form) {
-        this.vueComponents.push(obj['componentInstance'])
+      if (Object.hasOwnProperty.call(obj, 'children') && !isEmpty(obj.children)) {
+        this.findDeep(obj.children)
       }
     }
   }
