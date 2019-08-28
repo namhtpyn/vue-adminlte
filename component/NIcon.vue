@@ -20,4 +20,6 @@ export default class NIcon extends Vue {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+
+</style>

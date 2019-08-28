@@ -1,7 +1,7 @@
 <template>
-  <div :class="{ 'form-group': form, 'has-error': !valid }">
-    <label v-if="hasLabel" class="control-label">{{ label }}</label>
-    <div :class="inputGroup ? 'input-group' : ''">
+  <div :class="classComponent">
+    <label v-if="hasLabel" :class="labelClass" :style="labelStyle">{{ label }}</label>
+    <div :class="divClass" :style="divStyle">
       <span v-if="prefix" class="input-group-addon">{{ prefix }}</span>
       <span v-if="prependIcon" class="input-group-addon">
         <n-icon>{{ prependIcon }}</n-icon>
@@ -12,7 +12,7 @@
         :placeholder="hint"
         :value="value"
         @input="e => input(e.target.value)"
-        @blur="validate(value)"
+        @blur="input(value)"
         :disabled="readonly"
       />
       <span v-if="suffix" class="input-group-addon">{{ suffix }}</span>
@@ -45,11 +45,15 @@ export default class NTextBox extends Vue {
   @Prop(String) prependIcon!: string
   @Prop(String) suffix!: string
   @Prop(String) appendIcon!: string
+  @Prop({ type: Boolean, default: false }) horizontal!: boolean
+  @Prop({ type: Boolean, default: false }) lazyValidation!: boolean
   @Model('input', { type: [String, Number] }) value!: string | number
   @Emit() input(e) {
-    this.validate(e)
+    if ((!this.lazyForm && !this.lazyValidation) || !this.valid) this.validate(e)
   }
   valid: boolean = true
+  lazyForm: boolean = false
+  widthComponent = 0
   get hasLabel() {
     return !isEmpty(this.label)
   }
@@ -69,6 +73,30 @@ export default class NTextBox extends Vue {
       return f ? f(this.value) : ''
     }
     return ''
+  }
+
+  get classComponent() {
+    return { 'form-horizontal': this.horizontal, 'form-group': this.form, 'has-error': !this.valid }
+  }
+
+  get labelClass() {
+    return { 'control-label': true, 'col-xs-2': this.horizontal }
+  }
+
+  get divClass() {
+    return { 'input-group': this.inputGroup, 'col-xs-10': this.horizontal }
+  }
+
+  get labelStyle() {
+    return this.horizontal ? { width: '80px', 'padding-right': '0px' } : {}
+  }
+
+  get divStyle() {
+    return this.horizontal ? { width: `${this.widthComponent - 90}px` } : {}
+  }
+
+  mounted() {
+    this.widthComponent = $(this.$el).width()
   }
 
   validate(value) {

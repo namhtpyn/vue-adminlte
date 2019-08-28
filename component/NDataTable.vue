@@ -19,12 +19,14 @@
     </div>
     <table :class="tableCssClass">
       <thead>
-        <tr :class="headerRowCssClass">
+        <tr v-for="idx in getDeep(headers)" :key="idx" :class="headerRowCssClass">
           <th
-            v-for="(header, index) in tableHeaders"
+            v-for="(header, index) in tableHeaderss.filter(h => h.level === idx)"
             :key="index"
+            :rowspan="header.rowspan"
+            :colspan="header.colspan"
             :class="headerCellCssClass"
-            :style="(header.width ? 'width: ' + header.width + '; ' : '') + (header.align ? 'text-align: ' + header.align : '')"
+            :style="{ width: header.width, 'text-align': header.headerAlign, 'vertical-align': header.vHeaderAlign }"
           >
             <slot :name="`header.${header.value}`" :item="header">{{ header.text }}</slot>
           </th>
@@ -35,7 +37,7 @@
           <td
             :class="cellCssClass"
             :style="(header.width ? 'width: ' + header.width + '; ' : '') + (header.align ? 'text-align: ' + header.align : '')"
-            v-for="(header, colIndex) in tableHeaders"
+            v-for="(header, colIndex) in tableHeaderss.filter(h => h.colspan === 1)"
             :key="colIndex"
           >
             <slot v-if="header.value !== 'action'" :name="`item.${header.value}`" :item="item">{{ item[header.value] }}</slot>
@@ -64,15 +66,15 @@
       </tfoot>
     </table>
 
-    <div style="display:flex; padding:10px 5px; align-items: center;">
+    <div v-if="paging" style="display:flex; padding:10px 5px; align-items: center;">
       <div class="hidden-xs" style="height: 30px;min-height: 32px;padding: 6px 10px 6px 0px;font-size: 12px; line-height: 1.5;">
         Trang {{ page }}/{{ pageLength }} ({{ items.length }} mục)
       </div>
 
-      <div style="flex:auto">
+      <div v-if="paging" style="flex:auto">
         <n-pagination :length="pageLength" v-model="page" small class="no-margin"></n-pagination>
       </div>
-      <div>
+      <div v-if="paging">
         <select
           @change="changeItemPerPage"
           class="form-control"
@@ -121,6 +123,7 @@ export default class NDataTable extends Vue {
   @Prop({ type: Boolean, default: false }) creatable!: boolean
   @Prop({ type: Boolean, default: false }) updatable!: boolean
   @Prop({ type: Boolean, default: false }) deletable!: boolean
+  @Prop({ type: Boolean, default: true }) paging!: boolean
 
   @Prop(String) caption!: string
   @Prop({ type: String, default: 'Không có dữ liệu' }) noDataText!: string
@@ -225,6 +228,7 @@ export default class NDataTable extends Vue {
         width: '10%',
         align: 'center'
       })
+    this.getHeaderBand(headers, 1)
     return headers
   }
 
@@ -245,6 +249,38 @@ export default class NDataTable extends Vue {
     if (!Object.prototype.hasOwnProperty.call(css.data, 'attrs') || !css.data.attrs) return ''
     if (!Object.prototype.hasOwnProperty.call(css.data.attrs, tag)) return ''
     return css.data.attrs[tag]
+  }
+
+  tableHeaderss = []
+
+  getDeep(arr) {
+    let result = 1
+    arr.filter(a => (a.children || []).length > 0).forEach(v => (result += this.getDeep(v.children)))
+    return result
+  }
+  getChildEnd(arr) {
+    let result = arr.filter(a => (a.children || []).length === 0).length
+    arr.filter(a => (a.children || []).length > 0).forEach(v => (result += this.getChildEnd(v.children)))
+    return result
+  }
+  getHeaderBand(arr, level) {
+    arr.forEach(v => {
+      const item = cloneDeep(v)
+      if (!item.headerAlign) item.headerAlign = 'center'
+      if (!item.vHeaderAlign) item.vHeaderAlign = 'middle'
+      if ((v.children || []).length === 0) {
+        item.rowspan = this.getDeep(arr)
+        item.colspan = 1
+        item.level = level
+        this.tableHeaderss.push(item)
+      } else {
+        item.rowspan = 1
+        item.colspan = this.getChildEnd(v.children)
+        item.level = level
+        this.tableHeaderss.push(item)
+        this.getHeaderBand(v.children, level + 1)
+      }
+    })
   }
 }
 </script>
