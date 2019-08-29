@@ -1,11 +1,12 @@
 <template>
-  <n-drop-down-list :value="value" @input="input" :text.sync="getText">
+  <n-drop-down-list :value="value" @input="input" :text.sync="getText" :drop-down-width="dropDownWidth">
     <template #content="{data}">
       <n-data-table
         :headers="tableHeaders"
         :items="tableItems"
-        :component-footer="false"
-        :component-header="false"
+        hide-component-footer
+        hide-component-header
+        hide-table-footer
         @row-click="item => itemSelect(item, data)"
       >
       </n-data-table>
@@ -30,6 +31,7 @@ export default class NDropDownTable extends Vue {
   @Prop(Array) tableItems!: any[]
   @Prop({ type: String, default: 'text' }) itemText!: string
   @Prop({ type: String, default: 'value' }) itemValue!: string
+  @Prop([String, Number]) dropDownWidth!: string | number
   @Model('input', [String, Number]) value!: any
   @Emit() input(e) {}
   get getText() {
@@ -42,20 +44,4 @@ export default class NDropDownTable extends Vue {
 }
 </script>
 
-<style scoped>
-.input-flat,
-.input-flat:active {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  outline: none;
-  box-sizing: content-box;
-  box-shadow: none;
-}
-.auto-height {
-  height: auto;
-  position: absolute;
-  width: 100%;
-  padding: 0px 0px;
-}
-</style>
+<style scoped></style>

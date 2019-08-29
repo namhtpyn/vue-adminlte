@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="componentHeader" class="tbl-header">
+    <div v-if="!hideComponentHeader" class="tbl-header">
       <div class="title" v-if="caption" style="flex:auto">{{ caption }}</div>
       <div v-if="searchable" class="has-feedback" style="flex:auto">
         <div class="has-feedback">
@@ -18,7 +18,7 @@
       <slot name="top.append"></slot>
     </div>
     <table :class="tableCssClass">
-      <thead>
+      <thead v-if="!hideTableHeader">
         <tr :class="headerRowCssClass">
           <th
             v-for="(header, colIndex) in tableHeaders"
@@ -55,7 +55,7 @@
           <td class="text-center">{{ noDataText }}</td>
         </tr>
       </tbody>
-      <tfoot>
+      <tfoot v-if="!hideTableFooter">
         <tr :class="footerRowCssClass">
           <td :class="footerCellCssClass" v-for="(header, colIndex) in tableHeaders" :key="colIndex">
             <slot :name="`footer.${header.value}`" :item="items"></slot>
@@ -64,7 +64,7 @@
       </tfoot>
     </table>
 
-    <div v-if="componentFooter" style="display:flex; padding:10px 5px; align-items: center;">
+    <div v-if="!hideComponentFooter" style="display:flex; padding:10px 5px; align-items: center;">
       <div class="hidden-xs" style="height: 30px;min-height: 32px;padding: 6px 10px 6px 0px;font-size: 12px; line-height: 1.5;">
         Trang {{ page }}/{{ pageLength }} ({{ items.length }} mục)
       </div>
@@ -121,8 +121,10 @@ export default class NDataTable extends Vue {
   @Prop({ type: Boolean, default: false }) creatable!: boolean
   @Prop({ type: Boolean, default: false }) updatable!: boolean
   @Prop({ type: Boolean, default: false }) deletable!: boolean
-  @Prop({ type: Boolean, default: true }) componentFooter!: boolean
-  @Prop({ type: Boolean, default: true }) componentHeader!: boolean
+  @Prop({ type: Boolean, default: false }) hideComponentFooter!: boolean
+  @Prop({ type: Boolean, default: false }) hideComponentHeader!: boolean
+  @Prop({ type: Boolean, default: false }) hideTableFooter!: boolean
+  @Prop({ type: Boolean, default: false }) hideTableHeader!: boolean
 
   @Prop(String) caption!: string
   @Prop({ type: String, default: 'Không có dữ liệu' }) noDataText!: string

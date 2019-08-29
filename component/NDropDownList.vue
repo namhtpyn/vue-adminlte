@@ -14,7 +14,7 @@
       </div>
       <span :class="`fa fa-caret-${data.isOpen ? 'up' : 'down'} form-control-feedback`"></span>
     </div>
-    <div v-if="data.isOpen" class="form-control auto-height">
+    <div v-if="data.isOpen" class="form-control auto-height" :style="dropDownWidth ? `width:${dropDownWidth}px` : ''">
       <slot name="content" :data="data"></slot>
     </div>
   </div>
@@ -27,6 +27,7 @@ import { setTimeout, clearTimeout } from 'timers'
 export default class NDropDownList extends Vue {
   @PropSync('text', { type: String, default: '' }) textSync!: string
   @Prop([String, Number]) value!: any
+  @Prop([String, Number]) dropDownWidth!: string | number
 
   data = {
     isOpen: false
@@ -63,6 +64,7 @@ export default class NDropDownList extends Vue {
   height: auto;
   position: absolute;
   width: 100%;
+  overflow-y: auto;
   padding: 0px 0px;
 }
 </style>

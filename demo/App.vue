@@ -1,12 +1,13 @@
 <template>
   <div>
-    <div style="width:50%">
+    <div style="width:10%">
       <n-drop-down-table
         v-model="value"
         :table-headers="tableHeaders"
         :table-items="tableItems"
         item-text="name"
         item-value="fat"
+        drop-down-width="300"
       ></n-drop-down-table>
       <!-- <n-drop-down-list v-model="value">
         <template #content="{data}">
