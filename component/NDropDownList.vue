@@ -1,6 +1,6 @@
 <template>
   <div style="position:relative" @click="openDropDown">
-    <input type="hidden" />
+    <input type="hidden" :value="value" />
     <div class="has-feedback">
       <div class="form-control text-overflow">
         <input
@@ -9,37 +9,42 @@
           type="text"
           :style="`width:${searchWidth}px; max-width:100%`"
           @blur="closeDropDown"
-          v-model="search"
+          v-model="textSync"
         />
       </div>
-      <span :class="`fa fa-caret-${isOpen ? 'up' : 'down'} form-control-feedback`"></span>
+      <span :class="`fa fa-caret-${data.isOpen ? 'up' : 'down'} form-control-feedback`"></span>
     </div>
-    <div v-if="isOpen" class="form-control auto-height">
-      <slot name="content"></slot>
+    <div v-if="data.isOpen" class="form-control auto-height">
+      <slot name="content" :data="data"></slot>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Prop, PropSync } from 'vue-property-decorator'
 import { setTimeout, clearTimeout } from 'timers'
 @Component({})
 export default class NDropDownList extends Vue {
-  search = ''
-  isOpen = false
+  @PropSync('text', { type: String, default: '' }) textSync!: string
+  @Prop([String, Number]) value!: any
+
+  data = {
+    isOpen: false
+  }
+
   closeTimeout: NodeJS.Timeout
   openDropDown() {
     clearTimeout(this.closeTimeout)
-    this.isOpen = true
+    this.data.isOpen = true
     ;(this.$refs.search as any).focus()
   }
   closeDropDown() {
     this.closeTimeout = setTimeout(() => {
-      this.isOpen = false
+      this.data.isOpen = false
     }, 150)
   }
   get searchWidth() {
-    return 8 * this.search.length + 15
+    return 8 * this.textSync.length + 15
   }
 }
 </script>

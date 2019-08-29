@@ -1,9 +1,22 @@
 <template>
   <div>
     <div style="width:50%">
-      <n-drop-down-list>
-        <template #content>
-          <n-data-table :headers="tableHeaders" :items="tableItems" :component-footer="false" :component-header="false">
+      <n-drop-down-table
+        v-model="value"
+        :table-headers="tableHeaders"
+        :table-items="tableItems"
+        item-text="name"
+        item-value="fat"
+      ></n-drop-down-table>
+      <!-- <n-drop-down-list v-model="value">
+        <template #content="{data}">
+          <n-data-table
+            :headers="tableHeaders"
+            :items="tableItems"
+            :component-footer="false"
+            :component-header="false"
+            @row-click="item => itemSelect(item, data)"
+          >
             <template v-slot:modal="{ modal }">
               <input class="form-control" autofocus v-model="modal.data.name" />
               <input class="form-control" v-model="modal.data.fat" />
@@ -12,9 +25,9 @@
             <template v-slot:footer.calories="{ item }">{{ item.reduce((a, b) => a + (b.calories || 0), 0) }}</template>
           </n-data-table>
         </template>
-      </n-drop-down-list>
+      </n-drop-down-list> -->
     </div>
-    aaaaa
+    {{ value }}
     <!-- <n-radio label="radio 1" value="1"></n-radio>
     <n-checkbox form label="checkbox" v-model="checkbox"></n-checkbox>
     {{ checkbox }}
@@ -53,11 +66,14 @@ import NModal from '../component/NModal.vue'
 import NCheckbox from '../component/NCheckbox.vue'
 import NRadio from '../component/NRadio.vue'
 import NDropDownList from '../component/NDropDownList.vue'
+import NDropDownTable from '../component/NDropDownTable.vue'
 
 @Component({
-  components: { NDataTable, NBtn, NIcon, NPagination, NSelect2, NModal, NCheckbox, NRadio, NDropDownList }
+  components: { NDataTable, NBtn, NIcon, NPagination, NSelect2, NModal, NCheckbox, NRadio, NDropDownList, NDropDownTable }
 })
 export default class extends Vue {
+  value: any = 26
+
   //checkbox
   checkbox: boolean = true
 
