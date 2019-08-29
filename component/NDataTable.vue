@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="tbl-header">
+    <div v-if="componentHeader" class="tbl-header">
       <div class="title" v-if="caption" style="flex:auto">{{ caption }}</div>
       <div v-if="searchable" class="has-feedback" style="flex:auto">
         <div class="has-feedback">
@@ -66,15 +66,15 @@
       </tfoot>
     </table>
 
-    <div v-if="paging" style="display:flex; padding:10px 5px; align-items: center;">
+    <div v-if="componentFooter" style="display:flex; padding:10px 5px; align-items: center;">
       <div class="hidden-xs" style="height: 30px;min-height: 32px;padding: 6px 10px 6px 0px;font-size: 12px; line-height: 1.5;">
         Trang {{ page }}/{{ pageLength }} ({{ items.length }} mục)
       </div>
 
-      <div v-if="paging" style="flex:auto">
+      <div style="flex:auto">
         <n-pagination :length="pageLength" v-model="page" small class="no-margin"></n-pagination>
       </div>
-      <div v-if="paging">
+      <div>
         <select
           @change="changeItemPerPage"
           class="form-control"
@@ -123,7 +123,8 @@ export default class NDataTable extends Vue {
   @Prop({ type: Boolean, default: false }) creatable!: boolean
   @Prop({ type: Boolean, default: false }) updatable!: boolean
   @Prop({ type: Boolean, default: false }) deletable!: boolean
-  @Prop({ type: Boolean, default: true }) paging!: boolean
+  @Prop({ type: Boolean, default: true }) componentFooter!: boolean
+  @Prop({ type: Boolean, default: true }) componentHeader!: boolean
 
   @Prop(String) caption!: string
   @Prop({ type: String, default: 'Không có dữ liệu' }) noDataText!: string

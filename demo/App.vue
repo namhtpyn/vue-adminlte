@@ -1,9 +1,24 @@
 <template>
   <div>
-    <n-radio label="radio 1" value="1"></n-radio>
+    <div style="width:50%">
+      <n-drop-down-list>
+        <template #content>
+          <n-data-table :headers="tableHeaders" :items="tableItems">
+            <template v-slot:modal="{ modal }">
+              <input class="form-control" autofocus v-model="modal.data.name" />
+              <input class="form-control" v-model="modal.data.fat" />
+            </template>
+            <template v-slot:footer.fat="{ item }">{{ item.reduce((a, b) => a + (b.fat || 0), 0) }}</template>
+            <template v-slot:footer.calories="{ item }">{{ item.reduce((a, b) => a + (b.calories || 0), 0) }}</template>
+          </n-data-table>
+        </template>
+      </n-drop-down-list>
+    </div>
+    aaaaa
+    <!-- <n-radio label="radio 1" value="1"></n-radio>
     <n-checkbox form label="checkbox" v-model="checkbox"></n-checkbox>
     {{ checkbox }}
-    <n-btn app color="primary" text-color="white" @click="abc"> <n-icon color="yellow">play</n-icon>Play </n-btn>
+    <n-btn app color="primary" text-color="white" @click="abc"> <n-icon color="yellow">play</n-icon>Play </n-btn> -->
 
     <!-- <n-data-table caption="Title here" :headers="headers" :items="items" enable-search bordered>
       <template v-slot:item.action>aaaaa</template>
@@ -15,31 +30,13 @@
       </template>
     </n-data-table>-->
 
-    <n-pagination :length="10" v-model="page"></n-pagination>
+    <!-- <n-pagination :length="10" v-model="page"></n-pagination>
 
-    <n-data-table
-      :headers="tableHeaders"
-      :items="tableItems"
-      caption="Table"
-      searchable
-      creatable
-      updatable
-      deletable
-      @create="doAdd"
-      @update="doAdd"
-      @delete="doAdd"
-    >
-      <template v-slot:modal="{ modal }">
-        <input class="form-control" autofocus v-model="modal.data.name" />
-        <input class="form-control" v-model="modal.data.fat" />
-      </template>
-      <template v-slot:footer.fat="{ item }">{{ item.reduce((a, b) => a + (b.fat || 0), 0) }}</template>
-      <template v-slot:footer.calories="{ item }">{{ item.reduce((a, b) => a + (b.calories || 0), 0) }}</template>
-    </n-data-table>
+
 
     <n-select2 :items="selectItems" item-text="name" item-value="fat"></n-select2>
     <n-modal caption="OK" v-model="modalVisibility" hide-footer>tui thu ne haha</n-modal>
-    <n-btn @click="modalVisibility = !modalVisibility">Click</n-btn>
+    <n-btn @click="modalVisibility = !modalVisibility">Click</n-btn> -->
   </div>
 </template>
 
@@ -55,9 +52,10 @@ import NSelect2 from '../component/NSelect2.vue'
 import NModal from '../component/NModal.vue'
 import NCheckbox from '../component/NCheckbox.vue'
 import NRadio from '../component/NRadio.vue'
+import NDropDownList from '../component/NDropDownList.vue'
 
 @Component({
-  components: { NDataTable, NBtn, NIcon, NPagination, NSelect2, NModal, NCheckbox, NRadio }
+  components: { NDataTable, NBtn, NIcon, NPagination, NSelect2, NModal, NCheckbox, NRadio, NDropDownList }
 })
 export default class extends Vue {
   //checkbox
