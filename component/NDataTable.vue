@@ -19,14 +19,12 @@
     </div>
     <table :class="tableCssClass">
       <thead>
-        <tr v-for="idx in getDeep(headers)" :key="idx" :class="headerRowCssClass">
+        <tr :class="headerRowCssClass">
           <th
-            v-for="(header, index) in tableHeaderss.filter(h => h.level === idx)"
-            :key="index"
-            :rowspan="header.rowspan"
-            :colspan="header.colspan"
+            v-for="(header, colIndex) in tableHeaders"
+            :key="colIndex"
             :class="headerCellCssClass"
-            :style="{ width: header.width, 'text-align': header.headerAlign, 'vertical-align': header.vHeaderAlign }"
+            :style="(header.width ? 'width: ' + header.width + '; ' : '') + (header.align ? 'text-align: ' + header.align : '')"
           >
             <slot :name="`header.${header.value}`" :item="header">{{ header.text }}</slot>
           </th>
@@ -37,7 +35,7 @@
           <td
             :class="cellCssClass"
             :style="(header.width ? 'width: ' + header.width + '; ' : '') + (header.align ? 'text-align: ' + header.align : '')"
-            v-for="(header, colIndex) in tableHeaderss.filter(h => h.colspan === 1)"
+            v-for="(header, colIndex) in tableHeaders"
             :key="colIndex"
           >
             <slot v-if="header.value !== 'action'" :name="`item.${header.value}`" :item="item">{{ item[header.value] }}</slot>
@@ -230,7 +228,6 @@ export default class NDataTable extends Vue {
         width: '10%',
         align: 'center'
       })
-    this.getHeaderBand(headers, 1)
     return headers
   }
 
@@ -251,38 +248,6 @@ export default class NDataTable extends Vue {
     if (!Object.prototype.hasOwnProperty.call(css.data, 'attrs') || !css.data.attrs) return ''
     if (!Object.prototype.hasOwnProperty.call(css.data.attrs, tag)) return ''
     return css.data.attrs[tag]
-  }
-
-  tableHeaderss = []
-
-  getDeep(arr) {
-    let result = 1
-    arr.filter(a => (a.children || []).length > 0).forEach(v => (result += this.getDeep(v.children)))
-    return result
-  }
-  getChildEnd(arr) {
-    let result = arr.filter(a => (a.children || []).length === 0).length
-    arr.filter(a => (a.children || []).length > 0).forEach(v => (result += this.getChildEnd(v.children)))
-    return result
-  }
-  getHeaderBand(arr, level) {
-    arr.forEach(v => {
-      const item = cloneDeep(v)
-      if (!item.headerAlign) item.headerAlign = 'center'
-      if (!item.vHeaderAlign) item.vHeaderAlign = 'middle'
-      if ((v.children || []).length === 0) {
-        item.rowspan = this.getDeep(arr)
-        item.colspan = 1
-        item.level = level
-        this.tableHeaderss.push(item)
-      } else {
-        item.rowspan = 1
-        item.colspan = this.getChildEnd(v.children)
-        item.level = level
-        this.tableHeaderss.push(item)
-        this.getHeaderBand(v.children, level + 1)
-      }
-    })
   }
 }
 </script>
