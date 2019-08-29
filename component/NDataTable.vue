@@ -33,7 +33,7 @@
         </tr>
       </thead>
       <tbody v-if="hasItems">
-        <tr :class="rowCssClass" v-for="(item, rowIndex) in pageItems" :key="rowIndex">
+        <tr :class="rowCssClass" v-for="(item, rowIndex) in pageItems" :key="rowIndex" @click="rowClick(item)">
           <td
             :class="cellCssClass"
             :style="(header.width ? 'width: ' + header.width + '; ' : '') + (header.align ? 'text-align: ' + header.align : '')"
@@ -144,6 +144,7 @@ export default class NDataTable extends Vue {
     this.modal.isNew = false
     this.$emit('update-click', this.modal)
   }
+  @Emit() rowClick(e) {}
 
   @Emit('delete') remove(e) {}
   save() {

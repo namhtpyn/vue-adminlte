@@ -3,7 +3,7 @@
     <div style="width:50%">
       <n-drop-down-list>
         <template #content>
-          <n-data-table :headers="tableHeaders" :items="tableItems">
+          <n-data-table :headers="tableHeaders" :items="tableItems" :component-footer="false" :component-header="false">
             <template v-slot:modal="{ modal }">
               <input class="form-control" autofocus v-model="modal.data.name" />
               <input class="form-control" v-model="modal.data.fat" />
