@@ -40,7 +40,7 @@ export default class NDropDownTable extends Vue {
   get getText() {
     if (!this.tableItems || this.tableItems.length <= 0) return ''
     const item = this.tableItems.find(item => item[this.itemValue] === this.value)
-    if (!item || Object.hasOwnProperty.call(item, this.itemText)) return ''
+    if (!item || !Object.hasOwnProperty.call(item, this.itemText)) return ''
     return item[this.itemText].toString()
   }
   itemSelect(item, data) {
