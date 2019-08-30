@@ -56,6 +56,7 @@ export default class NDropDownList extends Vue {
   height: auto;
   position: absolute;
   width: 100%;
+  height: 300px;
   overflow-y: auto;
   padding: 0px 0px;
 }

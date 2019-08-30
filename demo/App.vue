@@ -1,12 +1,13 @@
 <template>
   <div>
+    <n-select2 :items="selectItems" item-text="name" item-value="fat" multiple :close-on-select="false"></n-select2>
     <div style="width:50%">
       <n-drop-down-table
         v-model="value"
         :table-headers="tableHeaders"
         :table-items="tableItems"
-        item-text="name"
-        item-value="fat"
+        item-text="SystemName"
+        item-value="DeviceID"
         searchable
       ></n-drop-down-table>
 
@@ -36,21 +37,20 @@
     {{ checkbox }}
     <n-btn app color="primary" text-color="white" @click="abc"> <n-icon color="yellow">play</n-icon>Play </n-btn> -->
 
-    <!-- <n-data-table caption="Title here" :headers="headers" :items="items" enable-search bordered>
-      <template v-slot:item.action>aaaaa</template>
-      <template v-slot:item.iron="{item}">
-        <span class="badge bg-red">{{item.iron}}</span>
+    <!-- <n-data-table caption="Title here" :headers="tableHeaders" :items="items" enable-search bordered selectable updatable>
+      <template v-slot:item.iron="{ item }">
+        <span class="badge bg-red">{{ item.iron }}</span>
       </template>
-      <template v-slot:item.protein="{item}">
-        <span class="badge bg-green">{{item.protein}}</span>
+      <template v-slot:item.protein="{ item }">
+        <span class="badge bg-green">{{ item.protein }}</span>
       </template>
-    </n-data-table>-->
+    </n-data-table> -->
 
     <!-- <n-pagination :length="10" v-model="page"></n-pagination>
 
 
 
-    <n-select2 :items="selectItems" item-text="name" item-value="fat"></n-select2>
+
     <n-modal caption="OK" v-model="modalVisibility" hide-footer>tui thu ne haha</n-modal>
     <n-btn @click="modalVisibility = !modalVisibility">Click</n-btn> -->
   </div>
@@ -64,6 +64,7 @@ import NIcon from '../component/NIcon.vue'
 import NPagination from '../component/NPagination.vue'
 import { TableHeader } from '../types/Table'
 import jsonData from './data.json'
+import data2 from './data2.json'
 import NSelect2 from '../component/NSelect2.vue'
 import NModal from '../component/NModal.vue'
 import NCheckbox from '../component/NCheckbox.vue'
@@ -84,17 +85,8 @@ export default class extends Vue {
   page = 1
 
   //Table
-  tableHeaders: TableHeader[] = [
-    {
-      text: 'Dessert (100g serving)',
-      value: 'name'
-    },
-    { text: 'Calories', value: 'calories' },
-    { text: 'Fat (g)', value: 'fat', sortable: true },
-    { text: 'Carbs (g)', value: 'carbs' },
-    { text: 'Protein (g)', value: 'protein' }
-  ]
-  tableItems: any[] = jsonData
+  tableHeaders: TableHeader[] = [{ text: 'IpAddress', value: 'DeviceID' }, { text: 'SystemName', value: 'SystemName' }]
+  tableItems: any[] = data2
   doAdd(modal) {
     console.log(modal)
     modal.visible = false
