@@ -1,15 +1,17 @@
 <template>
   <div>
-    <div style="width:10%">
+    <div style="width:50%">
       <n-drop-down-table
         v-model="value"
         :table-headers="tableHeaders"
         :table-items="tableItems"
         item-text="name"
         item-value="fat"
-        drop-down-width="300"
+        searchable
       ></n-drop-down-table>
-      <!-- <n-drop-down-list v-model="value">
+
+      <!-- drop-down-width="300"
+      <n-drop-down-list v-model="value">
         <template #content="{data}">
           <n-data-table
             :headers="tableHeaders"
