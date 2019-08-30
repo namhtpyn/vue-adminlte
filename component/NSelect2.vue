@@ -26,7 +26,7 @@ export default class NSelect2 extends Vue {
   @Prop({ type: Boolean, default: true }) form!: boolean
   @Prop({ type: Boolean, default: false }) horizontal!: boolean
   @Prop({ type: Boolean, default: false }) lazyValidation!: boolean
-  @Prop(Array) items!: any[]
+  @Prop({ type: Array, required: true }) items!: any[]
   @Prop(String) hint!: string
   @Prop(String) label!: string
   @Prop(Array) rules!: any[]
