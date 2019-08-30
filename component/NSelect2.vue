@@ -21,6 +21,7 @@ export default class NSelect2 extends Vue {
   @Prop({ type: Boolean, default: false }) disabled!: boolean
   @Prop({ type: Boolean, default: false }) multiple!: boolean
   @Prop({ type: Boolean, default: false }) searchable!: boolean
+  @Prop({ type: Boolean, default: true }) closeOnSelect!: boolean
   @Prop({ type: String, default: 'text' }) itemText!: string
   @Prop({ type: String, default: 'value' }) itemValue!: string
   @Prop({ type: Boolean, default: true }) form!: boolean
@@ -99,6 +100,7 @@ export default class NSelect2 extends Vue {
         disabled: this.disabled,
         multiple: this.multiple,
         placeholder: this.hint,
+        closeOnSelect: this.closeOnSelect,
         minimumResultsForSearch: this.searchable ? 0 : -1
       })
       .change(e => this.input(e.target.value))

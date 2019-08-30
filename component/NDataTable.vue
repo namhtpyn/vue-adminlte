@@ -38,8 +38,10 @@
             v-for="(header, colIndex) in tableHeaders"
             :key="colIndex"
           >
-            <slot v-if="header.value !== 'action'" :name="`item.${header.value}`" :item="item">{{ item[header.value] }}</slot>
-            <div :class="header.align ? 'text-${header.align}' : ''" v-else>
+            <div :class="header.align ? 'text-${header.align}' : ''" v-if="header.value === 'selection'">
+              <n-checkbox></n-checkbox>
+            </div>
+            <div :class="header.align ? 'text-${header.align}' : ''" v-else-if="header.value === 'action'">
               <n-btn v-if="updatable" @click="updateClick(item)">
                 <n-icon>pencil</n-icon>
               </n-btn>
@@ -47,6 +49,8 @@
                 <n-icon>trash</n-icon>
               </n-btn>
             </div>
+
+            <slot v-else :name="`item.${header.value}`" :item="item">{{ item[header.value] }}</slot>
           </td>
         </tr>
       </tbody>
@@ -103,13 +107,15 @@ import { Vue, Component, Prop, Emit } from 'vue-property-decorator'
 import { TableHeader } from '../types/Table'
 import isEmpty from 'lodash/isEmpty'
 import cloneDeep from 'lodash/cloneDeep'
+import upperFirst from 'lodash/upperFirst'
 import NPagination from './NPagination.vue'
 import NBtn from './NBtn.vue'
 import NIcon from './NIcon.vue'
 import NModal from './NModal.vue'
+import NCheckbox from './NCheckbox.vue'
 @Component({
   inheritAttrs: false,
-  components: { NPagination, NBtn, NIcon, NModal }
+  components: { NPagination, NBtn, NIcon, NModal, NCheckbox }
 })
 export default class NDataTable extends Vue {
   @Prop({ type: Boolean, default: true }) bordered!: boolean
@@ -118,9 +124,13 @@ export default class NDataTable extends Vue {
   @Prop({ type: Boolean, default: false }) striped!: boolean
 
   @Prop({ type: Boolean, default: false }) searchable!: boolean
+  @Prop({ type: Boolean, default: false }) selectable!: boolean
   @Prop({ type: Boolean, default: false }) creatable!: boolean
   @Prop({ type: Boolean, default: false }) updatable!: boolean
   @Prop({ type: Boolean, default: false }) deletable!: boolean
+
+  @Prop({ type: Boolean, default: false }) rowSelect!: boolean
+
   @Prop({ type: Boolean, default: false }) hideComponentFooter!: boolean
   @Prop({ type: Boolean, default: false }) hideComponentHeader!: boolean
   @Prop({ type: Boolean, default: false }) hideTableFooter!: boolean
@@ -144,7 +154,9 @@ export default class NDataTable extends Vue {
     this.modal.isNew = false
     this.$emit('update-click', this.modal)
   }
-  @Emit() rowClick(e) {}
+  @Emit() rowClick(e) {
+    //if(this.rowSelect)
+  }
 
   @Emit('delete') remove(e) {}
   save() {
@@ -222,7 +234,22 @@ export default class NDataTable extends Vue {
 
   /** headers */
   get tableHeaders() {
-    const headers: TableHeader[] = cloneDeep(this.headers)
+    let headers: TableHeader[] = []
+    if (this.headers) headers = cloneDeep(this.headers)
+    else if (this.items && this.items.length > 0) {
+      headers = Object.keys(this.items[0]).map(key => {
+        return { text: upperFirst(key), value: key }
+      })
+    }
+    //selection
+    if (this.selectable)
+      headers.unshift({
+        text: '',
+        value: 'selection',
+        width: '10%',
+        align: 'center'
+      })
+    //action
     if (this.updatable || this.deletable)
       headers.push({
         text: 'Tác vụ',
@@ -230,6 +257,7 @@ export default class NDataTable extends Vue {
         width: '10%',
         align: 'center'
       })
+
     return headers
   }
 
