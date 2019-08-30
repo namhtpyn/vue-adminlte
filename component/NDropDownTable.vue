@@ -5,7 +5,6 @@
         :headers="tableHeaders"
         :items="tableItems"
         :searchable="searchable"
-        hide-component-footer
         :hide-component-header="!searchable"
         hide-table-footer
         @row-click="item => itemSelect(item, data)"
