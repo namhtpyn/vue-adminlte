@@ -9,7 +9,7 @@ import { Component, Vue, Prop, Model, Emit } from 'vue-property-decorator'
 import isEmpty from 'lodash/isEmpty'
 @Component({ inheritAttrs: false })
 export default class NRadio extends Vue {
-  @Prop({ type: Boolean, default: false }) form!: boolean
+  @Prop({ type: Boolean, default: true }) form!: boolean
   @Prop() label!: string
   @Model('input', { type: [String, Number] }) value!: number | string
   @Emit() input(e) {}
