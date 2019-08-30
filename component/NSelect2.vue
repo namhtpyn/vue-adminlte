@@ -2,7 +2,9 @@
   <div :class="classComponent">
     <label v-if="hasLabel" :class="labelClass" :style="labelStyle">{{ label }}</label>
     <div :class="divClass" :style="divStyle">
-      <select :class="cCssClass" :value="value"></select>
+      <select :class="cCssClass" :value="value">
+        <!-- <option v-for="(item, idx) in select2Data" :key="idx" :value="item.id">{{ item.text }}</option> -->
+      </select>
     </div>
     <span v-if="!valid" class="help-block">{{ errorText }}</span>
   </div>
@@ -10,7 +12,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, Model } from 'vue-property-decorator'
+import { Component, Vue, Prop, Model, Watch } from 'vue-property-decorator'
 import isEmpty from 'lodash/isEmpty'
 @Component({ inheritAttrs: false })
 export default class NSelect2 extends Vue {
@@ -53,9 +55,10 @@ export default class NSelect2 extends Vue {
     return ''
   }
   get select2Data() {
-    return (this.items || []).map(item => {
+    const data = (this.items || []).map(item => {
       return { id: item[this.itemValue], text: item[this.itemText] }
     })
+    return data
   }
   get classComponent() {
     return { 'form-horizontal': this.horizontal, 'form-group': this.form, 'has-error': !this.valid }
@@ -76,12 +79,22 @@ export default class NSelect2 extends Vue {
   get divStyle() {
     return this.horizontal ? { width: `${this.widthComponent - 90}px` } : {}
   }
-
+  @Watch('select2Data')
+  onSelect2DataChange(n, o) {
+    this.init(n)
+  }
+  theSelect!: any
   mounted() {
-    this.widthComponent = $(this.$el).width()
-    ;($(this.$el).find('select') as any)
+    this.theSelect = $(this.$el).find('select') as any
+    this.init(this.select2Data)
+    this.valid = true
+  }
+
+  init(data) {
+    this.theSelect.empty()
+    this.theSelect
       .select2({
-        data: this.select2Data,
+        data: data,
         allowClear: this.clearable,
         disabled: this.disabled,
         multiple: this.multiple,
@@ -91,7 +104,6 @@ export default class NSelect2 extends Vue {
       .change(e => this.input(e.target.value))
       .val(this.value)
       .trigger('change')
-    this.valid = true
   }
 
   validate(value) {
@@ -99,6 +111,8 @@ export default class NSelect2 extends Vue {
     if (this.rules) this.valid = !this.rules.some(e => e(value) !== true)
     return this.valid
   }
+
+  resetvalue() {}
 }
 </script>
 
