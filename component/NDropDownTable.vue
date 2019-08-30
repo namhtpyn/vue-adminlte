@@ -1,11 +1,12 @@
 <template>
-  <n-drop-down-list :value="value" @input="input" :text.sync="getText" :drop-down-width="dropDownWidth">
+  <n-drop-down-list :value="value" @input="input" :text.sync="getText" :drop-down-width="dropDownWidth" @open="onOpen">
     <template #content="{data}">
       <n-data-table
         :headers="tableHeaders"
         :items="tableItems"
+        :searchable="searchable"
         hide-component-footer
-        hide-component-header
+        :hide-component-header="!searchable"
         hide-table-footer
         @row-click="item => itemSelect(item, data)"
       >
@@ -31,15 +32,20 @@ export default class NDropDownTable extends Vue {
   @Prop(Array) tableItems!: any[]
   @Prop({ type: String, default: 'text' }) itemText!: string
   @Prop({ type: String, default: 'value' }) itemValue!: string
+  @Prop({ type: Boolean, default: false }) searchable!: boolean
   @Prop([String, Number]) dropDownWidth!: string | number
   @Model('input', [String, Number]) value!: any
   @Emit() input(e) {}
+  //search=
   get getText() {
     return this.tableItems.find(item => item[this.itemValue] === this.value)[this.itemText]
   }
   itemSelect(item, data) {
     this.input(item[this.itemValue])
-    setTimeout(() => (data.isOpen = false), 100)
+    data.isOpen = false
+  }
+  onOpen() {
+    if (this.searchable) this.$nextTick(() => this.$children[0].$children[0].$el.querySelector('input').focus())
   }
 }
 </script>
