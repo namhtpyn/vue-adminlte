@@ -1,4 +1,4 @@
-b<template>
+<template>
   <div class="nav nav-tabs-custom">
     <ul class="nav nav-tabs">
       <li v-for="(i, k) in headers" :key="k" :class="{ active: k === tabActive - 1 }">

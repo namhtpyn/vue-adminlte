@@ -1,17 +1,49 @@
 <template>
   <div>
-    <n-select2 :items="selectItems" item-text="name" item-value="fat" multiple :close-on-select="false"></n-select2>
+    <n-drop-down-tree
+      v-model="unitID"
+      label="Đơn vị"
+      :tree-items="treeItems"
+      item-value="UnitID"
+      item-text="UnitName"
+      parent-key="ParentID"
+      searchable
+      :expand-to-level="1"
+    ></n-drop-down-tree>
+    <!-- <n-tree
+      :items="treeItems"
+      item-value="UnitID"
+      item-text="UnitName"
+      parent-key="ParentID"
+      @select="select_node"
+      :expand-to-level="expandToLevel"
+    ></n-tree> -->
+    {{ unitID }}
+    <!-- <n-select2
+      :items="selectItems"
+      item-text="name"
+      item-value="fat"
+      :rules="[v => v != 3.7 || 'fat']"
+      v-model="cake"
+      label="cake"
+    ></n-select2>
+    {{ cake }}
     <div style="width:50%">
-      <n-drop-down-table
-        v-model="value"
-        :table-headers="tableHeaders"
-        :table-items="tableItems"
-        item-text="SystemName"
-        item-value="DeviceID"
-        searchable
-      ></n-drop-down-table>
+      <n-form ref="form" lazy-validation>
+        <n-drop-down-table
+          v-model="value"
+          label="drop down list"
+          :table-headers="tableHeaders"
+          :table-items="tableItems"
+          item-text="SystemName"
+          item-value="DeviceID"
+          searchable
+          :rules="[v => v < 1 || 'Không lớn hơn 1']"
+        ></n-drop-down-table>
+      </n-form>
+      <n-btn @click="validate">Validate</n-btn> -->
 
-      <!-- drop-down-width="300"
+    <!-- drop-down-width="300"
       <n-drop-down-list v-model="value">
         <template #content="{data}">
           <n-data-table
@@ -30,7 +62,6 @@
           </n-data-table>
         </template>
       </n-drop-down-list> -->
-    </div>
     {{ value }}
     <!-- <n-radio label="radio 1" value="1"></n-radio>
     <n-checkbox form label="checkbox" v-model="checkbox"></n-checkbox>
@@ -65,18 +96,41 @@ import NPagination from '../component/NPagination.vue'
 import { TableHeader } from '../types/Table'
 import jsonData from './data.json'
 import data2 from './data2.json'
+import data3 from './data3.json'
 import NSelect2 from '../component/NSelect2.vue'
 import NModal from '../component/NModal.vue'
 import NCheckbox from '../component/NCheckbox.vue'
 import NRadio from '../component/NRadio.vue'
 import NDropDownList from '../component/NDropDownList.vue'
 import NDropDownTable from '../component/NDropDownTable.vue'
+import NForm from '../component/NForm.vue'
+import NTree from '../component/NTree.vue'
+import NDropDownTree from '../component/NDropDownTree.vue'
 
 @Component({
-  components: { NDataTable, NBtn, NIcon, NPagination, NSelect2, NModal, NCheckbox, NRadio, NDropDownList, NDropDownTable }
+  components: {
+    NDataTable,
+    NBtn,
+    NIcon,
+    NPagination,
+    NSelect2,
+    NModal,
+    NCheckbox,
+    NRadio,
+    NDropDownList,
+    NDropDownTable,
+    NForm,
+    NTree,
+    NDropDownTree
+  }
 })
 export default class extends Vue {
-  value: any = 26
+  expandToLevel = null
+  select_node(node) {
+    console.log(node)
+  }
+  cake: any = null
+  value: any = null
 
   //checkbox
   checkbox: boolean = true
@@ -99,7 +153,9 @@ export default class extends Vue {
   modalVisibility = false
 
   message = 'hello world'
-
+  validate() {
+    ;(this.$refs.form as any).validate()
+  }
   abc(a) {
     console.log(a)
   }
@@ -131,8 +187,11 @@ export default class extends Vue {
     { text: 'Action', value: 'action' }
   ]
   items: any[] = jsonData
-
-  mounted() {}
+  treeItems: any[] = []
+  unitID = 2
+  mounted() {
+    this.treeItems = data3
+  }
 }
 </script>
 

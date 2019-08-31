@@ -3,15 +3,17 @@
     <label v-if="hasLabel" class="control-label">{{ label }}</label>
     <n-drop-down-list :value="value" @input="input" :text.sync="getText" :drop-down-width="dropDownWidth" @open="onOpen">
       <template #content="{data}">
-        <n-data-table
-          :headers="tableHeaders"
-          :items="tableItems"
+        <n-tree
+          :items="treeItems"
+          :item-value="itemValue"
+          :item-text="itemText"
+          :parent-key="parentKey"
+          :expand-all="treeExpandAll"
+          :expand-to-level="treeExpandToLevel"
+          :icon="treeNodeIcon"
           :searchable="searchable"
-          :hide-component-header="!searchable"
-          hide-table-footer
-          @row-click="item => itemSelect(item, data)"
-        >
-        </n-data-table>
+          @select="item => itemSelect(item, data)"
+        ></n-tree>
       </template>
     </n-drop-down-list>
     <span v-if="!valid" class="help-block">{{ errorText }}</span>
@@ -21,22 +23,24 @@
 <script lang="ts">
 import { Vue, Component, Model, Emit, Prop } from 'vue-property-decorator'
 import isEmpty from 'lodash/isEmpty'
-//import { setTimeout } from 'timers'
-import { TableHeader } from '../types/Table'
 import NDropDownList from '../component/NDropDownList.vue'
-import NDataTable from '../component/NDataTable.vue'
+import NTree from '../component/NTree.vue'
 @Component({
   components: {
     NDropDownList,
-    NDataTable
+    NTree
   }
 })
-export default class NDropDownTable extends Vue {
-  @Prop(Array) tableHeaders!: TableHeader[]
-  @Prop(Array) tableItems!: any[]
-  @Prop({ type: String, default: 'text' }) itemText!: string
+export default class NDropDownTree extends Vue {
+  @Prop({ type: Array, required: true }) treeItems!: any[]
+  @Prop({ type: String, default: 'none' }) treeNodeIcon!: string
+  @Prop({ type: Boolean, default: false }) treeExpandAll!: boolean
+  @Prop({ type: Boolean, default: true }) searchable!: boolean
+  @Prop({ type: Number, default: 0 }) treeExpandToLevel!: number
   @Prop({ type: String, default: 'value' }) itemValue!: string
-  @Prop({ type: Boolean, default: false }) searchable!: boolean
+  @Prop({ type: String, default: 'text' }) itemText!: string
+  @Prop({ type: String, default: 'parentID' }) parentKey!: string
+
   @Prop([String, Number]) dropDownWidth!: string | number
   @Prop() label!: string
   @Prop({ type: Boolean, default: true }) form!: boolean
@@ -50,8 +54,8 @@ export default class NDropDownTable extends Vue {
   }
   //search=
   get getText() {
-    if (!this.tableItems || this.tableItems.length <= 0) return ''
-    const item = this.tableItems.find(item => item[this.itemValue] === this.value)
+    if (!this.treeItems || this.treeItems.length <= 0) return ''
+    const item = this.treeItems.find(item => item[this.itemValue] === this.value)
     if (!item || !Object.hasOwnProperty.call(item, this.itemText)) return ''
     return item[this.itemText].toString()
   }
@@ -68,8 +72,8 @@ export default class NDropDownTable extends Vue {
     return this.valid
   }
   itemSelect(item, data) {
-    if (Object.hasOwnProperty.call(item, this.itemValue)) this.input(item[this.itemValue])
-    if (!this.lazyValidation || !this.valid) this.validate(item[this.itemValue])
+    if (Object.hasOwnProperty.call(item, 'id')) this.input(item.id)
+    if (!this.lazyValidation || !this.valid) this.validate(item.id)
     data.isOpen = false
   }
   onOpen() {
