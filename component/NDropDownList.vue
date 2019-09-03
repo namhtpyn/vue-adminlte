@@ -1,13 +1,13 @@
 <template>
-  <div style="position:relative" @click="openDropDown" v-click-out="closeDropDown">
+  <div style="position:relative" v-click-out="closeDropDown">
     <input type="hidden" :value="value" />
     <div class="has-feedback">
-      <div class="form-control text-overflow">
+      <div @click="openDropDown" class="form-control text-overflow">
         {{ textSync }}
       </div>
       <span :class="`fa fa-caret-${data.isOpen ? 'up' : 'down'} form-control-feedback`"></span>
     </div>
-    <div v-if="data.isOpen" class="form-control auto-height" :style="dropDownWidth ? `width:${dropDownWidth}px` : ''">
+    <div v-show="data.isOpen" class="form-control auto-height" :style="dropDownWidth ? `width:${dropDownWidth}px` : ''">
       <slot name="content" :data="data"></slot>
     </div>
   </div>
@@ -59,5 +59,6 @@ export default class NDropDownList extends Vue {
   height: 300px;
   overflow-y: auto;
   padding: 0px 0px;
+  z-index: 9999;
 }
 </style>

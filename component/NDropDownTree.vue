@@ -35,7 +35,7 @@ export default class NDropDownTree extends Vue {
   @Prop({ type: Array, required: true }) treeItems!: any[]
   @Prop({ type: String, default: 'none' }) treeNodeIcon!: string
   @Prop({ type: Boolean, default: false }) treeExpandAll!: boolean
-  @Prop({ type: Boolean, default: true }) searchable!: boolean
+  @Prop({ type: Boolean, default: false }) searchable!: boolean
   @Prop({ type: Number, default: 0 }) treeExpandToLevel!: number
   @Prop({ type: String, default: 'value' }) itemValue!: string
   @Prop({ type: String, default: 'text' }) itemText!: string
@@ -77,7 +77,7 @@ export default class NDropDownTree extends Vue {
     data.isOpen = false
   }
   onOpen() {
-    if (this.searchable) this.$nextTick(() => this.$children[0].$children[0].$el.querySelector('input').focus())
+    //if (this.searchable) this.$nextTick(() => this.$children[0].$children[0].$el.querySelector('input').focus())
   }
 }
 </script>
