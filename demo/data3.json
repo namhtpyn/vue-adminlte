@@ -1,0 +1,8570 @@
+[
+  {
+    "UnitID": 2,
+    "ProvinceCode": "CQT",
+    "ParentID": 1,
+    "UnitCode": "CQT",
+    "UnitName": "Cơ quan Tập đoàn",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 495,
+    "ProvinceCode": "CQT",
+    "ParentID": 2,
+    "UnitCode": "ITVAS",
+    "UnitName": "Ban IT&VAS",
+    "Address": "T10, 57 Huỳnh Thúc Kháng, Hà Nội",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 496,
+    "ProvinceCode": "CQT",
+    "ParentID": 2,
+    "UnitCode": "CNM",
+    "UnitName": "Ban Công nghệ - Mạng",
+    "Address": "Tầng 9, 57 HTK, Hà Nội",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 679,
+    "ProvinceCode": "CQT",
+    "ParentID": 2,
+    "UnitCode": null,
+    "UnitName": "Ban Chất lượng",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 3,
+    "ProvinceCode": "NET",
+    "ParentID": 1,
+    "UnitCode": "NET",
+    "UnitName": "Tổng Công ty VNPT-Net",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 675,
+    "ProvinceCode": "NET",
+    "ParentID": 3,
+    "UnitCode": null,
+    "UnitName": "Ban Khai thác mạng",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 680,
+    "ProvinceCode": "NET",
+    "ParentID": 675,
+    "UnitCode": null,
+    "UnitName": "NET2",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 783,
+    "ProvinceCode": "NET",
+    "ParentID": 675,
+    "UnitCode": "DHNET",
+    "UnitName": "Trung tâm Điều hành",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1039,
+    "ProvinceCode": "KV1",
+    "ParentID": 783,
+    "UnitCode": "KV1",
+    "UnitName": "Miền Bắc (KV1)",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1040,
+    "ProvinceCode": "KV2",
+    "ParentID": 783,
+    "UnitCode": "KV2",
+    "UnitName": "Miền Nam (KV2)",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1041,
+    "ProvinceCode": "KV3",
+    "ParentID": 783,
+    "UnitCode": "KV3",
+    "UnitName": "Miền Trung (KV3)",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 829,
+    "ProvinceCode": "NET",
+    "ParentID": 675,
+    "UnitCode": null,
+    "UnitName": "Phòng QLCL Mạng & DV",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 677,
+    "ProvinceCode": "NET",
+    "ParentID": 3,
+    "UnitCode": null,
+    "UnitName": "Ban Nhân sự",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 678,
+    "ProvinceCode": "NET",
+    "ParentID": 3,
+    "UnitCode": null,
+    "UnitName": "Ban Phát triển mạng",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 4,
+    "ProvinceCode": "VNP",
+    "ParentID": 1,
+    "UnitCode": "VNP",
+    "UnitName": "Tổng Công ty VNPT-Vinaphone",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 849,
+    "ProvinceCode": "VNP",
+    "ParentID": 4,
+    "UnitCode": null,
+    "UnitName": "Ban Kỹ thuật Nghiệp vụ",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 860,
+    "ProvinceCode": "VNP",
+    "ParentID": 4,
+    "UnitCode": "VNP",
+    "UnitName": "Ban Khách hàng TC-DN",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 861,
+    "ProvinceCode": "VNP",
+    "ParentID": 4,
+    "UnitCode": "VNP",
+    "UnitName": "Ban Khách hàng Cá nhân",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 5,
+    "ProvinceCode": "BGG",
+    "ParentID": 1,
+    "UnitCode": "BGG",
+    "UnitName": "Viễn thông Bắc Giang",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 221,
+    "ProvinceCode": "BGG",
+    "ParentID": 5,
+    "UnitCode": "BGG.TPO",
+    "UnitName": "TTVT TP Bắc Giang",
+    "Address": "Phường Dĩnh Kế, Thành Phố Bắc Giang",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 222,
+    "ProvinceCode": "BGG",
+    "ParentID": 5,
+    "UnitCode": "BGG.LGG",
+    "UnitName": "TTVT Lạng Giang",
+    "Address": "Thị trấn Vôi, Huyện Lạng Giang",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 223,
+    "ProvinceCode": "BGG",
+    "ParentID": 5,
+    "UnitCode": "BGG.VYN",
+    "UnitName": "TTVT Việt Yên",
+    "Address": "Thị trấn Bích Động, Huyện Việt Yên",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 224,
+    "ProvinceCode": "BGG",
+    "ParentID": 5,
+    "UnitCode": "BGG.YDG",
+    "UnitName": "TTVT Yên Dũng",
+    "Address": "Thị trấn NEO, Huyện Yên Dũng",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 225,
+    "ProvinceCode": "BGG",
+    "ParentID": 5,
+    "UnitCode": "BGG.LNN",
+    "UnitName": "TTVT Lục Ngạn",
+    "Address": "Thị trấn Chũ, Huyện Lục Ngạn",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 226,
+    "ProvinceCode": "BGG",
+    "ParentID": 5,
+    "UnitCode": "BGG.LNM",
+    "UnitName": "TTVT Lục Nam",
+    "Address": "Thị trấn Đồi Ngô, Huyện Lục Nam",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 227,
+    "ProvinceCode": "BGG",
+    "ParentID": 5,
+    "UnitCode": "BGG.SDG",
+    "UnitName": "TTVT Sơn Động",
+    "Address": "Thị trấn An Châu, Huyện Sơn Động",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 228,
+    "ProvinceCode": "BGG",
+    "ParentID": 5,
+    "UnitCode": "BGG.HHA",
+    "UnitName": "TTVT Hiệp Hòa",
+    "Address": "Thị trấn Thắng, Huyện Hiệp Hòa",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 229,
+    "ProvinceCode": "BGG",
+    "ParentID": 5,
+    "UnitCode": "BGG.TYN",
+    "UnitName": "TTVT Tân Yên",
+    "Address": "Thị trấn Cao Thượng, Huyện Tân Yên",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 230,
+    "ProvinceCode": "BGG",
+    "ParentID": 5,
+    "UnitCode": "BGG.YTE",
+    "UnitName": "TTVT Yên Thế",
+    "Address": "Thị trấn Cầu Gồ, Huyện Yên Thế",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 6,
+    "ProvinceCode": "BKN",
+    "ParentID": 1,
+    "UnitCode": "BKN",
+    "UnitName": "Viễn thông Bắc Kạn",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 361,
+    "ProvinceCode": "BKN",
+    "ParentID": 6,
+    "UnitCode": "DHTT",
+    "UnitName": "TT Điều hành thông tin",
+    "Address": "Tổ 1B, P Phùng Chí Kiên, Tx Bắc Kạn",
+    "ContactPhone": "3870000"
+  },
+  {
+    "UnitID": 362,
+    "ProvinceCode": "BKN",
+    "ParentID": 6,
+    "UnitCode": "PTO",
+    "UnitName": "TTVT Bắc Kạn",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 363,
+    "ProvinceCode": "BKN",
+    "ParentID": 6,
+    "UnitCode": "BBE",
+    "UnitName": "TTVT Ba Bể",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 364,
+    "ProvinceCode": "BKN",
+    "ParentID": 6,
+    "UnitCode": "BTG",
+    "UnitName": "TTVT Bạch Thông",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 365,
+    "ProvinceCode": "BKN",
+    "ParentID": 6,
+    "UnitCode": "CMI",
+    "UnitName": "TTVT Chợ Mới",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 366,
+    "ProvinceCode": "BKN",
+    "ParentID": 6,
+    "UnitCode": "CDN",
+    "UnitName": "TTVT Chợ Đồn",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 367,
+    "ProvinceCode": "BKN",
+    "ParentID": 6,
+    "UnitCode": "NRI",
+    "UnitName": "TTVT Na Rì",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 368,
+    "ProvinceCode": "BKN",
+    "ParentID": 6,
+    "UnitCode": "NSN",
+    "UnitName": "TTVT Ngân Sơn",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 369,
+    "ProvinceCode": "BKN",
+    "ParentID": 6,
+    "UnitCode": "PNM",
+    "UnitName": "TTVT Pác Nặm",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 7,
+    "ProvinceCode": "BLU",
+    "ParentID": 1,
+    "UnitCode": "BLU",
+    "UnitName": "Viễn thông Bạc Liêu",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 917,
+    "ProvinceCode": "BLU",
+    "ParentID": 7,
+    "UnitCode": "TTVLBL1",
+    "UnitName": "Trung tâm Viễn thông Bạc Liêu 1",
+    "Address": "20 Trần Phú, P.3, Tp.Bạc Liêu",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1238,
+    "ProvinceCode": "BLU",
+    "ParentID": 917,
+    "UnitCode": "TT1_01",
+    "UnitName": "Phòng KT TT Bạc Liêu",
+    "Address": "TP Bạc Liêu.",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1239,
+    "ProvinceCode": "BLU",
+    "ParentID": 917,
+    "UnitCode": "TT1_02",
+    "UnitName": "Phòng KT Cái Dầy",
+    "Address": "Huyện Vĩnh Lợi",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1240,
+    "ProvinceCode": "BLU",
+    "ParentID": 917,
+    "UnitCode": "TT1_03",
+    "UnitName": "Phòng KT Hiệp Thành",
+    "Address": "TP Bạc Liêu",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 918,
+    "ProvinceCode": "BLU",
+    "ParentID": 7,
+    "UnitCode": "TTVLBL2",
+    "UnitName": "Trung tâm Viễn thông Bạc Liêu 2",
+    "Address": "Thị trấn Hòa Bình, Huyện Hòa Bình, Tỉnh Bạc Liêu",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 919,
+    "ProvinceCode": "BLU",
+    "ParentID": 7,
+    "UnitCode": "TTVLBL3",
+    "UnitName": "Trung tâm Viễn thông Bạc Liêu 3",
+    "Address": "Thị xã Giá Rai, Tỉnh Bạc Liêu",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 920,
+    "ProvinceCode": "BLU",
+    "ParentID": 7,
+    "UnitCode": "TTVLBL4",
+    "UnitName": "Trung tâm Viễn thông Bạc Liêu 4",
+    "Address": "Thị trấn Phước Long, Huyện Phước Long, Tỉnh Bạc Liêu",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 8,
+    "ProvinceCode": "BNH",
+    "ParentID": 1,
+    "UnitCode": "BNH",
+    "UnitName": "Viễn thông Bắc Ninh",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 9,
+    "ProvinceCode": "BTE",
+    "ParentID": 1,
+    "UnitCode": "BTE",
+    "UnitName": "Viễn thông Bến Tre",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 961,
+    "ProvinceCode": "BTE",
+    "ParentID": 9,
+    "UnitCode": "TPO",
+    "UnitName": "TTVT Thành phố Bến Tre",
+    "Address": "TP Bến Tre",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 962,
+    "ProvinceCode": "BTE",
+    "ParentID": 9,
+    "UnitCode": "CLB",
+    "UnitName": "TTVT Cù Lao Bảo",
+    "Address": "Huyện Giồng Trôm",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 963,
+    "ProvinceCode": "BTE",
+    "ParentID": 9,
+    "UnitCode": "CLM",
+    "UnitName": "TTVT Cù Lao Minh",
+    "Address": "Huyện Chợ Lách",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 964,
+    "ProvinceCode": "BTE",
+    "ParentID": 9,
+    "UnitCode": "CTH",
+    "UnitName": "TTVT Châu Thành - Bình Đại",
+    "Address": "Huyện Châu Thành",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 10,
+    "ProvinceCode": "BDH",
+    "ParentID": 1,
+    "UnitCode": "BDH",
+    "UnitName": "Viễn thông Bình Định",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 638,
+    "ProvinceCode": "BDH",
+    "ParentID": 10,
+    "UnitCode": "3",
+    "UnitName": "Trung Tâm VT 1",
+    "Address": "197 Phan Bội Châu - Qui Nhơn",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 639,
+    "ProvinceCode": "BDH",
+    "ParentID": 10,
+    "UnitCode": "4",
+    "UnitName": "Trung Tâm VT 2",
+    "Address": "36 Quang Trung - Bồng Sơn - Hoài Nhơn",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 640,
+    "ProvinceCode": "BDH",
+    "ParentID": 10,
+    "UnitCode": "5",
+    "UnitName": "Trung Tâm VT 3",
+    "Address": "96 Trần Phú - Bình Định - An Nhơn",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 641,
+    "ProvinceCode": "BDH",
+    "ParentID": 10,
+    "UnitCode": "6",
+    "UnitName": "Trung tâm OMC",
+    "Address": "33 Nguyễn Trãi - Qui Nhơn",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 11,
+    "ProvinceCode": "BDG",
+    "ParentID": 1,
+    "UnitCode": "BDG",
+    "UnitName": "Viễn thông Bình Dương",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 12,
+    "ProvinceCode": "BPC",
+    "ParentID": 1,
+    "UnitCode": "BPC",
+    "UnitName": "Viễn thông Bình Phước",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 497,
+    "ProvinceCode": "BPC",
+    "ParentID": 12,
+    "UnitCode": "DVKH",
+    "UnitName": "Trung Tâm Kinh doanh",
+    "Address": "1137 Phú Riềng Đỏ - P. Tân Bình - TX. Đồng Xoài - T. Bình Phước",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 498,
+    "ProvinceCode": "BPC",
+    "ParentID": 12,
+    "UnitCode": "KCT",
+    "UnitName": "Trung tâm Điều hành Thông tin",
+    "Address": "1137 Phú Riềng Đỏ - P. Tân Bình - TX. Đồng Xoài - T. Bình Phước",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 499,
+    "ProvinceCode": "BPC",
+    "ParentID": 12,
+    "UnitCode": "CNTT",
+    "UnitName": "Trung Tâm CNTT",
+    "Address": "Trung Tâm CNTT",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 506,
+    "ProvinceCode": "BPC",
+    "ParentID": 499,
+    "UnitCode": "CNTT_KD ",
+    "UnitName": "Tổ Kinh doanh -CNTT",
+    "Address": "Tổ Kinh doanh -CNTT ",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 500,
+    "ProvinceCode": "BPC",
+    "ParentID": 12,
+    "UnitCode": "TTDXI",
+    "UnitName": "Trung tâm VT Đồng Xoài",
+    "Address": "1137 Phú Riềng Đỏ - P. Tân Bình - TX. Đồng Xoài - T. Bình Phước",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 507,
+    "ProvinceCode": "BPC",
+    "ParentID": 500,
+    "UnitCode": "1003001",
+    "UnitName": "Tổ VT Tuyến Chơn Thành",
+    "Address": "Tổ VT Tuyến Chơn Thành                                         ",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 508,
+    "ProvinceCode": "BPC",
+    "ParentID": 500,
+    "UnitCode": "1004001",
+    "UnitName": "Tổ VT Tuyến Phú Giáo",
+    "Address": "Tổ VT Tuyến Phú Giáo                                           ",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 509,
+    "ProvinceCode": "BPC",
+    "ParentID": 500,
+    "UnitCode": "1008001",
+    "UnitName": "Tổ VT Tân Thành",
+    "Address": "Tổ VT Tân Thành                                                ",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 510,
+    "ProvinceCode": "BPC",
+    "ParentID": 500,
+    "UnitCode": "1007001",
+    "UnitName": "Tổ VT Tiến Hưng",
+    "Address": "Tổ VT Tiến Hưng                                                ",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 511,
+    "ProvinceCode": "BPC",
+    "ParentID": 500,
+    "UnitCode": "1044006",
+    "UnitName": "Tổ VT Tân Phú",
+    "Address": "Tổ VT Tân Phú                                                  ",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 512,
+    "ProvinceCode": "BPC",
+    "ParentID": 500,
+    "UnitCode": "1049006",
+    "UnitName": "Tổ VT Tuyến Bù Đăng",
+    "Address": "Tổ VT Đồng Tiến                                                ",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 513,
+    "ProvinceCode": "BPC",
+    "ParentID": 500,
+    "UnitCode": "1047006",
+    "UnitName": "Tổ VT Tuyến Phước Long",
+    "Address": "Tổ VT Tuyến Phước Long                                         ",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 501,
+    "ProvinceCode": "BPC",
+    "ParentID": 12,
+    "UnitCode": "TTBLG",
+    "UnitName": "Trung tâm VT Bình Long",
+    "Address": "Nguyễn Huệ - P.Hưng Chiến - TX.Bình Long- T.Bình Phước ",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 514,
+    "ProvinceCode": "BPC",
+    "ParentID": 501,
+    "UnitCode": "1011002",
+    "UnitName": "Tổ Viễn thông An Lộc",
+    "Address": "Tổ Viễn thông An Lộc                                           ",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 515,
+    "ProvinceCode": "BPC",
+    "ParentID": 501,
+    "UnitCode": "1013002",
+    "UnitName": "Tổ Viễn thông Tân Khai",
+    "Address": "Tổ Viễn thông Tân Khai                                         ",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 516,
+    "ProvinceCode": "BPC",
+    "ParentID": 501,
+    "UnitCode": "1014002",
+    "UnitName": "Tổ Viễn thông Thanh An",
+    "Address": "Tổ Viễn thông Thanh An                       ",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 502,
+    "ProvinceCode": "BPC",
+    "ParentID": 12,
+    "UnitCode": "TTLNH   ",
+    "UnitName": "Trung tâm VT Lộc Ninh",
+    "Address": "QL13- TT. Lộc Ninh - H.Lộc Ninh- T.Bình Phước                  ",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 517,
+    "ProvinceCode": "BPC",
+    "ParentID": 502,
+    "UnitCode": "1018003",
+    "UnitName": "Tổ VT TT Lộc Ninh",
+    "Address": "Tổ VT TT Lộc Ninh                            ",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 518,
+    "ProvinceCode": "BPC",
+    "ParentID": 502,
+    "UnitCode": "1020003",
+    "UnitName": "Tổ VT KV Lộc Điền - Lộc Hưng - Tà Thiết",
+    "Address": "Tổ VT KV Lộc Điền - Lộc Hưng - Tà Thiết      ",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 519,
+    "ProvinceCode": "BPC",
+    "ParentID": 502,
+    "UnitCode": "1022003",
+    "UnitName": "Tổ VT Bù Đốp",
+    "Address": "Tổ VT Thanh Hoà                                                ",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 520,
+    "ProvinceCode": "BPC",
+    "ParentID": 502,
+    "UnitCode": "10820031",
+    "UnitName": "Tổ VT KV Lộc Tấn - Lộc Hiệp",
+    "Address": "KV Lộc Tấn - Hoa Lư - Lộc Hòa & Lộc Hiệp - Tân Tiến            ",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 503,
+    "ProvinceCode": "BPC",
+    "ParentID": 12,
+    "UnitCode": "TTPLG   ",
+    "UnitName": "Trung tâm VT Phước Long",
+    "Address": "Đường Lê Văn A, Phường Long Thủy, Tx Phước Long, Bình Phước    ",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 521,
+    "ProvinceCode": "BPC",
+    "ParentID": 503,
+    "UnitCode": "1028004",
+    "UnitName": "Tổ Viễn thông Thác Mơ",
+    "Address": "Tổ Viễn thông Thác Mơ                        ",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 522,
+    "ProvinceCode": "BPC",
+    "ParentID": 503,
+    "UnitCode": "1029004",
+    "UnitName": "Tổ Viễn thông Phước Bình",
+    "Address": "Tổ Viễn thông Phước Bình                     ",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 523,
+    "ProvinceCode": "BPC",
+    "ParentID": 503,
+    "UnitCode": "1030004",
+    "UnitName": "Tổ Viễn thông Bù Nho - Long Bình",
+    "Address": "Tổ Viễn thông Bù Nho - Long Bình             ",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 524,
+    "ProvinceCode": "BPC",
+    "ParentID": 503,
+    "UnitCode": "1031004",
+    "UnitName": "Tổ Viễn thông Phú Riềng",
+    "Address": "Tổ Viễn thông Phú Riềng                      ",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 525,
+    "ProvinceCode": "BPC",
+    "ParentID": 503,
+    "UnitCode": "1033004",
+    "UnitName": "Tổ Viễn thông Phú Văn - Phú Nghĩa",
+    "Address": "Tổ Viễn thông Phú Văn - Phú Nghĩa            ",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 526,
+    "ProvinceCode": "BPC",
+    "ParentID": 503,
+    "UnitCode": "1035004",
+    "UnitName": "Tổ Viễn thông Đắk ơ",
+    "Address": "Tổ Viễn thông Đắk ơ                          ",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 527,
+    "ProvinceCode": "BPC",
+    "ParentID": 503,
+    "UnitCode": "1034004",
+    "UnitName": "Tổ Viễn thông ĐaKia - Bình Thắng",
+    "Address": "Tổ Viễn thông ĐaKia - Bình Thắng             ",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 528,
+    "ProvinceCode": "BPC",
+    "ParentID": 503,
+    "UnitCode": "1032004",
+    "UnitName": "Tổ Viễn thông Long Bình",
+    "Address": "Tổ Viễn thông Long Bình                      ",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 504,
+    "ProvinceCode": "BPC",
+    "ParentID": 12,
+    "UnitCode": "TTBDG   ",
+    "UnitName": "Trung tâm VT Bù Đăng",
+    "Address": "QL14- TT. Đức Phong - H.Bù Đăng - T.Bình Phước                 ",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 529,
+    "ProvinceCode": "BPC",
+    "ParentID": 504,
+    "UnitCode": "1037005",
+    "UnitName": "Tổ Viễn thông Đức Phong - Thọ sơn",
+    "Address": "Tổ Viễn thông Đức Phong - Thọ sơn            ",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 530,
+    "ProvinceCode": "BPC",
+    "ParentID": 504,
+    "UnitCode": "1040005",
+    "UnitName": "Tổ Viễn thông Minh Hưng- Đức Liễu",
+    "Address": "Tổ Viễn thông Minh Hưng- Bom Bo (BĐG)                          ",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 531,
+    "ProvinceCode": "BPC",
+    "ParentID": 504,
+    "UnitCode": "1041005",
+    "UnitName": "Tổ Viễn thông Đức Liễu - Thống Nhất",
+    "Address": "Tổ Viễn thông Đức Liễu - Thống Nhất          ",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 505,
+    "ProvinceCode": "BPC",
+    "ParentID": 12,
+    "UnitCode": "TTCTH   ",
+    "UnitName": "Trung tâm VT Chơn Thành",
+    "Address": "QL13- TT. Chơn Thành - H.Chơn Thành - T.Bình Phước             ",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 532,
+    "ProvinceCode": "BPC",
+    "ParentID": 505,
+    "UnitCode": "1052007",
+    "UnitName": "Tổ VT Chơn Thành",
+    "Address": "Tổ VT KCN Chơn Thành                                           ",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 533,
+    "ProvinceCode": "BPC",
+    "ParentID": 505,
+    "UnitCode": "1051007",
+    "UnitName": "Tổ VT Chơn Thành 2",
+    "Address": "Tổ VT Chơn Thành 2 (KHC)                                       ",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 534,
+    "ProvinceCode": "BPC",
+    "ParentID": 505,
+    "UnitCode": "1053007",
+    "UnitName": "Tổ VT Minh Hưng",
+    "Address": "Tổ VT Minh Hưng                              ",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 535,
+    "ProvinceCode": "BPC",
+    "ParentID": 505,
+    "UnitCode": "1054007",
+    "UnitName": "Tổ VT Nha Bích",
+    "Address": "Tổ VT Nha Bích                               ",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 13,
+    "ProvinceCode": "BTN",
+    "ParentID": 1,
+    "UnitCode": "BTN",
+    "UnitName": "Viễn thông Bình Thuận",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1072,
+    "ProvinceCode": "BTN",
+    "ParentID": 13,
+    "UnitCode": "BTN.DHTT",
+    "UnitName": "Trung Tâm ĐHTT",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1082,
+    "ProvinceCode": "BTN",
+    "ParentID": 1072,
+    "UnitCode": "BTN.OMC",
+    "UnitName": "Tổ OMC",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1073,
+    "ProvinceCode": "BTN",
+    "ParentID": 13,
+    "UnitCode": "BTN.PTT",
+    "UnitName": "Trung Tâm VT Phan Thiết",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1102,
+    "ProvinceCode": "BTN",
+    "ParentID": 1073,
+    "UnitCode": "PTT.HAT",
+    "UnitName": "Tổ Hàm Tiến",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1112,
+    "ProvinceCode": "BTN",
+    "ParentID": 1102,
+    "UnitCode": "HAT.DB1",
+    "UnitName": "DB1",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1113,
+    "ProvinceCode": "BTN",
+    "ParentID": 1102,
+    "UnitCode": "HAT.DB2",
+    "UnitName": "DB2",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1104,
+    "ProvinceCode": "BTN",
+    "ParentID": 1073,
+    "UnitCode": "PTT.PTT",
+    "UnitName": "Tổ Kỹ Thuật",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1119,
+    "ProvinceCode": "BTN",
+    "ParentID": 1104,
+    "UnitCode": "PTT.DB1",
+    "UnitName": "DB1",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1105,
+    "ProvinceCode": "BTN",
+    "ParentID": 1073,
+    "UnitCode": "PTT.MNE",
+    "UnitName": "Tổ Mũi Né",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1120,
+    "ProvinceCode": "BTN",
+    "ParentID": 1105,
+    "UnitCode": "MNE.DB1",
+    "UnitName": "DB1",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1121,
+    "ProvinceCode": "BTN",
+    "ParentID": 1105,
+    "UnitCode": "MNE.DB2",
+    "UnitName": "DB2",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1107,
+    "ProvinceCode": "BTN",
+    "ParentID": 1073,
+    "UnitCode": "PTT.PTT",
+    "UnitName": "Tổ Trung Tâm",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1114,
+    "ProvinceCode": "BTN",
+    "ParentID": 1107,
+    "UnitCode": "PTT.DB1",
+    "UnitName": "DB1",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1115,
+    "ProvinceCode": "BTN",
+    "ParentID": 1107,
+    "UnitCode": "PTT.DB2",
+    "UnitName": "DB2",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1116,
+    "ProvinceCode": "BTN",
+    "ParentID": 1107,
+    "UnitCode": "PTT.DB3",
+    "UnitName": "DB3",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1117,
+    "ProvinceCode": "BTN",
+    "ParentID": 1107,
+    "UnitCode": "BTN.DB4",
+    "UnitName": "DB4",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1118,
+    "ProvinceCode": "BTN",
+    "ParentID": 1107,
+    "UnitCode": "PTT.DB5",
+    "UnitName": "DB5",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1108,
+    "ProvinceCode": "BTN",
+    "ParentID": 1073,
+    "UnitCode": "PTT.PT1",
+    "UnitName": "Tổ VT1",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1122,
+    "ProvinceCode": "BTN",
+    "ParentID": 1108,
+    "UnitCode": "PT1.DB1",
+    "UnitName": "DB1",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1123,
+    "ProvinceCode": "BTN",
+    "ParentID": 1108,
+    "UnitCode": "PT1.DB2",
+    "UnitName": "DB2",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1124,
+    "ProvinceCode": "BTN",
+    "ParentID": 1108,
+    "UnitCode": "PT1.DB3",
+    "UnitName": "DB3",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1125,
+    "ProvinceCode": "BTN",
+    "ParentID": 1108,
+    "UnitCode": "PT1.DB4",
+    "UnitName": "DB4",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1109,
+    "ProvinceCode": "BTN",
+    "ParentID": 1073,
+    "UnitCode": "PTT.PT2",
+    "UnitName": "Tổ VT2",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1126,
+    "ProvinceCode": "BTN",
+    "ParentID": 1109,
+    "UnitCode": "PT2.DB1",
+    "UnitName": "DB1",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1127,
+    "ProvinceCode": "BTN",
+    "ParentID": 1109,
+    "UnitCode": "PT1.DB2",
+    "UnitName": "DB2",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1111,
+    "ProvinceCode": "BTN",
+    "ParentID": 1073,
+    "UnitCode": "PTT.PT3",
+    "UnitName": "Tổ VT3",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1128,
+    "ProvinceCode": "BTN",
+    "ParentID": 1111,
+    "UnitCode": "PT3.DB1",
+    "UnitName": "DB1",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1129,
+    "ProvinceCode": "BTN",
+    "ParentID": 1111,
+    "UnitCode": "PT3.DB2",
+    "UnitName": "DB2",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1130,
+    "ProvinceCode": "BTN",
+    "ParentID": 1111,
+    "UnitCode": "PT3.DB3",
+    "UnitName": "DB3",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1074,
+    "ProvinceCode": "BTN",
+    "ParentID": 13,
+    "UnitCode": "BTN.HTN",
+    "UnitName": "Trung Tâm VT Hàm Thuận Nam",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1083,
+    "ProvinceCode": "BTN",
+    "ParentID": 1074,
+    "UnitCode": "HTN.HMY",
+    "UnitName": "Tổ Kỹ Thuât Hàm Mỹ",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1085,
+    "ProvinceCode": "BTN",
+    "ParentID": 1083,
+    "UnitCode": "HMY.DB1",
+    "UnitName": "DB1",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1086,
+    "ProvinceCode": "BTN",
+    "ParentID": 1083,
+    "UnitCode": "HMY.DB2",
+    "UnitName": "DB2",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1087,
+    "ProvinceCode": "BTN",
+    "ParentID": 1083,
+    "UnitCode": "HMY.DB3",
+    "UnitName": "DB3",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1084,
+    "ProvinceCode": "BTN",
+    "ParentID": 1074,
+    "UnitCode": "HTN.HTN",
+    "UnitName": "Tổ Kỹ Thuật Trung Tâm",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1100,
+    "ProvinceCode": "BTN",
+    "ParentID": 1084,
+    "UnitCode": "HTN.DB1",
+    "UnitName": "DB1",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1101,
+    "ProvinceCode": "BTN",
+    "ParentID": 1084,
+    "UnitCode": "HTN.DB2",
+    "UnitName": "DB2",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1075,
+    "ProvinceCode": "BTN",
+    "ParentID": 13,
+    "UnitCode": "BTN.HTB",
+    "UnitName": "Trung Tâm VT Hàm Thuận Bắc",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1133,
+    "ProvinceCode": "BTN",
+    "ParentID": 1075,
+    "UnitCode": "HTB.HTB",
+    "UnitName": "Tổ Kỹ Thuật Ma Lâm",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1137,
+    "ProvinceCode": "BTN",
+    "ParentID": 1133,
+    "UnitCode": "HTB.DB1",
+    "UnitName": "DB1",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1138,
+    "ProvinceCode": "BTN",
+    "ParentID": 1133,
+    "UnitCode": "HTB.DB2",
+    "UnitName": "DB2",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1139,
+    "ProvinceCode": "BTN",
+    "ParentID": 1133,
+    "UnitCode": "HTB.DB3",
+    "UnitName": "DB3",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1140,
+    "ProvinceCode": "BTN",
+    "ParentID": 1133,
+    "UnitCode": "HTB.DB4",
+    "UnitName": "DB4",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1141,
+    "ProvinceCode": "BTN",
+    "ParentID": 1133,
+    "UnitCode": "HTB.DB5",
+    "UnitName": "DB5",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1135,
+    "ProvinceCode": "BTN",
+    "ParentID": 1075,
+    "UnitCode": "HTB.HNN",
+    "UnitName": "Tổ Kỹ Thuật Phú Long",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1142,
+    "ProvinceCode": "BTN",
+    "ParentID": 1135,
+    "UnitCode": "HNN.DB1",
+    "UnitName": "DB1",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1143,
+    "ProvinceCode": "BTN",
+    "ParentID": 1135,
+    "UnitCode": "HNN.DB2",
+    "UnitName": "DB2",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1144,
+    "ProvinceCode": "BTN",
+    "ParentID": 1135,
+    "UnitCode": "HNN.DB3",
+    "UnitName": "DB3",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1145,
+    "ProvinceCode": "BTN",
+    "ParentID": 1135,
+    "UnitCode": "HTB.DB4",
+    "UnitName": "DB4",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1146,
+    "ProvinceCode": "BTN",
+    "ParentID": 1135,
+    "UnitCode": "HTB.DB5",
+    "UnitName": "DB5",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1076,
+    "ProvinceCode": "BTN",
+    "ParentID": 13,
+    "UnitCode": "BTN.LGI",
+    "UnitName": "Trung Tâm VT Lagi-Hàm Tân",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1147,
+    "ProvinceCode": "BTN",
+    "ParentID": 1076,
+    "UnitCode": "LGI.HTA",
+    "UnitName": "Tồ Kỹ Thuật Hàm Tân",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1151,
+    "ProvinceCode": "BTN",
+    "ParentID": 1147,
+    "UnitCode": "HTA.DB1",
+    "UnitName": "DB1",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1152,
+    "ProvinceCode": "BTN",
+    "ParentID": 1147,
+    "UnitCode": "HTA.DB2",
+    "UnitName": "DB2",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1155,
+    "ProvinceCode": "BTN",
+    "ParentID": 1147,
+    "UnitCode": "HTA.DB3",
+    "UnitName": "DB3",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1148,
+    "ProvinceCode": "BTN",
+    "ParentID": 1076,
+    "UnitCode": "LGI.LGI",
+    "UnitName": "Tổ Kỹ Thuật La Gi",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1156,
+    "ProvinceCode": "BTN",
+    "ParentID": 1148,
+    "UnitCode": "LGI.DB1",
+    "UnitName": "DB1",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1157,
+    "ProvinceCode": "BTN",
+    "ParentID": 1148,
+    "UnitCode": "LGI.DB2",
+    "UnitName": "DB2",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1158,
+    "ProvinceCode": "BTN",
+    "ParentID": 1148,
+    "UnitCode": "LGI.DB3",
+    "UnitName": "DB3",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1149,
+    "ProvinceCode": "BTN",
+    "ParentID": 1076,
+    "UnitCode": "LGI.TAN",
+    "UnitName": "Tổ Kỹ Thuật Tân An",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1159,
+    "ProvinceCode": "BTN",
+    "ParentID": 1149,
+    "UnitCode": "TAN.DB1",
+    "UnitName": "DB1",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1160,
+    "ProvinceCode": "BTN",
+    "ParentID": 1149,
+    "UnitCode": "HTA.DB2",
+    "UnitName": "DB2",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1161,
+    "ProvinceCode": "BTN",
+    "ParentID": 1149,
+    "UnitCode": "TAN.DB3",
+    "UnitName": "DB3",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1077,
+    "ProvinceCode": "BTN",
+    "ParentID": 13,
+    "UnitCode": "BTN.TLH",
+    "UnitName": "Trung Tâm VT Tánh Linh",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1162,
+    "ProvinceCode": "BTN",
+    "ParentID": 1077,
+    "UnitCode": "TLH.TLH",
+    "UnitName": "Tổ Kỹ Thuật Lạc Tánh",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1164,
+    "ProvinceCode": "BTN",
+    "ParentID": 1162,
+    "UnitCode": "TLH.DB1",
+    "UnitName": "DB1",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1163,
+    "ProvinceCode": "BTN",
+    "ParentID": 1077,
+    "UnitCode": "TLH.MTO",
+    "UnitName": "Tổ Kỹ Thuật Măng Tố",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1165,
+    "ProvinceCode": "BTN",
+    "ParentID": 1163,
+    "UnitCode": "MTO.DB1",
+    "UnitName": "DB1",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1078,
+    "ProvinceCode": "BTN",
+    "ParentID": 13,
+    "UnitCode": "BTN.DLH",
+    "UnitName": "Trung Tâm VT Đức Linh",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1166,
+    "ProvinceCode": "BTN",
+    "ParentID": 1078,
+    "UnitCode": "DLH.DLH",
+    "UnitName": "Tổ Kỹ Thuật Võ Xu - Sùng Nhơn",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1168,
+    "ProvinceCode": "BTN",
+    "ParentID": 1166,
+    "UnitCode": "DLH.DB1",
+    "UnitName": "DB1",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1169,
+    "ProvinceCode": "BTN",
+    "ParentID": 1166,
+    "UnitCode": "DLH.DB2",
+    "UnitName": "DB2",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1167,
+    "ProvinceCode": "BTN",
+    "ParentID": 1078,
+    "UnitCode": "DLH.DTI",
+    "UnitName": "Tổ Kỹ Thuật Đức Tài - Trà Tân",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1170,
+    "ProvinceCode": "BTN",
+    "ParentID": 1167,
+    "UnitCode": "DTI.DB1",
+    "UnitName": "DB1",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1171,
+    "ProvinceCode": "BTN",
+    "ParentID": 1167,
+    "UnitCode": "DTI.DB2",
+    "UnitName": "DB2",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1079,
+    "ProvinceCode": "BTN",
+    "ParentID": 13,
+    "UnitCode": "BTN.TPG",
+    "UnitName": "Trung Tâm VT Tuy Phong",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1172,
+    "ProvinceCode": "BTN",
+    "ParentID": 1079,
+    "UnitCode": "TPG.LHG",
+    "UnitName": "Tổ Kỹ Thuật Liên Hương",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1175,
+    "ProvinceCode": "BTN",
+    "ParentID": 1172,
+    "UnitCode": "LHG.DB1",
+    "UnitName": "DB1",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1176,
+    "ProvinceCode": "BTN",
+    "ParentID": 1172,
+    "UnitCode": "LHG.DB2",
+    "UnitName": "DB2",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1177,
+    "ProvinceCode": "BTN",
+    "ParentID": 1172,
+    "UnitCode": "LHG.DB3",
+    "UnitName": "DB3",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1173,
+    "ProvinceCode": "BTN",
+    "ParentID": 1079,
+    "UnitCode": "TPG.PRC",
+    "UnitName": "Tổ Kỹ Thuật Phan Rí Cửa",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1178,
+    "ProvinceCode": "BTN",
+    "ParentID": 1173,
+    "UnitCode": "PRC.DB1",
+    "UnitName": "DB1",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1179,
+    "ProvinceCode": "BTN",
+    "ParentID": 1173,
+    "UnitCode": "PRC.DB2",
+    "UnitName": "DB2",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1180,
+    "ProvinceCode": "BTN",
+    "ParentID": 1173,
+    "UnitCode": "PRC.DB3",
+    "UnitName": "DB3",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1174,
+    "ProvinceCode": "BTN",
+    "ParentID": 1079,
+    "UnitCode": "TPG.VHO",
+    "UnitName": "Tổ Kỹ Thuật Vĩnh Hảo",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1181,
+    "ProvinceCode": "BTN",
+    "ParentID": 1174,
+    "UnitCode": "VHO.DB1",
+    "UnitName": "DB1",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1182,
+    "ProvinceCode": "BTN",
+    "ParentID": 1174,
+    "UnitCode": "VHO.DB2",
+    "UnitName": "DB2",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1183,
+    "ProvinceCode": "BTN",
+    "ParentID": 1174,
+    "UnitCode": "VHO.DB3",
+    "UnitName": "DB3",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1080,
+    "ProvinceCode": "BTN",
+    "ParentID": 13,
+    "UnitCode": "BTN.PQY",
+    "UnitName": "Trung Tâm VT Phú Quý",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1184,
+    "ProvinceCode": "BTN",
+    "ParentID": 1080,
+    "UnitCode": "PQY.PQY",
+    "UnitName": "Tổ Kỹ Thuật",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1185,
+    "ProvinceCode": "BTN",
+    "ParentID": 1184,
+    "UnitCode": "PQY.DB1",
+    "UnitName": "DB1",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1081,
+    "ProvinceCode": "BTN",
+    "ParentID": 13,
+    "UnitCode": "BTN.KTDT",
+    "UnitName": "Phòng Kỹ Thuật-Đầu Tư",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1221,
+    "ProvinceCode": "BTN",
+    "ParentID": 13,
+    "UnitCode": "BTN.BBH",
+    "UnitName": "Trung Tâm VT Bắc Bình",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1222,
+    "ProvinceCode": "BTN",
+    "ParentID": 1221,
+    "UnitCode": "BBH.BBH",
+    "UnitName": "Tổ Kỹ Thuật Chợ Lầu",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1224,
+    "ProvinceCode": "BTN",
+    "ParentID": 1222,
+    "UnitCode": "BBH.DB1",
+    "UnitName": "DB1",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1225,
+    "ProvinceCode": "BTN",
+    "ParentID": 1222,
+    "UnitCode": "BBH.DB2",
+    "UnitName": "DB2",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1226,
+    "ProvinceCode": "BTN",
+    "ParentID": 1222,
+    "UnitCode": "BBH.DB3",
+    "UnitName": "DB3",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1227,
+    "ProvinceCode": "BTN",
+    "ParentID": 1222,
+    "UnitCode": "BBH.DB4",
+    "UnitName": "DB4",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1223,
+    "ProvinceCode": "BTN",
+    "ParentID": 1221,
+    "UnitCode": "BBH.LSN",
+    "UnitName": "Tổ Kỹ Thuật Lương Sơn",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1228,
+    "ProvinceCode": "BTN",
+    "ParentID": 1223,
+    "UnitCode": "LSN.DB1",
+    "UnitName": "DB1",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1229,
+    "ProvinceCode": "BTN",
+    "ParentID": 1223,
+    "UnitCode": "LSN.DB2",
+    "UnitName": "DB2",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1230,
+    "ProvinceCode": "BTN",
+    "ParentID": 1223,
+    "UnitCode": "LSN.DB3",
+    "UnitName": "DB3",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 14,
+    "ProvinceCode": "CMU",
+    "ParentID": 1,
+    "UnitCode": "CMU",
+    "UnitName": "Viễn thông Cà Mau",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 15,
+    "ProvinceCode": "CTO",
+    "ParentID": 1,
+    "UnitCode": "CTO",
+    "UnitName": "Viễn thông Cần Thơ",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 16,
+    "ProvinceCode": "CBG",
+    "ParentID": 1,
+    "UnitCode": "CBG",
+    "UnitName": "Viễn thông Cao Bằng",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 266,
+    "ProvinceCode": "CBG",
+    "ParentID": 16,
+    "UnitCode": "TPO",
+    "UnitName": "TTVT Thành phố CB",
+    "Address": "58 Đường Hoàng Đình Giong TP Cao Bằng",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 816,
+    "ProvinceCode": "CBG",
+    "ParentID": 266,
+    "UnitCode": "KTTP",
+    "UnitName": "Tổ Kỹ Thuật",
+    "Address": "TP Cao Bằng",
+    "ContactPhone": "3852001"
+  },
+  {
+    "UnitID": 817,
+    "ProvinceCode": "CBG",
+    "ParentID": 266,
+    "UnitCode": "Km5TP",
+    "UnitName": "Tổ KT Km5",
+    "Address": "Phương Đề Thám TPCB",
+    "ContactPhone": "3852000"
+  },
+  {
+    "UnitID": 267,
+    "ProvinceCode": "CBG",
+    "ParentID": 16,
+    "UnitCode": "HAN",
+    "UnitName": "TTVT Hòa An",
+    "Address": "Thị trấn Nước Hai, Hòa An",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 268,
+    "ProvinceCode": "CBG",
+    "ParentID": 16,
+    "UnitCode": "HQG",
+    "UnitName": "TTVT Hà Quảng",
+    "Address": "Thị trấn Xuân Hòa, Hà Quảng",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 269,
+    "ProvinceCode": "CBG",
+    "ParentID": 16,
+    "UnitCode": "TNG",
+    "UnitName": "TTVT Thông Nông",
+    "Address": "Thị trấn Thông Nông, Thông Nông",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 270,
+    "ProvinceCode": "CBG",
+    "ParentID": 16,
+    "UnitCode": "QUN",
+    "UnitName": "TTVT Quảng Uyên",
+    "Address": "Thị trấn Quảng Uyên, Quảng Uyên",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 271,
+    "ProvinceCode": "CBG",
+    "ParentID": 16,
+    "UnitCode": "TKH\t",
+    "UnitName": "TTVT Trùng Khánh",
+    "Address": "Thị trấn Trùng Khánh, Trùng Khánh",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 272,
+    "ProvinceCode": "CBG",
+    "ParentID": 16,
+    "UnitCode": "TLH",
+    "UnitName": "TTVT Trà Lĩnh",
+    "Address": "Thị trấn Hùng Quôc, Trà Lĩnh",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 273,
+    "ProvinceCode": "CBG",
+    "ParentID": 16,
+    "UnitCode": "HLG",
+    "UnitName": "TTVT Hạ Lang",
+    "Address": "Thị trấn Thanh Nhật, Hạ Lang",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 274,
+    "ProvinceCode": "CBG",
+    "ParentID": 16,
+    "UnitCode": "NBH",
+    "UnitName": "TTVT Nguyên Bình",
+    "Address": "Thị trấn Nguyên Bình, Nguyên Bình",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 275,
+    "ProvinceCode": "CBG",
+    "ParentID": 16,
+    "UnitCode": "BLC",
+    "UnitName": "TTVT Bảo Lạc",
+    "Address": "Thị trấn Bảo Lạc, Bảo Lạc",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 276,
+    "ProvinceCode": "CBG",
+    "ParentID": 16,
+    "UnitCode": "TAN",
+    "UnitName": "TTVT Thạch An",
+    "Address": "Thị trấn Đông Khê, Thạch An",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 277,
+    "ProvinceCode": "CBG",
+    "ParentID": 16,
+    "UnitCode": "PHA",
+    "UnitName": "TTVT Phục Hòa",
+    "Address": "Thị trấn Hòa Thuận, Phục Hòa",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 278,
+    "ProvinceCode": "CBG",
+    "ParentID": 16,
+    "UnitCode": "BLM",
+    "UnitName": "TTVT Bảo Lâm",
+    "Address": "Thị trấn Pác Miều, Bảo Lâm",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 17,
+    "ProvinceCode": "DNG",
+    "ParentID": 1,
+    "UnitCode": "DNG",
+    "UnitName": "Viễn thông Đà Nẵng",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 18,
+    "ProvinceCode": "DLC",
+    "ParentID": 1,
+    "UnitCode": "DLC",
+    "UnitName": "Viễn thông Đắk Lắk",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 996,
+    "ProvinceCode": "DLC",
+    "ParentID": 18,
+    "UnitCode": null,
+    "UnitName": "Phòng Kỹ thuật",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 997,
+    "ProvinceCode": "DLC",
+    "ParentID": 18,
+    "UnitCode": null,
+    "UnitName": "Trung tâm Điều hành Thông tin",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 998,
+    "ProvinceCode": "DLC",
+    "ParentID": 18,
+    "UnitCode": null,
+    "UnitName": "Trung tâm Công nghệ Thông tin",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1000,
+    "ProvinceCode": "DLC",
+    "ParentID": 18,
+    "UnitCode": null,
+    "UnitName": "Trung Tâm viễn thông Buôn Ma Thuột",
+    "Address": "50-Lý Thái Tổ -Tp.BMT",
+    "ContactPhone": "02623843333"
+  },
+  {
+    "UnitID": 1001,
+    "ProvinceCode": "DLC",
+    "ParentID": 18,
+    "UnitCode": null,
+    "UnitName": "Trung Tâm Viễn thông KV Đông Đắk Lắk",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1002,
+    "ProvinceCode": "DLC",
+    "ParentID": 18,
+    "UnitCode": null,
+    "UnitName": "Trung Tâm Viễn thông KV Tây Đắk Lắk",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1003,
+    "ProvinceCode": "DLC",
+    "ParentID": 18,
+    "UnitCode": null,
+    "UnitName": "Trung Tâm Viễn thông KV Nam Đắk Lắk",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1004,
+    "ProvinceCode": "DLC",
+    "ParentID": 18,
+    "UnitCode": null,
+    "UnitName": "Trung Tâm Viễn thông KV Bắc Đắk Lắk",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 19,
+    "ProvinceCode": "DNO",
+    "ParentID": 1,
+    "UnitCode": "DNO",
+    "UnitName": "Viễn thông Đắk Nông",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 837,
+    "ProvinceCode": "DNO",
+    "ParentID": 19,
+    "UnitCode": null,
+    "UnitName": "TTVT Gia Nghĩa-ĐắkGLong",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 839,
+    "ProvinceCode": "DNO",
+    "ParentID": 19,
+    "UnitCode": null,
+    "UnitName": "TTVT ĐắkRLấp-TuyĐức",
+    "Address": null,
+    "ContactPhone": "0913433717"
+  },
+  {
+    "UnitID": 840,
+    "ProvinceCode": "DNO",
+    "ParentID": 19,
+    "UnitCode": null,
+    "UnitName": "TTVT Đắk Mil",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 841,
+    "ProvinceCode": "DNO",
+    "ParentID": 19,
+    "UnitCode": null,
+    "UnitName": "TTVT Đắk Song",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 842,
+    "ProvinceCode": "DNO",
+    "ParentID": 19,
+    "UnitCode": null,
+    "UnitName": "TTVT KrôngNô",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 843,
+    "ProvinceCode": "DNO",
+    "ParentID": 19,
+    "UnitCode": null,
+    "UnitName": "TTVT Cư Jut",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 848,
+    "ProvinceCode": "DNO",
+    "ParentID": 19,
+    "UnitCode": null,
+    "UnitName": "TTT ĐIỀU HÀNH THÔNG TIN",
+    "Address": null,
+    "ContactPhone": "05013546969"
+  },
+  {
+    "UnitID": 1231,
+    "ProvinceCode": "DNO",
+    "ParentID": 19,
+    "UnitCode": "DNO",
+    "UnitName": "P.KTĐT",
+    "Address": "23/3 Gia Nghĩa Đắk Nông",
+    "ContactPhone": "0912613121"
+  },
+  {
+    "UnitID": 20,
+    "ProvinceCode": "DBN",
+    "ParentID": 1,
+    "UnitCode": "DBN",
+    "UnitName": "Viễn thông Điện Biên",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 279,
+    "ProvinceCode": "DBN",
+    "ParentID": 20,
+    "UnitCode": null,
+    "UnitName": "TTVT Khu vực I",
+    "Address": "Tổ dân phố 6, phường Noong Bua, thành phố Điện Biên Phủ, tỉnh Điện Biên\r\n",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 280,
+    "ProvinceCode": "DBN",
+    "ParentID": 20,
+    "UnitCode": null,
+    "UnitName": "TTVT Khu vực II",
+    "Address": "Đội 24, xã Noong Hẹt, huyện Điện Biên, tỉnh Điện Biên\r\n",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 281,
+    "ProvinceCode": "DBN",
+    "ParentID": 20,
+    "UnitCode": null,
+    "UnitName": "TTVT Khu vực III",
+    "Address": "Khối Tân Giang, thị trấn Tuần Giáo, huyện Tuần Giáo, tỉnh Điện Biên\r\n",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 282,
+    "ProvinceCode": "DBN",
+    "ParentID": 20,
+    "UnitCode": null,
+    "UnitName": "TTVT Khu vực IV",
+    "Address": "Khối 3, thị trấn Mường Chà, huyện Mường Chà, tỉnh Điện Biên\r\n",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 283,
+    "ProvinceCode": "DBN",
+    "ParentID": 20,
+    "UnitCode": null,
+    "UnitName": "TTVT Khu vực V",
+    "Address": "Xã Mường Nhé, huyện Mường Nhé, tỉnh Điện Biên\r\n",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 670,
+    "ProvinceCode": "DBN",
+    "ParentID": 20,
+    "UnitCode": "DBN",
+    "UnitName": "Trung tâm ĐHTT",
+    "Address": "Phường Mường Thanh, TP Điện Biên Phủ, tỉnh Điện Biên",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 672,
+    "ProvinceCode": "DBN",
+    "ParentID": 20,
+    "UnitCode": "DBN",
+    "UnitName": "Trung tâm Kinh doanh",
+    "Address": "Phường Mường Thanh, TP Điện Biên Phủ, tỉnh Điện Biên",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 21,
+    "ProvinceCode": "DNI",
+    "ParentID": 1,
+    "UnitCode": "DNI",
+    "UnitName": "Viễn thông Đồng Nai",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 22,
+    "ProvinceCode": "DTP",
+    "ParentID": 1,
+    "UnitCode": "DTP",
+    "UnitName": "Viễn thông Đồng Tháp",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 23,
+    "ProvinceCode": "GLI",
+    "ParentID": 1,
+    "UnitCode": "GLI",
+    "UnitName": "Viễn thông Gia Lai",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 24,
+    "ProvinceCode": "HGG",
+    "ParentID": 1,
+    "UnitCode": "HGG",
+    "UnitName": "Viễn thông Hà Giang",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 182,
+    "ProvinceCode": "HGG",
+    "ParentID": 24,
+    "UnitCode": "TPO",
+    "UnitName": "Thành Phố",
+    "Address": "Thành Phố Hà Giang",
+    "ContactPhone": "0912026678"
+  },
+  {
+    "UnitID": 183,
+    "ProvinceCode": "HGG",
+    "ParentID": 24,
+    "UnitCode": "MVC",
+    "UnitName": "Mèo Vạc",
+    "Address": "Huyện Mèo vạc",
+    "ContactPhone": "0917509116"
+  },
+  {
+    "UnitID": 184,
+    "ProvinceCode": "HGG",
+    "ParentID": 24,
+    "UnitCode": "DVN",
+    "UnitName": "Đồng Văn",
+    "Address": "Huyện Đồng Văn",
+    "ContactPhone": "0912135179"
+  },
+  {
+    "UnitID": 185,
+    "ProvinceCode": "HGG",
+    "ParentID": 24,
+    "UnitCode": "YMH",
+    "UnitName": "Yên Minh",
+    "Address": "Huyện Yên Minh",
+    "ContactPhone": "0915486286"
+  },
+  {
+    "UnitID": 186,
+    "ProvinceCode": "HGG",
+    "ParentID": 24,
+    "UnitCode": "QBA",
+    "UnitName": "Quản Bạ",
+    "Address": "Huyện Quản Bạ",
+    "ContactPhone": "0916160333"
+  },
+  {
+    "UnitID": 187,
+    "ProvinceCode": "HGG",
+    "ParentID": 24,
+    "UnitCode": "BME",
+    "UnitName": "Bắc Mê",
+    "Address": "Huyện Bắc Mê",
+    "ContactPhone": "0912802099"
+  },
+  {
+    "UnitID": 188,
+    "ProvinceCode": "HGG",
+    "ParentID": 24,
+    "UnitCode": "VXN",
+    "UnitName": "Vị Xuyên",
+    "Address": "Huyện Vị Xuyên",
+    "ContactPhone": "0912282028"
+  },
+  {
+    "UnitID": 189,
+    "ProvinceCode": "HGG",
+    "ParentID": 24,
+    "UnitCode": "BQG",
+    "UnitName": "Bắc Quang",
+    "Address": "Huyện Bắc Quang",
+    "ContactPhone": "0912282189"
+  },
+  {
+    "UnitID": 190,
+    "ProvinceCode": "HGG",
+    "ParentID": 24,
+    "UnitCode": "QBH",
+    "UnitName": "Quang Bình",
+    "Address": "Huyện Quang Bình",
+    "ContactPhone": "0912606377"
+  },
+  {
+    "UnitID": 191,
+    "ProvinceCode": "HGG",
+    "ParentID": 24,
+    "UnitCode": "HSP",
+    "UnitName": "Hoàng Su Phì",
+    "Address": "Huyện Hoàng Su Phì",
+    "ContactPhone": "0912335181"
+  },
+  {
+    "UnitID": 192,
+    "ProvinceCode": "HGG",
+    "ParentID": 24,
+    "UnitCode": "XMN",
+    "UnitName": "Xín Mần",
+    "Address": "Huyện Xín Mần",
+    "ContactPhone": "0917706519"
+  },
+  {
+    "UnitID": 568,
+    "ProvinceCode": "HGG",
+    "ParentID": 24,
+    "UnitCode": "DHTT",
+    "UnitName": "Trung tâm ĐHTT",
+    "Address": "Thành Phố Hà Giang",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 25,
+    "ProvinceCode": "HNM",
+    "ParentID": 1,
+    "UnitCode": "HNM",
+    "UnitName": "Viễn thông Hà Nam",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 412,
+    "ProvinceCode": "HNM",
+    "ParentID": 25,
+    "UnitCode": "PLY",
+    "UnitName": "Trung tâm VT Phủ Lý",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 467,
+    "ProvinceCode": "HNM",
+    "ParentID": 412,
+    "UnitCode": "PLY01",
+    "UnitName": "Đài VT Trung tâm",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 468,
+    "ProvinceCode": "HNM",
+    "ParentID": 412,
+    "UnitCode": "PLY02",
+    "UnitName": "Đài VT Châu Sơn",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 469,
+    "ProvinceCode": "HNM",
+    "ParentID": 412,
+    "UnitCode": "PLY03",
+    "UnitName": "Đài VT Ba Đa",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 470,
+    "ProvinceCode": "HNM",
+    "ParentID": 412,
+    "UnitCode": "PLY04",
+    "UnitName": "Đài VT La Mát",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 471,
+    "ProvinceCode": "HNM",
+    "ParentID": 412,
+    "UnitCode": "PLY05",
+    "UnitName": "Đài VT Nam THĐ",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 472,
+    "ProvinceCode": "HNM",
+    "ParentID": 412,
+    "UnitCode": "PLY06",
+    "UnitName": "Đài VT Liêm Chung",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 413,
+    "ProvinceCode": "HNM",
+    "ParentID": 25,
+    "UnitCode": "BLC",
+    "UnitName": "Trung tâm VT Bình Lục",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 473,
+    "ProvinceCode": "HNM",
+    "ParentID": 413,
+    "UnitCode": "BLC01",
+    "UnitName": "Đài VT Bình Mỹ",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 474,
+    "ProvinceCode": "HNM",
+    "ParentID": 413,
+    "UnitCode": "BLC02",
+    "UnitName": "Đài VT Ba Hàng",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 475,
+    "ProvinceCode": "HNM",
+    "ParentID": 413,
+    "UnitCode": "BLC03",
+    "UnitName": "Đài VT Bồ Đề",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 476,
+    "ProvinceCode": "HNM",
+    "ParentID": 413,
+    "UnitCode": null,
+    "UnitName": "Đài VT Chợ Sông",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 414,
+    "ProvinceCode": "HNM",
+    "ParentID": 25,
+    "UnitCode": "DTN",
+    "UnitName": "Trung tâm VT Duy Tiên",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 477,
+    "ProvinceCode": "HNM",
+    "ParentID": 414,
+    "UnitCode": "DTN01",
+    "UnitName": "Đài VT Đồng Văn",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 478,
+    "ProvinceCode": "HNM",
+    "ParentID": 414,
+    "UnitCode": "DTN02",
+    "UnitName": "Đài VT Hòa Mạc",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 479,
+    "ProvinceCode": "HNM",
+    "ParentID": 414,
+    "UnitCode": "DTN03",
+    "UnitName": "Đài VT Chợ Lương",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 480,
+    "ProvinceCode": "HNM",
+    "ParentID": 414,
+    "UnitCode": "DTN04",
+    "UnitName": "Đài VT Đọi Sơn",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 415,
+    "ProvinceCode": "HNM",
+    "ParentID": 25,
+    "UnitCode": "KBG",
+    "UnitName": "Trung tâm VT Kim Bảng",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 481,
+    "ProvinceCode": "HNM",
+    "ParentID": 415,
+    "UnitCode": "KBG01",
+    "UnitName": "Đài VT Quế",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 482,
+    "ProvinceCode": "HNM",
+    "ParentID": 415,
+    "UnitCode": "KBG02",
+    "UnitName": "Đài VT Ba Sao",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 483,
+    "ProvinceCode": "HNM",
+    "ParentID": 415,
+    "UnitCode": "KBG03",
+    "UnitName": "Đài VT Chợ Sàng",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 484,
+    "ProvinceCode": "HNM",
+    "ParentID": 415,
+    "UnitCode": "KBG04",
+    "UnitName": "Đài VT Lê Hồ",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 485,
+    "ProvinceCode": "HNM",
+    "ParentID": 415,
+    "UnitCode": "KBG05",
+    "UnitName": "Đài VT Tân Sơn",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 564,
+    "ProvinceCode": "HNM",
+    "ParentID": 415,
+    "UnitCode": "KB06",
+    "UnitName": "Đài VT Thanh Sơn",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 416,
+    "ProvinceCode": "HNM",
+    "ParentID": 25,
+    "UnitCode": "LNN",
+    "UnitName": "Trung tâm VT Lý Nhân",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 491,
+    "ProvinceCode": "HNM",
+    "ParentID": 416,
+    "UnitCode": "LNN01",
+    "UnitName": "Đài VT Vĩnh Trụ",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 492,
+    "ProvinceCode": "HNM",
+    "ParentID": 416,
+    "UnitCode": "LNN02",
+    "UnitName": "Đài VT Chính Lý",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 493,
+    "ProvinceCode": "HNM",
+    "ParentID": 416,
+    "UnitCode": "LNN03",
+    "UnitName": "Đài VT Cầu Không",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 494,
+    "ProvinceCode": "HNM",
+    "ParentID": 416,
+    "UnitCode": "LNN04",
+    "UnitName": "Đài VT Hòa Hậu",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 417,
+    "ProvinceCode": "HNM",
+    "ParentID": 25,
+    "UnitCode": "TLM",
+    "UnitName": "Trung tâm VT Thanh Liêm",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 486,
+    "ProvinceCode": "HNM",
+    "ParentID": 417,
+    "UnitCode": "TLM01",
+    "UnitName": "Đài VT Cầu Nga",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 487,
+    "ProvinceCode": "HNM",
+    "ParentID": 417,
+    "UnitCode": "TLM02",
+    "UnitName": "Đài VT Cầu Gừng",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 488,
+    "ProvinceCode": "HNM",
+    "ParentID": 417,
+    "UnitCode": "TLM03",
+    "UnitName": "Đài VT Phố Động",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 489,
+    "ProvinceCode": "HNM",
+    "ParentID": 417,
+    "UnitCode": "TLM04",
+    "UnitName": "Đài VT Phố Cà",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 490,
+    "ProvinceCode": "HNM",
+    "ParentID": 417,
+    "UnitCode": "TLM05",
+    "UnitName": "Đài VT Phố Tâng",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 418,
+    "ProvinceCode": "HNM",
+    "ParentID": 25,
+    "UnitCode": "ĐHTT",
+    "UnitName": "Trung tâm ĐHTT",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 419,
+    "ProvinceCode": "HNM",
+    "ParentID": 25,
+    "UnitCode": "MDV",
+    "UnitName": "Phòng Mạng và dịch vụ",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 420,
+    "ProvinceCode": "HNM",
+    "ParentID": 25,
+    "UnitCode": "CNTT",
+    "UnitName": "Trung tâm CNTT",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 421,
+    "ProvinceCode": "HNM",
+    "ParentID": 25,
+    "UnitCode": "LĐ",
+    "UnitName": "Lãnh đạo VNPT Hà Nam",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 26,
+    "ProvinceCode": "HNI",
+    "ParentID": 1,
+    "UnitCode": "HNI",
+    "UnitName": "Viễn thông Hà Nội",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 897,
+    "ProvinceCode": "HNI",
+    "ParentID": 26,
+    "UnitCode": null,
+    "UnitName": "Trung Tâm Viễn Thông 1",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 898,
+    "ProvinceCode": "HNI",
+    "ParentID": 26,
+    "UnitCode": null,
+    "UnitName": "Trung Tâm Viễn Thông 2",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 899,
+    "ProvinceCode": "HNI",
+    "ParentID": 26,
+    "UnitCode": null,
+    "UnitName": "Trung Tâm Viễn Thông 3",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 900,
+    "ProvinceCode": "HNI",
+    "ParentID": 26,
+    "UnitCode": null,
+    "UnitName": "Trung Tâm Viễn Thông 4",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 901,
+    "ProvinceCode": "HNI",
+    "ParentID": 26,
+    "UnitCode": null,
+    "UnitName": "Trung Tâm Viễn Thông 5",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 902,
+    "ProvinceCode": "HNI",
+    "ParentID": 26,
+    "UnitCode": null,
+    "UnitName": "Trung Tâm Viễn Thông 6",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 903,
+    "ProvinceCode": "HNI",
+    "ParentID": 26,
+    "UnitCode": null,
+    "UnitName": "Trung Tâm Viễn Thông 7",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 904,
+    "ProvinceCode": "HNI",
+    "ParentID": 26,
+    "UnitCode": null,
+    "UnitName": "Trung Tâm Viễn Thông 8",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 905,
+    "ProvinceCode": "HNI",
+    "ParentID": 26,
+    "UnitCode": null,
+    "UnitName": "Trung Tâm Viễn Thông 9",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1009,
+    "ProvinceCode": "HNI",
+    "ParentID": 26,
+    "UnitCode": null,
+    "UnitName": "Trung tâm Điều hành thông tin",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 27,
+    "ProvinceCode": "HTH",
+    "ParentID": 1,
+    "UnitCode": "HTH",
+    "UnitName": "Viễn thông Hà Tĩnh",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 944,
+    "ProvinceCode": "HTH",
+    "ParentID": 27,
+    "UnitCode": "1",
+    "UnitName": "Trung tâm Viễn thông Thành phố",
+    "Address": "Thành phố Hà Tĩnh",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 945,
+    "ProvinceCode": "HTH",
+    "ParentID": 27,
+    "UnitCode": "2",
+    "UnitName": "Trung tâm Viễn thông Thạch Hà",
+    "Address": "Huyện Thạch Hà",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 946,
+    "ProvinceCode": "HTH",
+    "ParentID": 27,
+    "UnitCode": "3",
+    "UnitName": "Trung tâm Viễn thông Can Lộc",
+    "Address": "Huyện Can Lộc",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 947,
+    "ProvinceCode": "HTH",
+    "ParentID": 27,
+    "UnitCode": "4",
+    "UnitName": "Trung tâm Viễn thông Hồng Lĩnh",
+    "Address": "Huyện Hồng Lĩnh",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 948,
+    "ProvinceCode": "HTH",
+    "ParentID": 27,
+    "UnitCode": "5",
+    "UnitName": "Trung tâm Viễn thông Nghi Xuân",
+    "Address": "Huyện Nghi Xuân",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 949,
+    "ProvinceCode": "HTH",
+    "ParentID": 27,
+    "UnitCode": "6",
+    "UnitName": "Trung tâm Viễn thông Đức Thọ",
+    "Address": "Huyện Đức Thọ",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 950,
+    "ProvinceCode": "HTH",
+    "ParentID": 27,
+    "UnitCode": "7",
+    "UnitName": "Trung tâm Viễn thông Hương Sơn",
+    "Address": "Huyện Hương Sơn",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 951,
+    "ProvinceCode": "HTH",
+    "ParentID": 27,
+    "UnitCode": "8",
+    "UnitName": "Trung tâm Viễn thông Vũ Quang",
+    "Address": "Huyện Vũ Quang",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 952,
+    "ProvinceCode": "HTH",
+    "ParentID": 27,
+    "UnitCode": "9",
+    "UnitName": "Trung tâm Viễn thông Hương Khê",
+    "Address": "Huyện Hương Khê",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 953,
+    "ProvinceCode": "HTH",
+    "ParentID": 27,
+    "UnitCode": "10",
+    "UnitName": "Trung tâm Viễn thông Lộc Hà",
+    "Address": "Huyện Lộc Hà",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 954,
+    "ProvinceCode": "HTH",
+    "ParentID": 27,
+    "UnitCode": "11",
+    "UnitName": "Trung tâm Viễn thông Cẩm Xuyên",
+    "Address": "Huyện Cẩm Xuyên",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 955,
+    "ProvinceCode": "HTH",
+    "ParentID": 27,
+    "UnitCode": "12",
+    "UnitName": "Trung tâm Viễn thông TX Kỳ Anh",
+    "Address": "TX Kỳ Anh",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 956,
+    "ProvinceCode": "HTH",
+    "ParentID": 27,
+    "UnitCode": "901",
+    "UnitName": "Trung tâm Viễn thông Huyện Kỳ Anh",
+    "Address": "Huyện Kỳ Anh",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 28,
+    "ProvinceCode": "HDG",
+    "ParentID": 1,
+    "UnitCode": "HDG",
+    "UnitName": "Viễn thông Hải Dương",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 623,
+    "ProvinceCode": "HDG",
+    "ParentID": 28,
+    "UnitCode": "CGG",
+    "UnitName": "TTVT Cẩm Giàng",
+    "Address": "Khu 15 TTr Lai Cách Cẩm Giàng",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 624,
+    "ProvinceCode": "HDG",
+    "ParentID": 28,
+    "UnitCode": "TKY",
+    "UnitName": "TTVT Tứ Kỳ",
+    "Address": "Trung Tâm Viễn Thông Tứ Kỳ",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 625,
+    "ProvinceCode": "HDG",
+    "ParentID": 28,
+    "UnitCode": "BGG",
+    "UnitName": "TTVT Bình Giang",
+    "Address": "Trung tâm viễn thông Bình Giang",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 626,
+    "ProvinceCode": "HDG",
+    "ParentID": 28,
+    "UnitCode": "NSH",
+    "UnitName": "TTVT Nam Sách",
+    "Address": "Tiền Trung - ái Quốc - Hải Dương",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 627,
+    "ProvinceCode": "HDG",
+    "ParentID": 28,
+    "UnitCode": "THA",
+    "UnitName": "TTVT Thanh Hà",
+    "Address": "Đông Phan Tân An Thanh Hà",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 628,
+    "ProvinceCode": "HDG",
+    "ParentID": 28,
+    "UnitCode": "KMN",
+    "UnitName": "TTVT Kinh Môn",
+    "Address": "Trung tâm viễn thông Kinh Môn",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 629,
+    "ProvinceCode": "HDG",
+    "ParentID": 28,
+    "UnitCode": "KTH",
+    "UnitName": "TTVT Kim Thành",
+    "Address": "Thị Trấn Phú Thái",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 631,
+    "ProvinceCode": "HDG",
+    "ParentID": 28,
+    "UnitCode": "GLC",
+    "UnitName": "TTVT Gia Lộc",
+    "Address": "Số 01 đại lộ HCM, P Nguyễn Trãi, TP Hải Dương",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 632,
+    "ProvinceCode": "HDG",
+    "ParentID": 28,
+    "UnitCode": "TMN",
+    "UnitName": "TTVT Thanh Miện",
+    "Address": "Khu 4 - Thị trấn Thanh Miện",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 633,
+    "ProvinceCode": "HDG",
+    "ParentID": 28,
+    "UnitCode": "NGG",
+    "UnitName": "TTVT Ninh Giang",
+    "Address": "Trung Tâm VT Ninh Giang",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 634,
+    "ProvinceCode": "HDG",
+    "ParentID": 28,
+    "UnitCode": "HDG",
+    "UnitName": "TTVT TP Hải Dương",
+    "Address": "1 Đại Lộ Hồ Chí Minh TPHD",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 635,
+    "ProvinceCode": "HDG",
+    "ParentID": 28,
+    "UnitCode": "CLH",
+    "UnitName": "TTVT Chí Linh",
+    "Address": "233 Nguyễn Trãi 2 Sao Đỏ Chí Linh Hải Dương",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 29,
+    "ProvinceCode": "HPG",
+    "ParentID": 1,
+    "UnitCode": "HPG",
+    "UnitName": "Viễn thông Hải Phòng",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 863,
+    "ProvinceCode": "HPG",
+    "ParentID": 29,
+    "UnitCode": "02",
+    "UnitName": "TTVT1",
+    "Address": "Số 4 Lạch Tray",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 870,
+    "ProvinceCode": "HPG",
+    "ParentID": 863,
+    "UnitCode": null,
+    "UnitName": "Tổ Kỹ thuật Lê Chân 1",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 872,
+    "ProvinceCode": "HPG",
+    "ParentID": 863,
+    "UnitCode": null,
+    "UnitName": "Tổ Kỹ thuật Hồng Bàng",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 873,
+    "ProvinceCode": "HPG",
+    "ParentID": 863,
+    "UnitCode": null,
+    "UnitName": "Tổ Kỹ thuật Lê Chân 2",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 874,
+    "ProvinceCode": "HPG",
+    "ParentID": 863,
+    "UnitCode": null,
+    "UnitName": "Tổ kỹ thuật Bạch Long Vĩ",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 864,
+    "ProvinceCode": "HPG",
+    "ParentID": 29,
+    "UnitCode": "03",
+    "UnitName": "TTVT2",
+    "Address": "Quán Toan",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 875,
+    "ProvinceCode": "HPG",
+    "ParentID": 864,
+    "UnitCode": null,
+    "UnitName": "Tổ Kỹ thuật An Dương 2",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 876,
+    "ProvinceCode": "HPG",
+    "ParentID": 864,
+    "UnitCode": null,
+    "UnitName": "Tổ Kỹ thuật An Dương 3",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 877,
+    "ProvinceCode": "HPG",
+    "ParentID": 864,
+    "UnitCode": null,
+    "UnitName": "Tổ Kỹ thuật An Dương 1",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 878,
+    "ProvinceCode": "HPG",
+    "ParentID": 864,
+    "UnitCode": null,
+    "UnitName": "Tổ Kỹ thuật Thủy Nguyên 3",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 879,
+    "ProvinceCode": "HPG",
+    "ParentID": 864,
+    "UnitCode": null,
+    "UnitName": "Tổ Kỹ thuật Thủy Nguyên 2",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 880,
+    "ProvinceCode": "HPG",
+    "ParentID": 864,
+    "UnitCode": null,
+    "UnitName": "Tổ Kỹ thuật Thủy Nguyên 1",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 865,
+    "ProvinceCode": "HPG",
+    "ParentID": 29,
+    "UnitCode": "04",
+    "UnitName": "TTVT3",
+    "Address": "\tKiến An",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 881,
+    "ProvinceCode": "HPG",
+    "ParentID": 865,
+    "UnitCode": null,
+    "UnitName": "Tổ Kỹ thuật An Lão",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 883,
+    "ProvinceCode": "HPG",
+    "ParentID": 865,
+    "UnitCode": null,
+    "UnitName": "Tổ Kỹ thuật Kiến An",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 866,
+    "ProvinceCode": "HPG",
+    "ParentID": 29,
+    "UnitCode": "05",
+    "UnitName": "TTVT4",
+    "Address": "Vạn Mỹ",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 884,
+    "ProvinceCode": "HPG",
+    "ParentID": 866,
+    "UnitCode": null,
+    "UnitName": "Tổ Kỹ thuật Hải An 1",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 885,
+    "ProvinceCode": "HPG",
+    "ParentID": 866,
+    "UnitCode": null,
+    "UnitName": "Tổ Kỹ thuật Ngô Quyền 2",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 886,
+    "ProvinceCode": "HPG",
+    "ParentID": 866,
+    "UnitCode": null,
+    "UnitName": "Tổ Kỹ thuật Ngô Quyền 1",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 887,
+    "ProvinceCode": "HPG",
+    "ParentID": 866,
+    "UnitCode": null,
+    "UnitName": "Tổ Kỹ thuật Hải An 2",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 888,
+    "ProvinceCode": "HPG",
+    "ParentID": 866,
+    "UnitCode": null,
+    "UnitName": "Tổ Kỹ thuật Cát Bà",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 867,
+    "ProvinceCode": "HPG",
+    "ParentID": 29,
+    "UnitCode": "06",
+    "UnitName": "TTVT5",
+    "Address": "Tiên Lãng",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 889,
+    "ProvinceCode": "HPG",
+    "ParentID": 867,
+    "UnitCode": null,
+    "UnitName": "Tổ Kỹ thuật Tiên Lãng",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 890,
+    "ProvinceCode": "HPG",
+    "ParentID": 867,
+    "UnitCode": null,
+    "UnitName": "Tổ Kỹ thuật Vĩnh Bảo",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 868,
+    "ProvinceCode": "HPG",
+    "ParentID": 29,
+    "UnitCode": null,
+    "UnitName": "TTVT6",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 891,
+    "ProvinceCode": "HPG",
+    "ParentID": 868,
+    "UnitCode": null,
+    "UnitName": "Tổ Kỹ thuật Đồ Sơn",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 892,
+    "ProvinceCode": "HPG",
+    "ParentID": 868,
+    "UnitCode": null,
+    "UnitName": "Tổ Kỹ thuật Kiến Thụy",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 893,
+    "ProvinceCode": "HPG",
+    "ParentID": 868,
+    "UnitCode": null,
+    "UnitName": "Tổ Kỹ thuật Dương Kinh",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 869,
+    "ProvinceCode": "HPG",
+    "ParentID": 29,
+    "UnitCode": null,
+    "UnitName": "Trung tâm Điều hành Thông tin",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 894,
+    "ProvinceCode": "HPG",
+    "ParentID": 869,
+    "UnitCode": null,
+    "UnitName": "Tổ Truyền Dẫn",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 895,
+    "ProvinceCode": "HPG",
+    "ParentID": 869,
+    "UnitCode": null,
+    "UnitName": "Tổ khai thác",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 896,
+    "ProvinceCode": "HPG",
+    "ParentID": 869,
+    "UnitCode": null,
+    "UnitName": "Tổ Kỹ thuật",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 30,
+    "ProvinceCode": "HGI",
+    "ParentID": 1,
+    "UnitCode": "HGI",
+    "UnitName": "Viễn thông Hậu Giang",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 31,
+    "ProvinceCode": "HCM",
+    "ParentID": 1,
+    "UnitCode": "HCM",
+    "UnitName": "Viễn thông Hồ Chí Minh",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 194,
+    "ProvinceCode": "HCM",
+    "ParentID": 31,
+    "UnitCode": "TTP",
+    "UnitName": "Trung tâm ĐH Thông tin",
+    "Address": null,
+    "ContactPhone": "08 38665555"
+  },
+  {
+    "UnitID": 965,
+    "ProvinceCode": "HCM",
+    "ParentID": 31,
+    "UnitCode": "60",
+    "UnitName": "TTVT Thủ Đức",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1242,
+    "ProvinceCode": "HCM",
+    "ParentID": 31,
+    "UnitCode": "57",
+    "UnitName": "TTVT Gia Định",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1243,
+    "ProvinceCode": "HCM",
+    "ParentID": 31,
+    "UnitCode": "59",
+    "UnitName": "TTVT Nam Sài Gòn",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1244,
+    "ProvinceCode": "HCM",
+    "ParentID": 31,
+    "UnitCode": "44",
+    "UnitName": "TTVT Củ Chi",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1245,
+    "ProvinceCode": "HCM",
+    "ParentID": 31,
+    "UnitCode": "42",
+    "UnitName": "TTVT Chợ Lớn",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1246,
+    "ProvinceCode": "HCM",
+    "ParentID": 31,
+    "UnitCode": "45",
+    "UnitName": "TTVT Hóc Môn",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1247,
+    "ProvinceCode": "HCM",
+    "ParentID": 31,
+    "UnitCode": "41",
+    "UnitName": "TTVT Tân Bình",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1248,
+    "ProvinceCode": "HCM",
+    "ParentID": 31,
+    "UnitCode": "43",
+    "UnitName": "TTVT Bình Chánh",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1249,
+    "ProvinceCode": "HCM",
+    "ParentID": 31,
+    "UnitCode": "56",
+    "UnitName": "TTVT Sài Gòn",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 32,
+    "ProvinceCode": "HBH",
+    "ParentID": 1,
+    "UnitCode": "HBH",
+    "UnitName": "Viễn thông Hòa Bình",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 348,
+    "ProvinceCode": "HBH",
+    "ParentID": 32,
+    "UnitCode": null,
+    "UnitName": "TTVT Thành phố Hòa Bình",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 350,
+    "ProvinceCode": "HBH",
+    "ParentID": 32,
+    "UnitCode": null,
+    "UnitName": "TTVT Cao Phong",
+    "Address": "TT Bưng huyện Cao Phong",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 351,
+    "ProvinceCode": "HBH",
+    "ParentID": 32,
+    "UnitCode": null,
+    "UnitName": "TTVT Tân Lạc",
+    "Address": "TT Mường Khến huyện Tân lạc",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 352,
+    "ProvinceCode": "HBH",
+    "ParentID": 32,
+    "UnitCode": null,
+    "UnitName": "TTVT Mai Châu",
+    "Address": "TT Mai Châu huyện Mai Châu",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 353,
+    "ProvinceCode": "HBH",
+    "ParentID": 32,
+    "UnitCode": null,
+    "UnitName": "TTVT Lạc Sơn",
+    "Address": "TT Vụ Bản huyện Lạc Sơn",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 354,
+    "ProvinceCode": "HBH",
+    "ParentID": 32,
+    "UnitCode": null,
+    "UnitName": "TTVT Yên Thủy",
+    "Address": "TT Hàng Trạm huyện Yên Thủy",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 355,
+    "ProvinceCode": "HBH",
+    "ParentID": 32,
+    "UnitCode": null,
+    "UnitName": "TTVT Lạc Thủy",
+    "Address": "TT Chi Nê huyện Lạc Thủy",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 356,
+    "ProvinceCode": "HBH",
+    "ParentID": 32,
+    "UnitCode": null,
+    "UnitName": "TTVT Kim Bôi",
+    "Address": "TT Bo huyện Kim Bôi",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 357,
+    "ProvinceCode": "HBH",
+    "ParentID": 32,
+    "UnitCode": null,
+    "UnitName": "TTVT Kỳ Sơn",
+    "Address": "TT Kỳ Sơn huyện Kỳ Sơn",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 358,
+    "ProvinceCode": "HBH",
+    "ParentID": 32,
+    "UnitCode": null,
+    "UnitName": "TTVT Lương Sơn",
+    "Address": "TT Lương Sơn huyện Lương Sơn",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 359,
+    "ProvinceCode": "HBH",
+    "ParentID": 32,
+    "UnitCode": null,
+    "UnitName": "TTVT Đà Bắc",
+    "Address": "TT Đà Bắc huyện Đà Bắc",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 360,
+    "ProvinceCode": "HBH",
+    "ParentID": 32,
+    "UnitCode": "ĐHTT",
+    "UnitName": "TT Điều hành Thông tin",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 862,
+    "ProvinceCode": "HBH",
+    "ParentID": 32,
+    "UnitCode": "TTKD",
+    "UnitName": "Trung tâm Kinh Doanh",
+    "Address": "938 Đường Cù Chính Lan",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 33,
+    "ProvinceCode": "HYN",
+    "ParentID": 1,
+    "UnitCode": "HYN",
+    "UnitName": "Viễn thông Hưng Yên",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 34,
+    "ProvinceCode": "KHA",
+    "ParentID": 1,
+    "UnitCode": "KHA",
+    "UnitName": "Viễn thông Khánh Hòa",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 553,
+    "ProvinceCode": "KHA",
+    "ParentID": 34,
+    "UnitCode": "NTG",
+    "UnitName": "TTVT Nha Trang",
+    "Address": "TP Nha Trang",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 554,
+    "ProvinceCode": "KHA",
+    "ParentID": 34,
+    "UnitCode": "DKH",
+    "UnitName": "TTVT Diên Khánh",
+    "Address": "Huyện Diên Khánh",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 555,
+    "ProvinceCode": "KHA",
+    "ParentID": 34,
+    "UnitCode": "CRH",
+    "UnitName": "TTVT Cam Ranh",
+    "Address": "TP Cam Ranh",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 556,
+    "ProvinceCode": "KHA",
+    "ParentID": 34,
+    "UnitCode": "CLM",
+    "UnitName": "TTVT Cam Lâm",
+    "Address": "Huyện Cam Lâm",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 557,
+    "ProvinceCode": "KHA",
+    "ParentID": 34,
+    "UnitCode": "NHA",
+    "UnitName": "TTVT Ninh Hòa",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 558,
+    "ProvinceCode": "KHA",
+    "ParentID": 34,
+    "UnitCode": "VNH",
+    "UnitName": "TTVT Vạn Ninh",
+    "Address": "Huyện Vạn Ninh",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 815,
+    "ProvinceCode": "KHA",
+    "ParentID": 34,
+    "UnitCode": "DHTT",
+    "UnitName": "TT Điều Hành Thông Tin",
+    "Address": "04 Lê Lợi",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 35,
+    "ProvinceCode": "KGG",
+    "ParentID": 1,
+    "UnitCode": "KGG",
+    "UnitName": "Viễn thông Kiên Giang",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 252,
+    "ProvinceCode": "KGG",
+    "ParentID": 35,
+    "UnitCode": "TTVT_RGA",
+    "UnitName": "TTVT Rạch Giá",
+    "Address": "Thành phố Rạch Giá",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 253,
+    "ProvinceCode": "KGG",
+    "ParentID": 35,
+    "UnitCode": "TTVT_HDT",
+    "UnitName": "TTVT Hòn Đất",
+    "Address": "Huyện Hòn Đất",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 254,
+    "ProvinceCode": "KGG",
+    "ParentID": 35,
+    "UnitCode": "TTVT_ABN",
+    "UnitName": "TTVT An Biên",
+    "Address": "Huyện An Biên",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 255,
+    "ProvinceCode": "KGG",
+    "ParentID": 35,
+    "UnitCode": "TTVT_AMH",
+    "UnitName": "TTVT An Minh",
+    "Address": "Huyện An Minh",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 256,
+    "ProvinceCode": "KGG",
+    "ParentID": 35,
+    "UnitCode": "TTVT_CTH",
+    "UnitName": "TTVT Châu Thành",
+    "Address": "Huyện Châu Thành",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 257,
+    "ProvinceCode": "KGG",
+    "ParentID": 35,
+    "UnitCode": "TTVT_GRG",
+    "UnitName": "TTVT Giồng Riềng",
+    "Address": "Huyện Giồng Riềng",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 258,
+    "ProvinceCode": "KGG",
+    "ParentID": 35,
+    "UnitCode": "TTVT_GQO",
+    "UnitName": "TTVT Gò Quao",
+    "Address": "Huyện Gò Quao",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 259,
+    "ProvinceCode": "KGG",
+    "ParentID": 35,
+    "UnitCode": "TTVT_UMT",
+    "UnitName": "TTVT U Minh Thượng",
+    "Address": "Huyện U Minh Thượng",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 260,
+    "ProvinceCode": "KGG",
+    "ParentID": 35,
+    "UnitCode": "TTVT_VTN",
+    "UnitName": "TTVT Vĩnh Thuận",
+    "Address": "Huyện Vĩnh Thuận",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 261,
+    "ProvinceCode": "KGG",
+    "ParentID": 35,
+    "UnitCode": "TTVT_THP",
+    "UnitName": "TTVT Tân Hiệp",
+    "Address": "Huyện Tân Hiệp",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 262,
+    "ProvinceCode": "KGG",
+    "ParentID": 35,
+    "UnitCode": "TTVT_KLG",
+    "UnitName": "TTVT Kiên Lương",
+    "Address": "Huyện Kiên Lương",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 263,
+    "ProvinceCode": "KGG",
+    "ParentID": 35,
+    "UnitCode": "TTVT_HTN",
+    "UnitName": "TTVT Hà Tiên",
+    "Address": "Thị Xã Hà Tiên ",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 264,
+    "ProvinceCode": "KGG",
+    "ParentID": 35,
+    "UnitCode": "TTVT_PQC",
+    "UnitName": "TTVT Phú Quốc",
+    "Address": "Huyện Phú Quốc",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 265,
+    "ProvinceCode": "KGG",
+    "ParentID": 35,
+    "UnitCode": "TTVT_KHI",
+    "UnitName": "TTVT Kiên Hải",
+    "Address": "Huyện Kiên Hải",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 562,
+    "ProvinceCode": "KGG",
+    "ParentID": 35,
+    "UnitCode": "DHTT",
+    "UnitName": "Trung tâm ĐHTT",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 831,
+    "ProvinceCode": "KGG",
+    "ParentID": 35,
+    "UnitCode": "CNTT",
+    "UnitName": "Trung tâm CNTT",
+    "Address": "Kiên Giang",
+    "ContactPhone": "0773860511"
+  },
+  {
+    "UnitID": 832,
+    "ProvinceCode": "KGG",
+    "ParentID": 35,
+    "UnitCode": "KGG",
+    "UnitName": "Tiền xử lí",
+    "Address": "Đài hỗ trợ KH 800126",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 923,
+    "ProvinceCode": "KGG",
+    "ParentID": 35,
+    "UnitCode": "TTVT_GTH",
+    "UnitName": "TTVT Giang Thành",
+    "Address": "Huyện Giang Thành",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 36,
+    "ProvinceCode": "KTM",
+    "ParentID": 1,
+    "UnitCode": "KTM",
+    "UnitName": "Viễn thông Kon Tum",
+    "Address": "380 Phan Đình Phùng, P Ngô Mây, Tp kon Tum",
+    "ContactPhone": "0949565559"
+  },
+  {
+    "UnitID": 1250,
+    "ProvinceCode": "KTM",
+    "ParentID": 36,
+    "UnitCode": "615",
+    "UnitName": "TTVT Đắk Hà",
+    "Address": "Thị trấn Đắk Hà",
+    "ContactPhone": "0918298459"
+  },
+  {
+    "UnitID": 1251,
+    "ProvinceCode": "KTM",
+    "ParentID": 36,
+    "UnitCode": null,
+    "UnitName": "TTVT Đắk Tô-Tu Mơ Rông",
+    "Address": "Thị trấn Đắk Tô",
+    "ContactPhone": "0949565557"
+  },
+  {
+    "UnitID": 1252,
+    "ProvinceCode": "KTM",
+    "ParentID": 36,
+    "UnitCode": null,
+    "UnitName": "TTVT Ngọc Hồi ",
+    "Address": "Thị trấn Plei Kan",
+    "ContactPhone": "0914199193"
+  },
+  {
+    "UnitID": 1253,
+    "ProvinceCode": "KTM",
+    "ParentID": 36,
+    "UnitCode": null,
+    "UnitName": "TTVT ĐắkGlei",
+    "Address": "Thị trấn Đắk Pét",
+    "ContactPhone": "0914167127"
+  },
+  {
+    "UnitID": 1254,
+    "ProvinceCode": "KTM",
+    "ParentID": 36,
+    "UnitCode": null,
+    "UnitName": "TTVT Sa Thầy",
+    "Address": "Thị trấn Sa Thầy",
+    "ContactPhone": "0914248345"
+  },
+  {
+    "UnitID": 1255,
+    "ProvinceCode": "KTM",
+    "ParentID": 36,
+    "UnitCode": null,
+    "UnitName": "TTVT Kon Rẫy-KonPlong",
+    "Address": "Thị trấn ĐắkRve",
+    "ContactPhone": "0914223227"
+  },
+  {
+    "UnitID": 1256,
+    "ProvinceCode": "KTM",
+    "ParentID": 36,
+    "UnitCode": null,
+    "UnitName": "TTVT Thành Phố",
+    "Address": "Thành Phố Kon tum",
+    "ContactPhone": "0914059277"
+  },
+  {
+    "UnitID": 1257,
+    "ProvinceCode": "KTM",
+    "ParentID": 36,
+    "UnitCode": null,
+    "UnitName": "TT ĐHTT",
+    "Address": "Thành Phố Kon Tum",
+    "ContactPhone": "02603862579"
+  },
+  {
+    "UnitID": 37,
+    "ProvinceCode": "LCU",
+    "ParentID": 1,
+    "UnitCode": "LCU",
+    "UnitName": "Viễn thông Lai Châu",
+    "Address": "Tổ 12 - Phường Tân Phong - TP Lai Châu - tỉnh Lai Châu",
+    "ContactPhone": "02133798566"
+  },
+  {
+    "UnitID": 400,
+    "ProvinceCode": "LCU",
+    "ParentID": 37,
+    "UnitCode": "213002",
+    "UnitName": "Trung tâm VT Lai Châu",
+    "Address": "Tổ 12 - Phường Tân Phong - Thành Phố Lai Châu - tỉnh Lai Châu",
+    "ContactPhone": "02133799688"
+  },
+  {
+    "UnitID": 401,
+    "ProvinceCode": "LCU",
+    "ParentID": 37,
+    "UnitCode": "213003",
+    "UnitName": "Trung tâm VT Mường Tè",
+    "Address": "Thị trấn Mường Tè - huyện Mường tè - Tỉnh Lai Châu",
+    "ContactPhone": "02133881999"
+  },
+  {
+    "UnitID": 402,
+    "ProvinceCode": "LCU",
+    "ParentID": 37,
+    "UnitCode": "213004",
+    "UnitName": "Trung tâm VT Nậm Nhùn",
+    "Address": "Thị trấn Nậm Nhùn - huyện Nậm Nhùn - tỉnh Lai Châu",
+    "ContactPhone": "02133"
+  },
+  {
+    "UnitID": 403,
+    "ProvinceCode": "LCU",
+    "ParentID": 37,
+    "UnitCode": "213006",
+    "UnitName": "Trung tâm VT Sìn Hồ",
+    "Address": "Thị trấn Sìn Hồ - huyện Sìn Hồ - tỉnh Lai Châu",
+    "ContactPhone": "02133"
+  },
+  {
+    "UnitID": 404,
+    "ProvinceCode": "LCU",
+    "ParentID": 37,
+    "UnitCode": "231005",
+    "UnitName": "Trung tâm VT Phong Thổ",
+    "Address": "Thị trấn Phong Thổ - huyện Phong Thổ - tỉnh Lai Châu",
+    "ContactPhone": "02133"
+  },
+  {
+    "UnitID": 405,
+    "ProvinceCode": "LCU",
+    "ParentID": 37,
+    "UnitCode": "231007",
+    "UnitName": "Trung tâm VT Tam Đường",
+    "Address": "Thị trấn Tam Đường - huyện Tam Đường - tỉnh Lai Châu",
+    "ContactPhone": "02133"
+  },
+  {
+    "UnitID": 406,
+    "ProvinceCode": "LCU",
+    "ParentID": 37,
+    "UnitCode": "231008",
+    "UnitName": "Trung tâm VT Tân Uyên",
+    "Address": "Thị trấn Tân Uyên - huyện Tân Uyên - tỉnh Lai Châu",
+    "ContactPhone": "02133"
+  },
+  {
+    "UnitID": 407,
+    "ProvinceCode": "LCU",
+    "ParentID": 37,
+    "UnitCode": "231009",
+    "UnitName": "Trung tâm VT Than Uyên",
+    "Address": "Thị trấn Than Uyên - huyện Than Uyên - tỉnh Lai Châu",
+    "ContactPhone": "02133"
+  },
+  {
+    "UnitID": 1089,
+    "ProvinceCode": "LCU",
+    "ParentID": 37,
+    "UnitCode": "213001",
+    "UnitName": "Trung tâm Điều hành thông tin",
+    "Address": "Tổ 12 - Phường Tân Phong - TP Lai Châu ",
+    "ContactPhone": "02133878588"
+  },
+  {
+    "UnitID": 1131,
+    "ProvinceCode": "LCU",
+    "ParentID": 37,
+    "UnitCode": "213000",
+    "UnitName": "Phòng Kỹ thuật Đầu tư",
+    "Address": "Tổ 12 - Phường Tân Phong - TP Lai Châu - tỉnh Lai Châu",
+    "ContactPhone": "02133798566"
+  },
+  {
+    "UnitID": 1219,
+    "ProvinceCode": "LCU",
+    "ParentID": 37,
+    "UnitCode": "213000",
+    "UnitName": "Ban giám đốc VNPT Lai Châu",
+    "Address": "Tổ 12 - Phường Tân Phong - TP Lai Châu - tỉnh Lai châu",
+    "ContactPhone": "02133799996"
+  },
+  {
+    "UnitID": 38,
+    "ProvinceCode": "LDG",
+    "ParentID": 1,
+    "UnitCode": "LDG",
+    "UnitName": "Viễn thông Lâm Đồng",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 39,
+    "ProvinceCode": "LSN",
+    "ParentID": 1,
+    "UnitCode": "LSN",
+    "UnitName": "Viễn thông Lạng Sơn",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 387,
+    "ProvinceCode": "LSN",
+    "ParentID": 39,
+    "UnitCode": null,
+    "UnitName": "Viễn thông Bắc Sơn",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 388,
+    "ProvinceCode": "LSN",
+    "ParentID": 39,
+    "UnitCode": null,
+    "UnitName": "Viễn thông Bình Gia",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 389,
+    "ProvinceCode": "LSN",
+    "ParentID": 39,
+    "UnitCode": null,
+    "UnitName": "Viễn thông Văn Quan",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 390,
+    "ProvinceCode": "LSN",
+    "ParentID": 39,
+    "UnitCode": null,
+    "UnitName": "Viễn thông Cao Lộc",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 391,
+    "ProvinceCode": "LSN",
+    "ParentID": 39,
+    "UnitCode": null,
+    "UnitName": "Viễn thông Đồng Đăng",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 392,
+    "ProvinceCode": "LSN",
+    "ParentID": 39,
+    "UnitCode": null,
+    "UnitName": "Viễn thông Văn Lãng",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 393,
+    "ProvinceCode": "LSN",
+    "ParentID": 39,
+    "UnitCode": null,
+    "UnitName": "Viễn thông Tràng Định",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 394,
+    "ProvinceCode": "LSN",
+    "ParentID": 39,
+    "UnitCode": null,
+    "UnitName": "Viễn thông Chi Lăng",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 395,
+    "ProvinceCode": "LSN",
+    "ParentID": 39,
+    "UnitCode": null,
+    "UnitName": "Viễn thông Hữu Lũng",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 396,
+    "ProvinceCode": "LSN",
+    "ParentID": 39,
+    "UnitCode": null,
+    "UnitName": "Viễn thông Lộc Bình",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 397,
+    "ProvinceCode": "LSN",
+    "ParentID": 39,
+    "UnitCode": null,
+    "UnitName": "Viễn thông Đình Lập",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 398,
+    "ProvinceCode": "LSN",
+    "ParentID": 39,
+    "UnitCode": null,
+    "UnitName": "Viễn thông Thành Phố",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 995,
+    "ProvinceCode": "LSN",
+    "ParentID": 39,
+    "UnitCode": "LSN",
+    "UnitName": "Trung tâm ĐHTT",
+    "Address": "49 Lê Lợi, Phường Vĩnh Trại",
+    "ContactPhone": "3870000"
+  },
+  {
+    "UnitID": 40,
+    "ProvinceCode": "LCI",
+    "ParentID": 1,
+    "UnitCode": "LCI",
+    "UnitName": "Viễn thông Lào Cai",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 330,
+    "ProvinceCode": "LCI",
+    "ParentID": 40,
+    "UnitCode": "TPO",
+    "UnitName": "TTVT Thành Phố",
+    "Address": "20 Trần Đăng Ninh P.Cốc Lếu TP.Lào Cai",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 331,
+    "ProvinceCode": "LCI",
+    "ParentID": 40,
+    "UnitCode": "BTG",
+    "UnitName": "TTVT Bảo Thắng",
+    "Address": "Số 072 -Đường 19/5 - Thị Trấn Phố Lu- Huyện Bảo Thắng - Tỉnh Lào Cai",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 332,
+    "ProvinceCode": "LCI",
+    "ParentID": 40,
+    "UnitCode": "BYN",
+    "UnitName": "TTVT Bảo Yên",
+    "Address": "Khu 5B - Thị Trấn Phố Ràng - Huyện Bảo  Yên - Tỉnh Lào Cai",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 333,
+    "ProvinceCode": "LCI",
+    "ParentID": 40,
+    "UnitCode": "VBN",
+    "UnitName": "TTVT Văn Bàn",
+    "Address": "Đường Trần Phú -  Thị Trấn Khánh Yên - Huyện Văn Bàn - Tỉnh  Lào Cai",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 334,
+    "ProvinceCode": "LCI",
+    "ParentID": 40,
+    "UnitCode": "MKG",
+    "UnitName": "TTVT Mường Khương",
+    "Address": "Thôn Phố Cũ - xã Mường Khương  - Huyện Mường Khương - Tỉnh Lào Cai",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 335,
+    "ProvinceCode": "LCI",
+    "ParentID": 40,
+    "UnitCode": "BHA-SMC",
+    "UnitName": "TTVT Bắc Hà - SiMaCai",
+    "Address": "Thị Trấn Bắc Hà -Huyện Bắc Hà - Tỉnh Lào Cai",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 336,
+    "ProvinceCode": "LCI",
+    "ParentID": 40,
+    "UnitCode": "BXT",
+    "UnitName": "TTVT Bát Xát",
+    "Address": "Số 101 -Đường  Hùng  Vương Thị Trấn Bát xát - Huyện Bát Xát - Tỉnh Lào Cai",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 337,
+    "ProvinceCode": "LCI",
+    "ParentID": 40,
+    "UnitCode": "SPA",
+    "UnitName": "TTVT Sa Pa",
+    "Address": "Số 06 - Đường Thạch Sơn -  Thị Trấn Sa  pa - Huyện Sa Pa - Tỉnh  Lào Cai",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 591,
+    "ProvinceCode": "LCI",
+    "ParentID": 40,
+    "UnitCode": "DHTT",
+    "UnitName": "TT ĐHTT",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 592,
+    "ProvinceCode": "LCI",
+    "ParentID": 40,
+    "UnitCode": "IT",
+    "UnitName": "Phòng Kỹ thuật-Tin học",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 674,
+    "ProvinceCode": "LCI",
+    "ParentID": 40,
+    "UnitCode": "LCI",
+    "UnitName": "Đài hỗ trợ khách hàng-TTKD",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 41,
+    "ProvinceCode": "LAN",
+    "ParentID": 1,
+    "UnitCode": "LAN",
+    "UnitName": "Viễn thông Long An",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1058,
+    "ProvinceCode": "LAN",
+    "ParentID": 41,
+    "UnitCode": null,
+    "UnitName": "TTVT Bến Lức - Thủ Thừa",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1059,
+    "ProvinceCode": "LAN",
+    "ParentID": 41,
+    "UnitCode": null,
+    "UnitName": "TTVT Tân Thạnh - Thạnh Hóa",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1060,
+    "ProvinceCode": "LAN",
+    "ParentID": 41,
+    "UnitCode": null,
+    "UnitName": "TTVT Đức Hòa - Đức Huệ",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1061,
+    "ProvinceCode": "LAN",
+    "ParentID": 41,
+    "UnitCode": null,
+    "UnitName": "TTVT Châu Thành - Tân Trụ",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1062,
+    "ProvinceCode": "LAN",
+    "ParentID": 41,
+    "UnitCode": null,
+    "UnitName": "TTVT Kiến Tường - Mộc Hóa",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1063,
+    "ProvinceCode": "LAN",
+    "ParentID": 41,
+    "UnitCode": null,
+    "UnitName": "TTVT Vĩnh Hưng - Tân Hưng",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1064,
+    "ProvinceCode": "LAN",
+    "ParentID": 41,
+    "UnitCode": null,
+    "UnitName": "TTVT Tân An",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1065,
+    "ProvinceCode": "LAN",
+    "ParentID": 41,
+    "UnitCode": null,
+    "UnitName": "TTVT Cần Đước - Cần Giuộc",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1066,
+    "ProvinceCode": "LAN",
+    "ParentID": 41,
+    "UnitCode": null,
+    "UnitName": "TT ĐHTT",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1067,
+    "ProvinceCode": "LAN",
+    "ParentID": 41,
+    "UnitCode": null,
+    "UnitName": "Phòng ban",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 42,
+    "ProvinceCode": "NDH",
+    "ParentID": 1,
+    "UnitCode": "NDH",
+    "UnitName": "Viễn thông Nam Định",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 593,
+    "ProvinceCode": "NDH",
+    "ParentID": 42,
+    "UnitCode": "GTY",
+    "UnitName": "TTVT Giao Thủy",
+    "Address": "Thị Trấn Ngô Đồng, Huyện Giao Thuỷ",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 594,
+    "ProvinceCode": "NDH",
+    "ParentID": 42,
+    "UnitCode": "HHU",
+    "UnitName": "TTVT Hải Hậu",
+    "Address": "Thị Trấn Yên Định, Huyện Hải Hậu",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 595,
+    "ProvinceCode": "NDH",
+    "ParentID": 42,
+    "UnitCode": "MLC",
+    "UnitName": "TTVT Mỹ Lộc",
+    "Address": "Thị Trấn Đặng Xá,  Huyện Mỹ Lộc",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 596,
+    "ProvinceCode": "NDH",
+    "ParentID": 42,
+    "UnitCode": "TPO",
+    "UnitName": "TTVT Thành Phố",
+    "Address": "TP Nam Định",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 597,
+    "ProvinceCode": "NDH",
+    "ParentID": 42,
+    "UnitCode": "NHG",
+    "UnitName": "TTVT Nghĩa Hưng",
+    "Address": "Trấn Liễu Đề,  Huyện Nghĩa Hưng",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 598,
+    "ProvinceCode": "NDH",
+    "ParentID": 42,
+    "UnitCode": "NTC",
+    "UnitName": "TTVT Nam Trực",
+    "Address": "Thị Trấn Nam Giang, Huyện Nam Trực",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 599,
+    "ProvinceCode": "NDH",
+    "ParentID": 42,
+    "UnitCode": "TNH",
+    "UnitName": "TTVT Trực Ninh",
+    "Address": "Thị Trấn Cổ Lễ, Huyện Trực Ninh",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 600,
+    "ProvinceCode": "NDH",
+    "ParentID": 42,
+    "UnitCode": "VBN",
+    "UnitName": "TTVT Vụ Bản",
+    "Address": "Thị Trấn Gôi, Huyện Vụ Bản",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 601,
+    "ProvinceCode": "NDH",
+    "ParentID": 42,
+    "UnitCode": "XTG",
+    "UnitName": "TTVT Xuân Trường",
+    "Address": "Thị Trấn Xuân Bảng, Huyện Xuân Trường",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 602,
+    "ProvinceCode": "NDH",
+    "ParentID": 42,
+    "UnitCode": "YYN",
+    "UnitName": "TTVT Ý Yên",
+    "Address": "Thị Trấn Lâm, Huyện Ý Yên",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 645,
+    "ProvinceCode": "NDH",
+    "ParentID": 42,
+    "UnitCode": "CSKH",
+    "UnitName": "Đài CSKH",
+    "Address": "Số 4 Hà Huy Tập",
+    "ContactPhone": "03503844119"
+  },
+  {
+    "UnitID": 43,
+    "ProvinceCode": "NAN",
+    "ParentID": 1,
+    "UnitCode": "NAN",
+    "UnitName": "Viễn thông Nghệ An",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 603,
+    "ProvinceCode": "NAN",
+    "ParentID": 43,
+    "UnitCode": "ASN_NAN",
+    "UnitName": "TTVT Anh Sơn",
+    "Address": "Thị trấn Anh Sơn",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 604,
+    "ProvinceCode": "NAN",
+    "ParentID": 43,
+    "UnitCode": "CCG_NAN",
+    "UnitName": "TTVT Con Cuông",
+    "Address": "Thị trấn Con Cuông",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 605,
+    "ProvinceCode": "NAN",
+    "ParentID": 43,
+    "UnitCode": "CLO_NAN",
+    "UnitName": "TTVT Cửa Lò",
+    "Address": "Thị xã Cửa Lò",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 606,
+    "ProvinceCode": "NAN",
+    "ParentID": 43,
+    "UnitCode": "DCU_NAN",
+    "UnitName": "TTVT Diễn Châu",
+    "Address": "Thị trấn Diễn Châu",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 607,
+    "ProvinceCode": "NAN",
+    "ParentID": 43,
+    "UnitCode": "DLG_NAN",
+    "UnitName": "TTVT Đô Lương",
+    "Address": "Thị trấn Đô Lương",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 608,
+    "ProvinceCode": "NAN",
+    "ParentID": 43,
+    "UnitCode": "HNN_NAN",
+    "UnitName": "TTVT Hưng Nguyên",
+    "Address": "Thị trấn Hưng Nguyên",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 609,
+    "ProvinceCode": "NAN",
+    "ParentID": 43,
+    "UnitCode": "KSN_NAN",
+    "UnitName": "TTVT Kỳ Sơn",
+    "Address": "Thị trấn Mường Xén",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 610,
+    "ProvinceCode": "NAN",
+    "ParentID": 43,
+    "UnitCode": "NDN_NAN",
+    "UnitName": "TTVT Nam Đàn",
+    "Address": "Thị trấn Nam Đàn",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 611,
+    "ProvinceCode": "NAN",
+    "ParentID": 43,
+    "UnitCode": "NGL_NAN",
+    "UnitName": "TTVT Nghi Lộc",
+    "Address": "Thị trấn Quán Hành",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 612,
+    "ProvinceCode": "NAN",
+    "ParentID": 43,
+    "UnitCode": "QPG_NAN",
+    "UnitName": "TTVT Quế Phong",
+    "Address": "Thị trấn Kim Sơn",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 613,
+    "ProvinceCode": "NAN",
+    "ParentID": 43,
+    "UnitCode": "QCU_NAN",
+    "UnitName": "TTVT Quỳ Châu",
+    "Address": "Thị trấn Quỳ Châu",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 614,
+    "ProvinceCode": "NAN",
+    "ParentID": 43,
+    "UnitCode": "QHP_NAN",
+    "UnitName": "TTVT Quỳ Hợp",
+    "Address": "Thị trấn Quỳ Hợp",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 615,
+    "ProvinceCode": "NAN",
+    "ParentID": 43,
+    "UnitCode": "QLU-HMI_",
+    "UnitName": "TTVT Quỳnh Lưu - Hoàng Mai",
+    "Address": "Thị trấn Cầu Giát",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 616,
+    "ProvinceCode": "NAN",
+    "ParentID": 43,
+    "UnitCode": "TKY_NAN",
+    "UnitName": "TTVT Tân Kỳ",
+    "Address": "Thị trấn Tân Kỳ",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 617,
+    "ProvinceCode": "NAN",
+    "ParentID": 43,
+    "UnitCode": "THA-NGN_",
+    "UnitName": "TTVT Thái Hòa - Nghĩa Đàn",
+    "Address": "Thị xã Thái Hòa",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 618,
+    "ProvinceCode": "NAN",
+    "ParentID": 43,
+    "UnitCode": "TCG_NAN",
+    "UnitName": "TTVT Thanh Chương",
+    "Address": "Thị trấn Dùng",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 619,
+    "ProvinceCode": "NAN",
+    "ParentID": 43,
+    "UnitCode": "TDG_NAN",
+    "UnitName": "TTVT Tương Dương",
+    "Address": "Thị trấn Hòa Bình",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 620,
+    "ProvinceCode": "NAN",
+    "ParentID": 43,
+    "UnitCode": "VIH_NAN",
+    "UnitName": "TTVT Vinh",
+    "Address": "Thành phố Vinh",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 621,
+    "ProvinceCode": "NAN",
+    "ParentID": 43,
+    "UnitCode": "YTH_NAN",
+    "UnitName": "TTVT Yên Thành",
+    "Address": "Thị trấn Yên Thành",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 637,
+    "ProvinceCode": "NAN",
+    "ParentID": 43,
+    "UnitCode": "NAN_DHTT",
+    "UnitName": "TT Điều hành Thông tin",
+    "Address": "2B Trường Thi - TP.Vinh",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 642,
+    "ProvinceCode": "NAN",
+    "ParentID": 43,
+    "UnitCode": "NAN",
+    "UnitName": "Phòng Kỹ thuật Đầu tư",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 44,
+    "ProvinceCode": "NBH",
+    "ParentID": 1,
+    "UnitCode": "NBH",
+    "UnitName": "Viễn thông Ninh Bình",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 569,
+    "ProvinceCode": "NBH",
+    "ParentID": 44,
+    "UnitCode": "NBH",
+    "UnitName": "TT Điều hành thông tin",
+    "Address": "Đường THĐ, TP Ninh Bình",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 570,
+    "ProvinceCode": "NBH",
+    "ParentID": 44,
+    "UnitCode": null,
+    "UnitName": "TTVT Ninh Bình",
+    "Address": "Phường Phúc Thành, TP Ninh Bình",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 571,
+    "ProvinceCode": "NBH",
+    "ParentID": 44,
+    "UnitCode": null,
+    "UnitName": "TTVT Hoa Lư",
+    "Address": "TT Thiên Tôn, Huyện Hoa Lư",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 572,
+    "ProvinceCode": "NBH",
+    "ParentID": 44,
+    "UnitCode": null,
+    "UnitName": "TTVT Tam Điệp",
+    "Address": "Phường Trung Sơn, T Tam Điệp",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 573,
+    "ProvinceCode": "NBH",
+    "ParentID": 44,
+    "UnitCode": null,
+    "UnitName": "TTVT Gia Viễn",
+    "Address": "TT Nho Quan, Huyện Nho Quan",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 574,
+    "ProvinceCode": "NBH",
+    "ParentID": 44,
+    "UnitCode": null,
+    "UnitName": "TTVT Yên Mô",
+    "Address": "TT Ngò, Huyện Yên Mô",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 575,
+    "ProvinceCode": "NBH",
+    "ParentID": 44,
+    "UnitCode": null,
+    "UnitName": "TTVT Kim Sơn",
+    "Address": "TT Phát Diệm, Huyện Kim Sơn",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 576,
+    "ProvinceCode": "NBH",
+    "ParentID": 44,
+    "UnitCode": null,
+    "UnitName": "TTVT Yên Khánh",
+    "Address": "TT Ninh, Huyện Yên Khánh",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 577,
+    "ProvinceCode": "NBH",
+    "ParentID": 44,
+    "UnitCode": "NQN",
+    "UnitName": "TTVT Nho Quan",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 579,
+    "ProvinceCode": "NBH",
+    "ParentID": 44,
+    "UnitCode": null,
+    "UnitName": "TT Công nghệ thông tin",
+    "Address": "Đường THĐ, TP Ninh Bình",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 580,
+    "ProvinceCode": "NBH",
+    "ParentID": 44,
+    "UnitCode": null,
+    "UnitName": "Trung tâm Kinh doanh",
+    "Address": "Đường THĐ, TP Ninh Bình",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 581,
+    "ProvinceCode": "NBH",
+    "ParentID": 580,
+    "UnitCode": null,
+    "UnitName": "PGD Ninh Bình",
+    "Address": "Phường Phúc Thành, TP Ninh Bình",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 582,
+    "ProvinceCode": "NBH",
+    "ParentID": 580,
+    "UnitCode": null,
+    "UnitName": "PGD Hoa Lư",
+    "Address": "TT Thiên Tôn, Huyện Hoa Lư",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 583,
+    "ProvinceCode": "NBH",
+    "ParentID": 580,
+    "UnitCode": null,
+    "UnitName": "PGD Tam Điệp",
+    "Address": "Phường Trung Sơn, T Tam Điệp",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 584,
+    "ProvinceCode": "NBH",
+    "ParentID": 580,
+    "UnitCode": null,
+    "UnitName": "PGD Gia Viễn",
+    "Address": "TT Me, Huyện Gia Viễn",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 585,
+    "ProvinceCode": "NBH",
+    "ParentID": 580,
+    "UnitCode": null,
+    "UnitName": "PGD Nho Quan",
+    "Address": "TT Nho Quan, Huyện Nho Quan",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 586,
+    "ProvinceCode": "NBH",
+    "ParentID": 580,
+    "UnitCode": null,
+    "UnitName": "PGD Yên Mô",
+    "Address": "TT Ngò, Huyện Yên Mô",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 587,
+    "ProvinceCode": "NBH",
+    "ParentID": 580,
+    "UnitCode": null,
+    "UnitName": "PGD Kim Sơn",
+    "Address": "TT Phát Diệm, Huyện Kim Sơn",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 588,
+    "ProvinceCode": "NBH",
+    "ParentID": 580,
+    "UnitCode": null,
+    "UnitName": "PGD Yên Khánh",
+    "Address": "TT Ninh, Huyện Yên Khánh",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 45,
+    "ProvinceCode": "NTN",
+    "ParentID": 1,
+    "UnitCode": "NTN",
+    "UnitName": "Viễn thông Ninh Thuận",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 957,
+    "ProvinceCode": "NTN",
+    "ParentID": 45,
+    "UnitCode": "NTN",
+    "UnitName": "TTVT Phan Rang - Tháp Chàm",
+    "Address": "Đường 21/8, TP Phan Rang - Tháp Chàm",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 958,
+    "ProvinceCode": "NTN",
+    "ParentID": 45,
+    "UnitCode": null,
+    "UnitName": "TTVT Ninh Hải - Thuận Bắc",
+    "Address": "Đường Yên Ninh, Huyện Ninh Hải",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 959,
+    "ProvinceCode": "NTN",
+    "ParentID": 45,
+    "UnitCode": null,
+    "UnitName": "TTVT Ninh Phước - Thuận Nam",
+    "Address": "Quốc lộ 1, Huyện Ninh Phước",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 960,
+    "ProvinceCode": "NTN",
+    "ParentID": 45,
+    "UnitCode": null,
+    "UnitName": "TTVT Ninh Sơn - Bác Ái",
+    "Address": "Quốc lộ 27, Huyện Ninh Sơn",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1005,
+    "ProvinceCode": "NTN",
+    "ParentID": 45,
+    "UnitCode": "NTN",
+    "UnitName": "Trung Tâm Điều hành",
+    "Address": "Đường 21/8, TP Phan Rang - Tháp Chàm",
+    "ContactPhone": "05293833000"
+  },
+  {
+    "UnitID": 46,
+    "ProvinceCode": "PTO",
+    "ParentID": 1,
+    "UnitCode": "PTO",
+    "UnitName": "Viễn thông Phú Thọ",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 370,
+    "ProvinceCode": "PTO",
+    "ParentID": 46,
+    "UnitCode": "ĐHTT",
+    "UnitName": "TT Điều hành Thông tin",
+    "Address": "Số 1468-Đường Hùng vương - Việt trì - Phú Thọ",
+    "ContactPhone": "0917626626"
+  },
+  {
+    "UnitID": 371,
+    "ProvinceCode": "PTO",
+    "ParentID": 46,
+    "UnitCode": "VTI",
+    "UnitName": "TTVT Việt Trì",
+    "Address": "Số 1468 - Đường Hùng vương - Việt trì - Phú Thọ",
+    "ContactPhone": "0913283127"
+  },
+  {
+    "UnitID": 372,
+    "ProvinceCode": "PTO",
+    "ParentID": 46,
+    "UnitCode": "PNI",
+    "UnitName": "TTVT Phù Ninh",
+    "Address": "TT Phong Châu - Phù ninh",
+    "ContactPhone": "0914823000"
+  },
+  {
+    "UnitID": 373,
+    "ProvinceCode": "PTO",
+    "ParentID": 46,
+    "UnitCode": "LTO",
+    "UnitName": "TTVT Lâm Thao",
+    "Address": "TT Lâm Thao - Lâm Thao",
+    "ContactPhone": "0913391207"
+  },
+  {
+    "UnitID": 375,
+    "ProvinceCode": "PTO",
+    "ParentID": 46,
+    "UnitCode": null,
+    "UnitName": "TTVT Phú Thọ",
+    "Address": "Thị xã Phú Thọ",
+    "ContactPhone": "0915808868"
+  },
+  {
+    "UnitID": 376,
+    "ProvinceCode": "PTO",
+    "ParentID": 46,
+    "UnitCode": "TBA",
+    "UnitName": "TTVT Thanh Ba",
+    "Address": "K6 TT Thanh Ba - Thanh Ba",
+    "ContactPhone": "0913269880"
+  },
+  {
+    "UnitID": 377,
+    "ProvinceCode": "PTO",
+    "ParentID": 46,
+    "UnitCode": "HHA",
+    "UnitName": "TTVT Hạ Hòa",
+    "Address": "K8 TT Hạ Hòa - Hạ Hòa",
+    "ContactPhone": "0913282667"
+  },
+  {
+    "UnitID": 378,
+    "ProvinceCode": "PTO",
+    "ParentID": 46,
+    "UnitCode": "ĐHG",
+    "UnitName": "TTVT Đoan Hùng",
+    "Address": "TT Đoan Hùng - Đoan Hùng",
+    "ContactPhone": "0913389197"
+  },
+  {
+    "UnitID": 379,
+    "ProvinceCode": "PTO",
+    "ParentID": 46,
+    "UnitCode": "CKE",
+    "UnitName": "TTVT Cẩm Khê",
+    "Address": "TT Sông Thao- Cẩm khê",
+    "ContactPhone": "0912988887"
+  },
+  {
+    "UnitID": 380,
+    "ProvinceCode": "PTO",
+    "ParentID": 46,
+    "UnitCode": "YLP",
+    "UnitName": "TTVT Yên Lập",
+    "Address": "TT Yên Lập - Yên Lập",
+    "ContactPhone": "0912988887"
+  },
+  {
+    "UnitID": 381,
+    "ProvinceCode": "PTO",
+    "ParentID": 46,
+    "UnitCode": null,
+    "UnitName": "TTVT Tân Sơn",
+    "Address": "Xã Tân Phú - Tân sơn",
+    "ContactPhone": "0913269862"
+  },
+  {
+    "UnitID": 382,
+    "ProvinceCode": "PTO",
+    "ParentID": 46,
+    "UnitCode": "THN",
+    "UnitName": "TTVT Thanh Sơn",
+    "Address": "TT Thanh sơn - Thanh sơn",
+    "ContactPhone": "0913269862"
+  },
+  {
+    "UnitID": 383,
+    "ProvinceCode": "PTO",
+    "ParentID": 46,
+    "UnitCode": "TNG",
+    "UnitName": "TTVT Tam Nông",
+    "Address": "TT Hưng Hóa - Tam Nông",
+    "ContactPhone": "0914567829"
+  },
+  {
+    "UnitID": 384,
+    "ProvinceCode": "PTO",
+    "ParentID": 46,
+    "UnitCode": "TTY",
+    "UnitName": "TTVT Thanh Thủy",
+    "Address": "TT La Phù - Thanh Thủy",
+    "ContactPhone": "0917293888"
+  },
+  {
+    "UnitID": 836,
+    "ProvinceCode": "PTO",
+    "ParentID": 46,
+    "UnitCode": "KTDT",
+    "UnitName": "Phòng Kỹ thuật Đầu tư",
+    "Address": "Tiên Cát - Việt Trì - Phú Thọ",
+    "ContactPhone": "0913282168"
+  },
+  {
+    "UnitID": 47,
+    "ProvinceCode": "PYN",
+    "ParentID": 1,
+    "UnitCode": "PYN",
+    "UnitName": "Viễn thông Phú Yên",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 102,
+    "ProvinceCode": "PYN",
+    "ParentID": 47,
+    "UnitCode": null,
+    "UnitName": "Văn phòng VTPY",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 112,
+    "ProvinceCode": "PYN",
+    "ParentID": 102,
+    "UnitCode": null,
+    "UnitName": "Phòng TC-HC",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 114,
+    "ProvinceCode": "PYN",
+    "ParentID": 102,
+    "UnitCode": null,
+    "UnitName": "Phòng Kế toán TKTC",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 116,
+    "ProvinceCode": "PYN",
+    "ParentID": 102,
+    "UnitCode": null,
+    "UnitName": "Phòng KH-KD",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 117,
+    "ProvinceCode": "PYN",
+    "ParentID": 102,
+    "UnitCode": null,
+    "UnitName": "Phòng Mạng-Đầu tư",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 665,
+    "ProvinceCode": "PYN",
+    "ParentID": 102,
+    "UnitCode": null,
+    "UnitName": "Ban Giám đốc VTT",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 103,
+    "ProvinceCode": "PYN",
+    "ParentID": 47,
+    "UnitCode": null,
+    "UnitName": "TTVT Tuy Hòa",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 118,
+    "ProvinceCode": "PYN",
+    "ParentID": 103,
+    "UnitCode": null,
+    "UnitName": "Tổ Tổng hợp",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 122,
+    "ProvinceCode": "PYN",
+    "ParentID": 103,
+    "UnitCode": null,
+    "UnitName": "Tổ Kỹ thuật Tuy Hòa",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 123,
+    "ProvinceCode": "PYN",
+    "ParentID": 103,
+    "UnitCode": null,
+    "UnitName": "Tổ Kỹ thuật Phú Hòa",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 158,
+    "ProvinceCode": "PYN",
+    "ParentID": 103,
+    "UnitCode": "PYN",
+    "UnitName": "Tổ Hạ tầng",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 104,
+    "ProvinceCode": "PYN",
+    "ParentID": 47,
+    "UnitCode": null,
+    "UnitName": "TTVT Đông và Tây Hòa",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 125,
+    "ProvinceCode": "PYN",
+    "ParentID": 104,
+    "UnitCode": null,
+    "UnitName": "Tổ lắp đặt, bảo dưỡng, ứng cứu",
+    "Address": null,
+    "ContactPhone": "0573 851211"
+  },
+  {
+    "UnitID": 126,
+    "ProvinceCode": "PYN",
+    "ParentID": 104,
+    "UnitCode": null,
+    "UnitName": "Tổ Kỹ thuật Phú Lâm",
+    "Address": null,
+    "ContactPhone": "0573 851810"
+  },
+  {
+    "UnitID": 152,
+    "ProvinceCode": "PYN",
+    "ParentID": 104,
+    "UnitCode": null,
+    "UnitName": "Tổ Kỹ thuật Đông Mỹ",
+    "Address": "Đông Mỹ - Hòa Vinh",
+    "ContactPhone": "0573531101"
+  },
+  {
+    "UnitID": 153,
+    "ProvinceCode": "PYN",
+    "ParentID": 104,
+    "UnitCode": null,
+    "UnitName": "Tổ Kỹ thuật Phú Hiệp",
+    "Address": null,
+    "ContactPhone": "0573 545001"
+  },
+  {
+    "UnitID": 154,
+    "ProvinceCode": "PYN",
+    "ParentID": 104,
+    "UnitCode": null,
+    "UnitName": "Tổ Kỹ thuật Tây Hòa",
+    "Address": null,
+    "ContactPhone": "0573578200"
+  },
+  {
+    "UnitID": 155,
+    "ProvinceCode": "PYN",
+    "ParentID": 104,
+    "UnitCode": null,
+    "UnitName": "Tổ Tổng hợp",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 105,
+    "ProvinceCode": "PYN",
+    "ParentID": 47,
+    "UnitCode": null,
+    "UnitName": "TTVT Sông Hinh",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 129,
+    "ProvinceCode": "PYN",
+    "ParentID": 105,
+    "UnitCode": null,
+    "UnitName": "Tổ CS PTTB Sông Hinh",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 130,
+    "ProvinceCode": "PYN",
+    "ParentID": 105,
+    "UnitCode": null,
+    "UnitName": "Tổ Kỹ thuật Viễn thông",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 648,
+    "ProvinceCode": "PYN",
+    "ParentID": 105,
+    "UnitCode": null,
+    "UnitName": "Ban Giám đốc TTVT Sông Hinh",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 106,
+    "ProvinceCode": "PYN",
+    "ParentID": 47,
+    "UnitCode": null,
+    "UnitName": "TTVT Sơn Hòa",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 131,
+    "ProvinceCode": "PYN",
+    "ParentID": 106,
+    "UnitCode": null,
+    "UnitName": "Tổ CS PTTB Sơn Hòa",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 132,
+    "ProvinceCode": "PYN",
+    "ParentID": 106,
+    "UnitCode": null,
+    "UnitName": "Tổ Kỹ Thuật Viễn thông",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 647,
+    "ProvinceCode": "PYN",
+    "ParentID": 106,
+    "UnitCode": null,
+    "UnitName": "Tổ Quản lý",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 107,
+    "ProvinceCode": "PYN",
+    "ParentID": 47,
+    "UnitCode": null,
+    "UnitName": "TTVT Tuy An",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 133,
+    "ProvinceCode": "PYN",
+    "ParentID": 107,
+    "UnitCode": null,
+    "UnitName": "Tổ Tổng hợp",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 134,
+    "ProvinceCode": "PYN",
+    "ParentID": 107,
+    "UnitCode": null,
+    "UnitName": "Tổ Kỹ thuật Chí Thạnh",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 135,
+    "ProvinceCode": "PYN",
+    "ParentID": 107,
+    "UnitCode": null,
+    "UnitName": "Tổ Kỹ thuật Hòa Đa",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 161,
+    "ProvinceCode": "PYN",
+    "ParentID": 107,
+    "UnitCode": null,
+    "UnitName": "Tổ lắp đặt, bảo dưỡng, ứng cứu",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 108,
+    "ProvinceCode": "PYN",
+    "ParentID": 47,
+    "UnitCode": null,
+    "UnitName": "TTVT Đồng Xuân",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 138,
+    "ProvinceCode": "PYN",
+    "ParentID": 108,
+    "UnitCode": null,
+    "UnitName": "Tổ Kỹ thuật Đồng Xuân",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 139,
+    "ProvinceCode": "PYN",
+    "ParentID": 108,
+    "UnitCode": null,
+    "UnitName": "Trạm VT Xuân Lãnh",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 140,
+    "ProvinceCode": "PYN",
+    "ParentID": 108,
+    "UnitCode": null,
+    "UnitName": "Trạm VT Xuân Phước",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 157,
+    "ProvinceCode": "PYN",
+    "ParentID": 108,
+    "UnitCode": null,
+    "UnitName": "Ban Giám đốc TTVT Đồng Xuân",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 536,
+    "ProvinceCode": "PYN",
+    "ParentID": 108,
+    "UnitCode": "PYN",
+    "UnitName": "Tổ lắp đặt, bảo dưỡng, ứng cứu",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 109,
+    "ProvinceCode": "PYN",
+    "ParentID": 47,
+    "UnitCode": null,
+    "UnitName": "TTVT Sông Cầu",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 141,
+    "ProvinceCode": "PYN",
+    "ParentID": 109,
+    "UnitCode": null,
+    "UnitName": "Tổ Tổng hợp",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 142,
+    "ProvinceCode": "PYN",
+    "ParentID": 109,
+    "UnitCode": null,
+    "UnitName": "Tổ Kỹ thuật Sông Cầu",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 143,
+    "ProvinceCode": "PYN",
+    "ParentID": 109,
+    "UnitCode": null,
+    "UnitName": "Tổ lắp đặt, bảo dưỡng, ứng cứu",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 145,
+    "ProvinceCode": "PYN",
+    "ParentID": 109,
+    "UnitCode": null,
+    "UnitName": "Tổ Kỹ thuật Xuân Hải",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 110,
+    "ProvinceCode": "PYN",
+    "ParentID": 47,
+    "UnitCode": "CNTT",
+    "UnitName": "Trung tâm CNTT",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 667,
+    "ProvinceCode": "PYN",
+    "ParentID": 110,
+    "UnitCode": null,
+    "UnitName": "Tổ tổng hợp",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 668,
+    "ProvinceCode": "PYN",
+    "ParentID": 110,
+    "UnitCode": null,
+    "UnitName": "Tổ phần mềm",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 669,
+    "ProvinceCode": "PYN",
+    "ParentID": 110,
+    "UnitCode": null,
+    "UnitName": "Tổ kỹ thuật nghiệp vụ",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 111,
+    "ProvinceCode": "PYN",
+    "ParentID": 47,
+    "UnitCode": null,
+    "UnitName": "Trung Tâm Kinh Doanh",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 146,
+    "ProvinceCode": "PYN",
+    "ParentID": 111,
+    "UnitCode": null,
+    "UnitName": "Tổ Quản lý",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 147,
+    "ProvinceCode": "PYN",
+    "ParentID": 111,
+    "UnitCode": null,
+    "UnitName": "Tổ Tiếp thị - Bán hàng",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 148,
+    "ProvinceCode": "PYN",
+    "ParentID": 111,
+    "UnitCode": null,
+    "UnitName": "Tổ Xử lý cước - QLCN",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 149,
+    "ProvinceCode": "PYN",
+    "ParentID": 111,
+    "UnitCode": null,
+    "UnitName": "Tổ Dịch vụ Khách hàng",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 150,
+    "ProvinceCode": "PYN",
+    "ParentID": 111,
+    "UnitCode": null,
+    "UnitName": "Tổ đài 1080 - DV nội dung",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 646,
+    "ProvinceCode": "PYN",
+    "ParentID": 47,
+    "UnitCode": null,
+    "UnitName": "TT Điều hành Thông tin",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 119,
+    "ProvinceCode": "PYN",
+    "ParentID": 646,
+    "UnitCode": null,
+    "UnitName": "Tổ khai thác (OMC)",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 121,
+    "ProvinceCode": "PYN",
+    "ParentID": 646,
+    "UnitCode": null,
+    "UnitName": "Tổ bảo dưỡng, ứng cứu",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 662,
+    "ProvinceCode": "PYN",
+    "ParentID": 646,
+    "UnitCode": null,
+    "UnitName": "Ban Giám đốc TT ĐHTT",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 663,
+    "ProvinceCode": "PYN",
+    "ParentID": 646,
+    "UnitCode": null,
+    "UnitName": "Tổ tổng hợp",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 664,
+    "ProvinceCode": "PYN",
+    "ParentID": 646,
+    "UnitCode": null,
+    "UnitName": "Tổ sửa chữa thiết bị VT-CNTT",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 48,
+    "ProvinceCode": "QBH",
+    "ParentID": 1,
+    "UnitCode": "QBH",
+    "UnitName": "Viễn thông Quảng Bình",
+    "Address": "01 Trần Hưng Đạo",
+    "ContactPhone": "0913018077"
+  },
+  {
+    "UnitID": 171,
+    "ProvinceCode": "QBH",
+    "ParentID": 48,
+    "UnitCode": "MHA",
+    "UnitName": "Trung tâm VT Minh Hóa",
+    "Address": "Thị trấn Quy Đạt",
+    "ContactPhone": "0949275777"
+  },
+  {
+    "UnitID": 172,
+    "ProvinceCode": "QBH",
+    "ParentID": 48,
+    "UnitCode": "THA",
+    "UnitName": "Trung tâm VT Tuyên Hóa",
+    "Address": "Thị trấn Đồng Lê",
+    "ContactPhone": "0912335662"
+  },
+  {
+    "UnitID": 173,
+    "ProvinceCode": "QBH",
+    "ParentID": 48,
+    "UnitCode": "QTH",
+    "UnitName": "Trung tâm VT Quảng Trạch",
+    "Address": "Thị xã Ba Đồn",
+    "ContactPhone": "0913295291"
+  },
+  {
+    "UnitID": 174,
+    "ProvinceCode": "QBH",
+    "ParentID": 48,
+    "UnitCode": "BTH",
+    "UnitName": "Trung tâm VT Bố Trạch",
+    "Address": "Thị trấn Hoàn Lão",
+    "ContactPhone": "0913295957"
+  },
+  {
+    "UnitID": 175,
+    "ProvinceCode": "QBH",
+    "ParentID": 48,
+    "UnitCode": "DHI",
+    "UnitName": "Trung tâm VT Đồng Hới",
+    "Address": "Thành phố Đồng Hới",
+    "ContactPhone": "0913295487"
+  },
+  {
+    "UnitID": 176,
+    "ProvinceCode": "QBH",
+    "ParentID": 48,
+    "UnitCode": "QNH",
+    "UnitName": "Trung tâm VT Quảng Ninh",
+    "Address": "Thị trấn Quán Hàu",
+    "ContactPhone": "0913252523"
+  },
+  {
+    "UnitID": 177,
+    "ProvinceCode": "QBH",
+    "ParentID": 48,
+    "UnitCode": "LTY",
+    "UnitName": "Trung tâm VT Lệ Thủy",
+    "Address": "Thị trấn Kiến Giang",
+    "ContactPhone": "0915272375"
+  },
+  {
+    "UnitID": 399,
+    "ProvinceCode": "QBH",
+    "ParentID": 48,
+    "UnitCode": "QBH",
+    "UnitName": "Trung tâm Điều hành Thông tin",
+    "Address": "01 Trần Hưng Đạo",
+    "ContactPhone": "0523822537"
+  },
+  {
+    "UnitID": 408,
+    "ProvinceCode": "QBH",
+    "ParentID": 48,
+    "UnitCode": "QBH",
+    "UnitName": "Trung tâm Kinh Doanh",
+    "Address": "04 Trần Hưng Đạo",
+    "ContactPhone": "052800126"
+  },
+  {
+    "UnitID": 457,
+    "ProvinceCode": "QBH",
+    "ParentID": 48,
+    "UnitCode": "QBH",
+    "UnitName": "Trung tâm Công nghệ Thông tin",
+    "Address": "01 Trần Hưng Đạo",
+    "ContactPhone": "0915133224"
+  },
+  {
+    "UnitID": 49,
+    "ProvinceCode": "QNM",
+    "ParentID": 1,
+    "UnitCode": "QNM",
+    "UnitName": "Viễn thông Quảng Nam",
+    "Address": "Phan Bội Châu TP Tam Kỳ",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 195,
+    "ProvinceCode": "QNM",
+    "ParentID": 49,
+    "UnitCode": "TKY",
+    "UnitName": "Tam Kỳ",
+    "Address": "Thành phố Tam Kỳ",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 196,
+    "ProvinceCode": "QNM",
+    "ParentID": 49,
+    "UnitCode": "NTH",
+    "UnitName": "Núi Thành",
+    "Address": "Huyện Núi Thành",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 197,
+    "ProvinceCode": "QNM",
+    "ParentID": 49,
+    "UnitCode": "TBH",
+    "UnitName": "Thăng Bình",
+    "Address": "Huyện Thăng Bình",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 198,
+    "ProvinceCode": "QNM",
+    "ParentID": 49,
+    "UnitCode": "TPC",
+    "UnitName": "Tiên Phước",
+    "Address": "Huyện Tiên Phước",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 199,
+    "ProvinceCode": "QNM",
+    "ParentID": 49,
+    "UnitCode": "DXN",
+    "UnitName": "Duy Xuyên",
+    "Address": "Huyện Duy Xuyên",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 200,
+    "ProvinceCode": "QNM",
+    "ParentID": 49,
+    "UnitCode": "DBN",
+    "UnitName": "Điện Bàn",
+    "Address": "Thị xã Điện Bàn",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 201,
+    "ProvinceCode": "QNM",
+    "ParentID": 49,
+    "UnitCode": "HAN",
+    "UnitName": "Hội An",
+    "Address": "Thành phố Hội An",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 202,
+    "ProvinceCode": "QNM",
+    "ParentID": 49,
+    "UnitCode": "HDC",
+    "UnitName": "Hiệp Đức",
+    "Address": "Huyện Hiệp Đức",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 203,
+    "ProvinceCode": "QNM",
+    "ParentID": 49,
+    "UnitCode": "NGG",
+    "UnitName": "Nam Giang",
+    "Address": "Huyện Nam Giang",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 204,
+    "ProvinceCode": "QNM",
+    "ParentID": 49,
+    "UnitCode": "DLC",
+    "UnitName": "Đại Lộc",
+    "Address": "Huyện Đại Lộc",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 205,
+    "ProvinceCode": "QNM",
+    "ParentID": 49,
+    "UnitCode": "QSN",
+    "UnitName": "Quế Sơn",
+    "Address": "Huyện Quế Sơn",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 207,
+    "ProvinceCode": "QNM",
+    "ParentID": 49,
+    "UnitCode": "TTKD",
+    "UnitName": "TT Kinh doanh",
+    "Address": "01 Trần Phú",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 208,
+    "ProvinceCode": "QNM",
+    "ParentID": 49,
+    "UnitCode": "VPG",
+    "UnitName": "Văn phòng VTT",
+    "Address": "Quảng Nam",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 210,
+    "ProvinceCode": "QNM",
+    "ParentID": 49,
+    "UnitCode": "DHTT",
+    "UnitName": "TT Điều hành thông tin",
+    "Address": "02 Phan Chu Trinh, Tam Kỳ",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 991,
+    "ProvinceCode": "QNM",
+    "ParentID": 210,
+    "UnitCode": "OMC",
+    "UnitName": "Đài OMC",
+    "Address": "Thành phố Tam Kỳ",
+    "ContactPhone": "3831000"
+  },
+  {
+    "UnitID": 853,
+    "ProvinceCode": "QNM",
+    "ParentID": 49,
+    "UnitCode": "PNH",
+    "UnitName": "Phú Ninh",
+    "Address": "Huyện Phú Ninh",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 854,
+    "ProvinceCode": "QNM",
+    "ParentID": 49,
+    "UnitCode": "BTM",
+    "UnitName": "Bắc Trà My",
+    "Address": "Huyện Bắc Trà My",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 855,
+    "ProvinceCode": "QNM",
+    "ParentID": 49,
+    "UnitCode": "NTM",
+    "UnitName": "Nam Trà My",
+    "Address": "Huyện Nam Trà My",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 856,
+    "ProvinceCode": "QNM",
+    "ParentID": 49,
+    "UnitCode": "PSN",
+    "UnitName": "Phước Sơn",
+    "Address": "Huyện Phước Sơn",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 857,
+    "ProvinceCode": "QNM",
+    "ParentID": 49,
+    "UnitCode": "NSN",
+    "UnitName": "Nông Sơn",
+    "Address": "Huyện Nông Sơn",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 858,
+    "ProvinceCode": "QNM",
+    "ParentID": 49,
+    "UnitCode": "DGG",
+    "UnitName": "Đông Giang",
+    "Address": "Huyện Đông Giang",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 859,
+    "ProvinceCode": "QNM",
+    "ParentID": 49,
+    "UnitCode": "TGG",
+    "UnitName": "Tây Giang",
+    "Address": "Huyện Tây Giang",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 992,
+    "ProvinceCode": "QNM",
+    "ParentID": 49,
+    "UnitCode": "TTVT4",
+    "UnitName": "TTVT4",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 993,
+    "ProvinceCode": "QNM",
+    "ParentID": 49,
+    "UnitCode": "BGD",
+    "UnitName": "Ban giám đốc",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 994,
+    "ProvinceCode": "QNM",
+    "ParentID": 49,
+    "UnitCode": "KTĐT",
+    "UnitName": "Phòng KT-ĐT",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 999,
+    "ProvinceCode": "QNM",
+    "ParentID": 49,
+    "UnitCode": "TTVT3",
+    "UnitName": "TTVT3",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1234,
+    "ProvinceCode": "QNM",
+    "ParentID": 49,
+    "UnitCode": "TTVT1",
+    "UnitName": "Trung tâm VT1",
+    "Address": "04 Trần Hưng Đạo TP Tam Kỳ",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 50,
+    "ProvinceCode": "QNI",
+    "ParentID": 1,
+    "UnitCode": "QNI",
+    "UnitName": "Viễn thông Quảng Ngãi",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 51,
+    "ProvinceCode": "QNH",
+    "ParentID": 1,
+    "UnitCode": "QNH",
+    "UnitName": "Viễn thông Quảng Ninh",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 547,
+    "ProvinceCode": "QNH",
+    "ParentID": 51,
+    "UnitCode": "KTĐT",
+    "UnitName": "Phòng Kỹ thuật đầu tư",
+    "Address": "Tầng 7 tòa nhà VNPT số 01 đường 25/4 P.Bạch Đằng TP Hạ Long",
+    "ContactPhone": "0333.829924"
+  },
+  {
+    "UnitID": 548,
+    "ProvinceCode": "QNH",
+    "ParentID": 51,
+    "UnitCode": "TT1",
+    "UnitName": "Trung tâm VT 1",
+    "Address": "Phường Hồng Hà- TP Hạ Long-Quảng Ninh",
+    "ContactPhone": "033.3828666"
+  },
+  {
+    "UnitID": 549,
+    "ProvinceCode": "QNH",
+    "ParentID": 51,
+    "UnitCode": "TT2",
+    "UnitName": "Trung tâm VT 2",
+    "Address": "Phường Quang Trung- Thành Phố Uông bí",
+    "ContactPhone": "033.3566568"
+  },
+  {
+    "UnitID": 643,
+    "ProvinceCode": "QNH",
+    "ParentID": 549,
+    "UnitCode": "BLD",
+    "UnitName": "Ban lãnh đạo",
+    "Address": "Phường Quang Trung - TP Uông Bí",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 550,
+    "ProvinceCode": "QNH",
+    "ParentID": 51,
+    "UnitCode": "TT3",
+    "UnitName": "Trung tâm VT 3",
+    "Address": "Phường Cẩm Thành- Thành phố Cẩm Phả",
+    "ContactPhone": "033.3713909"
+  },
+  {
+    "UnitID": 822,
+    "ProvinceCode": "QNH",
+    "ParentID": 550,
+    "UnitCode": "TT3.CPA",
+    "UnitName": "TT3. Tổ KTVT Cẩm Phả",
+    "Address": "Cẩm Thành, TP Cẩm Phả",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 823,
+    "ProvinceCode": "QNH",
+    "ParentID": 550,
+    "UnitCode": "TT3.VDN",
+    "UnitName": "TT3. Tổ KTVT Vân Đồn",
+    "Address": "Vân Đồn",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 824,
+    "ProvinceCode": "QNH",
+    "ParentID": 550,
+    "UnitCode": "TT3.MDG",
+    "UnitName": "TT3. Tổ KTVT Mông Dương",
+    "Address": "Mông Dương, TP Cẩm Phả",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 825,
+    "ProvinceCode": "QNH",
+    "ParentID": 550,
+    "UnitCode": "TT3.COG",
+    "UnitName": "TT3. Tổ KTVT Cửa Ông",
+    "Address": "Phường Cửa Ông, TP Cẩm Phả",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 826,
+    "ProvinceCode": "QNH",
+    "ParentID": 550,
+    "UnitCode": "TT3.CSU",
+    "UnitName": "TT3. Tổ KTVT Cọc Sáu",
+    "Address": "Phường Cẩm Phú, TP Cẩm Phả",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 827,
+    "ProvinceCode": "QNH",
+    "ParentID": 550,
+    "UnitCode": "TT3.UCC",
+    "UnitName": "TT3. Tổ Điều hành và Xử lý ứng cứu",
+    "Address": "TP Cẩm Phả",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 828,
+    "ProvinceCode": "QNH",
+    "ParentID": 550,
+    "UnitCode": "TT3.THP",
+    "UnitName": "TT3. Tổ Tổng hợp",
+    "Address": "TP Cẩm Phả",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 551,
+    "ProvinceCode": "QNH",
+    "ParentID": 51,
+    "UnitCode": "TT4",
+    "UnitName": "Trung tâm VT 4",
+    "Address": "Thị Trấn Tiên Yên-Huyện Tiên Yên",
+    "ContactPhone": "033.3746828"
+  },
+  {
+    "UnitID": 552,
+    "ProvinceCode": "QNH",
+    "ParentID": 51,
+    "UnitCode": "TT5",
+    "UnitName": "Trung tâm VT 5",
+    "Address": "Phường Hòa Lạc- Thành phố Móng Cái",
+    "ContactPhone": "033.3740270"
+  },
+  {
+    "UnitID": 559,
+    "ProvinceCode": "QNH",
+    "ParentID": 51,
+    "UnitCode": "DHT",
+    "UnitName": "Trung tâm ĐHTT",
+    "Address": "539 Lê Thánh tông - Thành Phố Hạ Long",
+    "ContactPhone": "033.3825547"
+  },
+  {
+    "UnitID": 819,
+    "ProvinceCode": "QNH",
+    "ParentID": 51,
+    "UnitCode": "TTCNTT",
+    "UnitName": "Trung tâm CNTT",
+    "Address": "Tầng 7 tòa nhà VNPT Số 01 đường 25/4 P.Bạch Đằng TP Hạ Long",
+    "ContactPhone": "033.3822000"
+  },
+  {
+    "UnitID": 830,
+    "ProvinceCode": "QNH",
+    "ParentID": 51,
+    "UnitCode": null,
+    "UnitName": "Trung tâm KD",
+    "Address": "Số 01 đường 25/4 P. Bạch Đằng TP Hạ Long",
+    "ContactPhone": "0913267368"
+  },
+  {
+    "UnitID": 52,
+    "ProvinceCode": "QTI",
+    "ParentID": 1,
+    "UnitCode": "QTI",
+    "UnitName": "Viễn thông Quảng Trị",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 935,
+    "ProvinceCode": "QTI",
+    "ParentID": 52,
+    "UnitCode": "DHA",
+    "UnitName": "TTVT TP Đông Hà",
+    "Address": "20 Trần Hưng Đạo, Đông Hà",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 936,
+    "ProvinceCode": "QTI",
+    "ParentID": 52,
+    "UnitCode": "TPG",
+    "UnitName": "TTVT Triệu Phong",
+    "Address": "TT Ái Tử, Triệu Phong",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 937,
+    "ProvinceCode": "QTI",
+    "ParentID": 52,
+    "UnitCode": "Tx QTI",
+    "UnitName": "TTVT Thị xã Quảng Trị",
+    "Address": "20 Quang Trung, Tx Quảng Trị",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 938,
+    "ProvinceCode": "QTI",
+    "ParentID": 52,
+    "UnitCode": "HLG",
+    "UnitName": "TTVT Hải Lăng",
+    "Address": "TT Diên Sanh, Hải Lăng",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 939,
+    "ProvinceCode": "QTI",
+    "ParentID": 52,
+    "UnitCode": "GLH",
+    "UnitName": "TTVT Gio Linh",
+    "Address": "TT Gio Linh, Gio Linh",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 940,
+    "ProvinceCode": "QTI",
+    "ParentID": 52,
+    "UnitCode": "VLH",
+    "UnitName": "TTVT Vĩnh Linh",
+    "Address": "TT Hố Xá, Vĩnh Linh",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 941,
+    "ProvinceCode": "QTI",
+    "ParentID": 52,
+    "UnitCode": "CLO",
+    "UnitName": "TTVT Cam Lộ",
+    "Address": "TT Cam Lộ, Cam Lộ",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 942,
+    "ProvinceCode": "QTI",
+    "ParentID": 52,
+    "UnitCode": "DKG",
+    "UnitName": "TTVT Đakrông",
+    "Address": "TT Krông Klang, Đakrông",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 943,
+    "ProvinceCode": "QTI",
+    "ParentID": 52,
+    "UnitCode": "HHA",
+    "UnitName": "TTVT Hướng Hóa",
+    "Address": "TT Khe Sanh, Hướng Hóa",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 53,
+    "ProvinceCode": "STG",
+    "ParentID": 1,
+    "UnitCode": "STG",
+    "UnitName": "Viễn thông Sóc Trăng",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 54,
+    "ProvinceCode": "SLA",
+    "ParentID": 1,
+    "UnitCode": "SLA",
+    "UnitName": "Viễn thông Sơn La",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 385,
+    "ProvinceCode": "SLA",
+    "ParentID": 54,
+    "UnitCode": "TPO",
+    "UnitName": "Thành Phố",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 386,
+    "ProvinceCode": "SLA",
+    "ParentID": 54,
+    "UnitCode": "MSN",
+    "UnitName": "Mai Sơn",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 652,
+    "ProvinceCode": "SLA",
+    "ParentID": 54,
+    "UnitCode": "MCU",
+    "UnitName": "Mộc Châu",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 653,
+    "ProvinceCode": "SLA",
+    "ParentID": 54,
+    "UnitCode": "SMA",
+    "UnitName": "Sông Mã",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 654,
+    "ProvinceCode": "SLA",
+    "ParentID": 54,
+    "UnitCode": "MLA",
+    "UnitName": "Mường La",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 655,
+    "ProvinceCode": "SLA",
+    "ParentID": 54,
+    "UnitCode": "TCU",
+    "UnitName": "Thuận Châu",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 656,
+    "ProvinceCode": "SLA",
+    "ParentID": 54,
+    "UnitCode": "YCU",
+    "UnitName": "Yên Châu",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 657,
+    "ProvinceCode": "SLA",
+    "ParentID": 54,
+    "UnitCode": "BYN",
+    "UnitName": "Bắc Yên",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 658,
+    "ProvinceCode": "SLA",
+    "ParentID": 54,
+    "UnitCode": "PYN",
+    "UnitName": "Phù Yên",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 659,
+    "ProvinceCode": "SLA",
+    "ParentID": 54,
+    "UnitCode": "QNN",
+    "UnitName": "Quỳnh Nhai",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 660,
+    "ProvinceCode": "SLA",
+    "ParentID": 54,
+    "UnitCode": "SCP",
+    "UnitName": "Sốp Cộp",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 661,
+    "ProvinceCode": "SLA",
+    "ParentID": 54,
+    "UnitCode": "VHO",
+    "UnitName": "Vân Hồ",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1237,
+    "ProvinceCode": "SLA",
+    "ParentID": 54,
+    "UnitCode": "ĐHTT",
+    "UnitName": "Điều hành Thông tin",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 55,
+    "ProvinceCode": "TNH",
+    "ParentID": 1,
+    "UnitCode": "TNH",
+    "UnitName": "Viễn thông Tây Ninh",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 538,
+    "ProvinceCode": "TNH",
+    "ParentID": 55,
+    "UnitCode": "600",
+    "UnitName": "TTVT Bến Cầu",
+    "Address": "Thị trấn Bến Cầu",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 539,
+    "ProvinceCode": "TNH",
+    "ParentID": 55,
+    "UnitCode": "200",
+    "UnitName": "TTVT Châu Thành",
+    "Address": "Thị trấn Châu Thành",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 540,
+    "ProvinceCode": "TNH",
+    "ParentID": 55,
+    "UnitCode": "500",
+    "UnitName": "TTVT Dương Minh Châu",
+    "Address": "Thị trấn Dương Minh Châu",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 541,
+    "ProvinceCode": "TNH",
+    "ParentID": 55,
+    "UnitCode": "300",
+    "UnitName": "TTVT Gò Dầu",
+    "Address": "Thị trấn Gò Dầu",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 542,
+    "ProvinceCode": "TNH",
+    "ParentID": 55,
+    "UnitCode": "400",
+    "UnitName": "TTVT Hòa Thành",
+    "Address": "Thị trấn Hòa Thành",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 543,
+    "ProvinceCode": "TNH",
+    "ParentID": 55,
+    "UnitCode": "800",
+    "UnitName": "TTVT Tân Biên",
+    "Address": "Thị trấn Tân Biên",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 544,
+    "ProvinceCode": "TNH",
+    "ParentID": 55,
+    "UnitCode": "900",
+    "UnitName": "TTVT Tân Châu",
+    "Address": "Thị trấn Tân Châu",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 545,
+    "ProvinceCode": "TNH",
+    "ParentID": 55,
+    "UnitCode": "100",
+    "UnitName": "TTVT Thành phố TN",
+    "Address": " Thành Phố Tây Ninh",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 546,
+    "ProvinceCode": "TNH",
+    "ParentID": 55,
+    "UnitCode": "700",
+    "UnitName": "TTVT Trảng Bàng",
+    "Address": "Thị trấn Trảng Bàng",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 590,
+    "ProvinceCode": "TNH",
+    "ParentID": 55,
+    "UnitCode": "DHTT",
+    "UnitName": "TT Điều hành thông tin",
+    "Address": "186 đường 30/4 F3 Tp Tây Ninh",
+    "ContactPhone": "0663855555"
+  },
+  {
+    "UnitID": 834,
+    "ProvinceCode": "TNH",
+    "ParentID": 55,
+    "UnitCode": "CNTT",
+    "UnitName": "TT Công nghệ thông tin",
+    "Address": "1 Phạm Công Khiêm, Thành Phố Tây Ninh",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 56,
+    "ProvinceCode": "TBH",
+    "ParentID": 1,
+    "UnitCode": "TBH",
+    "UnitName": "Viễn thông Thái Bình",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1050,
+    "ProvinceCode": "TBH",
+    "ParentID": 56,
+    "UnitCode": "TPO",
+    "UnitName": "TTVT Thành Phố",
+    "Address": "Thành phố Thái Bình",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1051,
+    "ProvinceCode": "TBH",
+    "ParentID": 56,
+    "UnitCode": "VTU",
+    "UnitName": "TTVT Vũ Thư",
+    "Address": "huyện Vũ Thư",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1052,
+    "ProvinceCode": "TBH",
+    "ParentID": 56,
+    "UnitCode": "DHG",
+    "UnitName": "TTVT Đông Hưng",
+    "Address": "huyện Đông Hưng",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1053,
+    "ProvinceCode": "TBH",
+    "ParentID": 56,
+    "UnitCode": "HHA",
+    "UnitName": "TTVT Hưng Hà",
+    "Address": "huyện Hưng Hà",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1054,
+    "ProvinceCode": "TBH",
+    "ParentID": 56,
+    "UnitCode": "KXG",
+    "UnitName": "TTVT Kiến Xương",
+    "Address": "huyện Kiến Xương",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1055,
+    "ProvinceCode": "TBH",
+    "ParentID": 56,
+    "UnitCode": "QPU",
+    "UnitName": "TTVT Quỳnh Phụ",
+    "Address": "huyện Quỳnh Phụ",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1056,
+    "ProvinceCode": "TBH",
+    "ParentID": 56,
+    "UnitCode": "TTY",
+    "UnitName": "TTVT Thái Thụy",
+    "Address": "huyện Thái Thụy",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1057,
+    "ProvinceCode": "TBH",
+    "ParentID": 56,
+    "UnitCode": "THI",
+    "UnitName": "TTVT Tiền Hải",
+    "Address": "huyện Tiền Hải",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1071,
+    "ProvinceCode": "TBH",
+    "ParentID": 56,
+    "UnitCode": "ĐHTT",
+    "UnitName": "Trung tâm Điều hành Thông tin",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 57,
+    "ProvinceCode": "TNN",
+    "ParentID": 1,
+    "UnitCode": "TNN",
+    "UnitName": "Viễn thông Thái Nguyên",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 285,
+    "ProvinceCode": "TNN",
+    "ParentID": 57,
+    "UnitCode": "TPO",
+    "UnitName": "TTVT Thành Phố",
+    "Address": "No.10 - Cách Mạng Tháng 8 - TP Thái Nguyên",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 315,
+    "ProvinceCode": "TNN",
+    "ParentID": 285,
+    "UnitCode": null,
+    "UnitName": "Trạm Đồng Quang",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 316,
+    "ProvinceCode": "TNN",
+    "ParentID": 285,
+    "UnitCode": null,
+    "UnitName": "Trạm Gia Sàng",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 317,
+    "ProvinceCode": "TNN",
+    "ParentID": 285,
+    "UnitCode": null,
+    "UnitName": "Trạm Lưu Xá",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 318,
+    "ProvinceCode": "TNN",
+    "ParentID": 285,
+    "UnitCode": null,
+    "UnitName": "Trạm Mỏ Bạch",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 319,
+    "ProvinceCode": "TNN",
+    "ParentID": 285,
+    "UnitCode": null,
+    "UnitName": "Trạm Phú Xá",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 320,
+    "ProvinceCode": "TNN",
+    "ParentID": 285,
+    "UnitCode": null,
+    "UnitName": "Trạm Quan Triều",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 321,
+    "ProvinceCode": "TNN",
+    "ParentID": 285,
+    "UnitCode": null,
+    "UnitName": "Trạm Tân Thành",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 322,
+    "ProvinceCode": "TNN",
+    "ParentID": 285,
+    "UnitCode": null,
+    "UnitName": "Trạm Tân Thịnh",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 323,
+    "ProvinceCode": "TNN",
+    "ParentID": 285,
+    "UnitCode": null,
+    "UnitName": "Trạm Thịnh Đán",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 324,
+    "ProvinceCode": "TNN",
+    "ParentID": 285,
+    "UnitCode": null,
+    "UnitName": "Trạm Trung tâm",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 286,
+    "ProvinceCode": "TNN",
+    "ParentID": 57,
+    "UnitCode": "DTU",
+    "UnitName": "TTVT Đại Từ",
+    "Address": "Thị Trấn Hùng Sơn, huyện Đại Từ",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 295,
+    "ProvinceCode": "TNN",
+    "ParentID": 286,
+    "UnitCode": null,
+    "UnitName": "Trạm Đại Từ",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 296,
+    "ProvinceCode": "TNN",
+    "ParentID": 286,
+    "UnitCode": null,
+    "UnitName": "Trạm Hà Thượng",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 297,
+    "ProvinceCode": "TNN",
+    "ParentID": 286,
+    "UnitCode": null,
+    "UnitName": "Trạm Ký Phú",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 298,
+    "ProvinceCode": "TNN",
+    "ParentID": 286,
+    "UnitCode": null,
+    "UnitName": "Trạm Yên Lãng",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 287,
+    "ProvinceCode": "TNN",
+    "ParentID": 57,
+    "UnitCode": "DHA",
+    "UnitName": "TTVT Định Hóa",
+    "Address": "Xóm Bãi Á Thị  trấn Chợ Chu, huyện Định Hóa",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 299,
+    "ProvinceCode": "TNN",
+    "ParentID": 287,
+    "UnitCode": null,
+    "UnitName": "Trạm Bình Yên",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 300,
+    "ProvinceCode": "TNN",
+    "ParentID": 287,
+    "UnitCode": null,
+    "UnitName": "Trạm Định Hóa",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 301,
+    "ProvinceCode": "TNN",
+    "ParentID": 287,
+    "UnitCode": null,
+    "UnitName": "Trạm Quán Vuông",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 288,
+    "ProvinceCode": "TNN",
+    "ParentID": 57,
+    "UnitCode": "DHY",
+    "UnitName": "TTVT Đồng Hỷ",
+    "Address": "Tổ 14 Thị Trấn Chùa Hang, huyện Đồng Hỷ",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 302,
+    "ProvinceCode": "TNN",
+    "ParentID": 288,
+    "UnitCode": null,
+    "UnitName": "Trạm Đồng Hỷ",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 303,
+    "ProvinceCode": "TNN",
+    "ParentID": 288,
+    "UnitCode": null,
+    "UnitName": "Trạm Sông Cầu",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 304,
+    "ProvinceCode": "TNN",
+    "ParentID": 288,
+    "UnitCode": null,
+    "UnitName": "Trạm Trại Cau",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 289,
+    "ProvinceCode": "TNN",
+    "ParentID": 57,
+    "UnitCode": "SCG",
+    "UnitName": "TTVT Sông Công",
+    "Address": "Tổ 10 Phường Thắng Lợi, TX Sông Công",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 314,
+    "ProvinceCode": "TNN",
+    "ParentID": 289,
+    "UnitCode": null,
+    "UnitName": "Trạm Sông Công",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 290,
+    "ProvinceCode": "TNN",
+    "ParentID": 57,
+    "UnitCode": "PYN",
+    "UnitName": "TTVT Phổ Yên",
+    "Address": "VT Phổ Yên, Tiểu khu 4 Thị trấn Ba Hàng, huyện Phổ yên ",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 305,
+    "ProvinceCode": "TNN",
+    "ParentID": 290,
+    "UnitCode": null,
+    "UnitName": "Trạm Bắc Sơn",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 306,
+    "ProvinceCode": "TNN",
+    "ParentID": 290,
+    "UnitCode": null,
+    "UnitName": "Trạm Phổ Yên",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 307,
+    "ProvinceCode": "TNN",
+    "ParentID": 290,
+    "UnitCode": null,
+    "UnitName": "Trạm Thanh Xuyên",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 291,
+    "ProvinceCode": "TNN",
+    "ParentID": 57,
+    "UnitCode": "PBH",
+    "UnitName": "TTVT Phú Bình",
+    "Address": "Tổ 2 Thị Trấn Hương Sơn, huyện Phú Bình",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 308,
+    "ProvinceCode": "TNN",
+    "ParentID": 291,
+    "UnitCode": null,
+    "UnitName": "Trạm Phú Bình",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 309,
+    "ProvinceCode": "TNN",
+    "ParentID": 291,
+    "UnitCode": null,
+    "UnitName": "Trạm Tân Khánh",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 310,
+    "ProvinceCode": "TNN",
+    "ParentID": 291,
+    "UnitCode": null,
+    "UnitName": "Trạm Úc Kỳ",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 292,
+    "ProvinceCode": "TNN",
+    "ParentID": 57,
+    "UnitCode": "PLG",
+    "UnitName": "TTVT Phú Lương",
+    "Address": "Thị Trấn Đu, huyện Phú Lương",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 311,
+    "ProvinceCode": "TNN",
+    "ParentID": 292,
+    "UnitCode": null,
+    "UnitName": "Trạm Giang Tiên",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 312,
+    "ProvinceCode": "TNN",
+    "ParentID": 292,
+    "UnitCode": null,
+    "UnitName": "Trạm Phú Lương",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 313,
+    "ProvinceCode": "TNN",
+    "ParentID": 292,
+    "UnitCode": null,
+    "UnitName": "Trạm Yên Đổ",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 293,
+    "ProvinceCode": "TNN",
+    "ParentID": 57,
+    "UnitCode": "VNI",
+    "UnitName": "TTVT Võ Nhai",
+    "Address": "Phố Thái Long, thị trấn Đình Cả, huyện Võ Nhai",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 325,
+    "ProvinceCode": "TNN",
+    "ParentID": 293,
+    "UnitCode": null,
+    "UnitName": "Trạm Đình Cả",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 326,
+    "ProvinceCode": "TNN",
+    "ParentID": 293,
+    "UnitCode": null,
+    "UnitName": "Trạm La Hiên",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 327,
+    "ProvinceCode": "TNN",
+    "ParentID": 293,
+    "UnitCode": null,
+    "UnitName": "Trạm Tràng Xá",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 328,
+    "ProvinceCode": "TNN",
+    "ParentID": 57,
+    "UnitCode": "TDCM",
+    "UnitName": "TT Điều hành Thông tin",
+    "Address": null,
+    "ContactPhone": "02803852899"
+  },
+  {
+    "UnitID": 329,
+    "ProvinceCode": "TNN",
+    "ParentID": 328,
+    "UnitCode": "OMC",
+    "UnitName": "Đài OMC",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 58,
+    "ProvinceCode": "THA",
+    "ParentID": 1,
+    "UnitCode": "THA",
+    "UnitName": "Viễn thông Thanh Hóa",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1010,
+    "ProvinceCode": "THA",
+    "ParentID": 58,
+    "UnitCode": null,
+    "UnitName": "TTVT Bắc Thành Phố",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1011,
+    "ProvinceCode": "THA",
+    "ParentID": 58,
+    "UnitCode": null,
+    "UnitName": "TTVT Nam Thành Phố",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1012,
+    "ProvinceCode": "THA",
+    "ParentID": 58,
+    "UnitCode": null,
+    "UnitName": "TTVT Bỉm Sơn",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1013,
+    "ProvinceCode": "THA",
+    "ParentID": 58,
+    "UnitCode": null,
+    "UnitName": "TTVT Sầm Sơn",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1014,
+    "ProvinceCode": "THA",
+    "ParentID": 58,
+    "UnitCode": null,
+    "UnitName": "TTVT Hà Trung",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1015,
+    "ProvinceCode": "THA",
+    "ParentID": 58,
+    "UnitCode": null,
+    "UnitName": "TTVT Nga Sơn",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1016,
+    "ProvinceCode": "THA",
+    "ParentID": 58,
+    "UnitCode": null,
+    "UnitName": "TTVT Hậu Lộc",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1017,
+    "ProvinceCode": "THA",
+    "ParentID": 58,
+    "UnitCode": null,
+    "UnitName": "TTVT Hoằng Hóa",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1018,
+    "ProvinceCode": "THA",
+    "ParentID": 58,
+    "UnitCode": null,
+    "UnitName": "TTVT Quảng Xương",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1019,
+    "ProvinceCode": "THA",
+    "ParentID": 58,
+    "UnitCode": null,
+    "UnitName": "TTVT Tĩnh Gia",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1020,
+    "ProvinceCode": "THA",
+    "ParentID": 58,
+    "UnitCode": null,
+    "UnitName": "TTVT Nông Công",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1021,
+    "ProvinceCode": "THA",
+    "ParentID": 58,
+    "UnitCode": null,
+    "UnitName": "TTVT Như Thanh",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1022,
+    "ProvinceCode": "THA",
+    "ParentID": 58,
+    "UnitCode": null,
+    "UnitName": "TTVT Đông Sơn",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1023,
+    "ProvinceCode": "THA",
+    "ParentID": 58,
+    "UnitCode": null,
+    "UnitName": "TTVT Triệu Sơn",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1024,
+    "ProvinceCode": "THA",
+    "ParentID": 58,
+    "UnitCode": null,
+    "UnitName": "TTVT Thọ Xuân",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1025,
+    "ProvinceCode": "THA",
+    "ParentID": 58,
+    "UnitCode": null,
+    "UnitName": "TTVT Thiệu Hóa",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1026,
+    "ProvinceCode": "THA",
+    "ParentID": 58,
+    "UnitCode": null,
+    "UnitName": "TTVT Yên Định",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1027,
+    "ProvinceCode": "THA",
+    "ParentID": 58,
+    "UnitCode": null,
+    "UnitName": "TTVT Vĩnh Lộc",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1028,
+    "ProvinceCode": "THA",
+    "ParentID": 58,
+    "UnitCode": null,
+    "UnitName": "TTVT Thạch Thành",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1029,
+    "ProvinceCode": "THA",
+    "ParentID": 58,
+    "UnitCode": null,
+    "UnitName": "TTVT Cẩm Thủy",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1030,
+    "ProvinceCode": "THA",
+    "ParentID": 58,
+    "UnitCode": null,
+    "UnitName": "TTVT Ngọc Lặc",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1031,
+    "ProvinceCode": "THA",
+    "ParentID": 58,
+    "UnitCode": null,
+    "UnitName": "TTVT Bá Thước",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1032,
+    "ProvinceCode": "THA",
+    "ParentID": 58,
+    "UnitCode": null,
+    "UnitName": "TTVT Quan Hóa",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1034,
+    "ProvinceCode": "THA",
+    "ParentID": 58,
+    "UnitCode": null,
+    "UnitName": "TTVT Quan Sơn",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1035,
+    "ProvinceCode": "THA",
+    "ParentID": 58,
+    "UnitCode": null,
+    "UnitName": "TTVT Mường Lát",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1036,
+    "ProvinceCode": "THA",
+    "ParentID": 58,
+    "UnitCode": null,
+    "UnitName": "TTVT Thường Xuân",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1037,
+    "ProvinceCode": "THA",
+    "ParentID": 58,
+    "UnitCode": null,
+    "UnitName": "TTVT Như Xuân",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 59,
+    "ProvinceCode": "HUE",
+    "ParentID": 1,
+    "UnitCode": "HUE",
+    "UnitName": "Viễn thông Thừa Thiên Huế",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 212,
+    "ProvinceCode": "HUE",
+    "ParentID": 59,
+    "UnitCode": "HUE",
+    "UnitName": "TTVT Huế",
+    "Address": "36 Phạm Văn Đồng TP Huế ",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 213,
+    "ProvinceCode": "HUE",
+    "ParentID": 59,
+    "UnitCode": "PĐN",
+    "UnitName": "TTVT Phong Điền ",
+    "Address": "Thị trấn Phong Điền",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 214,
+    "ProvinceCode": "HUE",
+    "ParentID": 59,
+    "UnitCode": "QĐN",
+    "UnitName": "TTVT Quảng Điền",
+    "Address": "Thị Trấn Sịa Huyện Quảng Điền",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 215,
+    "ProvinceCode": "HUE",
+    "ParentID": 59,
+    "UnitCode": "HTA",
+    "UnitName": "TTVT Hương Trà",
+    "Address": "Thị trấn Tứ Hạ",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 216,
+    "ProvinceCode": "HUE",
+    "ParentID": 59,
+    "UnitCode": "ALI",
+    "UnitName": "TTVT A Lưới",
+    "Address": "Thị trấn A lưới",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 217,
+    "ProvinceCode": "HUE",
+    "ParentID": 59,
+    "UnitCode": "HTY",
+    "UnitName": "TTVT Hương Thuỷ",
+    "Address": "272, Nguyễn Tất Thành, Phường Phú Bài... ",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 218,
+    "ProvinceCode": "HUE",
+    "ParentID": 59,
+    "UnitCode": "PVG",
+    "UnitName": "TTVT Phú Vang",
+    "Address": "Thị trấn Phú Đa",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 219,
+    "ProvinceCode": "HUE",
+    "ParentID": 59,
+    "UnitCode": "PLC",
+    "UnitName": "TTVT Phú Lộc",
+    "Address": "Khu vưc 2 Thi trấn Phú lộc ",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 220,
+    "ProvinceCode": "HUE",
+    "ParentID": 59,
+    "UnitCode": "NĐG",
+    "UnitName": "TTVT Nam Đông",
+    "Address": "Thị trân Khe tre",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 60,
+    "ProvinceCode": "TGG",
+    "ParentID": 1,
+    "UnitCode": "TGG",
+    "UnitName": "Viễn thông Tiền Giang",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 339,
+    "ProvinceCode": "TGG",
+    "ParentID": 60,
+    "UnitCode": "MTO",
+    "UnitName": "Đài VT Mỹ Tho",
+    "Address": "Số 1, Lê Lợi, Phường 1, Thành Phố Mỹ Tho",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 448,
+    "ProvinceCode": "TGG",
+    "ParentID": 339,
+    "UnitCode": "TGGMTO01",
+    "UnitName": "Địa bàn Huyện Toại - Lê lợi",
+    "Address": "Số 1, đường Lê Lợi, phường 1, thành phố Mỹ Tho, tỉnh Tiền Giang.",
+    "ContactPhone": "3838375"
+  },
+  {
+    "UnitID": 449,
+    "ProvinceCode": "TGG",
+    "ParentID": 339,
+    "UnitCode": "TGGMTO02",
+    "UnitName": "Địa bàn Bình Đức - KCN",
+    "Address": "Ấp Chợ, xã Bình Đức, huyện Châu Thành, tỉnh Tiền Giang.",
+    "ContactPhone": "3853211"
+  },
+  {
+    "UnitID": 450,
+    "ProvinceCode": "TGG",
+    "ParentID": 339,
+    "UnitCode": "TGGMTO03",
+    "UnitName": "Địa bàn Phường 10",
+    "Address": "Khu phố 2, phường 10, thành phố Mỹ Tho, tỉnh Tiền Giang.",
+    "ContactPhone": "3855411"
+  },
+  {
+    "UnitID": 451,
+    "ProvinceCode": "TGG",
+    "ParentID": 339,
+    "UnitCode": "TGGMTO04",
+    "UnitName": "Địa bàn Tân Mỹ Chánh",
+    "Address": "Ấp Tân Tỉnh, xã Tân Mỹ Chánh, thành phố Mỹ Tho, tỉnh Tiền Giang.",
+    "ContactPhone": "3850211"
+  },
+  {
+    "UnitID": 785,
+    "ProvinceCode": "TGG",
+    "ParentID": 339,
+    "UnitCode": null,
+    "UnitName": "Địa bàn Thới Sơn - Đồng Tâm",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 786,
+    "ProvinceCode": "TGG",
+    "ParentID": 339,
+    "UnitCode": null,
+    "UnitName": "Địa bàn  ấp Bắc",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 787,
+    "ProvinceCode": "TGG",
+    "ParentID": 339,
+    "UnitCode": null,
+    "UnitName": "Địa bàn  Đạo Thạnh",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 788,
+    "ProvinceCode": "TGG",
+    "ParentID": 339,
+    "UnitCode": null,
+    "UnitName": "Địa bàn  Học Lạc",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 789,
+    "ProvinceCode": "TGG",
+    "ParentID": 339,
+    "UnitCode": null,
+    "UnitName": "Địa bàn  Hồng Gấm",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 790,
+    "ProvinceCode": "TGG",
+    "ParentID": 339,
+    "UnitCode": null,
+    "UnitName": "Địa bàn  Lý Thường Kiệt",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 791,
+    "ProvinceCode": "TGG",
+    "ParentID": 339,
+    "UnitCode": null,
+    "UnitName": "Địa bàn Đinh Bộ Lĩnh - Tân Long",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 792,
+    "ProvinceCode": "TGG",
+    "ParentID": 339,
+    "UnitCode": null,
+    "UnitName": "Địa bàn  Mỹ Phong",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 793,
+    "ProvinceCode": "TGG",
+    "ParentID": 339,
+    "UnitCode": null,
+    "UnitName": "Địa bàn Đạo Thạnh - Long An",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 794,
+    "ProvinceCode": "TGG",
+    "ParentID": 339,
+    "UnitCode": null,
+    "UnitName": "Địa bàn Trung An",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 340,
+    "ProvinceCode": "TGG",
+    "ParentID": 60,
+    "UnitCode": "CBE",
+    "UnitName": "Đài VT Cái Bè",
+    "Address": "Trương Công Định, Khu 1A, TT Cái Bè",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 445,
+    "ProvinceCode": "TGG",
+    "ParentID": 340,
+    "UnitCode": "TGGCBE01",
+    "UnitName": "Địa bàn Cái Bè - Hội Cư",
+    "Address": null,
+    "ContactPhone": "3925333"
+  },
+  {
+    "UnitID": 446,
+    "ProvinceCode": "TGG",
+    "ParentID": 340,
+    "UnitCode": "TGGCBE02",
+    "UnitName": "Địa bàn Hòa Khánh - Thiện Trung",
+    "Address": "ấp Hòa Phúc xã Hòa Khánh huyện Cái Bè",
+    "ContactPhone": "3819000"
+  },
+  {
+    "UnitID": 447,
+    "ProvinceCode": "TGG",
+    "ParentID": 340,
+    "UnitCode": null,
+    "UnitName": "Địa bàn Thị Trấn CBE_DHH",
+    "Address": "Trương Công Định, Khu 1A, Thị trấn Cái Bè huyện Cái Bè",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 682,
+    "ProvinceCode": "TGG",
+    "ParentID": 340,
+    "UnitCode": "CBE",
+    "UnitName": "Địa bàn An Hữu - Tân Thanh",
+    "Address": "ấp 4 xã An Hữu huyện Cái Bè",
+    "ContactPhone": "3925333"
+  },
+  {
+    "UnitID": 778,
+    "ProvinceCode": "TGG",
+    "ParentID": 340,
+    "UnitCode": null,
+    "UnitName": "Địa bàn Thiên Hộ - Hậu Mỹ Phú",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 779,
+    "ProvinceCode": "TGG",
+    "ParentID": 340,
+    "UnitCode": "111",
+    "UnitName": "Địa bàn An Cư",
+    "Address": "1111",
+    "ContactPhone": "11111"
+  },
+  {
+    "UnitID": 781,
+    "ProvinceCode": "TGG",
+    "ParentID": 340,
+    "UnitCode": null,
+    "UnitName": "Địa bàn An Hữu - Mỹ Lương",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 782,
+    "ProvinceCode": "TGG",
+    "ParentID": 340,
+    "UnitCode": null,
+    "UnitName": "Địa bàn  Mỹ Đức Tây - Mỹ Lợi",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 341,
+    "ProvinceCode": "TGG",
+    "ParentID": 60,
+    "UnitCode": "CLY",
+    "UnitName": "Đài VT Cai Lậy",
+    "Address": "Số 3, Thái Thị Kiểu, Khu 2, Phường 1, Tx Cai Lậy",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 440,
+    "ProvinceCode": "TGG",
+    "ParentID": 341,
+    "UnitCode": "TGGCLY01",
+    "UnitName": "Địa bàn Phường 4- Nhị Mỹ",
+    "Address": "Số 3, Thái Thị Kiểu, Khu 2, Phường 1, Tx Cai Lậy",
+    "ContactPhone": "3826141"
+  },
+  {
+    "UnitID": 441,
+    "ProvinceCode": "TGG",
+    "ParentID": 341,
+    "UnitCode": "TGGCLY02",
+    "UnitName": "Địa bàn Long Trung",
+    "Address": "Ấp 17, xã Long Trung, huyện Cai Lậy, tỉnh Tiền Giang.",
+    "ContactPhone": "3811670"
+  },
+  {
+    "UnitID": 442,
+    "ProvinceCode": "TGG",
+    "ParentID": 341,
+    "UnitCode": "TGGCLY03",
+    "UnitName": "Địa bàn Bình Phú- Mỹ Thành Nam",
+    "Address": "ấp Kinh 12, xã Mỹ Phước Tây, TX Cai Lậy",
+    "ContactPhone": "3827364"
+  },
+  {
+    "UnitID": 443,
+    "ProvinceCode": "TGG",
+    "ParentID": 341,
+    "UnitCode": null,
+    "UnitName": "Địa bàn Cẩm Sơn- Tân Phong",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 444,
+    "ProvinceCode": "TGG",
+    "ParentID": 341,
+    "UnitCode": null,
+    "UnitName": "Địa bàn Mỹ Phước Tây",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 795,
+    "ProvinceCode": "TGG",
+    "ParentID": 341,
+    "UnitCode": null,
+    "UnitName": "Địa bàn Nhị Quý",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 796,
+    "ProvinceCode": "TGG",
+    "ParentID": 341,
+    "UnitCode": null,
+    "UnitName": "Địa bàn Tam Bình- Ngũ Hiệp",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 797,
+    "ProvinceCode": "TGG",
+    "ParentID": 341,
+    "UnitCode": null,
+    "UnitName": "Địa bàn Phường 3- Tân Bình",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 798,
+    "ProvinceCode": "TGG",
+    "ParentID": 341,
+    "UnitCode": null,
+    "UnitName": "Địa bàn Phường 5- Long Khánh",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 342,
+    "ProvinceCode": "TGG",
+    "ParentID": 60,
+    "UnitCode": "CTH",
+    "UnitName": "Đài VT Tân Hiệp",
+    "Address": "ấp Cá - TT Tân Hiệp - Châu Thành - Tiền Giang",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 437,
+    "ProvinceCode": "TGG",
+    "ParentID": 342,
+    "UnitCode": "TGGTHP01",
+    "UnitName": "Địa bàn Tân Hiệp",
+    "Address": "ấp Cá - TT Tân Hiệp- Châu Thành- Tiền Giang",
+    "ContactPhone": "3896708"
+  },
+  {
+    "UnitID": 438,
+    "ProvinceCode": "TGG",
+    "ParentID": 342,
+    "UnitCode": "TGGTHP03",
+    "UnitName": "Địa bàn Vĩnh Kim",
+    "Address": "ấp Vĩnh Thạnh - Vĩnh Kim - Châu Thành - Tiền Giang",
+    "ContactPhone": "3834000"
+  },
+  {
+    "UnitID": 439,
+    "ProvinceCode": "TGG",
+    "ParentID": 342,
+    "UnitCode": "TGGTHP03",
+    "UnitName": "Địa bàn Long Định",
+    "Address": "ấp Mới - Long Định - Châu Thành - Tiền Giang",
+    "ContactPhone": "3634600"
+  },
+  {
+    "UnitID": 799,
+    "ProvinceCode": "TGG",
+    "ParentID": 342,
+    "UnitCode": null,
+    "UnitName": "Địa bàn Chợ Bưng",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 800,
+    "ProvinceCode": "TGG",
+    "ParentID": 342,
+    "UnitCode": null,
+    "UnitName": "Địa bàn Tân Hương",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 801,
+    "ProvinceCode": "TGG",
+    "ParentID": 342,
+    "UnitCode": null,
+    "UnitName": "Địa bàn Dưỡng Điềm",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 802,
+    "ProvinceCode": "TGG",
+    "ParentID": 342,
+    "UnitCode": null,
+    "UnitName": "Địa bàn Kim Sơn",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 803,
+    "ProvinceCode": "TGG",
+    "ParentID": 342,
+    "UnitCode": null,
+    "UnitName": "Địa bàn Tân Hội Đông",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 343,
+    "ProvinceCode": "TGG",
+    "ParentID": 60,
+    "UnitCode": "CGO",
+    "UnitName": "Đài VT Chợ Gạo",
+    "Address": "Ô 1 Khu 2 - Thị trấn Chợ Gạo - Huyện Chợ Gạo",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 434,
+    "ProvinceCode": "TGG",
+    "ParentID": 343,
+    "UnitCode": "TGGCGO01",
+    "UnitName": "Địa bàn Chợ Gạo - Bình Phan",
+    "Address": "Ô 1 Khu 2 - Thị trấn Chợ Gạo - Huyện Chợ Gạo",
+    "ContactPhone": "3835209"
+  },
+  {
+    "UnitID": 435,
+    "ProvinceCode": "TGG",
+    "ParentID": 343,
+    "UnitCode": "TGGCGO02",
+    "UnitName": "Địa bàn Bình Ninh - Bình Phục Nhứt",
+    "Address": "Ô 3 Khu 3 - Thị trấn Chợ Gạo - Huyện Chợ Gạo",
+    "ContactPhone": "3835209"
+  },
+  {
+    "UnitID": 436,
+    "ProvinceCode": "TGG",
+    "ParentID": 343,
+    "UnitCode": "TGGCGO03",
+    "UnitName": "Địa bàn Bến Tranh - Thanh Bình",
+    "Address": "Ấp Lương Phú A - Xã Lương Hòa Lạc - Huyện Chợ Gạo",
+    "ContactPhone": "3845000"
+  },
+  {
+    "UnitID": 804,
+    "ProvinceCode": "TGG",
+    "ParentID": 343,
+    "UnitCode": null,
+    "UnitName": "Địa bàn Mỹ Tịnh An",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 805,
+    "ProvinceCode": "TGG",
+    "ParentID": 343,
+    "UnitCode": null,
+    "UnitName": "Địa bàn Chợ Gạo - Song Bình",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 806,
+    "ProvinceCode": "TGG",
+    "ParentID": 343,
+    "UnitCode": null,
+    "UnitName": "Địa bàn Quơn Long - Đăng Hưng Phước",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 344,
+    "ProvinceCode": "TGG",
+    "ParentID": 60,
+    "UnitCode": "GCG",
+    "UnitName": "Đài VT TX Gò Công",
+    "Address": "Địa bàn Bình Đông",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 432,
+    "ProvinceCode": "TGG",
+    "ParentID": 344,
+    "UnitCode": "TGGGCG01",
+    "UnitName": "Địa bàn Phường 4 - Long Chánh",
+    "Address": "Số 20 Đường Trần Hưng Đạo Phường 2 Thị Xã Gò Công",
+    "ContactPhone": "3841711"
+  },
+  {
+    "UnitID": 807,
+    "ProvinceCode": "TGG",
+    "ParentID": 344,
+    "UnitCode": null,
+    "UnitName": "Địa bàn Phường 2 - Việt Hùng",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 808,
+    "ProvinceCode": "TGG",
+    "ParentID": 344,
+    "UnitCode": null,
+    "UnitName": "Địa bàn Phường 3 - Long Hưng",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 809,
+    "ProvinceCode": "TGG",
+    "ParentID": 344,
+    "UnitCode": null,
+    "UnitName": "Địa bàn Bình Đông",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 345,
+    "ProvinceCode": "TGG",
+    "ParentID": 60,
+    "UnitCode": "GCD",
+    "UnitName": "Đài VT Gò Công Đông",
+    "Address": "Đường 862,Thị trấn Tân Hòa, GCĐ, TG",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 429,
+    "ProvinceCode": "TGG",
+    "ParentID": 345,
+    "UnitCode": "TGGGCD03",
+    "UnitName": "Địa bàn Tân Tây",
+    "Address": "Ấp Lăng, Thị trấn Vàm Láng, GCĐ, TG",
+    "ContactPhone": "3844900"
+  },
+  {
+    "UnitID": 430,
+    "ProvinceCode": "TGG",
+    "ParentID": 345,
+    "UnitCode": "TGGGCD01",
+    "UnitName": "Địa bàn Tân Hòa",
+    "Address": "Đường 862,Thị trấn Tân Hòa, GCĐ, TG",
+    "ContactPhone": "3846179"
+  },
+  {
+    "UnitID": 810,
+    "ProvinceCode": "TGG",
+    "ParentID": 345,
+    "UnitCode": null,
+    "UnitName": "Địa bàn Tân Thành",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 811,
+    "ProvinceCode": "TGG",
+    "ParentID": 345,
+    "UnitCode": null,
+    "UnitName": "Địa bàn Vàm Láng",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 346,
+    "ProvinceCode": "TGG",
+    "ParentID": 60,
+    "UnitCode": "GCT",
+    "UnitName": "Đài VT Gò Công Tây",
+    "Address": "Ấp Hạ, thị trấn Vĩnh Bình, huyện Gò Công Tây, tỉnh Tiền Giang.",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 422,
+    "ProvinceCode": "TGG",
+    "ParentID": 346,
+    "UnitCode": "TGGGCT02",
+    "UnitName": "Địa bàn Long Bình",
+    "Address": "Ấp Thới Hòa, xã Long Bình, huyện Gò Công Tây, tỉnh Tiền Giang.",
+    "ContactPhone": "3830063"
+  },
+  {
+    "UnitID": 424,
+    "ProvinceCode": "TGG",
+    "ParentID": 346,
+    "UnitCode": "TGGTPD02",
+    "UnitName": "Địa bàn  Tân Phú",
+    "Address": "Bưu điện Tân Phú, ấp Tân Thạnh, xã Tân Phú, huyện Tân Phú Đông, tỉnh Tiền Giang.",
+    "ContactPhone": "3890363"
+  },
+  {
+    "UnitID": 425,
+    "ProvinceCode": "TGG",
+    "ParentID": 346,
+    "UnitCode": "TGGGCT01",
+    "UnitName": "Địa bàn Vĩnh Bình - Vĩnh Hựu",
+    "Address": "Ấp Hạ, thị trấn Vĩnh Bình, huyện Gò Công Tây, tỉnh Tiền Giang.",
+    "ContactPhone": "3838375"
+  },
+  {
+    "UnitID": 812,
+    "ProvinceCode": "TGG",
+    "ParentID": 346,
+    "UnitCode": null,
+    "UnitName": "Địa bàn  Đồng Sơn",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 813,
+    "ProvinceCode": "TGG",
+    "ParentID": 346,
+    "UnitCode": null,
+    "UnitName": "Địa bàn  Phú Đông",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 814,
+    "ProvinceCode": "TGG",
+    "ParentID": 346,
+    "UnitCode": null,
+    "UnitName": "Địa bàn Vĩnh Bình - Thạnh Nhựt",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 347,
+    "ProvinceCode": "TGG",
+    "ParentID": 60,
+    "UnitCode": "TPC",
+    "UnitName": "Đài VT Tân Phước",
+    "Address": "Khu 1, thị trấn Mỹ Phước, huyện Tân Phước",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 426,
+    "ProvinceCode": "TGG",
+    "ParentID": 347,
+    "UnitCode": "TGGTPH02",
+    "UnitName": "Địa bàn Phú Mỹ - Tân Lập",
+    "Address": "ấp Phú Hữu, xã Phú Mỹ, huyện Tân Phước",
+    "ContactPhone": "3849062"
+  },
+  {
+    "UnitID": 427,
+    "ProvinceCode": "TGG",
+    "ParentID": 347,
+    "UnitCode": "TGGTPH01",
+    "UnitName": "Địa bàn  Mỹ Phước - T. Hòa - T. Mỹ",
+    "Address": "Khu 1, thị trấn Mỹ Phước, huyện Tân Phước",
+    "ContactPhone": "3848333"
+  },
+  {
+    "UnitID": 61,
+    "ProvinceCode": "TVH",
+    "ParentID": 1,
+    "UnitCode": "TVH",
+    "UnitName": "Viễn thông Trà Vinh",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 966,
+    "ProvinceCode": "TVH",
+    "ParentID": 61,
+    "UnitCode": "TPO",
+    "UnitName": "TTVT THÀNH PHỐ",
+    "Address": "70 Hùng Vương, Phường 4, TP Trà Vinh",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 967,
+    "ProvinceCode": "TVH",
+    "ParentID": 61,
+    "UnitCode": "CTH",
+    "UnitName": "TTVT CHÂU THÀNH",
+    "Address": "BĐ Châu Thành, Huyện Châu Thành, Tỉnh Trà Vinh",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 968,
+    "ProvinceCode": "TVH",
+    "ParentID": 61,
+    "UnitCode": "CLG",
+    "UnitName": "TTVT CÀNG LONG",
+    "Address": "BĐ Càng Long, Huyện Càng long, Tỉnh Trà Vinh",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 969,
+    "ProvinceCode": "TVH",
+    "ParentID": 61,
+    "UnitCode": "CKE",
+    "UnitName": "TTVT CẦU KÈ",
+    "Address": "BĐ Cầu Kè, Huyện Cầu Kè, Tỉnh Trà Vinh",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 970,
+    "ProvinceCode": "TVH",
+    "ParentID": 61,
+    "UnitCode": "TCN",
+    "UnitName": "TTVT TIỂU CẦN",
+    "Address": "BĐ Tiểu Cần, Huyện Tiểu Cần, Tỉnh Trà Vinh",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 971,
+    "ProvinceCode": "TVH",
+    "ParentID": 61,
+    "UnitCode": "DHI",
+    "UnitName": "TTVT DUYÊN HẢI",
+    "Address": "BĐ Duyên Hải, Thị Xã Duyên Hải, Tỉnh Trà Vinh",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 972,
+    "ProvinceCode": "TVH",
+    "ParentID": 61,
+    "UnitCode": "CNG",
+    "UnitName": "TTVT CẦU NGANG",
+    "Address": "BĐ Cầu Ngang, Huyện Cầu Ngang, Tỉnh Trà Vinh",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 973,
+    "ProvinceCode": "TVH",
+    "ParentID": 61,
+    "UnitCode": "TCU",
+    "UnitName": "TTVT TRÀ CÚ",
+    "Address": "BĐ Trà Cú, Huyện Trà Cú, Tỉnh Trà Vinh",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 62,
+    "ProvinceCode": "TQG",
+    "ParentID": 1,
+    "UnitCode": "TQG",
+    "UnitName": "Viễn thông Tuyên Quang",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 231,
+    "ProvinceCode": "TQG",
+    "ParentID": 62,
+    "UnitCode": "DHTT",
+    "UnitName": "Trung tâm Điều hành Thông tin",
+    "Address": "Số 2 đường 17-8 TP Tuyên Quang",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 232,
+    "ProvinceCode": "TQG",
+    "ParentID": 62,
+    "UnitCode": "TTVT1",
+    "UnitName": "Trung tâm Viễn thông 1",
+    "Address": "Số 2 đường 17-8 TP Tuyên Quang",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 233,
+    "ProvinceCode": "TQG",
+    "ParentID": 62,
+    "UnitCode": "TTVT3",
+    "UnitName": "Trung tâm Viễn thông 3",
+    "Address": "Thị trấn Sơn Dương, Huyện Sơn Dương",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 234,
+    "ProvinceCode": "TQG",
+    "ParentID": 62,
+    "UnitCode": "TTVT4",
+    "UnitName": "Trung tâm Viễn thông 4",
+    "Address": "Thị trấn Tân Yên, Huyện Hàm Yên",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 235,
+    "ProvinceCode": "TQG",
+    "ParentID": 62,
+    "UnitCode": "TTVT5",
+    "UnitName": "Trung tâm Viễn thông 5",
+    "Address": "Thị trấn Vĩnh Lộc, Huyện Chiêm Hóa",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 236,
+    "ProvinceCode": "TQG",
+    "ParentID": 62,
+    "UnitCode": "TTVT6",
+    "UnitName": "Trung tâm Viễn thông 6",
+    "Address": "Thị trấn Nà Hang, Huyện Nà Hang",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 821,
+    "ProvinceCode": "TQG",
+    "ParentID": 62,
+    "UnitCode": "TQG",
+    "UnitName": "User không sử dụng",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 63,
+    "ProvinceCode": "VLG",
+    "ParentID": 1,
+    "UnitCode": "VLG",
+    "UnitName": "Viễn thông Vĩnh Long",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 974,
+    "ProvinceCode": "VLG",
+    "ParentID": 63,
+    "UnitCode": "VLG",
+    "UnitName": "TTVT Vĩnh Long",
+    "Address": "Tp Vĩnh Long",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 975,
+    "ProvinceCode": "VLG",
+    "ParentID": 63,
+    "UnitCode": "BMH",
+    "UnitName": "TTVT Bình Minh",
+    "Address": "Thị xã Bình Minh",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 976,
+    "ProvinceCode": "VLG",
+    "ParentID": 63,
+    "UnitCode": "BTN",
+    "UnitName": "TTVT Bình Tân",
+    "Address": "Huyện Bình Tân",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 977,
+    "ProvinceCode": "VLG",
+    "ParentID": 63,
+    "UnitCode": "VLM",
+    "UnitName": "TTVT Vũng Liêm",
+    "Address": "Huyện Vũng Liêm",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 978,
+    "ProvinceCode": "VLG",
+    "ParentID": 63,
+    "UnitCode": "TBH",
+    "UnitName": "TTVT Tam Bình",
+    "Address": "Huyện Tam Bình",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 979,
+    "ProvinceCode": "VLG",
+    "ParentID": 63,
+    "UnitCode": "TON",
+    "UnitName": "TTVT Trà Ôn",
+    "Address": "Huyện Trà Ôn",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 980,
+    "ProvinceCode": "VLG",
+    "ParentID": 63,
+    "UnitCode": "MTT",
+    "UnitName": "TTVT Măng Thít",
+    "Address": "Huyện Măng Thít",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 981,
+    "ProvinceCode": "VLG",
+    "ParentID": 63,
+    "UnitCode": "LHO",
+    "UnitName": "TTVT Long Hồ",
+    "Address": "Huyện Long Hồ",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1069,
+    "ProvinceCode": "VLG",
+    "ParentID": 63,
+    "UnitCode": "VLG",
+    "UnitName": "TT ĐIỀU HÀNH THÔNG TIN",
+    "Address": "ĐHTT",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 64,
+    "ProvinceCode": "VPC",
+    "ParentID": 1,
+    "UnitCode": "VPC",
+    "UnitName": "Viễn thông Vĩnh Phúc",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 237,
+    "ProvinceCode": "VPC",
+    "ParentID": 64,
+    "UnitCode": "BXN\t",
+    "UnitName": "TTVT Bình Xuyên",
+    "Address": "Phố Kếu- Đạo Đức - Bình Xuyên - Vĩnh Phúc",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 238,
+    "ProvinceCode": "VPC",
+    "ParentID": 64,
+    "UnitCode": "LTH",
+    "UnitName": "TTVT Lập Thạch - Sông Lô",
+    "Address": "Phố Tân Chiền - thị trấn Lập Thạch - huyện Lập Thạch - Vĩnh Phúc",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 239,
+    "ProvinceCode": "VPC",
+    "ParentID": 64,
+    "UnitCode": "PYN",
+    "UnitName": "TTVT Phúc Yên",
+    "Address": "Số 28 - Lạc Long Quân - Trưng Trắc - Phúc Yên - Vĩnh Phúc",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 240,
+    "ProvinceCode": "VPC",
+    "ParentID": 64,
+    "UnitCode": "TDTD",
+    "UnitName": "TTVT Tam Đảo - Tam Dương",
+    "Address": "Đồi Cao- Hợp Châu- Tam Đảo - Vĩnh Phúc",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 242,
+    "ProvinceCode": "VPC",
+    "ParentID": 64,
+    "UnitCode": "VTG",
+    "UnitName": "TTVT Vĩnh Tường",
+    "Address": "Thị Trấn Thổ Tang - Vĩnh Tường - Vĩnh Phúc",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 243,
+    "ProvinceCode": "VPC",
+    "ParentID": 64,
+    "UnitCode": "VYN",
+    "UnitName": "TTVT Vĩnh Yên",
+    "Address": "Nguyễn Tất Thành - Khai Quang - Vĩnh Yên  - Vĩnh Phúc",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 244,
+    "ProvinceCode": "VPC",
+    "ParentID": 64,
+    "UnitCode": "YLC",
+    "UnitName": "TTVT Yên Lạc",
+    "Address": "TT Yên Lạc - Yên Lạc - Vĩnh Phúc",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 561,
+    "ProvinceCode": "VPC",
+    "ParentID": 64,
+    "UnitCode": "DHTT",
+    "UnitName": "TT Điều hành Thông tin",
+    "Address": "Số 2 Đường Kim Ngọc - Tp. Vĩnh Yên - Vĩnh Phúc",
+    "ContactPhone": "02113861796"
+  },
+  {
+    "UnitID": 565,
+    "ProvinceCode": "VPC",
+    "ParentID": 64,
+    "UnitCode": "MDV",
+    "UnitName": "Phòng Mạng và Dịch vụ",
+    "Address": "Số 2 Đường Kim Ngọc - Tp. Vĩnh Yên - Vĩnh Phúc",
+    "ContactPhone": "02113860701"
+  },
+  {
+    "UnitID": 820,
+    "ProvinceCode": "VPC",
+    "ParentID": 64,
+    "UnitCode": "KHKT",
+    "UnitName": "Phòng KH-KT",
+    "Address": "Số 2 Đường Kim Ngọc - Tp. Vĩnh Yên - Vĩnh Phúc",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 65,
+    "ProvinceCode": "YBI",
+    "ParentID": 1,
+    "UnitCode": "YBI",
+    "UnitName": "Viễn thông Yên Bái",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 245,
+    "ProvinceCode": "YBI",
+    "ParentID": 65,
+    "UnitCode": "TPO",
+    "UnitName": "TTVT Thành phố",
+    "Address": "15 Đinh Tiên Hoàng, TP Yên Bái",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 246,
+    "ProvinceCode": "YBI",
+    "ParentID": 65,
+    "UnitCode": "YBN",
+    "UnitName": "TTVT Yên Bình",
+    "Address": "Huyện Yên Bình, tỉnh Yên Bái",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 247,
+    "ProvinceCode": "YBI",
+    "ParentID": 65,
+    "UnitCode": "LYN",
+    "UnitName": "TTVT Lục Yên",
+    "Address": "Thị trấn Yên Thế, huyện Lục Yên",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 248,
+    "ProvinceCode": "YBI",
+    "ParentID": 65,
+    "UnitCode": "MTY",
+    "UnitName": "TTVT Miền Tây",
+    "Address": "Thị xã Nghĩa Lộ",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 249,
+    "ProvinceCode": "YBI",
+    "ParentID": 65,
+    "UnitCode": "VCN",
+    "UnitName": "TTVT Văn Chấn",
+    "Address": "Xã Sơn Thịnh, huyện Văn Chấn",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 250,
+    "ProvinceCode": "YBI",
+    "ParentID": 65,
+    "UnitCode": "TYN",
+    "UnitName": "TTVT Trấn Yên",
+    "Address": "Thị trấn Cổ Phúc, huyện Trấn Yên",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 251,
+    "ProvinceCode": "YBI",
+    "ParentID": 65,
+    "UnitCode": "VYN",
+    "UnitName": "TTVT Văn Yên",
+    "Address": "Thị trấn Mậu A, huyện Văn Yên",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 650,
+    "ProvinceCode": "YBI",
+    "ParentID": 65,
+    "UnitCode": "TTKD",
+    "UnitName": "Trung tâm Kinh doanh",
+    "Address": "15, Đinh Tiên Hoàng",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 673,
+    "ProvinceCode": "YBI",
+    "ParentID": 65,
+    "UnitCode": "DHTT",
+    "UnitName": "Trung tâm ĐHTT",
+    "Address": "15, Đinh Tiên Hoàng, TP Yên Bái",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 66,
+    "ProvinceCode": "AGG",
+    "ParentID": 1,
+    "UnitCode": "AGG",
+    "UnitName": "Viễn thông An Giang",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 906,
+    "ProvinceCode": "AGG",
+    "ParentID": 66,
+    "UnitCode": "LXN",
+    "UnitName": "TTVT Long Xuyên",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 907,
+    "ProvinceCode": "AGG",
+    "ParentID": 66,
+    "UnitCode": "CDC",
+    "UnitName": "TTVT Châu Đốc",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 908,
+    "ProvinceCode": "AGG",
+    "ParentID": 66,
+    "UnitCode": "TCU",
+    "UnitName": "TTVT Tân Châu",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 909,
+    "ProvinceCode": "AGG",
+    "ParentID": 66,
+    "UnitCode": "CPU",
+    "UnitName": "TTVT Châu Phú",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 910,
+    "ProvinceCode": "AGG",
+    "ParentID": 66,
+    "UnitCode": "CTH",
+    "UnitName": "TTVT Châu Thành",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 911,
+    "ProvinceCode": "AGG",
+    "ParentID": 66,
+    "UnitCode": "CMI",
+    "UnitName": "TTVT Chợ Mới",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 912,
+    "ProvinceCode": "AGG",
+    "ParentID": 66,
+    "UnitCode": "PTN",
+    "UnitName": "TTVT Phú Tân",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 913,
+    "ProvinceCode": "AGG",
+    "ParentID": 66,
+    "UnitCode": "TBN",
+    "UnitName": "TTVT Tịnh Biên",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 914,
+    "ProvinceCode": "AGG",
+    "ParentID": 66,
+    "UnitCode": "TTN",
+    "UnitName": "TTVT Tri Tôn",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 915,
+    "ProvinceCode": "AGG",
+    "ParentID": 66,
+    "UnitCode": "TSN",
+    "UnitName": "TTVT Thoại Sơn",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 916,
+    "ProvinceCode": "AGG",
+    "ParentID": 66,
+    "UnitCode": "APU",
+    "UnitName": "TTVT An Phú",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 67,
+    "ProvinceCode": "VTU",
+    "ParentID": 1,
+    "UnitCode": "VTU",
+    "UnitName": "Viễn thông Bà Rịa - Vũng Tàu",
+    "Address": null,
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 982,
+    "ProvinceCode": "VTU",
+    "ParentID": 67,
+    "UnitCode": "OCB",
+    "UnitName": "TVT OCB",
+    "Address": "198 Xô Viêt Nghệ Tĩnh",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 983,
+    "ProvinceCode": "VTU",
+    "ParentID": 67,
+    "UnitCode": "ĐXN",
+    "UnitName": "TVT Đông Xuyên",
+    "Address": "Khu đô thị Chí Linh",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 984,
+    "ProvinceCode": "VTU",
+    "ParentID": 67,
+    "UnitCode": "BRA",
+    "UnitName": "TVT Bà rịa",
+    "Address": "Tp Bà Rịa",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 985,
+    "ProvinceCode": "VTU",
+    "ParentID": 67,
+    "UnitCode": "LĐ-ĐĐ",
+    "UnitName": "TVT Long Điền -Đất Đỏ",
+    "Address": "Thị Trấn Long Điền",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 986,
+    "ProvinceCode": "VTU",
+    "ParentID": 67,
+    "UnitCode": "CĐC",
+    "UnitName": "TVT Châu Đức",
+    "Address": "Thị Trấn Ngãi Giao",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 987,
+    "ProvinceCode": "VTU",
+    "ParentID": 67,
+    "UnitCode": "CĐO",
+    "UnitName": "TTVT Côn Đảo",
+    "Address": "Huyện Côn Đảo",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 988,
+    "ProvinceCode": "VTU",
+    "ParentID": 67,
+    "UnitCode": "XMC",
+    "UnitName": "TVT Xuyên Mộc",
+    "Address": "Thị Trấn Phước Bửu",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 989,
+    "ProvinceCode": "VTU",
+    "ParentID": 67,
+    "UnitCode": "TTH",
+    "UnitName": "TVT Tân Thành",
+    "Address": "Thị Trấn Phú Mỹ- Tân Thành",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1236,
+    "ProvinceCode": "GRP",
+    "ParentID": 1,
+    "UnitCode": "VNPTIT",
+    "UnitName": "Công ty Công nghệ thông tin VNPT IT",
+    "Address": "57 Huỳnh Thúc Kháng, Hà Nội",
+    "ContactPhone": null
+  },
+  {
+    "UnitID": 1241,
+    "ProvinceCode": "GRP",
+    "ParentID": 1,
+    "UnitCode": "Media",
+    "UnitName": "Tổng Công ty VNPT-Media",
+    "Address": "97 Nguyễn Chí Thanh, Hà Nội",
+    "ContactPhone": null
+  }
+]

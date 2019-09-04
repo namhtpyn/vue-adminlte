@@ -1,96 +1,129 @@
 <template>
-  <div>
-    <div class="tbl-header">
-      <div class="title" v-if="caption" style="flex:auto">{{ caption }}</div>
-      <div v-if="searchable" class="has-feedback" style="flex:auto">
-        <div class="has-feedback">
-          <input type="text" class="form-control" v-model="searchText" />
-          <span class="glyphicon glyphicon-search form-control-feedback"></span>
+  <div style="position:relative">
+    <div v-if="!hideComponentHeader" class="tbl-header">
+      <slot name="top.prepend"></slot>
+      <slot name="top">
+        <div class="title" v-if="caption" style="flex:auto">{{ caption }}</div>
+        <div v-if="searchable" class="has-feedback" style="flex:auto">
+          <div class="has-feedback">
+            <input type="text" class="form-control" v-model="searchText" />
+            <span class="glyphicon glyphicon-search form-control-feedback"></span>
+          </div>
         </div>
-      </div>
-      <div v-if="!caption && !searchable" style="flex:auto"></div>
-      <div v-if="creatable">
-        <n-btn :class="buttonAddCssClass" @click="createClick">
-          <n-icon>plus</n-icon>
-          <span class="hidden-xs">Thêm</span>
-        </n-btn>
-      </div>
+        <div v-if="!caption && !searchable" style="flex:auto"></div>
+        <div v-if="creatable">
+          <n-btn :class="buttonAddCssClass" @click="createClick">
+            <n-icon>plus</n-icon>
+            <span class="hidden-xs">Thêm</span>
+          </n-btn>
+        </div>
+      </slot>
       <slot name="top.append"></slot>
     </div>
-    <table :class="tableCssClass">
-      <thead>
-        <tr :class="headerRowCssClass">
-          <th
-            v-for="(header, index) in tableHeaders"
-            :key="index"
-            :class="headerCellCssClass"
-            :style="(header.width ? 'width: ' + header.width + '; ' : '') + (header.align ? 'text-align: ' + header.align : '')"
-          >
-            <slot :name="`header.${header.value}`" :item="header">{{ header.text }}</slot>
-          </th>
-        </tr>
-      </thead>
-      <tbody v-if="hasItems">
-        <tr :class="rowCssClass" v-for="(item, rowIndex) in pageItems" :key="rowIndex">
-          <td
-            :class="cellCssClass"
-            :style="(header.width ? 'width: ' + header.width + '; ' : '') + (header.align ? 'text-align: ' + header.align : '')"
-            v-for="(header, colIndex) in tableHeaders"
-            :key="colIndex"
-          >
-            <slot v-if="header.value !== 'action'" :name="`item.${header.value}`" :item="item">{{ item[header.value] }}</slot>
-            <div :class="header.align ? 'text-${header.align}' : ''" v-else>
-              <n-btn v-if="updatable" @click="updateClick(item)">
-                <n-icon>pencil</n-icon>
-              </n-btn>
-              <n-btn v-if="deletable" @click="remove(item)">
-                <n-icon>trash</n-icon>
-              </n-btn>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-      <tbody v-else>
-        <tr>
-          <td class="text-center">{{ noDataText }}</td>
-        </tr>
-      </tbody>
-      <tfoot>
-        <tr :class="footerRowCssClass">
-          <td :class="footerCellCssClass" v-for="(header, colIndex) in tableHeaders" :key="colIndex">
-            <slot :name="`footer.${header.value}`" :item="items"></slot>
-          </td>
-        </tr>
-      </tfoot>
-    </table>
 
-    <div style="display:flex; padding:10px 5px; align-items: center;">
-      <div class="hidden-xs" style="height: 30px;min-height: 32px;padding: 6px 10px 6px 0px;font-size: 12px; line-height: 1.5;">
-        Trang {{ page }}/{{ pageLength }} ({{ items.length }} mục)
-      </div>
+    <div class="table-responsive">
+      <table :class="tableCssClass">
+        <thead v-if="!hideTableHeader">
+          <tr :class="headerRowCssClass" v-for="headerLevel in tableHeaderDepth()" :key="headerLevel">
+            <th
+              v-for="(header, colIndex) in tableHeaderAtLevel(headerLevel)"
+              :key="colIndex"
+              :colspan="header.children ? tableHeaderChildren(header.children).length : 1"
+              :rowspan="header.children ? 1 : tableHeaderDepth()"
+              :class="headerCellCssClass"
+              :style="(header.width ? 'width: ' + header.width + '; ' : '') + (header.align ? 'text-align: ' + header.align : '')"
+            >
+              <slot :name="`header.${header.value}`" :item="header">{{ header.text }}</slot>
+            </th>
+          </tr>
+        </thead>
+        <tbody v-if="hasItems">
+          <tr
+            :class="rowCssClass"
+            v-for="(item, rowIndex) in pageItems"
+            :key="rowIndex"
+            @contextmenu="e => rowContextmenu(e, item)"
+            @dblclick="e => rowDblclick(e, item)"
+            @click="e => rowClick(e, item)"
+          >
+            <td
+              :class="cellCssClass"
+              :style="(header.width ? 'width: ' + header.width + '; ' : '') + (header.align ? 'text-align: ' + header.align : '')"
+              v-for="(header, colIndex) in tableHeaderChildren()"
+              :key="colIndex"
+            >
+              <div :class="header.align ? 'text-${header.align}' : ''" v-if="header.value === 'selection'">
+                <n-checkbox></n-checkbox>
+              </div>
+              <div :class="header.align ? 'text-${header.align}' : ''" v-else-if="header.value === 'action'">
+                <n-btn v-if="updatable" @click="updateClick(item)">
+                  <n-icon>pencil</n-icon>
+                </n-btn>
+                <n-btn v-if="deletable" @click="remove(item)">
+                  <n-icon>trash</n-icon>
+                </n-btn>
+              </div>
 
-      <div style="flex:auto">
-        <n-pagination :length="pageLength" v-model="page" small class="no-margin"></n-pagination>
-      </div>
-      <div>
-        <select
-          @change="changeItemPerPage"
-          class="form-control"
-          style="width:70px;display: inline-block; height:30px;  padding: 6px 6px"
-          :value="itemPerPage"
-        >
-          <option value="5">5</option>
-          <option value="10">10</option>
-          <option value="25">25</option>
-          <option value="50">50</option>
-          <option value="100">100</option>
-          <option value="-1">Tất cả</option>
-        </select>
-      </div>
+              <slot v-else :name="`item.${header.value}`" :item="item">{{ `item.${header.value}` }}{{ item[header.value] }}</slot>
+            </td>
+          </tr>
+        </tbody>
+        <tbody v-else>
+          <tr>
+            <td class="text-center">{{ noDataText }}</td>
+          </tr>
+        </tbody>
+        <tfoot v-if="!hideTableFooter">
+          <tr :class="footerRowCssClass">
+            <td :class="footerCellCssClass" v-for="(header, colIndex) in tableHeaderChildren()" :key="colIndex">
+              <slot :name="`footer.${header.value}`" :item="items"></slot>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
     </div>
 
-    <n-modal :caption="modal.isNew ? 'Thêm' : 'Sửa'" v-model="modal.visible">
-      <slot name="modal" :modal="modal">OK</slot>
+    <div v-if="!hideComponentFooter" style="display:flex; padding:10px 5px; align-items: center;">
+      <slot name="bottom.prepend"></slot>
+      <slot name="bottom">
+        <div class="hidden-xs" style="height: 30px;min-height: 32px;padding: 6px 10px 6px 0px;font-size: 12px; line-height: 1.5;">
+          Trang {{ page }}/{{ pageLength }} ({{ items.length }} mục)
+        </div>
+
+        <div style="flex:auto">
+          <n-pagination :length="pageLength" v-model="page" small class="no-margin"></n-pagination>
+        </div>
+        <div>
+          <select
+            @change="changeItemPerPage"
+            class="form-control"
+            style="width:70px;display: inline-block; height:30px;  padding: 6px 6px"
+            :value="itemPerPage"
+          >
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+            <option value="-1">Tất cả</option>
+          </select>
+        </div>
+      </slot>
+      <slot name="bottom.append"></slot>
+    </div>
+
+    <!-- Table loading -->
+    <n-overlay absolute :value="loading">
+      <n-icon css-class="fa-spin fa-5x" style="color:white">circle-o-notch</n-icon>
+    </n-overlay>
+
+    <n-modal
+      :loading="modal.isLoading"
+      v-if="updatable && creatable"
+      :caption="modal.isNew ? 'Thêm' : 'Sửa'"
+      v-model="modal.visible"
+    >
+      <slot name="modal" :modal="modal"></slot>
       <template v-slot:footer>
         <n-btn color="primary" @click="save">Lưu</n-btn>
       </template>
@@ -103,24 +136,37 @@ import { Vue, Component, Prop, Emit } from 'vue-property-decorator'
 import { TableHeader } from '../types/Table'
 import isEmpty from 'lodash/isEmpty'
 import cloneDeep from 'lodash/cloneDeep'
+import upperFirst from 'lodash/upperFirst'
 import NPagination from './NPagination.vue'
 import NBtn from './NBtn.vue'
 import NIcon from './NIcon.vue'
 import NModal from './NModal.vue'
+import NCheckbox from './NCheckbox.vue'
+import NOverlay from './NOverlay.vue'
 @Component({
   inheritAttrs: false,
-  components: { NPagination, NBtn, NIcon, NModal }
+  components: { NPagination, NBtn, NIcon, NModal, NCheckbox, NOverlay }
 })
 export default class NDataTable extends Vue {
+  @Prop({ type: Boolean, default: false }) loading!: boolean
+
   @Prop({ type: Boolean, default: true }) bordered!: boolean
   @Prop({ type: Boolean, default: true }) hovered!: boolean
   @Prop({ type: Boolean, default: false }) densed!: boolean
   @Prop({ type: Boolean, default: false }) striped!: boolean
 
   @Prop({ type: Boolean, default: false }) searchable!: boolean
+  @Prop({ type: Boolean, default: false }) selectable!: boolean
   @Prop({ type: Boolean, default: false }) creatable!: boolean
   @Prop({ type: Boolean, default: false }) updatable!: boolean
   @Prop({ type: Boolean, default: false }) deletable!: boolean
+
+  @Prop({ type: Boolean, default: false }) rowSelect!: boolean
+
+  @Prop({ type: Boolean, default: false }) hideComponentFooter!: boolean
+  @Prop({ type: Boolean, default: false }) hideComponentHeader!: boolean
+  @Prop({ type: Boolean, default: false }) hideTableFooter!: boolean
+  @Prop({ type: Boolean, default: false }) hideTableHeader!: boolean
 
   @Prop(String) caption!: string
   @Prop({ type: String, default: 'Không có dữ liệu' }) noDataText!: string
@@ -132,13 +178,24 @@ export default class NDataTable extends Vue {
     this.modal.visible = true
     this.modal.data = {}
     this.modal.isNew = true
+    this.modal.isLoading = false
     this.$emit('create-click', this.modal)
   }
   updateClick(e) {
     this.modal.visible = true
     this.modal.data = cloneDeep(e)
     this.modal.isNew = false
+    this.modal.isLoading = false
     this.$emit('update-click', this.modal)
+  }
+  rowClick(event, item) {
+    this.$emit('row-click', { event, item })
+  }
+  rowDblclick(event, item) {
+    this.$emit('row-dblclick', { event, item })
+  }
+  rowContextmenu(event, item) {
+    this.$emit('row-contextmenu', { event, item })
   }
 
   @Emit('delete') remove(e) {}
@@ -217,7 +274,22 @@ export default class NDataTable extends Vue {
 
   /** headers */
   get tableHeaders() {
-    const headers: TableHeader[] = cloneDeep(this.headers)
+    let headers: TableHeader[] = []
+    if (this.headers) headers = cloneDeep(this.headers)
+    else if (this.items && this.items.length > 0) {
+      headers = Object.keys(this.items[0]).map(key => {
+        return { text: upperFirst(key), value: key }
+      })
+    }
+    //selection
+    if (this.selectable)
+      headers.unshift({
+        text: '',
+        value: 'selection',
+        width: '10%',
+        align: 'center'
+      })
+    //action
     if (this.updatable || this.deletable)
       headers.push({
         text: 'Tác vụ',
@@ -225,14 +297,36 @@ export default class NDataTable extends Vue {
         width: '10%',
         align: 'center'
       })
+
     return headers
   }
-
+  tableHeaderDepth(value: any[] = this.tableHeaders, childrenField = 'children') {
+    const hasChildren = value.filter(o => Object.prototype.hasOwnProperty.call(o, childrenField))
+    if (hasChildren.length <= 0) return 1
+    return Array.isArray(value)
+      ? 1 + Math.max(...hasChildren.map(o => this.tableHeaderDepth(o[childrenField], childrenField)))
+      : 0
+  }
+  tableHeaderAtLevel(level = 1, childrenField = 'children') {
+    let ar: any = this.tableHeaders
+    for (let i = 1; i < level; i++)
+      ar = ar.filter((a: any) => Object.prototype.hasOwnProperty.call(a, childrenField)).flatMap((a: any) => a[childrenField])
+    return ar
+  }
+  tableHeaderChildren(array: any[] = this.tableHeaders, childrenField = 'children') {
+    let save: any[] = [] //array.filter((o: any) => !o.hasOwnProperty("children"));
+    array.forEach((item: any) => {
+      if (!Object.prototype.hasOwnProperty.call(item, childrenField)) save.push(item)
+      if (Array.isArray(item[childrenField])) save = save.concat(this.tableHeaderChildren(item[childrenField], childrenField))
+    })
+    return save
+  }
   /** Edit modal */
   modal = {
     visible: false,
     data: {},
-    isNew: false
+    isNew: false,
+    isLoading: false
   }
 
   mounted() {}

@@ -18,6 +18,11 @@ export default class NForm extends Vue {
 
   mounted() {
     this.findDeep(this.$slots.default)
+    if (this.lazyValidation) {
+      this.vueComponents.forEach(v => {
+        v.lazyValidation = true
+      })
+    }
   }
 
   validate() {
