@@ -1,28 +1,34 @@
 <template>
-  <label><input type="radio" :check="check" /> {{ label }}</label>
+  <label><input type="radio" :check="checked" :value="value" /> {{ label }}</label>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import { Component, Vue, Prop, Model, Watch, Emit } from 'vue-property-decorator'
 @Component({ inheritAttrs: false })
 export default class NRadio extends Vue {
-  @Prop({ type: Boolean, default: false }) form!: boolean
   @Prop() label!: string
-  @Prop({ type: [String, Number] }) value!: number | string
-
+  @Prop({ type: [String, Number, Boolean], default: true }) value!: number | string | boolean
+  @Model('input', { type: [String, Number, Boolean] }) model: number | string | boolean
+  @Emit() input(e) {}
   radioEl!: any
-  check!: boolean
+  get checked() {
+    return this.model === this.value
+  }
   mounted() {
-    this.radioEl = ($(this.$el) as any)
+    this.radioEl = $(this.$el) as any
+    this.radioEl
       .iCheck({
         radioClass: 'iradio_flat-green'
       })
-      .on('ifClicked', e => (this.check = true))
+      .on('ifChanged', this.modifiedModel)
+  }
+  @Watch('checked')
+  onCheckedChange(n) {
+    this.radioEl.iCheck(n ? 'check' : 'uncheck')
   }
 
-  change(check: boolean) {
-    if (check) this.radioEl.iCheck('check')
-    else this.radioEl.iCheck('uncheck')
+  modifiedModel(e) {
+    if (e.target.checked) this.input(this.value)
   }
 }
 </script>

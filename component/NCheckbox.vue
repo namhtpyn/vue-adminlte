@@ -1,7 +1,5 @@
 <template>
-  <div :class="{ 'form-group': form }">
-    <label><input type="checkbox" :checked="checked" :value="value" /> {{ label }}</label>
-  </div>
+  <label><input type="checkbox" :checked="checked" :value="value" /> {{ label }}</label>
 </template>
 
 <script lang="ts">
@@ -9,7 +7,7 @@ import { Component, Vue, Prop, Model, Emit, Watch } from 'vue-property-decorator
 import cloneDeep from 'lodash/cloneDeep'
 @Component({ inheritAttrs: false })
 export default class NCheckbox extends Vue {
-  @Prop({ type: Boolean, default: false }) form!: boolean
+  @Prop({ type: Boolean, default: true }) form!: boolean
   @Prop() label!: string
   @Prop({ type: [String, Number, Boolean], default: true }) value!: string | number | boolean
   @Model('input', { type: [Array, String, Number, Boolean] }) model: any[] | any

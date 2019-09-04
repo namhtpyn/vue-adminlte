@@ -26,19 +26,18 @@ export default class NSelect2 extends Vue {
   @Prop({ type: String, default: 'value' }) itemValue!: string
   @Prop({ type: Boolean, default: true }) form!: boolean
   @Prop({ type: Boolean, default: false }) horizontal!: boolean
-  @Prop({ type: Boolean, default: false }) lazyValidation!: boolean
   @Prop({ type: Array, required: true }) items!: any[]
   @Prop(String) hint!: string
   @Prop(String) label!: string
   @Prop(Array) rules!: any[]
   @Model('input', [String, Number, Array, Object]) value!: any[] | any
   input(e) {
-    if ((!this.lazyForm && !this.lazyValidation) || !this.valid) this.validate(e)
+    if (!this.lazyValidation || !this.valid) this.validate(e)
     this.$emit('input', isNaN(e) ? e : Number(e))
   }
 
   valid: boolean = true
-  lazyForm: boolean = false
+  lazyValidation: boolean = false
   widthComponent = 0
   get hasLabel() {
     return !isEmpty(this.label)
@@ -84,6 +83,14 @@ export default class NSelect2 extends Vue {
   onSelect2DataChange(n, o) {
     this.init(n)
   }
+  @Watch('valid')
+  onValidChange(n, o) {
+    if (n) {
+      ;($(this.$el).find('span.select2-selection') as any).css('border-color', '')
+    } else {
+      ;($(this.$el).find('span.select2-selection') as any).css('border-color', '#dd4b39')
+    }
+  }
   theSelect!: any
   mounted() {
     this.theSelect = $(this.$el).find('select') as any
@@ -113,8 +120,6 @@ export default class NSelect2 extends Vue {
     if (this.rules) this.valid = !this.rules.some(e => e(value) !== true)
     return this.valid
   }
-
-  resetvalue() {}
 }
 </script>
 

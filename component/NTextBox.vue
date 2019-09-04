@@ -46,13 +46,12 @@ export default class NTextBox extends Vue {
   @Prop(String) suffix!: string
   @Prop(String) appendIcon!: string
   @Prop({ type: Boolean, default: false }) horizontal!: boolean
-  @Prop({ type: Boolean, default: false }) lazyValidation!: boolean
   @Model('input', { type: [String, Number] }) value!: string | number
   @Emit() input(e) {
-    if ((!this.lazyForm && !this.lazyValidation) || !this.valid) this.validate(e)
+    if (!this.lazyValidation || !this.valid) this.validate(e)
   }
   valid: boolean = true
-  lazyForm: boolean = false
+  lazyValidation: boolean = false
   widthComponent = 0
   get hasLabel() {
     return !isEmpty(this.label)
