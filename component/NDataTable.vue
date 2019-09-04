@@ -21,65 +21,67 @@
       <slot name="top.append"></slot>
     </div>
 
-    <table :class="tableCssClass">
-      <thead v-if="!hideTableHeader">
-        <tr :class="headerRowCssClass" v-for="headerLevel in tableHeaderDepth()" :key="headerLevel">
-          <th
-            v-for="(header, colIndex) in tableHeaderAtLevel(headerLevel)"
-            :key="colIndex"
-            :colspan="header.children ? tableHeaderChildren(header.children).length : 1"
-            :rowspan="header.children ? 1 : tableHeaderDepth()"
-            :class="headerCellCssClass"
-            :style="(header.width ? 'width: ' + header.width + '; ' : '') + (header.align ? 'text-align: ' + header.align : '')"
+    <div class="table-responsive">
+      <table :class="tableCssClass">
+        <thead v-if="!hideTableHeader">
+          <tr :class="headerRowCssClass" v-for="headerLevel in tableHeaderDepth()" :key="headerLevel">
+            <th
+              v-for="(header, colIndex) in tableHeaderAtLevel(headerLevel)"
+              :key="colIndex"
+              :colspan="header.children ? tableHeaderChildren(header.children).length : 1"
+              :rowspan="header.children ? 1 : tableHeaderDepth()"
+              :class="headerCellCssClass"
+              :style="(header.width ? 'width: ' + header.width + '; ' : '') + (header.align ? 'text-align: ' + header.align : '')"
+            >
+              <slot :name="`header.${header.value}`" :item="header">{{ header.text }}</slot>
+            </th>
+          </tr>
+        </thead>
+        <tbody v-if="hasItems">
+          <tr
+            :class="rowCssClass"
+            v-for="(item, rowIndex) in pageItems"
+            :key="rowIndex"
+            @contextmenu="e => rowContextmenu(e, item)"
+            @dblclick="e => rowDblclick(e, item)"
+            @click="e => rowClick(e, item)"
           >
-            <slot :name="`header.${header.value}`" :item="header">{{ header.text }}</slot>
-          </th>
-        </tr>
-      </thead>
-      <tbody v-if="hasItems">
-        <tr
-          :class="rowCssClass"
-          v-for="(item, rowIndex) in pageItems"
-          :key="rowIndex"
-          @contextmenu="e => rowContextmenu(e, item)"
-          @dblclick="e => rowDblclick(e, item)"
-          @click="e => rowClick(e, item)"
-        >
-          <td
-            :class="cellCssClass"
-            :style="(header.width ? 'width: ' + header.width + '; ' : '') + (header.align ? 'text-align: ' + header.align : '')"
-            v-for="(header, colIndex) in tableHeaderChildren()"
-            :key="colIndex"
-          >
-            <div :class="header.align ? 'text-${header.align}' : ''" v-if="header.value === 'selection'">
-              <n-checkbox></n-checkbox>
-            </div>
-            <div :class="header.align ? 'text-${header.align}' : ''" v-else-if="header.value === 'action'">
-              <n-btn v-if="updatable" @click="updateClick(item)">
-                <n-icon>pencil</n-icon>
-              </n-btn>
-              <n-btn v-if="deletable" @click="remove(item)">
-                <n-icon>trash</n-icon>
-              </n-btn>
-            </div>
+            <td
+              :class="cellCssClass"
+              :style="(header.width ? 'width: ' + header.width + '; ' : '') + (header.align ? 'text-align: ' + header.align : '')"
+              v-for="(header, colIndex) in tableHeaderChildren()"
+              :key="colIndex"
+            >
+              <div :class="header.align ? 'text-${header.align}' : ''" v-if="header.value === 'selection'">
+                <n-checkbox></n-checkbox>
+              </div>
+              <div :class="header.align ? 'text-${header.align}' : ''" v-else-if="header.value === 'action'">
+                <n-btn v-if="updatable" @click="updateClick(item)">
+                  <n-icon>pencil</n-icon>
+                </n-btn>
+                <n-btn v-if="deletable" @click="remove(item)">
+                  <n-icon>trash</n-icon>
+                </n-btn>
+              </div>
 
-            <slot v-else :name="`item.${header.value}`" :item="item">{{ `item.${header.value}` }}{{ item[header.value] }}</slot>
-          </td>
-        </tr>
-      </tbody>
-      <tbody v-else>
-        <tr>
-          <td class="text-center">{{ noDataText }}</td>
-        </tr>
-      </tbody>
-      <tfoot v-if="!hideTableFooter">
-        <tr :class="footerRowCssClass">
-          <td :class="footerCellCssClass" v-for="(header, colIndex) in tableHeaderChildren()" :key="colIndex">
-            <slot :name="`footer.${header.value}`" :item="items"></slot>
-          </td>
-        </tr>
-      </tfoot>
-    </table>
+              <slot v-else :name="`item.${header.value}`" :item="item">{{ `item.${header.value}` }}{{ item[header.value] }}</slot>
+            </td>
+          </tr>
+        </tbody>
+        <tbody v-else>
+          <tr>
+            <td class="text-center">{{ noDataText }}</td>
+          </tr>
+        </tbody>
+        <tfoot v-if="!hideTableFooter">
+          <tr :class="footerRowCssClass">
+            <td :class="footerCellCssClass" v-for="(header, colIndex) in tableHeaderChildren()" :key="colIndex">
+              <slot :name="`footer.${header.value}`" :item="items"></slot>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
 
     <div v-if="!hideComponentFooter" style="display:flex; padding:10px 5px; align-items: center;">
       <slot name="bottom.prepend"></slot>
