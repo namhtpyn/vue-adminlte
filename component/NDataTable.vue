@@ -20,13 +20,14 @@
       </slot>
       <slot name="top.append"></slot>
     </div>
-
     <table :class="tableCssClass">
       <thead v-if="!hideTableHeader">
-        <tr :class="headerRowCssClass">
+        <tr :class="headerRowCssClass" v-for="headerLevel in tableHeaderDepth()" :key="headerLevel">
           <th
-            v-for="(header, colIndex) in tableHeaders"
+            v-for="(header, colIndex) in tableHeaderAtLevel(headerLevel)"
             :key="colIndex"
+            :colspan="header.children ? tableHeaderChildren(header.children).length : 1"
+            :rowspan="header.children ? 1 : tableHeaderDepth()"
             :class="headerCellCssClass"
             :style="(header.width ? 'width: ' + header.width + '; ' : '') + (header.align ? 'text-align: ' + header.align : '')"
           >
@@ -35,11 +36,18 @@
         </tr>
       </thead>
       <tbody v-if="hasItems">
-        <tr :class="rowCssClass" v-for="(item, rowIndex) in pageItems" :key="rowIndex" @click="rowClick(item)">
+        <tr
+          :class="rowCssClass"
+          v-for="(item, rowIndex) in pageItems"
+          :key="rowIndex"
+          @contextmenu="e => rowContextmenu(e, item)"
+          @dblclick="e => rowDblclick(e, item)"
+          @click="e => rowClick(e, item)"
+        >
           <td
             :class="cellCssClass"
             :style="(header.width ? 'width: ' + header.width + '; ' : '') + (header.align ? 'text-align: ' + header.align : '')"
-            v-for="(header, colIndex) in tableHeaders"
+            v-for="(header, colIndex) in tableHeaderChildren()"
             :key="colIndex"
           >
             <div :class="header.align ? 'text-${header.align}' : ''" v-if="header.value === 'selection'">
@@ -65,7 +73,7 @@
       </tbody>
       <tfoot v-if="!hideTableFooter">
         <tr :class="footerRowCssClass">
-          <td :class="footerCellCssClass" v-for="(header, colIndex) in tableHeaders" :key="colIndex">
+          <td :class="footerCellCssClass" v-for="(header, colIndex) in tableHeaderChildren()" :key="colIndex">
             <slot :name="`footer.${header.value}`" :item="items"></slot>
           </td>
         </tr>
@@ -162,8 +170,14 @@ export default class NDataTable extends Vue {
     this.modal.isNew = false
     this.$emit('update-click', this.modal)
   }
-  @Emit() rowClick(e) {
-    //if(this.rowSelect)
+  rowClick(event, item) {
+    this.$emit('row-click', { event, item })
+  }
+  rowDblclick(event, item) {
+    this.$emit('row-dblclick', { event, item })
+  }
+  rowContextmenu(event, item) {
+    this.$emit('row-contextmenu', { event, item })
   }
 
   @Emit('delete') remove(e) {}
@@ -268,7 +282,27 @@ export default class NDataTable extends Vue {
 
     return headers
   }
-
+  tableHeaderDepth(value: any[] = this.tableHeaders, childrenField = 'children') {
+    const hasChildren = value.filter(o => Object.prototype.hasOwnProperty.call(o, childrenField))
+    if (hasChildren.length <= 0) return 1
+    return Array.isArray(value)
+      ? 1 + Math.max(...hasChildren.map(o => this.tableHeaderDepth(o[childrenField], childrenField)))
+      : 0
+  }
+  tableHeaderAtLevel(level = 1, childrenField = 'children') {
+    let ar: any = this.tableHeaders
+    for (let i = 1; i < level; i++)
+      ar = ar.filter((a: any) => Object.prototype.hasOwnProperty.call(a, childrenField)).flatMap((a: any) => a[childrenField])
+    return ar
+  }
+  tableHeaderChildren(array: any[] = this.tableHeaders, childrenField = 'children') {
+    let save: any[] = [] //array.filter((o: any) => !o.hasOwnProperty("children"));
+    array.forEach((item: any) => {
+      if (!Object.prototype.hasOwnProperty.call(item, childrenField)) save.push(item)
+      if (Array.isArray(item[childrenField])) save = save.concat(this.tableHeaderChildren(item[childrenField], childrenField))
+    })
+    return save
+  }
   /** Edit modal */
   modal = {
     visible: false,
