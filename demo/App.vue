@@ -1,5 +1,6 @@
 <template>
   <div>
+    <n-time-selector label='Bắt đầu'></n-time-selector>
     <n-radio label="radio 1" value="1"></n-radio>
     <n-checkbox form label="checkbox" v-model="checkbox"></n-checkbox>
     {{ checkbox }}
@@ -38,7 +39,10 @@
     </n-data-table>
 
     <n-select2 :items="selectItems" item-text="name" item-value="fat"></n-select2>
-    <n-modal caption="OK" v-model="modalVisibility" hide-footer>tui thu ne haha</n-modal>
+    <n-modal caption="OK" v-model="modalVisibility" hide-footer>
+      tui thu ne haha
+      <template #footer>footer day ne</template>
+      </n-modal>
     <n-btn @click="modalVisibility = !modalVisibility">Click</n-btn>
   </div>
 </template>
@@ -55,9 +59,10 @@ import NSelect2 from '../component/NSelect2.vue'
 import NModal from '../component/NModal.vue'
 import NCheckbox from '../component/NCheckbox.vue'
 import NRadio from '../component/NRadio.vue'
+import NTimeSelector from '../component/NTimeSelector.vue'
 
 @Component({
-  components: { NDataTable, NBtn, NIcon, NPagination, NSelect2, NModal, NCheckbox, NRadio }
+  components: { NDataTable, NBtn, NIcon, NPagination, NSelect2, NModal, NCheckbox, NRadio, NTimeSelector }
 })
 export default class extends Vue {
   //checkbox
