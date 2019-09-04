@@ -20,7 +20,7 @@ export default components.map(c => {
       dir: './dist/',
       entryFileNames: path.parse(c).name + '.js'
     },
-    external: ['Vue'],
+    external: ['vue'],
     plugins: [
       multiInput(),
       typescript(),

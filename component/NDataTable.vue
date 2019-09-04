@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="position:relative">
     <div v-if="!hideComponentHeader" class="tbl-header">
       <slot name="top.prepend"></slot>
       <slot name="top">
@@ -20,6 +20,7 @@
       </slot>
       <slot name="top.append"></slot>
     </div>
+
     <table :class="tableCssClass">
       <thead v-if="!hideTableHeader">
         <tr :class="headerRowCssClass" v-for="headerLevel in tableHeaderDepth()" :key="headerLevel">
@@ -62,7 +63,7 @@
               </n-btn>
             </div>
 
-            <slot v-else :name="`item.${header.value}`" :item="item">{{ item[header.value] }}</slot>
+            <slot v-else :name="`item.${header.value}`" :item="item">{{ `item.${header.value}` }}{{ item[header.value] }}</slot>
           </td>
         </tr>
       </tbody>
@@ -109,8 +110,18 @@
       <slot name="bottom.append"></slot>
     </div>
 
-    <n-modal v-if="updatable && creatable" :caption="modal.isNew ? 'Thêm' : 'Sửa'" v-model="modal.visible">
-      <slot name="modal" :modal="modal">OK</slot>
+    <!-- Table loading -->
+    <n-overlay absolute :value="loading">
+      <n-icon css-class="fa-spin fa-5x" style="color:white">circle-o-notch</n-icon>
+    </n-overlay>
+
+    <n-modal
+      :loading="modal.isLoading"
+      v-if="updatable && creatable"
+      :caption="modal.isNew ? 'Thêm' : 'Sửa'"
+      v-model="modal.visible"
+    >
+      <slot name="modal" :modal="modal"></slot>
       <template v-slot:footer>
         <n-btn color="primary" @click="save">Lưu</n-btn>
       </template>
@@ -129,11 +140,14 @@ import NBtn from './NBtn.vue'
 import NIcon from './NIcon.vue'
 import NModal from './NModal.vue'
 import NCheckbox from './NCheckbox.vue'
+import NOverlay from './NOverlay.vue'
 @Component({
   inheritAttrs: false,
-  components: { NPagination, NBtn, NIcon, NModal, NCheckbox }
+  components: { NPagination, NBtn, NIcon, NModal, NCheckbox, NOverlay }
 })
 export default class NDataTable extends Vue {
+  @Prop({ type: Boolean, default: false }) loading!: boolean
+
   @Prop({ type: Boolean, default: true }) bordered!: boolean
   @Prop({ type: Boolean, default: true }) hovered!: boolean
   @Prop({ type: Boolean, default: false }) densed!: boolean
@@ -162,12 +176,14 @@ export default class NDataTable extends Vue {
     this.modal.visible = true
     this.modal.data = {}
     this.modal.isNew = true
+    this.modal.isLoading = false
     this.$emit('create-click', this.modal)
   }
   updateClick(e) {
     this.modal.visible = true
     this.modal.data = cloneDeep(e)
     this.modal.isNew = false
+    this.modal.isLoading = false
     this.$emit('update-click', this.modal)
   }
   rowClick(event, item) {
@@ -307,7 +323,8 @@ export default class NDataTable extends Vue {
   modal = {
     visible: false,
     data: {},
-    isNew: false
+    isNew: false,
+    isLoading: false
   }
 
   mounted() {}
