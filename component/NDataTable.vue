@@ -1,22 +1,26 @@
 <template>
   <div>
     <div v-if="!hideComponentHeader" class="tbl-header">
-      <div class="title" v-if="caption" style="flex:auto">{{ caption }}</div>
-      <div v-if="searchable" class="has-feedback" style="flex:auto">
-        <div class="has-feedback">
-          <input type="text" class="form-control" v-model="searchText" />
-          <span class="glyphicon glyphicon-search form-control-feedback"></span>
+      <slot name="top.prepend"></slot>
+      <slot name="top">
+        <div class="title" v-if="caption" style="flex:auto">{{ caption }}</div>
+        <div v-if="searchable" class="has-feedback" style="flex:auto">
+          <div class="has-feedback">
+            <input type="text" class="form-control" v-model="searchText" />
+            <span class="glyphicon glyphicon-search form-control-feedback"></span>
+          </div>
         </div>
-      </div>
-      <div v-if="!caption && !searchable" style="flex:auto"></div>
-      <div v-if="creatable">
-        <n-btn :class="buttonAddCssClass" @click="createClick">
-          <n-icon>plus</n-icon>
-          <span class="hidden-xs">Thêm</span>
-        </n-btn>
-      </div>
+        <div v-if="!caption && !searchable" style="flex:auto"></div>
+        <div v-if="creatable">
+          <n-btn :class="buttonAddCssClass" @click="createClick">
+            <n-icon>plus</n-icon>
+            <span class="hidden-xs">Thêm</span>
+          </n-btn>
+        </div>
+      </slot>
       <slot name="top.append"></slot>
     </div>
+
     <table :class="tableCssClass">
       <thead v-if="!hideTableHeader">
         <tr :class="headerRowCssClass">
@@ -69,31 +73,35 @@
     </table>
 
     <div v-if="!hideComponentFooter" style="display:flex; padding:10px 5px; align-items: center;">
-      <div class="hidden-xs" style="height: 30px;min-height: 32px;padding: 6px 10px 6px 0px;font-size: 12px; line-height: 1.5;">
-        Trang {{ page }}/{{ pageLength }} ({{ items.length }} mục)
-      </div>
+      <slot name="bottom.prepend"></slot>
+      <slot name="bottom">
+        <div class="hidden-xs" style="height: 30px;min-height: 32px;padding: 6px 10px 6px 0px;font-size: 12px; line-height: 1.5;">
+          Trang {{ page }}/{{ pageLength }} ({{ items.length }} mục)
+        </div>
 
-      <div style="flex:auto">
-        <n-pagination :length="pageLength" v-model="page" small class="no-margin"></n-pagination>
-      </div>
-      <div>
-        <select
-          @change="changeItemPerPage"
-          class="form-control"
-          style="width:70px;display: inline-block; height:30px;  padding: 6px 6px"
-          :value="itemPerPage"
-        >
-          <option value="5">5</option>
-          <option value="10">10</option>
-          <option value="25">25</option>
-          <option value="50">50</option>
-          <option value="100">100</option>
-          <option value="-1">Tất cả</option>
-        </select>
-      </div>
+        <div style="flex:auto">
+          <n-pagination :length="pageLength" v-model="page" small class="no-margin"></n-pagination>
+        </div>
+        <div>
+          <select
+            @change="changeItemPerPage"
+            class="form-control"
+            style="width:70px;display: inline-block; height:30px;  padding: 6px 6px"
+            :value="itemPerPage"
+          >
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+            <option value="-1">Tất cả</option>
+          </select>
+        </div>
+      </slot>
+      <slot name="bottom.append"></slot>
     </div>
 
-    <n-modal :caption="modal.isNew ? 'Thêm' : 'Sửa'" v-model="modal.visible">
+    <n-modal v-if="updatable && creatable" :caption="modal.isNew ? 'Thêm' : 'Sửa'" v-model="modal.visible">
       <slot name="modal" :modal="modal">OK</slot>
       <template v-slot:footer>
         <n-btn color="primary" @click="save">Lưu</n-btn>
