@@ -1,10 +1,13 @@
 <template>
   <div :class="classComponent">
-    <label v-if="hasLabel" :class="labelClass" :style="labelStyle">{{ label }}</label>
-    <div :class="divClass" :style="divStyle">
+    <label v-if="hasLabel" class="control-label">{{ label }}</label>
+    <div :class="divClass">
       <span v-if="prefix" class="input-group-addon">{{ prefix }}</span>
       <span v-if="prependIcon" class="input-group-addon">
         <n-icon>{{ prependIcon }}</n-icon>
+      </span>
+      <span v-if="prependBtn" class="input-group-btn">
+        <n-btn :color="prependBtnColor" :flat="prependBtnFlat" @click="prependBtnClick">{{ prependBtn }}</n-btn>
       </span>
       <input
         :type="type"
@@ -19,9 +22,10 @@
       <span v-if="appendIcon" class="input-group-addon">
         <n-icon>{{ appendIcon }}</n-icon>
       </span>
-      <span v-if="appendButton" class="input-group-btn">
-        <slot name="appendButton"></slot>
+      <span v-if="appendBtn" class="input-group-btn">
+        <n-btn :color="appendBtnColor" :flat="appendBtnFlat" @click="appendBtnClick">{{ appendBtn }}</n-btn>
       </span>
+      <span v-if="innerIcon" :class="`form-control-feedback fa fa-${innerIcon}`" aria-hidden="true"></span>
     </div>
     <span v-if="!valid" class="help-block">{{ errorText }}</span>
   </div>
@@ -29,9 +33,10 @@
 
 <script lang="ts">
 import NIcon from '../component/NIcon.vue'
+import NBtn from '../component/NBtn.vue'
 import { Component, Vue, Prop, Emit, Model } from 'vue-property-decorator'
 import isEmpty from 'lodash/isEmpty'
-@Component({ components: { NIcon }, inheritAttrs: false })
+@Component({ components: { NIcon, NBtn }, inheritAttrs: false })
 export default class NTextBox extends Vue {
   @Prop({ type: String, default: 'text' }) type!: string
   @Prop(String) cssClass!: string
@@ -42,28 +47,41 @@ export default class NTextBox extends Vue {
   @Prop({ type: String, default: 'default' }) color!: string
   @Prop({ type: Boolean, default: true }) form!: string
   @Prop(String) prefix!: string
-  @Prop(String) prependIcon!: string
   @Prop(String) suffix!: string
+  @Prop(String) prependIcon!: string
   @Prop(String) appendIcon!: string
-  @Prop({ type: Boolean, default: false }) horizontal!: boolean
+  @Prop(String) prependBtn!: string
+  @Prop(Boolean) prependBtnFlat!: boolean
+  @Prop({ type: String, default: 'default' }) prependBtnColor!: string
+  @Prop(String) appendBtn!: string
+  @Prop(Boolean) appendBtnFlat!: boolean
+  @Prop({ type: String, default: 'default' }) appendBtnColor!: string
+  @Prop(String) innerIcon!: string
+  @Prop({ type: Boolean, default: false }) large!: boolean
+  @Prop({ type: Boolean, default: false }) small!: boolean
   @Model('input', { type: [String, Number] }) value!: string | number
   @Emit() input(e) {
     if (!this.lazyValidation || !this.valid) this.validate(e)
   }
+  @Emit('append-btn-click') appendBtnClick(e) {}
+  @Emit('prepend-btn-click') prependBtnClick(e) {}
   valid: boolean = true
   lazyValidation: boolean = false
-  widthComponent = 0
   get hasLabel() {
     return !isEmpty(this.label)
   }
   get appendButton() {
-    return this.$slots.appendButton
+    return this.prependBtn || this.appendBtn
   }
   get inputGroup() {
-    return this.prefix || this.prependIcon || this.suffix || this.appendIcon || this.appendButton
+    return (
+      this.prefix || this.prependIcon || this.suffix || this.appendIcon || this.appendButton || this.prependBtn || this.appendBtn
+    )
   }
   get cCssClass() {
-    const css = 'form-control ' + this.cssClass
+    let css = 'form-control ' + (this.cssClass || '')
+    css += this.large ? ' input-lg' : ''
+    css += this.small ? ' input-sm' : ''
     return css
   }
   get errorText() {
@@ -75,28 +93,18 @@ export default class NTextBox extends Vue {
   }
 
   get classComponent() {
-    return { 'form-horizontal': this.horizontal, 'form-group': this.form, 'has-error': !this.valid }
-  }
-
-  get labelClass() {
-    return { 'control-label': true, 'col-xs-2': this.horizontal }
+    return { 'form-group': this.form, 'has-error': !this.valid, 'has-feedback': this.innerIcon }
   }
 
   get divClass() {
-    return { 'input-group': this.inputGroup, 'col-xs-10': this.horizontal }
+    return {
+      'input-group': this.inputGroup,
+      'input-group-sm': this.inputGroup && this.small,
+      'input-group-lg': this.inputGroup && this.large
+    }
   }
 
-  get labelStyle() {
-    return this.horizontal ? { width: '80px', 'padding-right': '0px' } : {}
-  }
-
-  get divStyle() {
-    return this.horizontal ? { width: `${this.widthComponent - 90}px` } : {}
-  }
-
-  mounted() {
-    this.widthComponent = $(this.$el).width()
-  }
+  mounted() {}
 
   validate(value) {
     this.valid = true

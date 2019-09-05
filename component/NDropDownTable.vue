@@ -9,7 +9,7 @@
           :searchable="searchable"
           :hide-component-header="!searchable"
           hide-table-footer
-          @row-click="item => itemSelect(item, data)"
+          @row-click="obj => itemSelect(obj.item, data)"
         >
         </n-data-table>
       </template>
