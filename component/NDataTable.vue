@@ -1,6 +1,6 @@
 <template>
   <div style="position:relative">
-    <div v-if="!hideComponentHeader" class="tbl-header">
+    <div v-if="!hideTop" class="tbl-header">
       <slot name="top.prepend"></slot>
       <slot name="top">
         <div class="title" v-if="caption" style="flex:auto">{{ caption }}</div>
@@ -12,7 +12,7 @@
         </div>
         <div v-if="!caption && !searchable" style="flex:auto"></div>
         <div v-if="creatable">
-          <n-btn :class="buttonAddCssClass" @click="createClick">
+          <n-btn @click="createClick">
             <n-icon>plus</n-icon>
             <span class="hidden-xs">Thêm</span>
           </n-btn>
@@ -22,40 +22,42 @@
     </div>
 
     <div class="table-responsive">
-      <table :class="tableCssClass">
-        <thead v-if="!hideTableHeader">
-          <tr :class="headerRowCssClass" v-for="headerLevel in tableHeaderDepth()" :key="headerLevel">
+      <table :class="cssClass.table">
+        <thead v-if="!hideHeader">
+          <tr :class="cssClass.headerRow" v-for="headerRow in headerRows()" :key="headerRow">
             <th
-              v-for="(header, colIndex) in tableHeaderAtLevel(headerLevel)"
+              v-for="(header, colIndex) in headersLevel(headerRow)"
               :key="colIndex"
-              :colspan="header.children ? tableHeaderChildren(header.children).length : 1"
-              :rowspan="header.children ? 1 : tableHeaderDepth()"
-              :class="headerCellCssClass"
-              :style="(header.width ? 'width: ' + header.width + '; ' : '') + (header.align ? 'text-align: ' + header.align : '')"
+              :colspan="headerColspan(header)"
+              :rowspan="headerRowspan(header)"
+              :class="cssClass.headerCell"
+              :style="headerCellStyle(header)"
             >
-              <slot :name="`header.${header.value}`" :item="header">{{ header.text }}</slot>
+              <div v-if="header.value === '$selection'">
+                <n-checkbox v-if="multiple" @input="checkAll"></n-checkbox>
+              </div>
+              <slot v-else :name="`header.${header.value}`" :item="header">{{ header.text }}</slot>
             </th>
           </tr>
         </thead>
         <tbody v-if="hasItems">
           <tr
-            :class="rowCssClass"
+            :class="cssClass.row"
             v-for="(item, rowIndex) in pageItems"
             :key="rowIndex"
             @contextmenu="e => rowContextmenu(e, item)"
             @dblclick="e => rowDblclick(e, item)"
             @click="e => rowClick(e, item)"
           >
-            <td
-              :class="cellCssClass"
-              :style="(header.width ? 'width: ' + header.width + '; ' : '') + (header.align ? 'text-align: ' + header.align : '')"
-              v-for="(header, colIndex) in tableHeaderChildren()"
-              :key="colIndex"
-            >
-              <div :class="header.align ? 'text-${header.align}' : ''" v-if="header.value === 'selection'">
-                <n-checkbox></n-checkbox>
+            <td :class="cssClass.cell" :style="cellStyle(header)" v-for="(header, colIndex) in headerColumns()" :key="colIndex">
+              <div v-if="header.value === '$selection'">
+                <n-checkbox v-if="multiple" @input="input" :model="value" :value="keyField ? item[keyField] : item"></n-checkbox>
+                <n-radio v-else @input="input" :model="value" :value="keyField ? item[keyField] : item"></n-radio>
               </div>
-              <div :class="header.align ? 'text-${header.align}' : ''" v-else-if="header.value === 'action'">
+              <div v-else-if="header.value === '$expansion'">
+                <n-icon style="cursor:pointer" @click="expandRow(rowIndex)">chevron-down</n-icon>
+              </div>
+              <div v-else-if="header.value === '$action'">
                 <n-btn v-if="updatable" @click="updateClick(item)">
                   <n-icon>pencil</n-icon>
                 </n-btn>
@@ -64,26 +66,28 @@
                 </n-btn>
               </div>
 
-              <slot v-else :name="`item.${header.value}`" :item="item">{{ `item.${header.value}` }}{{ item[header.value] }}</slot>
+              <slot v-else :name="`item.${header.value}`" :item="item">{{ formatItemValue(item, header) }}</slot>
             </td>
           </tr>
         </tbody>
         <tbody v-else>
           <tr>
-            <td class="text-center">{{ noDataText }}</td>
+            <td :colspan="headerColumns().length" class="text-center">{{ noDataText }}</td>
           </tr>
         </tbody>
-        <tfoot v-if="!hideTableFooter">
-          <tr :class="footerRowCssClass">
-            <td :class="footerCellCssClass" v-for="(header, colIndex) in tableHeaderChildren()" :key="colIndex">
-              <slot :name="`footer.${header.value}`" :item="items"></slot>
+        <tfoot v-if="!hideFooter">
+          <tr :class="cssClass.footerRow">
+            <td :class="cssClass.footerCell" v-for="(header, colIndex) in headerColumns()" :key="colIndex">
+              <slot :name="`footer.${header.value}`" :item="items">
+                {{ footerSummary(items, header) }}
+              </slot>
             </td>
           </tr>
         </tfoot>
       </table>
     </div>
 
-    <div v-if="!hideComponentFooter" style="display:flex; padding:10px 5px; align-items: center;">
+    <div v-if="!hideBottom" style="display:flex; padding:10px 5px; align-items: center;">
       <slot name="bottom.prepend"></slot>
       <slot name="bottom">
         <div class="hidden-xs" style="height: 30px;min-height: 32px;padding: 6px 10px 6px 0px;font-size: 12px; line-height: 1.5;">
@@ -119,7 +123,7 @@
 
     <n-modal
       :loading="modal.isLoading"
-      v-if="updatable && creatable"
+      v-if="updatable || creatable"
       :caption="modal.isNew ? 'Thêm' : 'Sửa'"
       v-model="modal.visible"
     >
@@ -132,9 +136,10 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop, Emit } from 'vue-property-decorator'
+import { Vue, Component, Prop, Emit, Model } from 'vue-property-decorator'
 import { TableHeader } from '../types/Table'
 import isEmpty from 'lodash/isEmpty'
+import isNil from 'lodash/isNil'
 import cloneDeep from 'lodash/cloneDeep'
 import upperFirst from 'lodash/upperFirst'
 import NPagination from './NPagination.vue'
@@ -142,10 +147,13 @@ import NBtn from './NBtn.vue'
 import NIcon from './NIcon.vue'
 import NModal from './NModal.vue'
 import NCheckbox from './NCheckbox.vue'
+import NRadio from './NRadio.vue'
 import NOverlay from './NOverlay.vue'
+import { VNode } from 'vue'
+import camelCase from 'lodash/camelCase'
 @Component({
   inheritAttrs: false,
-  components: { NPagination, NBtn, NIcon, NModal, NCheckbox, NOverlay }
+  components: { NPagination, NBtn, NIcon, NModal, NCheckbox, NRadio, NOverlay }
 })
 export default class NDataTable extends Vue {
   @Prop({ type: Boolean, default: false }) loading!: boolean
@@ -156,23 +164,27 @@ export default class NDataTable extends Vue {
   @Prop({ type: Boolean, default: false }) striped!: boolean
 
   @Prop({ type: Boolean, default: false }) searchable!: boolean
+  @Prop({ type: Boolean, default: false }) expandable!: boolean
   @Prop({ type: Boolean, default: false }) selectable!: boolean
+  @Prop({ type: Boolean, default: false }) multiple!: boolean
   @Prop({ type: Boolean, default: false }) creatable!: boolean
   @Prop({ type: Boolean, default: false }) updatable!: boolean
   @Prop({ type: Boolean, default: false }) deletable!: boolean
 
-  @Prop({ type: Boolean, default: false }) rowSelect!: boolean
-
-  @Prop({ type: Boolean, default: false }) hideComponentFooter!: boolean
-  @Prop({ type: Boolean, default: false }) hideComponentHeader!: boolean
-  @Prop({ type: Boolean, default: false }) hideTableFooter!: boolean
-  @Prop({ type: Boolean, default: false }) hideTableHeader!: boolean
+  @Prop({ type: Boolean, default: false }) hideBottom!: boolean
+  @Prop({ type: Boolean, default: false }) hideTop!: boolean
+  @Prop({ type: Boolean, default: false }) hideFooter!: boolean
+  @Prop({ type: Boolean, default: false }) hideHeader!: boolean
 
   @Prop(String) caption!: string
   @Prop({ type: String, default: 'Không có dữ liệu' }) noDataText!: string
+  @Prop(String) keyField!: string
 
   @Prop(Array) headers: TableHeader[]
   @Prop(Array) items: any[]
+
+  @Model('input', { type: [Array, String, Number, Boolean, Object] }) value!: any[] | any
+  @Emit() input(e) {}
 
   createClick(e) {
     this.modal.visible = true
@@ -189,6 +201,7 @@ export default class NDataTable extends Vue {
     this.$emit('update-click', this.modal)
   }
   rowClick(event, item) {
+    //console.log(event)
     this.$emit('row-click', { event, item })
   }
   rowDblclick(event, item) {
@@ -204,38 +217,6 @@ export default class NDataTable extends Vue {
     else this.$emit('update', this.modal)
   }
 
-  /** css classes */
-  get tableCssClass() {
-    let css = 'table no-margin '
-    css += this.bordered ? 'table-bordered ' : ''
-    css += this.hovered ? 'table-hover ' : ''
-    css += this.densed ? 'table-condensed ' : ''
-    css += this.striped ? 'table-striped ' : ''
-    css += this.getCssClass('table') || ''
-    return css
-  }
-  get headerRowCssClass() {
-    return this.getCssClass('header-row') || ''
-  }
-  get headerCellCssClass() {
-    return this.getCssClass('header-cell') || ''
-  }
-  get rowCssClass() {
-    return this.getCssClass('row') || ''
-  }
-  get cellCssClass() {
-    return this.getCssClass('cell') || ''
-  }
-  get footerRowCssClass() {
-    return this.getCssClass('footer-row') || ''
-  }
-  get footerCellCssClass() {
-    return this.getCssClass('footer-cell') || ''
-  }
-  get buttonAddCssClass() {
-    return this.getCssClass('button-add') || ''
-  }
-
   /**Items */
   get hasItems() {
     return !isEmpty(this.items)
@@ -243,12 +224,14 @@ export default class NDataTable extends Vue {
   get pageItems() {
     let items = cloneDeep(this.items)
     if (this.searchText)
-      items = items.filter(r =>
-        Object.values(r).some(c =>
-          c
-            .toString()
-            .toUpperCase()
-            .includes(this.searchText.toUpperCase())
+      items = items.filter(item =>
+        Object.values(item).some(field =>
+          isNil(field)
+            ? false
+            : field
+                .toString()
+                .toUpperCase()
+                .includes(this.searchText.toUpperCase())
         )
       )
 
@@ -258,6 +241,13 @@ export default class NDataTable extends Vue {
         this.page * this.itemPerPage < this.items.length ? this.page * this.itemPerPage : this.items.length
       )
     return items
+  }
+  formatItemValue(item: any, header: TableHeader) {
+    return item[header.value]
+  }
+  expandRow(rowIndex: number) {
+    // this.itemsClone.splice(rowIndex + 1, 0, { isExpansion: true })
+    // console.log(this.itemsClone)
   }
   /** search */
   searchText: string = ''
@@ -274,52 +264,103 @@ export default class NDataTable extends Vue {
 
   /** headers */
   get tableHeaders() {
-    let headers: TableHeader[] = []
-    if (this.headers) headers = cloneDeep(this.headers)
-    else if (this.items && this.items.length > 0) {
+    let headers: TableHeader[] = this.getHeadersFromTag()
+    if (!isEmpty(this.headers)) headers = cloneDeep(this.headers)
+    else if (isEmpty(headers) && !isEmpty(this.items)) {
       headers = Object.keys(this.items[0]).map(key => {
         return { text: upperFirst(key), value: key }
       })
     }
+    //expansion
+    if (this.expandable)
+      headers.unshift({
+        text: '',
+        value: '$expansion',
+        width: '36px',
+        headerAlign: 'center',
+        headerValign: 'middle',
+        align: 'center'
+      })
     //selection
     if (this.selectable)
       headers.unshift({
         text: '',
-        value: 'selection',
-        width: '10%',
+        value: '$selection',
+        width: '36px',
+        headerAlign: 'center',
+        headerValign: 'middle',
         align: 'center'
       })
     //action
     if (this.updatable || this.deletable)
       headers.push({
         text: 'Tác vụ',
-        value: 'action',
-        width: '10%',
+        value: '$action',
+        width: '96px',
+        headerAlign: 'center',
+        headerValign: 'middle',
         align: 'center'
       })
 
     return headers
   }
-  tableHeaderDepth(value: any[] = this.tableHeaders, childrenField = 'children') {
-    const hasChildren = value.filter(o => Object.prototype.hasOwnProperty.call(o, childrenField))
-    if (hasChildren.length <= 0) return 1
-    return Array.isArray(value)
-      ? 1 + Math.max(...hasChildren.map(o => this.tableHeaderDepth(o[childrenField], childrenField)))
-      : 0
+
+  headerColspan(header: TableHeader) {
+    return header.children ? this.headerColumns(header.children).length : 1
   }
-  tableHeaderAtLevel(level = 1, childrenField = 'children') {
+  headerRowspan(header: TableHeader) {
+    return header.children ? 1 : this.headerRows()
+  }
+  headerCellStyle(header: TableHeader) {
+    let style = ''
+    style += header.width ? 'width: ' + header.width + '; ' : ''
+    style += header.width ? 'min-width: ' + header.width + '; ' : ''
+    style += header.width ? 'max-width: ' + header.width + '; ' : ''
+    style += header.headerBgcolor ? 'background-color: ' + header.headerBgcolor + '; ' : ''
+    style += header.headerColor ? 'color: ' + header.headerColor + '; ' : ''
+    style += header.headerAlign ? 'text-align: ' + header.headerAlign + '; ' : ''
+    style += header.headerValign ? 'vertical-align: ' + header.headerValign + '; ' : ''
+    return style
+  }
+  cellStyle(header: TableHeader) {
+    let style = ''
+    style += header.width ? 'width: ' + header.width + '; ' : ''
+    style += header.width ? 'min-width: ' + header.width + '; ' : ''
+    style += header.width ? 'max-width: ' + header.width + '; ' : ''
+    style += header.align ? 'text-align: ' + header.align + '; ' : ''
+    style += header.valign ? 'vertical-align: ' + header.valign + '; ' : ''
+    style += header.bgcolor ? 'background-color: ' + header.bgcolor + '; ' : ''
+    style += header.color ? 'color: ' + header.color + '; ' : ''
+    return style
+  }
+  footerSummary(items: any[], header: TableHeader) {
+    if (header.summary === 'sum') return items.reduce((a, b) => a + (b[header.value] || 0), 0)
+    return ''
+  }
+  headerRows(value: any[] = this.tableHeaders, childrenField = 'children') {
+    const hasChildren = value.filter(o => !isNil(o[childrenField]))
+    if (hasChildren.length <= 0) return 1
+    return Array.isArray(value) ? 1 + Math.max(...hasChildren.map(o => this.headerRows(o[childrenField], childrenField))) : 0
+  }
+  headersLevel(level = 1, childrenField = 'children') {
     let ar: any = this.tableHeaders
-    for (let i = 1; i < level; i++)
-      ar = ar.filter((a: any) => Object.prototype.hasOwnProperty.call(a, childrenField)).flatMap((a: any) => a[childrenField])
+    for (let i = 1; i < level; i++) ar = ar.filter((a: any) => !isNil(a[childrenField])).flatMap((a: any) => a[childrenField])
     return ar
   }
-  tableHeaderChildren(array: any[] = this.tableHeaders, childrenField = 'children') {
-    let save: any[] = [] //array.filter((o: any) => !o.hasOwnProperty("children"));
+  headerColumns(array: any[] = this.tableHeaders, childrenField = 'children') {
+    let save: any[] = []
     array.forEach((item: any) => {
-      if (!Object.prototype.hasOwnProperty.call(item, childrenField)) save.push(item)
-      if (Array.isArray(item[childrenField])) save = save.concat(this.tableHeaderChildren(item[childrenField], childrenField))
+      if (isNil(item[childrenField])) save.push(item)
+      if (Array.isArray(item[childrenField])) save = save.concat(this.headerColumns(item[childrenField], childrenField))
     })
     return save
+  }
+  /** Checkable */
+  checkAll(e) {
+    if (e) {
+      if (!this.keyField) this.input(this.items)
+      else this.input(this.items.map(i => i[this.keyField]))
+    } else this.input([])
   }
   /** Edit modal */
   modal = {
@@ -329,16 +370,65 @@ export default class NDataTable extends Vue {
     isLoading: false
   }
 
-  mounted() {}
+  created() {
+    //this.itemsClone = cloneDeep(this.items)
+  }
 
   /**helper function */
+  get cssClass() {
+    return {
+      table:
+        'table no-margin ' +
+          (this.bordered ? 'table-bordered ' : '') +
+          (this.hovered ? 'table-hover ' : '') +
+          (this.densed ? 'table-condensed ' : '') +
+          (this.striped ? 'table-striped ' : '') +
+          this.getCssClass('table') || '',
+      headerRow: this.getCssClass('header-row') || '',
+      headerCell: this.getCssClass('header-cell') || '',
+      row: this.getCssClass('row') || '',
+      cell: this.getCssClass('cell') || '',
+      footerRow: this.getCssClass('footer-row') || '',
+      footerCell: this.getCssClass('footer-cell') || ''
+    }
+  }
+  getHeadersFromTag(node: VNode[] = this.$slots.default) {
+    const itemNode = ['text-item', 'number-item', 'date-item', 'band-item']
+    const items = this.getVNodeChildren(this.getVNode('items', node)).filter(node => itemNode.includes(node.tag))
+    return items.map(o => {
+      const obj: TableHeader = { ...{ text: '', value: '', headerValign: 'center' }, ...this.getVNodeDataAttrs(o) }
+      obj.type = o.tag.slice(0, -5)
+      if (o.tag === 'band-item') {
+        const children = this.getVNodeChildren(o)
+        obj.children = this.getHeadersFromTag(children)
+      }
+      return obj
+    })
+  }
   getCssClass(tag: string) {
-    if (!this.$slots.default) return ''
-    const css = this.$slots.default.find(node => node.tag === 'css-class')
-    if (!css.data) return ''
-    if (!Object.prototype.hasOwnProperty.call(css.data, 'attrs') || !css.data.attrs) return ''
-    if (!Object.prototype.hasOwnProperty.call(css.data.attrs, tag)) return ''
-    return css.data.attrs[tag]
+    const node = this.getVNode('css-class')
+    const attrs = this.getVNodeDataAttrs(node)
+    return attrs[tag] || ''
+  }
+  getVNode(tag: string, node: VNode[] = this.$slots.default) {
+    if (isNil(node)) return null
+    return node.find(node => node.tag === tag)
+  }
+  getVNodeChildren(node: VNode) {
+    if (!isNil(node) && Array.isArray(node.children)) return node.children.filter(node => !isNil(node.tag))
+    else return []
+  }
+  getVNodeDataAttrs(node: VNode) {
+    if (!isNil(node) && !isNil(node.data) && !isNil(node.data.attrs)) return this.toCamelCaseObj(node.data.attrs)
+    return {}
+  }
+  toCamelCaseObj(obj) {
+    return Object.fromEntries(
+      Object.entries(obj).map(e => {
+        e[0] = camelCase(e[0])
+        return e
+      })
+    )
   }
 }
 </script>
