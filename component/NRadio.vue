@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop, Model, Watch, Emit } from 'vue-property-decorator'
-import isEqual = require('lodash/isEqual')
+import isEqual from 'lodash/isEqual'
 
 @Component({ inheritAttrs: false })
 export default class NRadio extends Vue {
