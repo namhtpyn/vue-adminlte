@@ -36,7 +36,7 @@
               <div v-if="header.value === '$selection'">
                 <n-checkbox v-if="multiple" @input="checkAll"></n-checkbox>
               </div>
-              <slot v-else :name="`header.${header.value}`" :item="header">{{ header.text }}</slot>
+              <slot v-else :name="`header.${kebabCase(header.value)}`" :item="header">{{ header.text }}</slot>
             </th>
           </tr>
         </thead>
@@ -66,7 +66,7 @@
                 </n-btn>
               </div>
 
-              <slot v-else :name="`item.${header.value}`" :item="item">{{ formatItemValue(item, header) }}</slot>
+              <slot v-else :name="`item.${kebabCase(header.value)}`" :item="item">{{ formatItemValue(item, header) }}</slot>
             </td>
           </tr>
         </tbody>
@@ -78,7 +78,7 @@
         <tfoot v-if="!hideFooter">
           <tr :class="cssClass.footerRow">
             <td :class="cssClass.footerCell" v-for="(header, colIndex) in headerColumns()" :key="colIndex">
-              <slot :name="`footer.${header.value}`" :item="items">
+              <slot :name="`footer.${kebabCase(header.value)}`" :item="items">
                 {{ footerSummary(items, header) }}
               </slot>
             </td>
@@ -151,6 +151,7 @@ import NRadio from './NRadio.vue'
 import NOverlay from './NOverlay.vue'
 import { VNode } from 'vue'
 import camelCase from 'lodash/camelCase'
+import kebabCase from 'lodash/kebabCase'
 @Component({
   inheritAttrs: false,
   components: { NPagination, NBtn, NIcon, NModal, NCheckbox, NRadio, NOverlay }
@@ -429,6 +430,9 @@ export default class NDataTable extends Vue {
         return e
       })
     )
+  }
+  kebabCase(t) {
+    return kebabCase(t)
   }
 }
 </script>
