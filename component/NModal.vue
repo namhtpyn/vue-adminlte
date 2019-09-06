@@ -12,6 +12,9 @@
         <div v-if="!hideFooter" class="modal-footer">
           <slot name="footer"></slot>
         </div>
+        <n-overlay absolute :value="loading">
+          <n-icon css-class="fa-spin fa-3x" style="color:white">circle-o-notch</n-icon>
+        </n-overlay>
       </div>
     </div>
   </div>
@@ -20,8 +23,11 @@
 <script lang="ts">
 import { Component, Vue, Model, Watch, Emit, Prop } from 'vue-property-decorator'
 import NIcon from '../component/NIcon.vue'
-@Component({ inheritAttrs: false, components: { NIcon } })
+import NOverlay from '../component/NOverlay.vue'
+@Component({ inheritAttrs: false, components: { NIcon, NOverlay } })
 export default class NModal extends Vue {
+  @Prop({ type: Boolean, default: false }) loading!: boolean
+
   @Prop({ type: String, default: 'default' }) color!: string
   @Prop({ type: String, default: '' }) caption!: string
   @Prop({ type: Boolean, default: false }) persistent!: boolean
