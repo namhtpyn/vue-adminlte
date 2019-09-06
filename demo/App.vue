@@ -119,7 +119,6 @@ import NDropDownTable from '../component/NDropDownTable.vue'
 import NForm from '../component/NForm.vue'
 import NTree from '../component/NTree.vue'
 import NDropDownTree from '../component/NDropDownTree.vue'
-import NTable from '../component/NTable.vue'
 
 @Component({
   components: {
@@ -135,8 +134,7 @@ import NTable from '../component/NTable.vue'
     NDropDownTable,
     NForm,
     NTree,
-    NDropDownTree,
-    NTable
+    NDropDownTree
   }
 })
 export default class extends Vue {
