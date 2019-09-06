@@ -1,11 +1,7 @@
 <template>
   <div :class="classComponent">
-    <label v-if="hasLabel" :class="labelClass" :style="labelStyle">{{ label }}</label>
-    <div :class="divClass" :style="divStyle">
-      <select :class="cCssClass" :value="value">
-        <!-- <option v-for="(item, idx) in select2Data" :key="idx" :value="item.id">{{ item.text }}</option> -->
-      </select>
-    </div>
+    <label v-if="hasLabel" class="control-label">{{ label }}</label>
+    <select :class="cCssClass" :value="value"> </select>
     <span v-if="!valid" class="help-block">{{ errorText }}</span>
   </div>
   <!-- <select :class="selectCssClass"></select> -->
@@ -25,8 +21,9 @@ export default class NSelect2 extends Vue {
   @Prop({ type: String, default: 'text' }) itemText!: string
   @Prop({ type: String, default: 'value' }) itemValue!: string
   @Prop({ type: Boolean, default: true }) form!: boolean
-  @Prop({ type: Boolean, default: false }) horizontal!: boolean
   @Prop({ type: Array, required: true }) items!: any[]
+  @Prop({ type: Boolean, default: false }) small!: boolean
+  @Prop({ type: Boolean, default: false }) large!: boolean
   @Prop(String) hint!: string
   @Prop(String) label!: string
   @Prop(Array) rules!: any[]
@@ -61,23 +58,7 @@ export default class NSelect2 extends Vue {
     return data
   }
   get classComponent() {
-    return { 'form-horizontal': this.horizontal, 'form-group': this.form, 'has-error': !this.valid }
-  }
-
-  get labelClass() {
-    return { 'control-label': true, 'col-xs-2': this.horizontal }
-  }
-
-  get divClass() {
-    return { 'col-xs-10': this.horizontal }
-  }
-
-  get labelStyle() {
-    return this.horizontal ? { width: '80px', 'padding-right': '0px' } : {}
-  }
-
-  get divStyle() {
-    return this.horizontal ? { width: `${this.widthComponent - 90}px` } : {}
+    return { 'form-group': this.form, 'has-error': !this.valid }
   }
   @Watch('select2Data')
   onSelect2DataChange(n, o) {
@@ -95,6 +76,7 @@ export default class NSelect2 extends Vue {
   mounted() {
     this.theSelect = $(this.$el).find('select') as any
     this.init(this.select2Data)
+    this.setSize()
     this.valid = true
   }
 
@@ -108,11 +90,25 @@ export default class NSelect2 extends Vue {
         multiple: this.multiple,
         placeholder: this.hint,
         closeOnSelect: this.closeOnSelect,
-        minimumResultsForSearch: this.searchable ? 0 : -1
+        minimumResultsForSearch: this.searchable ? 0 : -1,
+        language: {
+          noResults: function() {
+            return 'Không có dữ liệu'
+          }
+        }
       })
       .change(e => this.input(e.target.value))
       .val(this.value)
       .trigger('change')
+  }
+
+  setSize() {
+    if (!this.small && !this.large) return
+    ;($(this.$el).find('.select2-selection__rendered') as any).addClass(`input-${this.small ? 'sm' : 'lg'}-rendered`)
+    ;($(this.$el).find('.select2-container .select2-selection--single') as any).addClass(
+      `input-${this.small ? 'sm' : 'lg'}-select`
+    )
+    ;($(this.$el).find('.select2-selection__arrow') as any).addClass(`input-${this.small ? 'sm' : 'lg'}-arrow`)
   }
 
   validate(value) {
@@ -126,5 +122,31 @@ export default class NSelect2 extends Vue {
 <style>
 span.select2-container {
   width: 100% !important;
+}
+.input-sm-rendered {
+  font-size: 12px !important;
+  line-height: 23px !important;
+}
+.input-sm-select {
+  height: 30px !important;
+}
+.input-sm-arrow {
+  height: 23px !important;
+}
+.input-sm-dropdown {
+  font-size: 12px;
+}
+.input-lg-rendered {
+  font-size: 18px !important;
+  line-height: 40px !important;
+}
+.input-lg-select {
+  height: 46px !important;
+}
+.input-lg-arrow {
+  height: 40px !important;
+}
+.input-lg-dropdown {
+  font-size: 18px;
 }
 </style>

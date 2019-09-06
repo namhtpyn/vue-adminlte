@@ -68,7 +68,6 @@ export default class NDropDownTable extends Vue {
     return this.valid
   }
   itemSelect(e, data) {
-    console.log(e.item)
     if (Object.hasOwnProperty.call(e.item, this.itemValue)) this.input(e.item[this.itemValue])
     if (!this.lazyValidation || !this.valid) this.validate(e.item[this.itemValue])
     data.isOpen = false
