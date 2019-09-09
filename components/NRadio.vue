@@ -13,7 +13,7 @@ export default class NRadio extends Vue {
   @Prop({ type: [String, Number, Boolean, Object], default: true }) value!: number | string | boolean | object
   @Model('input', { type: [String, Number, Boolean, Object] }) model: number | string | boolean | object
   @Emit() input(e) {}
-  radioEl!: any
+  private radioEl!: any
   groupModel: any = null
   get checked() {
     if (!this.model) return _.isEqual(this.groupModel, this.value)
@@ -28,11 +28,11 @@ export default class NRadio extends Vue {
       .on('ifChanged', this.modifiedModel)
   }
   @Watch('checked')
-  onCheckedChange(n) {
+  private onCheckedChange(n) {
     this.radioEl.iCheck(n ? 'check' : 'uncheck')
   }
 
-  modifiedModel(e) {
+  private modifiedModel(e) {
     if (!this.model) this.groupModel = _.cloneDeep(this.value)
     else this.input(this.value)
   }

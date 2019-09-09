@@ -17,8 +17,8 @@ import _ from 'lodash'
 @Component({ inheritAttrs: false })
 export default class NTabCollection extends Vue {
   @Prop({ type: Boolean, default: false }) changeOnCreated!: boolean
-  valueTabActive: any = null
-  tabComponents: any[] = []
+  private valueTabActive: any = null
+  private tabComponents: any[] = []
   mounted() {
     this.findDeep(this.$slots.default)
     if (this.changeOnCreated && !_.isEmpty(this.headers)) this.valueTabActive = this.headers[this.tabActive].value
@@ -46,7 +46,7 @@ export default class NTabCollection extends Vue {
   }
 
   @Watch('valueTabActive')
-  onValueTabActiveChange(n, o) {
+  private onValueTabActiveChange(n, o) {
     this.$emit('tab-change', n)
   }
 
@@ -54,7 +54,7 @@ export default class NTabCollection extends Vue {
     this.valueTabActive = item.value
   }
 
-  findDeep(obj) {
+  private findDeep(obj) {
     if (obj instanceof Array) {
       for (let i = 0; i < obj.length; i++) {
         this.findDeep(obj[i])

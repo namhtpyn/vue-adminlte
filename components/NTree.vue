@@ -32,6 +32,7 @@ export default class NTree extends Vue {
     if (this.expandAll) this.theTree.jstree().open_all()
   }
   searchText: string = ''
+  theTree!: any
   get treeData() {
     if (_.isEmpty(this.items)) return []
     const itemsMap = _.cloneDeep(this.items).map(m => {
@@ -62,18 +63,17 @@ export default class NTree extends Vue {
   get hasData() {
     return !_.isEmpty(this.treeData)
   }
-  theTree!: any
   mounted() {
     this.theTree = $($(this.$el as any).find('#component-tree-view')) as any
     this.init(this.treeData)
   }
   @Watch('treeData')
-  onTreeDataChange(n, o) {
+  private onTreeDataChange(n, o) {
     if (o !== undefined) {
       this.init(n)
     }
   }
-  init(data) {
+  private init(data) {
     if (this.theTree.hasClass('jstree')) {
       this.theTree.jstree().destroy()
     }
@@ -111,7 +111,7 @@ export default class NTree extends Vue {
       .find('input')
       .focus()
   }
-  convertHereditaryToObject(arr, idRoot, level) {
+  private convertHereditaryToObject(arr, idRoot, level) {
     const result: Object[] = []
     if (!arr.some(i => i.parentID === idRoot)) return result
 

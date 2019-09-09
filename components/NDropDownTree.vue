@@ -59,6 +59,7 @@ export default class NDropDownTree extends Vue {
   @Emit() input(e) {}
   valid: boolean = true
   lazyValidation: boolean = false
+  private treeComponent!: any
   get hasLabel() {
     return !_.isEmpty(this.label)
   }
@@ -81,22 +82,21 @@ export default class NDropDownTree extends Vue {
     if (this.rules) this.valid = !this.rules.some(e => e(value) !== true)
     return this.valid
   }
-  itemSelect(item, data) {
+  private itemSelect(item, data) {
     if (Object.hasOwnProperty.call(item, 'id')) this.input(item.id)
     if (!this.lazyValidation || !this.valid) this.validate(item.id)
     data.isOpen = false
   }
-  treeComponent!: any
   mounted() {
     this.treeComponent = this.$children[0].$children[0] as any
   }
-  onOpen() {
+  private onOpen() {
     this.$nextTick(() => {
       this.treeComponent.focusSelectedNode()
       this.treeComponent.focusSearch()
     })
   }
-  onClose() {
+  private onClose() {
     this.treeComponent.searchText = ''
   }
 }

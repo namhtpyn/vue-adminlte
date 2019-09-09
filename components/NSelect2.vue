@@ -35,7 +35,7 @@ export default class NSelect2 extends Vue {
 
   valid: boolean = true
   lazyValidation: boolean = false
-  widthComponent = 0
+  private theSelect!: any
   get hasLabel() {
     return !_.isEmpty(this.label)
   }
@@ -61,18 +61,17 @@ export default class NSelect2 extends Vue {
     return { 'form-group': this.form, 'has-error': !this.valid }
   }
   @Watch('select2Data')
-  onSelect2DataChange(n, o) {
+  private onSelect2DataChange(n, o) {
     this.init(n)
   }
   @Watch('valid')
-  onValidChange(n, o) {
+  private onValidChange(n, o) {
     if (n) {
       ;($(this.$el).find('span.select2-selection') as any).css('border-color', '')
     } else {
       ;($(this.$el).find('span.select2-selection') as any).css('border-color', '#dd4b39')
     }
   }
-  theSelect!: any
   mounted() {
     this.theSelect = $(this.$el).find('select') as any
     this.init(this.select2Data)
@@ -80,7 +79,7 @@ export default class NSelect2 extends Vue {
     this.valid = true
   }
 
-  init(data) {
+  private init(data) {
     this.theSelect.empty()
     this.theSelect
       .select2({
@@ -102,7 +101,7 @@ export default class NSelect2 extends Vue {
       .trigger('change')
   }
 
-  setSize() {
+  private setSize() {
     if (!this.small && !this.large) return
     ;($(this.$el).find('.select2-selection__rendered') as any).addClass(`input-${this.small ? 'sm' : 'lg'}-rendered`)
     ;($(this.$el).find('.select2-container .select2-selection--single') as any).addClass(

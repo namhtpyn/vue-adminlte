@@ -14,7 +14,7 @@ export default class NRadioGroup extends Vue {
   @Model('input', { type: [String, Number, Boolean, Object] }) value: number | string | boolean | object
   @Emit() input(e) {}
 
-  radioComponents: any[] = []
+  private radioComponents: any[] = []
   mounted() {
     this.findDeep(this.$slots.default)
     if (!_.isEmpty(this.value)) this.setGroupModel(this.value)
@@ -29,7 +29,7 @@ export default class NRadioGroup extends Vue {
   }
 
   @Watch('groupModelArray')
-  onGroupModelArrayChange(n, o) {
+  private onGroupModelArrayChange(n, o) {
     if (!_.isEmpty(n) && !_.isEmpty(o) && _.unionWith(n, _.isEqual).length !== 1) {
       const [changedValue] = _.difference(n, o)
       this.setGroupModel(changedValue)
@@ -37,11 +37,11 @@ export default class NRadioGroup extends Vue {
     }
   }
 
-  setGroupModel(value) {
+  private setGroupModel(value) {
     this.radioComponents.forEach(r => (r.groupModel = _.cloneDeep(value)))
   }
 
-  findDeep(obj) {
+  private findDeep(obj) {
     if (obj instanceof Array) {
       for (let i = 0; i < obj.length; i++) {
         this.findDeep(obj[i])
