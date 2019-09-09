@@ -67,15 +67,28 @@
     <n-checkbox form label="checkbox" v-model="checkbox"></n-checkbox>
     {{ checkbox }}
     <n-btn app color="primary" text-color="white" @click="abc"> <n-icon color="yellow">play</n-icon>Play </n-btn> -->
-
-    <!-- <n-data-table caption="Title here" :headers="tableHeaders" :items="items" enable-search bordered selectable updatable>
-      <template v-slot:item.iron="{ item }">
+    {{ def }}
+    <n-data-table v-model="def" :items="items" selectable updatable deletable creatable expandable>
+      <items>
+        <text-item :editable="false" header-valign="middle" text="Calories" value="calories"></text-item>
+        <band-item text="band" align="center">
+          <items>
+            <text-item text="Calories" value="calories" summary="sum"></text-item>
+            <number-item text="Fat" value="calories"></number-item>
+            <date-item></date-item>
+          </items>
+        </band-item>
+      </items>
+      <!-- <template v-slot:item.iron="{ item }">
         <span class="badge bg-red">{{ item.iron }}</span>
       </template>
       <template v-slot:item.protein="{ item }">
         <span class="badge bg-green">{{ item.protein }}</span>
       </template>
-    </n-data-table> -->
+      <template v-slot:item.Name="{ item }">
+        <span class="badge bg-green">{{ item.protein }}</span>
+      </template> -->
+    </n-data-table>
 
     <!-- <n-pagination :length="10" v-model="page"></n-pagination>
 
@@ -125,6 +138,7 @@ import NDropDownTree from '../component/NDropDownTree.vue'
   }
 })
 export default class extends Vue {
+  def: any = {}
   expandToLevel = null
   select_node(node) {
     console.log(node)
@@ -139,7 +153,14 @@ export default class extends Vue {
   page = 1
 
   //Table
-  tableHeaders: TableHeader[] = [{ text: 'IpAddress', value: 'DeviceID' }, { text: 'SystemName', value: 'SystemName' }]
+  tableHeaders: TableHeader[] = [
+    { text: 'IpAddress', value: 'DeviceID', width: '500px' },
+    { text: 'IpAddress', value: 'DeviceID' },
+    { text: 'IpAddress', value: 'DeviceID' },
+    { text: 'IpAddress', value: 'DeviceID' },
+    { text: 'IpAddress', value: 'DeviceID' },
+    { text: 'SystemName', value: 'SystemName' }
+  ]
   tableItems: any[] = data2
   doAdd(modal) {
     console.log(modal)
@@ -162,7 +183,7 @@ export default class extends Vue {
   headers = [
     {
       text: 'Dessert (100g serving)',
-      value: 'name'
+      value: 'Name'
     },
     {
       text: 'abc',
@@ -183,8 +204,7 @@ export default class extends Vue {
       ]
     },
 
-    { text: 'Iron (%))', value: 'iron' },
-    { text: 'Action', value: 'action' }
+    { text: 'Iron (%))', value: 'iron' }
   ]
   items: any[] = jsonData
   treeItems: any[] = []

@@ -37,7 +37,8 @@ import isEmpty from 'lodash/isEmpty'
 @Component({ inheritAttrs: false })
 export default class NTimeSelector extends Vue {
   @Prop(String) label!: string
-  @Prop(Date) value!: Date
+  @Model('input', { type: [Date] }) value!: Date
+  //@Prop(Date) value!: Date
   @Prop(String) id!: string
   @Prop(String) placeholder!: String
   @Prop(String) name!: String
@@ -96,6 +97,18 @@ export default class NTimeSelector extends Vue {
   }
   
     get picker(){
+      if(typeof(this.value) == "string"){
+        let myDate = new Date(this.value)
+
+        this.value = this.utc ? new Date(
+        Date.UTC(myDate.getFullYear(), 
+        myDate.getMonth(), 
+        myDate.getDate(), 
+        myDate.getHours(), 
+        myDate.getMinutes(), 
+        myDate.getSeconds())
+        ) : myDate;
+      }
       return {
         hour: this.value ? (this.utc ? this.value.getUTCHours() : this.value.getHours()) : 0,
         minute: this.value ? (this.utc ? this.value.getUTCMinutes() : this.value.getMinutes()) : 0,
@@ -124,12 +137,12 @@ export default class NTimeSelector extends Vue {
         hh: () => {
           if (this.h24)
             return this.pad(this.picker.hour > 12 ? 12 - (this.picker.hour === 0 ? this.picker.hour + 1 : this.picker.hour) : this.picker.hour === 0 ? this.picker.hour + 1 : this.picker.hour, true)
-          return this.pad(this.picker.hour === 0 ? this.picker.hour + 1 : this.picker.hour, true)
+            return this.pad(this.picker.hour === 0 ? this.picker.hour + 1 : this.picker.hour, true)
         },
         h: () => {
           if (this.h24)
             return this.picker.hour > 12 ? 12 - (this.picker.hour === 0 ? this.picker.hour + 1 : this.picker.hour) : (this.picker.hour === 0 ? this.picker.hour + 1 : this.picker.hour)
-          return this.picker.hour === 0 ? this.picker.hour + 1 : this.picker.hour
+            return this.picker.hour === 0 ? this.picker.hour + 1 : this.picker.hour
         },
         mm: () => this.pad(this.picker.minute, true),
         m: () => this.picker.minute.toString(),
@@ -164,7 +177,14 @@ export default class NTimeSelector extends Vue {
       // Set hours in final Date format - default
       this.pickerState.time.setHours(this.picker.hour, this.picker.minute, this.picker.second);
       const date = this.value ? this.value : new Date();
-      return this.utc ? new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), this.picker.hour, this.picker.minute, this.picker.second)) : new Date(this.pickerState.time);
+      return this.utc ? new Date(
+        Date.UTC(date.getFullYear(), 
+        date.getMonth(), 
+        date.getDate(), 
+        this.picker.hour, 
+        this.picker.minute, 
+        this.picker.second)
+        ) : new Date(this.pickerState.time);
     }
 
   /**
@@ -260,6 +280,7 @@ export default class NTimeSelector extends Vue {
         * @type {Date|Object}
         */
         this.$emit('input', this.time);
+        
       } else {
         /**
         * Emit event because disabled time has been clicked
