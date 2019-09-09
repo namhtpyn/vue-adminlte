@@ -93,6 +93,9 @@ export default class NDropDownTree extends Vue {
   mounted() {
     this.treeComponent = this.$children[0].$children[0] as any
   }
+  setItems(items: any[]) {
+    this.treeComponent.setItems(items)
+  }
   private onOpen() {
     this.$nextTick(() => {
       this.treeComponent.focusSelectedNode()

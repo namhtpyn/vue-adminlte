@@ -60,9 +60,7 @@ export default class NTree extends Vue {
         return cur
       }
     }, itemsMap[0].parentID)
-    console.log(root)
     const convertData = this.convertHereditaryToObject(itemsMap, root, 1)
-    console.log(itemsMap)
     return convertData
   }
   get iconFa() {
@@ -102,6 +100,9 @@ export default class NTree extends Vue {
       this.error(e)
     }
     this.loading = false
+  }
+  setItems(items: any[]) {
+    this.items = items
   }
   private init(data) {
     if (this.theTree.hasClass('jstree')) {
