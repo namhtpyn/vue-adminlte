@@ -9,7 +9,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop, Model, Watch } from 'vue-property-decorator'
-import isEmpty from 'lodash/isEmpty'
+import _ from 'lodash'
 @Component({ inheritAttrs: false })
 export default class NSelect2 extends Vue {
   @Prop({ type: String, default: '' }) cssClass!: string
@@ -37,7 +37,7 @@ export default class NSelect2 extends Vue {
   lazyValidation: boolean = false
   widthComponent = 0
   get hasLabel() {
-    return !isEmpty(this.label)
+    return !_.isEmpty(this.label)
   }
   get cCssClass() {
     let css = 'form-control '

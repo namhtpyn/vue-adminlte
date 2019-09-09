@@ -35,7 +35,7 @@
 import NIcon from '../component/NIcon.vue'
 import NBtn from '../component/NBtn.vue'
 import { Component, Vue, Prop, Emit, Model } from 'vue-property-decorator'
-import isEmpty from 'lodash/isEmpty'
+import _ from 'lodash'
 @Component({ components: { NIcon, NBtn }, inheritAttrs: false })
 export default class NTextBox extends Vue {
   @Prop({ type: String, default: 'text' }) type!: string
@@ -68,7 +68,7 @@ export default class NTextBox extends Vue {
   valid: boolean = true
   lazyValidation: boolean = false
   get hasLabel() {
-    return !isEmpty(this.label)
+    return !_.isEmpty(this.label)
   }
   get appendButton() {
     return this.prependBtn || this.appendBtn

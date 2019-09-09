@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop, Model, Watch, Emit } from 'vue-property-decorator'
-import isEqual from 'lodash/isEqual'
+import _ from 'lodash'
 
 @Component({ inheritAttrs: false })
 export default class NRadio extends Vue {
@@ -14,7 +14,7 @@ export default class NRadio extends Vue {
   @Emit() input(e) {}
   radioEl!: any
   get checked() {
-    return isEqual(this.model, this.value)
+    return _.isEqual(this.model, this.value)
   }
   mounted() {
     this.radioEl = $(this.$el) as any

@@ -10,7 +10,7 @@
 
 <script lang="ts">
 import NIcon from '../component/NIcon.vue'
-import isEmpty from 'lodash/isEmpty'
+import _ from 'lodash'
 import { Component, Vue, Prop, Emit, Model } from 'vue-property-decorator'
 @Component({ components: { NIcon }, inheritAttrs: false })
 export default class NSelect extends Vue {
@@ -31,7 +31,7 @@ export default class NSelect extends Vue {
     return css
   }
   get hasLabel() {
-    return !isEmpty(this.label)
+    return !_.isEmpty(this.label)
   }
   get errorText() {
     if (this.rules) {

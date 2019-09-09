@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop, Model, Emit } from 'vue-property-decorator'
-import isEmpty from 'lodash/isEmpty'
+import _ from 'lodash'
 @Component({ inheritAttrs: false })
 export default class NRadio extends Vue {
   @Prop({ type: Boolean, default: true }) form!: boolean
@@ -21,7 +21,7 @@ export default class NRadio extends Vue {
         this.findDeep(obj[i])
       }
     } else {
-      if (!isEmpty(obj['children'])) {
+      if (!_.isEmpty(obj['children'])) {
         this.findDeep(obj['children'])
       }
       if (obj['componentInstance'] instanceof Vue) {

@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop, Emit, Model } from 'vue-property-decorator'
-import isEmpty from 'lodash/isEmpty'
+import _ from 'lodash'
 @Component({ inheritAttrs: false })
 export default class NForm extends Vue {
   @Prop({ type: Boolean, default: false }) lazyValidation!: boolean
@@ -42,10 +42,10 @@ export default class NForm extends Vue {
         this.findDeep(obj[i])
       }
     } else {
-      if (Object.hasOwnProperty.call(obj, 'componentInstance') && !isEmpty(obj.componentInstance) && obj.componentInstance.form) {
+      if (!_.isEmpty(obj.componentInstance) && obj.componentInstance.form) {
         this.vueComponents.push(obj.componentInstance)
       }
-      if (Object.hasOwnProperty.call(obj, 'children') && !isEmpty(obj.children)) {
+      if (!_.isEmpty(obj.children)) {
         this.findDeep(obj.children)
       }
     }

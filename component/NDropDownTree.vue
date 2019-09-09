@@ -22,7 +22,7 @@
 
 <script lang="ts">
 import { Vue, Component, Model, Emit, Prop } from 'vue-property-decorator'
-import isEmpty from 'lodash/isEmpty'
+import _ from 'lodash'
 import NDropDownList from '../component/NDropDownList.vue'
 import NTree from '../component/NTree.vue'
 @Component({
@@ -50,7 +50,7 @@ export default class NDropDownTree extends Vue {
   valid: boolean = true
   lazyValidation: boolean = false
   get hasLabel() {
-    return !isEmpty(this.label)
+    return !_.isEmpty(this.label)
   }
   //search=
   get getText() {

@@ -4,8 +4,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop, Model, Emit, Watch } from 'vue-property-decorator'
-import cloneDeep from 'lodash/cloneDeep'
-import isEqual from 'lodash/isEqual'
+import _ from 'lodash'
 @Component({ inheritAttrs: false })
 export default class NCheckbox extends Vue {
   @Prop({ type: Boolean, default: true }) form!: boolean
@@ -16,8 +15,8 @@ export default class NCheckbox extends Vue {
   @Emit() input(e) {}
 
   get checked() {
-    if (this.model instanceof Array) return this.model.some(m => isEqual(m, this.value))
-    return isEqual(this.model, this.value)
+    if (this.model instanceof Array) return this.model.some(m => _.isEqual(m, this.value))
+    return _.isEqual(this.model, this.value)
   }
   iCheck!: any
   mounted() {
@@ -35,12 +34,12 @@ export default class NCheckbox extends Vue {
   }
 
   modifiedModel(e) {
-    let cModel = cloneDeep(this.model)
+    let cModel = _.cloneDeep(this.model)
     if (cModel instanceof Array) {
       if (e.target.checked) {
-        if (!cModel.some(m => isEqual(m, this.value))) cModel.push(this.value)
+        if (!cModel.some(m => _.isEqual(m, this.value))) cModel.push(this.value)
       } else {
-        const idx = cModel.findIndex(m => isEqual(m, this.value))
+        const idx = cModel.findIndex(m => _.isEqual(m, this.value))
         if (idx >= 0) cModel.splice(idx, 1)
       }
     } else {

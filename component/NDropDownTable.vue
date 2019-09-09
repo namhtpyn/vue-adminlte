@@ -20,7 +20,7 @@
 
 <script lang="ts">
 import { Vue, Component, Model, Emit, Prop } from 'vue-property-decorator'
-import isEmpty from 'lodash/isEmpty'
+import _ from 'lodash'
 //import { setTimeout } from 'timers'
 import { TableHeader } from '../types/Table'
 import NDropDownList from '../component/NDropDownList.vue'
@@ -46,7 +46,7 @@ export default class NDropDownTable extends Vue {
   valid: boolean = true
   lazyValidation: boolean = false
   get hasLabel() {
-    return !isEmpty(this.label)
+    return !_.isEmpty(this.label)
   }
   //search=
   get getText() {
