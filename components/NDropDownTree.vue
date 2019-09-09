@@ -23,8 +23,8 @@
 <script lang="ts">
 import { Vue, Component, Model, Emit, Prop } from 'vue-property-decorator'
 import _ from 'lodash'
-import NDropDownList from '../component/NDropDownList.vue'
-import NTree from '../component/NTree.vue'
+import NDropDownList from './NDropDownList.vue'
+import NTree from './NTree.vue'
 @Component({
   components: {
     NDropDownList,

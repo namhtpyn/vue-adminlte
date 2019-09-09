@@ -50,25 +50,31 @@
             @click="e => rowClick(e, item)"
           >
             <td :class="cssClass.cell" :style="cellStyle(header)" v-for="(header, colIndex) in headerColumns()" :key="colIndex">
-              <div v-if="header.value === '$selection'">
-                <n-checkbox v-if="multiple" @input="input" :model="value" :value="keyField ? item[keyField] : item"></n-checkbox>
-                <n-radio v-else @input="input" :model="value" :value="keyField ? item[keyField] : item"></n-radio>
-              </div>
-              <div v-else-if="header.value === '$expansion'">
-                <n-icon style="cursor:pointer" @click="expandRow(rowIndex)">chevron-down</n-icon>
-              </div>
-              <div v-else-if="header.value === '$action'">
-                <n-btn v-if="updatable" @click="updateClick(item)">
-                  <n-icon>pencil</n-icon>
-                </n-btn>
-                <n-btn v-if="deletable" @click="remove(item)">
-                  <n-icon>trash</n-icon>
-                </n-btn>
-              </div>
-
-              <slot v-else :name="`item.${kebabCase(header.value)}`" :item="item" :value="item[header.value]">{{
-                formatItemValue(item, header)
-              }}</slot>
+              <slot :name="`item.${kebabCase(header.value)}`" :item="item" :value="item[header.value]">
+                <template v-if="header.value === '$selection'">
+                  <n-checkbox
+                    v-if="multiple"
+                    @input="input"
+                    :model="value"
+                    :value="keyField ? item[keyField] : item"
+                  ></n-checkbox>
+                  <n-radio v-else @input="input" :model="value" :value="keyField ? item[keyField] : item"></n-radio>
+                </template>
+                <template v-else-if="header.value === '$expansion'">
+                  <n-icon style="cursor:pointer" @click="expandRow(rowIndex)">chevron-down</n-icon>
+                </template>
+                <template v-else-if="header.value === '$action'">
+                  <n-btn v-if="updatable" @click="updateClick(item)">
+                    <n-icon>pencil</n-icon>
+                  </n-btn>
+                  <n-btn v-if="deletable" @click="removeClick(item)">
+                    <n-icon>trash</n-icon>
+                  </n-btn>
+                </template>
+                <template v-else>
+                  {{ formatItemValue(item, header) }}
+                </template>
+              </slot>
             </td>
           </tr>
         </tbody>
@@ -80,7 +86,7 @@
         <tfoot v-if="!hideFooter">
           <tr :class="cssClass.footerRow">
             <td :class="cssClass.footerCell" v-for="(header, colIndex) in headerColumns()" :key="colIndex">
-              <slot :name="`footer.${kebabCase(header.value)}`" :item="items">
+              <slot :name="`footer.${kebabCase(header.value)}`" :items="items">
                 {{ footerSummary(items, header) }}
               </slot>
             </td>
@@ -139,7 +145,6 @@ import { Vue, Component, Prop, Emit, Model, Watch } from 'vue-property-decorator
 import { TableHeader } from '../types/Table'
 import _ from 'lodash'
 import axios from 'axios'
-
 import NPagination from './NPagination.vue'
 import NBtn from './NBtn.vue'
 import NIcon from './NIcon.vue'
@@ -168,20 +173,28 @@ export default class NDataTable extends Vue {
   @Prop({ type: Boolean, default: false }) readonly searchable!: boolean
   @Prop({ type: Boolean, default: false }) readonly expandable!: boolean
 
-  /**CRUD */
+  /**Auto read on component initialize and when read-url is changed */
   @Prop({ type: Boolean, default: true }) readonly autoRead!: boolean
   @Prop({ type: Boolean, default: false }) readonly creatable!: boolean
   @Prop({ type: Boolean, default: false }) readonly updatable!: boolean
   @Prop({ type: Boolean, default: false }) readonly deletable!: boolean
-  // eslint-disable-next-line prettier/prettier
-  @Prop({type: Object, default() { return {} }}) newItem!: string
+
+  /**default value for new item */
+  @Prop({
+    type: Object,
+    default: () => {
+      return {}
+    }
+  })
+  newItem!: string
   @Prop(String) readonly readUrl!: string
   @Prop(String) readonly createUrl!: string
   @Prop(String) readonly updateUrl!: string
   @Prop(String) readonly deleteUrl!: string
 
-  /**Selection */
+  /**Enable selection */
   @Prop({ type: Boolean, default: false }) readonly selectable!: boolean
+  /**Only work with selectable, enable checkbox instead of radio */
   @Prop({ type: Boolean, default: false }) readonly multiple!: boolean
   @Prop({ type: Boolean, default: false }) readonly rowSelect!: boolean
   @Prop(String) readonly keyField!: string
@@ -191,7 +204,6 @@ export default class NDataTable extends Vue {
 
   @Prop(Array) headers: TableHeader[]
 
-  /** VARIABLE */
   loading: boolean = false
   items: any[] = []
 
@@ -213,7 +225,6 @@ export default class NDataTable extends Vue {
     this.modal.new = true
     this.modal.loading = false
     this.modal.valid = true
-    this.$emit('create-click', this.modal)
   }
   updateClick(e) {
     this.modal.visible = true
@@ -221,7 +232,6 @@ export default class NDataTable extends Vue {
     this.modal.new = false
     this.modal.loading = false
     this.modal.valid = true
-    this.$emit('update-click', this.modal)
   }
   private rowClick(event, item) {
     //Row select
@@ -245,16 +255,13 @@ export default class NDataTable extends Vue {
     this.$emit('row-contextmenu', { event, item })
   }
 
-  async remove(e) {
-    this.$emit('delete', e)
+  async removeClick(e) {
     await this.delete(e)
   }
   async save() {
     if (this.modal.new) {
-      this.$emit('create', this.modal)
       await this.create()
     } else {
-      this.$emit('update', this.modal)
       await this.update()
     }
   }
@@ -263,7 +270,7 @@ export default class NDataTable extends Vue {
   private get hasItems() {
     return !_.isEmpty(this.items)
   }
-  private get itemLength() {
+  private get itemsLength() {
     return this.items.length
   }
   private get pageItems() {

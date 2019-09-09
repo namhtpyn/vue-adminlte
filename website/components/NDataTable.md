@@ -15,19 +15,17 @@
 |hideHeader|-|`Boolean`|`false`|false|
 |searchable|-|`Boolean`|`false`|false|
 |expandable|-|`Boolean`|`false`|false|
-|autoRead|CRUD|`Boolean`|`false`|true|
+|autoRead|Auto read on component initialize and when read-url is changed|`Boolean`|`false`|true|
 |creatable|-|`Boolean`|`false`|false|
 |updatable|-|`Boolean`|`false`|false|
 |deletable|-|`Boolean`|`false`|false|
-|newItem|eslint-disable-next-line prettier/prettier|`Object`|`false`|default() {
-  return {};
-}|
+|newItem|default value for new item|`Object`|`false`|{}|
 |readUrl|-|`String`|`false`|-|
 |createUrl|-|`String`|`false`|-|
 |updateUrl|-|`String`|`false`|-|
 |deleteUrl|-|`String`|`false`|-|
-|selectable|Selection|`Boolean`|`false`|false|
-|multiple|-|`Boolean`|`false`|false|
+|selectable|Enable selection|`Boolean`|`false`|false|
+|multiple|Only work with selectable, enable checkbox instead of radio|`Boolean`|`false`|false|
 |rowSelect|-|`Boolean`|`false`|false|
 |keyField|-|`String`|`false`|-|
 |caption|-|`String`|`false`|-|
@@ -44,14 +42,9 @@
 |---|---|---|
 |input|-|-|
 |error|-|-|
-|create-click|-|-|
-|update-click|-|-|
 |row-click|-|-|
 |row-dblclick|-|-|
 |row-contextmenu|-|-|
-|delete|-|-|
-|create|-|-|
-|update|-|-|
 |created|-|-|
 |updated|-|-|
 |deleted|-|-|
@@ -67,6 +60,7 @@
 |top.prepend|-|-|
 |top|-|-|
 |top.append|-|-|
+|`item.${kebabCase(header.value)}`|-|-|
 |`footer.${kebabCase(header.value)}`|-|-|
 |bottom.prepend|-|-|
 |bottom|-|-|

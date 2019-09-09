@@ -24,8 +24,8 @@
 <script lang="ts">
 import { Vue, Component, Model, Emit, Prop, Ref } from 'vue-property-decorator'
 import _ from 'lodash'
-import NDropDownList from '../component/NDropDownList.vue'
-import NDataTable from '../component/NDataTable.vue'
+import NDropDownList from './NDropDownList.vue'
+import NDataTable from './NDataTable.vue'
 @Component({
   components: {
     NDropDownList,
@@ -82,6 +82,9 @@ export default class NDropDownTable extends Vue {
     this.$nextTick(() => {
       if (this.table) this.table.setItems(items)
     })
+  }
+  get items() {
+    return this.table.items
   }
 }
 </script>

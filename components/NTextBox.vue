@@ -32,8 +32,8 @@
 </template>
 
 <script lang="ts">
-import NIcon from '../component/NIcon.vue'
-import NBtn from '../component/NBtn.vue'
+import NIcon from './NIcon.vue'
+import NBtn from './NBtn.vue'
 import { Component, Vue, Prop, Emit, Model } from 'vue-property-decorator'
 import _ from 'lodash'
 @Component({ components: { NIcon, NBtn }, inheritAttrs: false })
