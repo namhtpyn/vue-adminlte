@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, Emit, Model } from 'vue-property-decorator'
+import { Component, Vue, Prop, Emit, Model, Watch } from 'vue-property-decorator'
 import _ from 'lodash'
 @Component({ inheritAttrs: false })
 export default class NForm extends Vue {
@@ -23,6 +23,10 @@ export default class NForm extends Vue {
         v.lazyValidation = true
       })
     }
+  }
+  @Watch('value')
+  onValueChange(n) {
+    if (!n) this.resetValidation()
   }
 
   validate() {

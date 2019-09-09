@@ -34,7 +34,7 @@
               :style="headerCellStyle(header)"
             >
               <div v-if="header.value === '$selection'">
-                <n-checkbox v-if="multiple" @input="checkAll"></n-checkbox>
+                <n-checkbox v-if="multiple" @input="selectAll"></n-checkbox>
               </div>
               <slot v-else :name="`header.${kebabCase(header.value)}`" :item="header">{{ header.text }}</slot>
             </th>
@@ -91,7 +91,7 @@
       <slot name="bottom.prepend"></slot>
       <slot name="bottom">
         <div class="hidden-xs" style="height: 30px;min-height: 32px;padding: 6px 10px 6px 0px;font-size: 12px; line-height: 1.5;">
-          Trang {{ page }}/{{ pageLength }} ({{ items.length }} mục)
+          Trang {{ page }}/{{ pageLength }} ({{ itemsSync.length }} mục)
         </div>
 
         <div style="flex:auto">
@@ -121,13 +121,10 @@
       <n-icon css-class="fa-spin fa-5x" style="color:white">circle-o-notch</n-icon>
     </n-overlay>
 
-    <n-modal
-      :loading="modal.isLoading"
-      v-if="updatable || creatable"
-      :caption="modal.isNew ? 'Thêm' : 'Sửa'"
-      v-model="modal.visible"
-    >
-      <slot name="modal" :modal="modal"></slot>
+    <n-modal :loading="modal.loading" :caption="modal.new ? 'Thêm' : 'Sửa'" v-model="modal.visible">
+      <n-form ref="form" v-model="modal.valid">
+        <slot name="modal" :modal="modal"></slot>
+      </n-form>
       <template v-slot:footer>
         <n-btn color="primary" @click="save">Lưu</n-btn>
       </template>
@@ -136,12 +133,11 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop, Emit, Model } from 'vue-property-decorator'
+import { Vue, Component, Prop, Emit, Model, PropSync } from 'vue-property-decorator'
 import { TableHeader } from '../types/Table'
-import isEmpty from 'lodash/isEmpty'
-import isNil from 'lodash/isNil'
-import cloneDeep from 'lodash/cloneDeep'
-import upperFirst from 'lodash/upperFirst'
+import _ from 'lodash'
+import axios from 'axios'
+
 import NPagination from './NPagination.vue'
 import NBtn from './NBtn.vue'
 import NIcon from './NIcon.vue'
@@ -149,85 +145,118 @@ import NModal from './NModal.vue'
 import NCheckbox from './NCheckbox.vue'
 import NRadio from './NRadio.vue'
 import NOverlay from './NOverlay.vue'
+import NForm from './NForm.vue'
 import { VNode } from 'vue'
-import camelCase from 'lodash/camelCase'
-import kebabCase from 'lodash/kebabCase'
+
 @Component({
   inheritAttrs: false,
-  components: { NPagination, NBtn, NIcon, NModal, NCheckbox, NRadio, NOverlay }
+  components: { NPagination, NBtn, NIcon, NModal, NCheckbox, NRadio, NOverlay, NForm }
 })
 export default class NDataTable extends Vue {
-  @Prop({ type: Boolean, default: false }) loading!: boolean
+  @PropSync('loading', { type: Boolean, default: false }) tableLoading!: boolean
 
-  @Prop({ type: Boolean, default: true }) bordered!: boolean
-  @Prop({ type: Boolean, default: true }) hovered!: boolean
-  @Prop({ type: Boolean, default: false }) densed!: boolean
-  @Prop({ type: Boolean, default: false }) striped!: boolean
+  @Prop({ type: Boolean, default: true }) readonly bordered!: boolean
+  @Prop({ type: Boolean, default: true }) readonly hovered!: boolean
+  @Prop({ type: Boolean, default: false }) readonly densed!: boolean
+  @Prop({ type: Boolean, default: false }) readonly striped!: boolean
 
-  @Prop({ type: Boolean, default: false }) searchable!: boolean
-  @Prop({ type: Boolean, default: false }) expandable!: boolean
-  @Prop({ type: Boolean, default: false }) selectable!: boolean
-  @Prop({ type: Boolean, default: false }) multiple!: boolean
-  @Prop({ type: Boolean, default: false }) creatable!: boolean
-  @Prop({ type: Boolean, default: false }) updatable!: boolean
-  @Prop({ type: Boolean, default: false }) deletable!: boolean
+  @Prop({ type: Boolean, default: false }) readonly hideBottom!: boolean
+  @Prop({ type: Boolean, default: false }) readonly hideTop!: boolean
+  @Prop({ type: Boolean, default: false }) readonly hideFooter!: boolean
+  @Prop({ type: Boolean, default: false }) readonly hideHeader!: boolean
 
-  @Prop({ type: Boolean, default: false }) hideBottom!: boolean
-  @Prop({ type: Boolean, default: false }) hideTop!: boolean
-  @Prop({ type: Boolean, default: false }) hideFooter!: boolean
-  @Prop({ type: Boolean, default: false }) hideHeader!: boolean
+  @Prop({ type: Boolean, default: false }) readonly searchable!: boolean
+  @Prop({ type: Boolean, default: false }) readonly expandable!: boolean
 
-  @Prop(String) caption!: string
+  /**CRUD */
+  @Prop({ type: Boolean, default: false }) readonly creatable!: boolean
+  @Prop({ type: Boolean, default: false }) readonly updatable!: boolean
+  @Prop({ type: Boolean, default: false }) readonly deletable!: boolean
+  // eslint-disable-next-line prettier/prettier
+  @Prop({type: Object, default() { return {} }}) newItem!: string
+  @Prop(String) readonly readUrl!: string
+  @Prop(String) readonly createUrl!: string
+  @Prop(String) readonly updateUrl!: string
+  @Prop(String) readonly deleteUrl!: string
+
+  /**Selection */
+  @Prop({ type: Boolean, default: false }) readonly selectable!: boolean
+  @Prop({ type: Boolean, default: false }) readonly multiple!: boolean
+  @Prop({ type: Boolean, default: false }) readonly rowSelect!: boolean
+  @Prop(String) readonly keyField!: string
+
+  @Prop(String) readonly caption!: string
   @Prop({ type: String, default: 'Không có dữ liệu' }) noDataText!: string
-  @Prop(String) keyField!: string
 
   @Prop(Array) headers: TableHeader[]
-  @Prop(Array) items: any[]
+  @PropSync('items', Array) itemsSync: any[]
 
   @Model('input', { type: [Array, String, Number, Boolean, Object] }) value!: any[] | any
   @Emit() input(e) {}
+  @Emit() error(e) {}
 
   createClick(e) {
     this.modal.visible = true
-    this.modal.data = {}
-    this.modal.isNew = true
-    this.modal.isLoading = false
+    this.modal.data = _.cloneDeep(this.newItem)
+    this.modal.new = true
+    this.modal.loading = false
+    this.modal.valid = true
     this.$emit('create-click', this.modal)
   }
   updateClick(e) {
     this.modal.visible = true
-    this.modal.data = cloneDeep(e)
-    this.modal.isNew = false
-    this.modal.isLoading = false
+    this.modal.data = _.cloneDeep(e)
+    this.modal.new = false
+    this.modal.loading = false
+    this.modal.valid = true
     this.$emit('update-click', this.modal)
   }
-  rowClick(event, item) {
-    //console.log(event)
+  private rowClick(event, item) {
+    //Row select
+    if (this.selectable && this.rowSelect) {
+      const value = this.keyField ? item[this.keyField] : item
+      if (this.multiple) {
+        const values = _.cloneDeep(this.value)
+        const index = values.findIndex(o => _.isEqual(o, value))
+        if (index < 0) values.push(value)
+        else values.splice(index, 1)
+        this.input(values)
+      } else this.input(value)
+    }
+
     this.$emit('row-click', { event, item })
   }
-  rowDblclick(event, item) {
+  private rowDblclick(event, item) {
     this.$emit('row-dblclick', { event, item })
   }
-  rowContextmenu(event, item) {
+  private rowContextmenu(event, item) {
     this.$emit('row-contextmenu', { event, item })
   }
 
-  @Emit('delete') remove(e) {}
-  save() {
-    if (this.modal.isNew) this.$emit('create', this.modal)
-    else this.$emit('update', this.modal)
+  async remove(e) {
+    this.$emit('delete', e)
+    await this.doDelete(e)
+  }
+  async save() {
+    if (this.modal.new) {
+      this.$emit('create', this.modal)
+      await this.doCreate()
+    } else {
+      this.$emit('update', this.modal)
+      await this.doUpdate()
+    }
   }
 
   /**Items */
-  get hasItems() {
-    return !isEmpty(this.items)
+  private get hasItems() {
+    return !_.isEmpty(this.itemsSync)
   }
-  get pageItems() {
-    let items = cloneDeep(this.items)
+  private get pageItems() {
+    let items = _.cloneDeep(this.itemsSync)
     if (this.searchText)
       items = items.filter(item =>
         Object.values(item).some(field =>
-          isNil(field)
+          _.isNil(field)
             ? false
             : field
                 .toString()
@@ -239,14 +268,14 @@ export default class NDataTable extends Vue {
     if (this.itemPerPage > 0)
       items = items.slice(
         (this.page - 1) * this.itemPerPage,
-        this.page * this.itemPerPage < this.items.length ? this.page * this.itemPerPage : this.items.length
+        this.page * this.itemPerPage < this.itemsSync.length ? this.page * this.itemPerPage : this.itemsSync.length
       )
     return items
   }
-  formatItemValue(item: any, header: TableHeader) {
+  private formatItemValue(item: any, header: TableHeader) {
     return item[header.value]
   }
-  expandRow(rowIndex: number) {
+  private expandRow(rowIndex: number) {
     // this.itemsClone.splice(rowIndex + 1, 0, { isExpansion: true })
     // console.log(this.itemsClone)
   }
@@ -256,20 +285,20 @@ export default class NDataTable extends Vue {
   /**pagination */
   itemPerPage = 10
   page = 1
-  get pageLength() {
-    return Math.ceil(this.items.length / this.itemPerPage)
+  private get pageLength() {
+    return Math.ceil(this.itemsSync.length / this.itemPerPage)
   }
-  changeItemPerPage(e) {
+  private changeItemPerPage(e) {
     this.itemPerPage = e.target.value
   }
 
   /** headers */
-  get tableHeaders() {
+  private get tableHeaders() {
     let headers: TableHeader[] = this.getHeadersFromTag()
-    if (!isEmpty(this.headers)) headers = cloneDeep(this.headers)
-    else if (isEmpty(headers) && !isEmpty(this.items)) {
-      headers = Object.keys(this.items[0]).map(key => {
-        return { text: upperFirst(key), value: key }
+    if (!_.isEmpty(this.headers)) headers = _.cloneDeep(this.headers)
+    else if (_.isEmpty(headers) && !_.isEmpty(this.itemsSync)) {
+      headers = Object.keys(this.itemsSync[0]).map(key => {
+        return { text: _.startCase(key), value: key }
       })
     }
     //expansion
@@ -306,13 +335,13 @@ export default class NDataTable extends Vue {
     return headers
   }
 
-  headerColspan(header: TableHeader) {
+  private headerColspan(header: TableHeader) {
     return header.children ? this.headerColumns(header.children).length : 1
   }
-  headerRowspan(header: TableHeader) {
+  private headerRowspan(header: TableHeader) {
     return header.children ? 1 : this.headerRows()
   }
-  headerCellStyle(header: TableHeader) {
+  private headerCellStyle(header: TableHeader) {
     let style = ''
     style += header.width ? 'width: ' + header.width + '; ' : ''
     style += header.width ? 'min-width: ' + header.width + '; ' : ''
@@ -323,7 +352,7 @@ export default class NDataTable extends Vue {
     style += header.headerValign ? 'vertical-align: ' + header.headerValign + '; ' : ''
     return style
   }
-  cellStyle(header: TableHeader) {
+  private cellStyle(header: TableHeader) {
     let style = ''
     style += header.width ? 'width: ' + header.width + '; ' : ''
     style += header.width ? 'min-width: ' + header.width + '; ' : ''
@@ -334,49 +363,112 @@ export default class NDataTable extends Vue {
     style += header.color ? 'color: ' + header.color + '; ' : ''
     return style
   }
-  footerSummary(items: any[], header: TableHeader) {
+  private footerSummary(items: any[], header: TableHeader) {
     if (header.summary === 'sum') return items.reduce((a, b) => a + (b[header.value] || 0), 0)
     return ''
   }
-  headerRows(value: any[] = this.tableHeaders, childrenField = 'children') {
-    const hasChildren = value.filter(o => !isNil(o[childrenField]))
+  private headerRows(value: any[] = this.tableHeaders, childrenField = 'children') {
+    const hasChildren = value.filter(o => !_.isNil(o[childrenField]))
     if (hasChildren.length <= 0) return 1
     return Array.isArray(value) ? 1 + Math.max(...hasChildren.map(o => this.headerRows(o[childrenField], childrenField))) : 0
   }
-  headersLevel(level = 1, childrenField = 'children') {
+  private headersLevel(level = 1, childrenField = 'children') {
     let ar: any = this.tableHeaders
-    for (let i = 1; i < level; i++) ar = ar.filter((a: any) => !isNil(a[childrenField])).flatMap((a: any) => a[childrenField])
+    for (let i = 1; i < level; i++) ar = ar.filter((a: any) => !_.isNil(a[childrenField])).flatMap((a: any) => a[childrenField])
     return ar
   }
-  headerColumns(array: any[] = this.tableHeaders, childrenField = 'children') {
+  private headerColumns(array: any[] = this.tableHeaders, childrenField = 'children') {
     let save: any[] = []
     array.forEach((item: any) => {
-      if (isNil(item[childrenField])) save.push(item)
+      if (_.isNil(item[childrenField])) save.push(item)
       if (Array.isArray(item[childrenField])) save = save.concat(this.headerColumns(item[childrenField], childrenField))
     })
     return save
   }
-  /** Checkable */
-  checkAll(e) {
+  /** selectable */
+  selectAll(e) {
+    if (!this.selectable || !this.multiple) return
     if (e) {
-      if (!this.keyField) this.input(this.items)
-      else this.input(this.items.map(i => i[this.keyField]))
+      if (!this.keyField) this.input(this.itemsSync)
+      else this.input(this.itemsSync.map(i => i[this.keyField]))
     } else this.input([])
   }
   /** Edit modal */
   modal = {
     visible: false,
     data: {},
-    isNew: false,
-    isLoading: false
+    new: false,
+    loading: false,
+    valid: true
   }
 
-  created() {
-    //this.itemsClone = cloneDeep(this.items)
+  async created() {
+    await this.doRead()
+    //this.itemsClone = _.cloneDeep(this.items)
+  }
+
+  /**CRUD */
+  private async doRead() {
+    if (_.isEmpty(this.readUrl)) return
+    this.tableLoading = true
+    try {
+      const { data } = await axios.get(this.readUrl)
+      this.itemsSync = data
+    } catch (e) {
+      this.error(e)
+    }
+    this.tableLoading = false
+  }
+  private async doCreate() {
+    if (!this.creatable) return
+    if (_.isEmpty(this.createUrl)) return
+    this.modal.loading = true
+    try {
+      if ((this.$refs.form as NForm).validate()) {
+        await axios.put(this.createUrl, this.modal.data)
+        this.modal.visible = false
+        this.$emit('created', this.modal)
+        await this.doRead()
+      }
+    } catch (e) {
+      this.error(e)
+    }
+    this.modal.loading = false
+  }
+  private async doUpdate() {
+    if (!this.updatable) return
+    if (_.isEmpty(this.updateUrl)) return
+    this.modal.loading = true
+    try {
+      if ((this.$refs.form as NForm).validate()) {
+        await axios.post(this.updateUrl, this.modal.data)
+        this.modal.visible = false
+        this.$emit('updated', this.modal)
+        await this.doRead()
+      }
+    } catch (e) {
+      this.error(e)
+    }
+    this.modal.loading = false
+  }
+  private async doDelete(item) {
+    if (!this.deletable) return
+    if (_.isEmpty(this.deleteUrl)) return
+    this.tableLoading = true
+    try {
+      if (confirm('Bạn có chắc muốn xóa?')) {
+        await axios.delete(this.readUrl, { params: item })
+        this.$emit('deleted', item)
+        await this.doRead()
+      }
+    } catch (e) {
+      this.error(e)
+    }
+    this.tableLoading = false
   }
 
   /**helper function */
-  get cssClass() {
+  private get cssClass() {
     return {
       table:
         'table no-margin ' +
@@ -393,7 +485,7 @@ export default class NDataTable extends Vue {
       footerCell: this.getCssClass('footer-cell') || ''
     }
   }
-  getHeadersFromTag(node: VNode[] = this.$slots.default) {
+  private getHeadersFromTag(node: VNode[] = this.$slots.default) {
     const itemNode = ['text-item', 'number-item', 'date-item', 'band-item']
     const items = this.getVNodeChildren(this.getVNode('items', node)).filter(node => itemNode.includes(node.tag))
     return items.map(o => {
@@ -406,33 +498,33 @@ export default class NDataTable extends Vue {
       return obj
     })
   }
-  getCssClass(tag: string) {
+  private getCssClass(tag: string) {
     const node = this.getVNode('css-class')
     const attrs = this.getVNodeDataAttrs(node)
     return attrs[tag] || ''
   }
-  getVNode(tag: string, node: VNode[] = this.$slots.default) {
-    if (isNil(node)) return null
+  private getVNode(tag: string, node: VNode[] = this.$slots.default) {
+    if (_.isNil(node)) return null
     return node.find(node => node.tag === tag)
   }
-  getVNodeChildren(node: VNode) {
-    if (!isNil(node) && Array.isArray(node.children)) return node.children.filter(node => !isNil(node.tag))
+  private getVNodeChildren(node: VNode) {
+    if (!_.isNil(node) && Array.isArray(node.children)) return node.children.filter(node => !_.isNil(node.tag))
     else return []
   }
-  getVNodeDataAttrs(node: VNode) {
-    if (!isNil(node) && !isNil(node.data) && !isNil(node.data.attrs)) return this.toCamelCaseObj(node.data.attrs)
+  private getVNodeDataAttrs(node: VNode) {
+    if (!_.isNil(node) && !_.isNil(node.data) && !_.isNil(node.data.attrs)) return this.toCamelCaseObj(node.data.attrs)
     return {}
   }
-  toCamelCaseObj(obj) {
+  private toCamelCaseObj(obj) {
     return Object.fromEntries(
       Object.entries(obj).map(e => {
-        e[0] = camelCase(e[0])
+        e[0] = _.camelCase(e[0])
         return e
       })
     )
   }
-  kebabCase(t) {
-    return kebabCase(t)
+  private kebabCase(t) {
+    return _.kebabCase(t)
   }
 }
 </script>
