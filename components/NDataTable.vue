@@ -66,7 +66,9 @@
                 </n-btn>
               </div>
 
-              <slot v-else :name="`item.${kebabCase(header.value)}`" :item="item">{{ formatItemValue(item, header) }}</slot>
+              <slot v-else :name="`item.${kebabCase(header.value)}`" :item="item" :value="item[header.value]">{{
+                formatItemValue(item, header)
+              }}</slot>
             </td>
           </tr>
         </tbody>
@@ -91,7 +93,7 @@
       <slot name="bottom.prepend"></slot>
       <slot name="bottom">
         <div class="hidden-xs" style="height: 30px;min-height: 32px;padding: 6px 10px 6px 0px;font-size: 12px; line-height: 1.5;">
-          Trang {{ page }}/{{ pageLength }} ({{ itemsSync.length }} mục)
+          Trang {{ page }}/{{ pageLength }} ({{ itemsLength }} mục)
         </div>
 
         <div style="flex:auto">
@@ -133,7 +135,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop, Emit, Model, PropSync } from 'vue-property-decorator'
+import { Vue, Component, Prop, Emit, Model, Watch } from 'vue-property-decorator'
 import { TableHeader } from '../types/Table'
 import _ from 'lodash'
 import axios from 'axios'
@@ -153,8 +155,6 @@ import { VNode } from 'vue'
   components: { NPagination, NBtn, NIcon, NModal, NCheckbox, NRadio, NOverlay, NForm }
 })
 export default class NDataTable extends Vue {
-  @PropSync('loading', { type: Boolean, default: false }) tableLoading!: boolean
-
   @Prop({ type: Boolean, default: true }) readonly bordered!: boolean
   @Prop({ type: Boolean, default: true }) readonly hovered!: boolean
   @Prop({ type: Boolean, default: false }) readonly densed!: boolean
@@ -169,6 +169,7 @@ export default class NDataTable extends Vue {
   @Prop({ type: Boolean, default: false }) readonly expandable!: boolean
 
   /**CRUD */
+  @Prop({ type: Boolean, default: true }) readonly autoRead!: boolean
   @Prop({ type: Boolean, default: false }) readonly creatable!: boolean
   @Prop({ type: Boolean, default: false }) readonly updatable!: boolean
   @Prop({ type: Boolean, default: false }) readonly deletable!: boolean
@@ -189,11 +190,22 @@ export default class NDataTable extends Vue {
   @Prop({ type: String, default: 'Không có dữ liệu' }) noDataText!: string
 
   @Prop(Array) headers: TableHeader[]
-  @PropSync('items', Array) itemsSync: any[]
+
+  /** VARIABLE */
+  loading: boolean = false
+  items: any[] = []
 
   @Model('input', { type: [Array, String, Number, Boolean, Object] }) value!: any[] | any
   @Emit() input(e) {}
   @Emit() error(e) {}
+
+  setLoading(status: boolean) {
+    this.loading = status
+  }
+
+  setItems(items: any[]) {
+    this.items = items
+  }
 
   createClick(e) {
     this.modal.visible = true
@@ -235,24 +247,27 @@ export default class NDataTable extends Vue {
 
   async remove(e) {
     this.$emit('delete', e)
-    await this.doDelete(e)
+    await this.delete(e)
   }
   async save() {
     if (this.modal.new) {
       this.$emit('create', this.modal)
-      await this.doCreate()
+      await this.create()
     } else {
       this.$emit('update', this.modal)
-      await this.doUpdate()
+      await this.update()
     }
   }
 
   /**Items */
   private get hasItems() {
-    return !_.isEmpty(this.itemsSync)
+    return !_.isEmpty(this.items)
+  }
+  private get itemLength() {
+    return this.items.length
   }
   private get pageItems() {
-    let items = _.cloneDeep(this.itemsSync)
+    let items = _.cloneDeep(this.items)
     if (this.searchText)
       items = items.filter(item =>
         Object.values(item).some(field =>
@@ -268,7 +283,7 @@ export default class NDataTable extends Vue {
     if (this.itemPerPage > 0)
       items = items.slice(
         (this.page - 1) * this.itemPerPage,
-        this.page * this.itemPerPage < this.itemsSync.length ? this.page * this.itemPerPage : this.itemsSync.length
+        this.page * this.itemPerPage < this.items.length ? this.page * this.itemPerPage : this.items.length
       )
     return items
   }
@@ -286,7 +301,7 @@ export default class NDataTable extends Vue {
   itemPerPage = 10
   page = 1
   private get pageLength() {
-    return Math.ceil(this.itemsSync.length / this.itemPerPage)
+    return Math.ceil(this.items.length / this.itemPerPage)
   }
   private changeItemPerPage(e) {
     this.itemPerPage = e.target.value
@@ -296,8 +311,8 @@ export default class NDataTable extends Vue {
   private get tableHeaders() {
     let headers: TableHeader[] = this.getHeadersFromTag()
     if (!_.isEmpty(this.headers)) headers = _.cloneDeep(this.headers)
-    else if (_.isEmpty(headers) && !_.isEmpty(this.itemsSync)) {
-      headers = Object.keys(this.itemsSync[0]).map(key => {
+    else if (_.isEmpty(headers) && !_.isEmpty(this.items)) {
+      headers = Object.keys(this.items[0]).map(key => {
         return { text: _.startCase(key), value: key }
       })
     }
@@ -365,6 +380,7 @@ export default class NDataTable extends Vue {
   }
   private footerSummary(items: any[], header: TableHeader) {
     if (header.summary === 'sum') return items.reduce((a, b) => a + (b[header.value] || 0), 0)
+    else if (header.summary === 'count') return items.map(o => o[header.value]).length
     return ''
   }
   private headerRows(value: any[] = this.tableHeaders, childrenField = 'children') {
@@ -389,8 +405,8 @@ export default class NDataTable extends Vue {
   selectAll(e) {
     if (!this.selectable || !this.multiple) return
     if (e) {
-      if (!this.keyField) this.input(this.itemsSync)
-      else this.input(this.itemsSync.map(i => i[this.keyField]))
+      if (!this.keyField) this.input(this.items)
+      else this.input(this.items.map(i => i[this.keyField]))
     } else this.input([])
   }
   /** Edit modal */
@@ -403,23 +419,26 @@ export default class NDataTable extends Vue {
   }
 
   async created() {
-    await this.doRead()
-    //this.itemsClone = _.cloneDeep(this.items)
+    if (this.autoRead) await this.read()
   }
 
   /**CRUD */
-  private async doRead() {
+  @Watch('readUrl')
+  private onReadUrlChanged() {
+    if (this.autoRead) this.read()
+  }
+  async read() {
     if (_.isEmpty(this.readUrl)) return
-    this.tableLoading = true
+    this.loading = true
     try {
-      const { data } = await axios.get(this.readUrl)
-      this.itemsSync = data
+      const res = await axios.get(this.readUrl)
+      this.items = res.data
     } catch (e) {
       this.error(e)
     }
-    this.tableLoading = false
+    this.loading = false
   }
-  private async doCreate() {
+  async create() {
     if (!this.creatable) return
     if (_.isEmpty(this.createUrl)) return
     this.modal.loading = true
@@ -428,14 +447,14 @@ export default class NDataTable extends Vue {
         await axios.put(this.createUrl, this.modal.data)
         this.modal.visible = false
         this.$emit('created', this.modal)
-        await this.doRead()
+        await this.read()
       }
     } catch (e) {
       this.error(e)
     }
     this.modal.loading = false
   }
-  private async doUpdate() {
+  async update() {
     if (!this.updatable) return
     if (_.isEmpty(this.updateUrl)) return
     this.modal.loading = true
@@ -444,27 +463,27 @@ export default class NDataTable extends Vue {
         await axios.post(this.updateUrl, this.modal.data)
         this.modal.visible = false
         this.$emit('updated', this.modal)
-        await this.doRead()
+        await this.read()
       }
     } catch (e) {
       this.error(e)
     }
     this.modal.loading = false
   }
-  private async doDelete(item) {
+  async delete(item) {
     if (!this.deletable) return
     if (_.isEmpty(this.deleteUrl)) return
-    this.tableLoading = true
+    this.loading = true
     try {
       if (confirm('Bạn có chắc muốn xóa?')) {
         await axios.delete(this.readUrl, { params: item })
         this.$emit('deleted', item)
-        await this.doRead()
+        await this.read()
       }
     } catch (e) {
       this.error(e)
     }
-    this.tableLoading = false
+    this.loading = false
   }
 
   /**helper function */

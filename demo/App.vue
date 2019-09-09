@@ -68,9 +68,10 @@
     {{ checkbox }}
     <n-btn app color="primary" text-color="white" @click="abc"> <n-icon color="yellow">play</n-icon>Play </n-btn> -->
     {{ def }}
-    <n-data-table v-model="def" :items="items" selectable updatable deletable creatable expandable>
+    <n-data-table v-model="def" :items="items" selectable row-select updatable deletable creatable expandable>
       <items>
-        <text-item :editable="false" header-valign="middle" text="Calories" value="calories"></text-item>
+        <text-item header-valign="middle" text="Name" value="NamE"></text-item>
+        <text-item header-valign="middle" text="Calories" value="calories"></text-item>
         <band-item text="band" align="center">
           <items>
             <text-item text="Calories" value="calories" summary="sum"></text-item>
@@ -79,6 +80,10 @@
           </items>
         </band-item>
       </items>
+      <template v-slot:modal="{ modal }">
+        <input class="form-control" autofocus v-model="modal.data.name" />
+        <input class="form-control" v-model="modal.data.fat" />
+      </template>
       <!-- <template v-slot:item.iron="{ item }">
         <span class="badge bg-red">{{ item.iron }}</span>
       </template>
@@ -88,6 +93,9 @@
       <template v-slot:item.Name="{ item }">
         <span class="badge bg-green">{{ item.protein }}</span>
       </template> -->
+      <template v-slot:item.nam-e="{ item }">
+        NAME
+      </template>
     </n-data-table>
 
     <!-- <n-pagination :length="10" v-model="page"></n-pagination>
@@ -102,41 +110,12 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import NDataTable from '../component/NDataTable.vue'
-import NBtn from '../component/NBtn.vue'
-import NIcon from '../component/NIcon.vue'
-import NPagination from '../component/NPagination.vue'
 import { TableHeader } from '../types/Table'
 import jsonData from './data.json'
 import data2 from './data2.json'
 import data3 from './data3.json'
-import NSelect2 from '../component/NSelect2.vue'
-import NModal from '../component/NModal.vue'
-import NCheckbox from '../component/NCheckbox.vue'
-import NRadio from '../component/NRadio.vue'
-import NDropDownList from '../component/NDropDownList.vue'
-import NDropDownTable from '../component/NDropDownTable.vue'
-import NForm from '../component/NForm.vue'
-import NTree from '../component/NTree.vue'
-import NDropDownTree from '../component/NDropDownTree.vue'
 
-@Component({
-  components: {
-    NDataTable,
-    NBtn,
-    NIcon,
-    NPagination,
-    NSelect2,
-    NModal,
-    NCheckbox,
-    NRadio,
-    NDropDownList,
-    NDropDownTable,
-    NForm,
-    NTree,
-    NDropDownTree
-  }
-})
+@Component({})
 export default class extends Vue {
   def: any = {}
   expandToLevel = null

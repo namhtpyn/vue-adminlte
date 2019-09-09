@@ -4,13 +4,16 @@
     <n-drop-down-list :value="value" @input="input" :text.sync="getText" :drop-down-width="dropDownWidth" @open="onOpen">
       <template #content="{data}">
         <n-data-table
-          :headers="tableHeaders"
+          ref="table"
           :items="tableItems"
+          :read-url="readUrl"
           :searchable="searchable"
           :hide-top="!searchable"
           hide-table-footer
           @row-click="e => itemSelect(e, data)"
+          @error="error"
         >
+          <slot></slot>
         </n-data-table>
       </template>
     </n-drop-down-list>
@@ -19,10 +22,8 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Model, Emit, Prop } from 'vue-property-decorator'
+import { Vue, Component, Model, Emit, Prop, Ref } from 'vue-property-decorator'
 import _ from 'lodash'
-//import { setTimeout } from 'timers'
-import { TableHeader } from '../types/Table'
 import NDropDownList from '../component/NDropDownList.vue'
 import NDataTable from '../component/NDataTable.vue'
 @Component({
@@ -32,17 +33,18 @@ import NDataTable from '../component/NDataTable.vue'
   }
 })
 export default class NDropDownTable extends Vue {
-  @Prop(Array) tableHeaders!: TableHeader[]
-  @Prop(Array) tableItems!: any[]
   @Prop({ type: String, default: 'text' }) itemText!: string
   @Prop({ type: String, default: 'value' }) itemValue!: string
   @Prop({ type: Boolean, default: false }) searchable!: boolean
+  @Prop(String) readonly readUrl!: string
   @Prop([String, Number]) dropDownWidth!: string | number
   @Prop() label!: string
   @Prop({ type: Boolean, default: true }) form!: boolean
   @Prop(Array) rules!: any[]
+  @Ref('table') table!: NDataTable
   @Model('input', [String, Number]) value!: any
   @Emit() input(e) {}
+  @Emit() error(e) {}
   valid: boolean = true
   lazyValidation: boolean = false
   get hasLabel() {
@@ -50,10 +52,11 @@ export default class NDropDownTable extends Vue {
   }
   //search=
   get getText() {
-    if (!this.tableItems || this.tableItems.length <= 0) return ''
-    const item = this.tableItems.find(item => item[this.itemValue] === this.value)
-    if (!item || !Object.hasOwnProperty.call(item, this.itemText)) return ''
-    return item[this.itemText].toString()
+    if (this.table && this.table.items && this.table.items.length > 0) {
+      const item = this.table.items.find(item => item[this.itemValue] === this.value)
+      if (item && Object.hasOwnProperty.call(item, this.itemText)) return item[this.itemText].toString()
+    }
+    return ''
   }
   get errorText() {
     if (!this.valid && this.rules) {
@@ -74,6 +77,11 @@ export default class NDropDownTable extends Vue {
   }
   onOpen() {
     if (this.searchable) this.$nextTick(() => this.$children[0].$children[0].$el.querySelector('input').focus())
+  }
+  setItems(items: any[]) {
+    this.$nextTick(() => {
+      if (this.table) this.table.setItems(items)
+    })
   }
 }
 </script>

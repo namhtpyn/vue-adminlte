@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --display-error-details --port 8888",
     "build": "npm run clean && cross-env NODE_ENV=production rollup -c --config-custom ",
+    "doc": "vuese gen",
     "clean": "rimraf dist"
   },
   "author": "Nam Hoang",
@@ -14,10 +15,12 @@
     "@types/jquery": "^3.3.31",
     "@types/lodash": "^4.14.138",
     "@types/select2": "^4.0.48",
+    "@types/webpack-env": "^1.14.0",
     "@typescript-eslint/eslint-plugin": "^2.1.0",
     "@typescript-eslint/parser": "^2.1.0",
     "@vue/eslint-config-prettier": "^5.0.0",
     "@vue/eslint-config-typescript": "^4.0.0",
+    "@vuese/cli": "^2.8.0",
     "axios": "^0.19.0",
     "cross-env": "^5.2.1",
     "css-loader": "^3.2.0",
