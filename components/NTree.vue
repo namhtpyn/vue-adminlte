@@ -5,34 +5,44 @@
       <span v-if="!hasData">Không có dữ liệu</span>
       <div id="component-tree-view"></div>
     </div>
+    <n-overlay absolute :value="loading">
+      <n-icon css-class="fa-spin fa-5x" style="color:white">circle-o-notch</n-icon>
+    </n-overlay>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop, Model, Emit, Watch } from 'vue-property-decorator'
 import _ from 'lodash'
+import axios from 'axios'
 @Component({ inheritAttrs: false })
 export default class NTree extends Vue {
-  @Prop({ type: Array, required: true }) items!: any[]
   @Prop({ type: String, default: 'none' }) icon!: string
   @Prop({ type: Boolean, default: false }) multiple!: boolean
   @Prop({ type: Boolean, default: false }) expandAll!: boolean
   @Prop({ type: Boolean, default: true }) searchable!: boolean
   @Prop({ type: Boolean, default: false }) fixedSearch!: boolean
+  @Prop({ type: Boolean, default: true }) autoRead!: boolean
   @Prop({ type: String }) height!: string
   @Prop({ type: Number, default: 0 }) expandToLevel!: number
   @Prop({ type: String, default: 'value' }) itemValue!: string
   @Prop({ type: String, default: 'text' }) itemText!: string
   @Prop({ type: String, default: 'parentID' }) parentKey!: string
+  @Prop(String) readUrl
 
   @Model('input', [String, Number]) value!: string | number
   @Emit() input(e) {}
   @Emit() select(e) {}
+  @Emit() error(e) {}
   @Emit() loaded(e) {
     if (this.expandAll) this.theTree.jstree().open_all()
   }
+
+  private items: any[] = []
   searchText: string = ''
-  theTree!: any
+  private theTree!: any
+  loading: boolean = false
+
   get treeData() {
     if (_.isEmpty(this.items)) return []
     const itemsMap = _.cloneDeep(this.items).map(m => {
@@ -50,7 +60,9 @@ export default class NTree extends Vue {
         return cur
       }
     }, itemsMap[0].parentID)
+    console.log(root)
     const convertData = this.convertHereditaryToObject(itemsMap, root, 1)
+    console.log(itemsMap)
     return convertData
   }
   get iconFa() {
@@ -63,6 +75,9 @@ export default class NTree extends Vue {
   get hasData() {
     return !_.isEmpty(this.treeData)
   }
+  async created() {
+    if (this.autoRead) await this.read()
+  }
   mounted() {
     this.theTree = $($(this.$el as any).find('#component-tree-view')) as any
     this.init(this.treeData)
@@ -72,6 +87,21 @@ export default class NTree extends Vue {
     if (o !== undefined) {
       this.init(n)
     }
+  }
+  @Watch('readUrl')
+  private onReadUrlChange(n, o) {
+    if (this.autoRead) this.read()
+  }
+  async read() {
+    if (_.isEmpty(this.readUrl)) return
+    this.loading = true
+    try {
+      const res = await axios.get(this.readUrl)
+      this.items = res.data
+    } catch (e) {
+      this.error(e)
+    }
+    this.loading = false
   }
   private init(data) {
     if (this.theTree.hasClass('jstree')) {

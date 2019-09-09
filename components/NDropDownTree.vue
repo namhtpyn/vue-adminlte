@@ -11,7 +11,7 @@
     >
       <template #content="{data}">
         <n-tree
-          :items="treeItems"
+          :read-url="treeReadUrl"
           :item-value="itemValue"
           :item-text="itemText"
           :parent-key="treeParentKey"
@@ -42,24 +42,27 @@ import NTree from './NTree.vue'
   }
 })
 export default class NDropDownTree extends Vue {
-  @Prop({ type: Array, required: true }) treeItems!: any[]
   @Prop({ type: String, default: 'none' }) treeNodeIcon!: string
   @Prop({ type: Boolean, default: false }) treeExpandAll!: boolean
   @Prop({ type: Boolean, default: false }) searchable!: boolean
   @Prop({ type: Number, default: 0 }) treeExpandToLevel!: number
+  @Prop({ type: [String, Number], default: 'parentID' }) treeParentKey!: string | number
+  @Prop(String) treeReadUrl!: string
   @Prop({ type: String, default: 'value' }) itemValue!: string
   @Prop({ type: String, default: 'text' }) itemText!: string
-  @Prop({ type: [String, Number], default: 'parentID' }) treeParentKey!: string | number
-
   @Prop([String, Number]) dropDownWidth!: string | number
   @Prop() label!: string
   @Prop({ type: Boolean, default: true }) form!: boolean
   @Prop(Array) rules!: any[]
+
   @Model('input', [String, Number]) value!: any
   @Emit() input(e) {}
+
+  treeItems: any[] = []
   valid: boolean = true
   lazyValidation: boolean = false
   private treeComponent!: any
+
   get hasLabel() {
     return !_.isEmpty(this.label)
   }

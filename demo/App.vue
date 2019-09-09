@@ -1,24 +1,26 @@
 <template>
   <div>
-    <n-drop-down-tree
+    <!-- <n-drop-down-tree
       v-model="unitID"
       label="Đơn vị"
-      :tree-items="treeItems"
+      :tree-read-url="`https://localhost:5001/linetest/vnptunit/GetUnitListByID?unitID=${unitID}`"
       item-value="UnitID"
       item-text="UnitName"
-      parent-key="ParentID"
+      tree-parent-key="ParentID"
       searchable
-      :expand-to-level="1"
-    ></n-drop-down-tree>
-    <!-- <n-tree
-      :items="treeItems"
+      :tree-expand-to-level="1"
+    ></n-drop-down-tree> -->
+    <n-tree
+      :read-url="`https://localhost:5001/linetest/vnptunit/GetUnitListByID?unitID=${unitID}`"
       item-value="UnitID"
       item-text="UnitName"
       parent-key="ParentID"
       @select="select_node"
-      :expand-to-level="expandToLevel"
-    ></n-tree> -->
-    {{ unitID }}
+      :expand-to-level="1"
+      fixed-search
+      height="500px"
+    ></n-tree>
+    <input type="text" v-model="unitID" />
     <!-- <n-select2
       :items="selectItems"
       item-text="name"
@@ -62,13 +64,13 @@
           </n-data-table>
         </template>
       </n-drop-down-list> -->
-    {{ value }}
+    <!-- {{ value }} -->
     <!-- <n-radio label="radio 1" value="1"></n-radio>
     <n-checkbox form label="checkbox" v-model="checkbox"></n-checkbox>
     {{ checkbox }}
     <n-btn app color="primary" text-color="white" @click="abc"> <n-icon color="yellow">play</n-icon>Play </n-btn> -->
-    {{ def }}
-    <n-data-table v-model="def" :items="items" selectable row-select updatable deletable creatable expandable>
+    <!-- {{ def }} -->
+    <!-- <n-data-table v-model="def" :items="items" selectable row-select updatable deletable creatable expandable>
       <items>
         <text-item header-valign="middle" text="Name" value="NamE"></text-item>
         <text-item header-valign="middle" text="Calories" value="calories"></text-item>
@@ -84,7 +86,7 @@
         <input class="form-control" autofocus v-model="modal.data.name" />
         <input class="form-control" v-model="modal.data.fat" />
       </template>
-      <!-- <template v-slot:item.iron="{ item }">
+      <template v-slot:item.iron="{ item }">
         <span class="badge bg-red">{{ item.iron }}</span>
       </template>
       <template v-slot:item.protein="{ item }">
@@ -92,11 +94,11 @@
       </template>
       <template v-slot:item.Name="{ item }">
         <span class="badge bg-green">{{ item.protein }}</span>
-      </template> -->
+      </template>
       <template v-slot:item.nam-e="{ item }">
         NAME
       </template>
-    </n-data-table>
+    </n-data-table> -->
 
     <!-- <n-pagination :length="10" v-model="page"></n-pagination>
 
