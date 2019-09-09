@@ -7,9 +7,9 @@
           :headers="tableHeaders"
           :items="tableItems"
           :searchable="searchable"
-          :hide-component-header="!searchable"
+          :hide-top="!searchable"
           hide-table-footer
-          @row-click="item => itemSelect(item, data)"
+          @row-click="e => itemSelect(e, data)"
         >
         </n-data-table>
       </template>
@@ -20,7 +20,7 @@
 
 <script lang="ts">
 import { Vue, Component, Model, Emit, Prop } from 'vue-property-decorator'
-import isEmpty from 'lodash/isEmpty'
+import _ from 'lodash'
 //import { setTimeout } from 'timers'
 import { TableHeader } from '../types/Table'
 import NDropDownList from '../component/NDropDownList.vue'
@@ -46,7 +46,7 @@ export default class NDropDownTable extends Vue {
   valid: boolean = true
   lazyValidation: boolean = false
   get hasLabel() {
-    return !isEmpty(this.label)
+    return !_.isEmpty(this.label)
   }
   //search=
   get getText() {
@@ -67,9 +67,9 @@ export default class NDropDownTable extends Vue {
     if (this.rules) this.valid = !this.rules.some(e => e(value) !== true)
     return this.valid
   }
-  itemSelect(item, data) {
-    if (Object.hasOwnProperty.call(item, this.itemValue)) this.input(item[this.itemValue])
-    if (!this.lazyValidation || !this.valid) this.validate(item[this.itemValue])
+  itemSelect(e, data) {
+    if (Object.hasOwnProperty.call(e.item, this.itemValue)) this.input(e.item[this.itemValue])
+    if (!this.lazyValidation || !this.valid) this.validate(e.item[this.itemValue])
     data.isOpen = false
   }
   onOpen() {

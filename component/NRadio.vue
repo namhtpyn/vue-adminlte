@@ -1,18 +1,20 @@
 <template>
-  <label><input type="radio" :check="checked" :value="value" /> {{ label }}</label>
+  <label><input type="radio" :checked="checked" :value="value" /> {{ label }}</label>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop, Model, Watch, Emit } from 'vue-property-decorator'
+import _ from 'lodash'
+
 @Component({ inheritAttrs: false })
 export default class NRadio extends Vue {
   @Prop() label!: string
-  @Prop({ type: [String, Number, Boolean], default: true }) value!: number | string | boolean
-  @Model('input', { type: [String, Number, Boolean] }) model: number | string | boolean
+  @Prop({ type: [String, Number, Boolean, Object], default: true }) value!: number | string | boolean | object
+  @Model('input', { type: [String, Number, Boolean, Object] }) model: number | string | boolean | object
   @Emit() input(e) {}
   radioEl!: any
   get checked() {
-    return this.model === this.value
+    return _.isEqual(this.model, this.value)
   }
   mounted() {
     this.radioEl = $(this.$el) as any
