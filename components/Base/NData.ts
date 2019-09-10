@@ -32,4 +32,7 @@ export default class NData extends Vue {
     if (_.isEmpty(this.vItems)) return 0
     else return this.vItems.length
   }
+  setItems(items: any[]) {
+    this.vItems = _.cloneDeep(items)
+  }
 }
