@@ -17,6 +17,7 @@ const components = fs
       path: p + (fs.lstatSync(p).isDirectory() ? '/index.vue' : '')
     }
   })
+  .filter(o => fs.existsSync(o.path))
 //.filter(f => f.toLowerCase().endsWith('.vue'))
 
 // const fileArg = process.argv.slice(4, process.argv.length).map(f => f + '.vue')

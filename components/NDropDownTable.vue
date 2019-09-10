@@ -5,12 +5,15 @@
       <template #content="{data}">
         <n-data-table
           ref="table"
-          :items="tableItems"
-          :read-url="readUrl"
+          v-model="selectedValue"
+          :items="vItems"
           :searchable="searchable"
           :hide-top="!searchable"
-          hide-table-footer
-          @row-click="e => itemSelect(e, data)"
+          selectable
+          row-select
+          hide-footer
+          hide-bottom
+          sticky-top
           @error="error"
         >
           <slot></slot>
@@ -22,33 +25,38 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Model, Emit, Prop, Ref } from 'vue-property-decorator'
+import { Component, Model, Prop, Ref, Mixins } from 'vue-property-decorator'
 import _ from 'lodash'
-import NDataTable from './NDataTable.vue'
+import NDataTable from './NDataTable/index.vue'
+import NDataSource from './Base/NDataSource'
+import NBase from './Base/NBase'
 @Component({})
-export default class NDropDownTable extends Vue {
+export default class NDropDownTable extends Mixins(NBase, NDataSource) {
   @Prop({ type: String, default: 'text' }) itemText!: string
   @Prop({ type: String, default: 'value' }) itemValue!: string
   @Prop({ type: Boolean, default: false }) searchable!: boolean
-  @Prop(String) readonly readUrl!: string
+  @Prop({ type: Boolean, default: false }) multiple!: boolean
+
   @Prop([String, Number]) dropDownWidth!: string | number
   @Prop() label!: string
   @Prop({ type: Boolean, default: true }) form!: boolean
   @Prop(Array) rules!: any[]
+
   @Ref('table') table!: NDataTable
   @Model('input', [String, Number]) value!: any
-  @Emit() input(e) {}
-  @Emit() error(e) {}
+
+  selectedValue: any[] | any = ''
   valid: boolean = true
   lazyValidation: boolean = false
+
   get hasLabel() {
     return !_.isEmpty(this.label)
   }
   //search=
   get getText() {
     console.log('')
-    if (this.table && this.table.items && this.table.items.length > 0) {
-      const item = this.table.items.find(item => item[this.itemValue] === this.value)
+    if (this.table && this.table.vItems && this.table.vItems.length > 0) {
+      const item = this.table.vItems.find(item => item[this.itemValue] === this.value)
       if (item && Object.hasOwnProperty.call(item, this.itemText)) return item[this.itemText].toString()
     }
     return ''
@@ -72,14 +80,6 @@ export default class NDropDownTable extends Vue {
   }
   onOpen() {
     if (this.searchable) this.$nextTick(() => this.$children[0].$children[0].$el.querySelector('input').focus())
-  }
-  setItems(items: any[]) {
-    this.$nextTick(() => {
-      if (this.table) this.table.setItems(items)
-    })
-  }
-  get items() {
-    return this.table.items
   }
 }
 </script>

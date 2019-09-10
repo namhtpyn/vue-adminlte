@@ -10,7 +10,7 @@
       searchable
       :tree-expand-to-level="1"
     ></n-drop-down-tree> -->
-    <n-tree
+    <!-- <n-tree
       :read-url="`https://localhost:5001/linetest/vnptunit/GetUnitListByID?unitID=${unitID}`"
       item-value="UnitID"
       item-text="UnitName"
@@ -19,7 +19,7 @@
       :expand-to-level="1"
       fixed-search
       height="500px"
-    ></n-tree>
+    ></n-tree> -->
     <input type="text" v-model="unitID" />
     <!-- <n-select2
       :items="selectItems"
@@ -66,11 +66,18 @@
       </n-drop-down-list> -->
     <!-- {{ value }} -->
     <!-- <n-radio label="radio 1" value="1"></n-radio>
-    <n-checkbox form label="checkbox" v-model="checkbox"></n-checkbox>
+
     {{ checkbox }}
     <n-btn app color="primary" text-color="white" @click="abc"> <n-icon color="yellow">play</n-icon>Play </n-btn> -->
-    {{ def }}
-    <n-data-table ref="table" v-model="def" :items="items" updatable deletable creatable expandable>
+    <n-drop-down-table
+      v-model="value"
+      label="drop down list"
+      :items="items"
+      item-text="SystemName"
+      item-value="DeviceID"
+      searchable
+      :rules="[v => v < 1 || 'Không lớn hơn 1']"
+    >
       <items>
         <text-item :header-valign.camel="`middle`" text="Name" value="NamE"></text-item>
         <text-item header-valign="middle" text="Calories" value="calories"></text-item>
@@ -78,31 +85,38 @@
           <items>
             <text-item text="Calories" value="calories" summary="sum"></text-item>
             <number-item text="Fat" value="calories"></number-item>
-            <date-item></date-item>
           </items>
         </band-item>
       </items>
-      <template v-slot:item.calories="{ value, index }">
-        <n-checkbox :ref="`abc[${index}]`"></n-checkbox>
-      </template>
-      <template v-slot:modal="{ modal }">
-        <input class="form-control" autofocus v-model="modal.data.name" />
-        <input class="form-control" v-model="modal.data.fat" />
-      </template>
-      <template v-slot:item.iron="{ item }">
-        <span class="badge bg-red">{{ item.iron }}</span>
-      </template>
-      <template v-slot:item.protein="{ item }">
-        <span class="badge bg-green">{{ item.protein }}</span>
-      </template>
-      <template v-slot:item.Name="{ item }">
-        <span class="badge bg-green">{{ item.protein }}</span>
-      </template>
-      <template v-slot:item.nam-e="{ item }">
-        NAME
-      </template>
+    </n-drop-down-table>
+    {{ checkbox }}
+    <n-checkbox v-model="checkbox"></n-checkbox>
+    {{ def }}
+    <n-data-table
+      ref="table"
+      :items="items"
+      v-model="def"
+      searchable
+      updatable
+      deletable
+      creatable
+      expandable
+      hide-bottom
+      selectable
+      sticky-top
+    >
+      <items>
+        <text-item :header-valign.camel="`middle`" text="Name" value="NamE"></text-item>
+        <text-item header-valign="middle" text="Calories" value="calories"></text-item>
+        <band-item text="band" align="center">
+          <items>
+            <text-item text="Calories" value="calories" summary="sum"></text-item>
+            <number-item text="Fat" value="calories"></number-item>
+          </items>
+        </band-item>
+      </items>
+      <css-class></css-class>
     </n-data-table>
-    -->
 
     <!-- <n-pagination :length="10" v-model="page"></n-pagination>
 
@@ -196,7 +210,6 @@ export default class extends Vue {
   unitID = 2
   mounted() {
     this.treeItems = data3
-    ;(this.$refs.table as any).setItems(this.items)
   }
 }
 </script>
