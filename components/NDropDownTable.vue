@@ -24,14 +24,8 @@
 <script lang="ts">
 import { Vue, Component, Model, Emit, Prop, Ref } from 'vue-property-decorator'
 import _ from 'lodash'
-import NDropDownList from './NDropDownList.vue'
 import NDataTable from './NDataTable.vue'
-@Component({
-  components: {
-    NDropDownList,
-    NDataTable
-  }
-})
+@Component({})
 export default class NDropDownTable extends Vue {
   @Prop({ type: String, default: 'text' }) itemText!: string
   @Prop({ type: String, default: 'value' }) itemValue!: string
@@ -52,6 +46,7 @@ export default class NDropDownTable extends Vue {
   }
   //search=
   get getText() {
+    console.log('')
     if (this.table && this.table.items && this.table.items.length > 0) {
       const item = this.table.items.find(item => item[this.itemValue] === this.value)
       if (item && Object.hasOwnProperty.call(item, this.itemText)) return item[this.itemText].toString()

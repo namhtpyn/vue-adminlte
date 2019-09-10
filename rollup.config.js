@@ -7,18 +7,29 @@ import multiInput from 'rollup-plugin-multi-input'
 import fs from 'fs'
 import path from 'path'
 
-let components = fs.readdirSync(path.join('components')).filter(f => f.toLowerCase().endsWith('.vue'))
-const fileArg = process.argv.slice(4, process.argv.length).map(f => f + '.vue')
-if (fileArg.length > 0) components = components.filter(c => fileArg.includes(c))
+const componentPath = 'components'
+const components = fs
+  .readdirSync(componentPath)
+  .map(f => componentPath + '/' + f)
+  .map(p => {
+    return {
+      name: path.parse(p).name,
+      path: p + (fs.lstatSync(p).isDirectory() ? '/index.vue' : '')
+    }
+  })
+//.filter(f => f.toLowerCase().endsWith('.vue'))
 
-export default components.map(c => {
+// const fileArg = process.argv.slice(4, process.argv.length).map(f => f + '.vue')
+// if (fileArg.length > 0) components = components.filter(c => fileArg.includes(c))l
+
+const xxx = components.map(o => {
   return {
-    input: './components/' + c,
+    input: o.path,
     output: {
-      format: 'iife',
-      name: path.parse(c).name,
+      format: 'umd',
+      name: o.name,
       dir: './dist/',
-      entryFileNames: path.parse(c).name + '.js'
+      entryFileNames: o.name + '.js'
     },
     external: ['vue', 'lodash', 'axios'],
     plugins: [
@@ -33,3 +44,5 @@ export default components.map(c => {
     ]
   }
 })
+console.log(xxx)
+export default xxx

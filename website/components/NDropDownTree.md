@@ -12,7 +12,7 @@
 |treeExpandToLevel|-|`Number`|`false`|0|
 |itemValue|-|`String`|`false`|'value'|
 |itemText|-|`String`|`false`|'text'|
-|parentKey|-|`String`|`false`|'parentID'|
+|treeParentKey|-|`String` /  `Number`|`false`|'parentID'|
 |dropDownWidth|-|`String` /  `Number`|`false`|-|
 |label|-|—|`false`|-|
 |form|-|`Boolean`|`false`|true|
