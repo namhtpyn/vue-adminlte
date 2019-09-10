@@ -3,23 +3,4 @@ node_modules
 
 # build
 dist
-website/components/NOverlay.md
-website/components/NBtn.md
-website/components/NCheckbox.md
-website/components/NDataTable.md
-website/components/NDataTableOld.md
-website/components/NDropDownList.md
-website/components/NDropDownTable.md
-website/components/NDropDownTree.md
-website/components/NForm.md
-website/components/NIcon.md
-website/components/NModal.md
-website/components/NPagination.md
-website/components/NRadio.md
-website/components/NRadioGroup.md
-website/components/NSelect.md
-website/components/NSelect2.md
-website/components/NTab.md
-website/components/NTabCollection.md
-website/components/NTimeSelector.md
-website/components/NTree.md
+website
