@@ -1,5 +1,15 @@
 <template>
   <div>
+    <n-tree
+      :items="treeItems"
+      item-value="UnitID"
+      item-text="UnitName"
+      parent-key="ParentID"
+      @select="select_node"
+      :expand-to-level="1"
+      sticky-search
+      height="500px"
+    ></n-tree>
     <!-- <n-drop-down-tree
       v-model="unitID"
       label="Đơn vị"
@@ -206,10 +216,10 @@ export default class extends Vue {
     { text: 'Iron (%))', value: 'iron' }
   ]
   items: any[] = jsonData
-  treeItems: any[] = []
+  treeItems: any[] = data3
   unitID = 2
   mounted() {
-    this.treeItems = data3
+    //this.treeItems = data3
   }
 }
 </script>

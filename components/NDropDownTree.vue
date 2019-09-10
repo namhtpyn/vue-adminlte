@@ -11,7 +11,7 @@
     >
       <template #content="{data}">
         <n-tree
-          :read-url="treeReadUrl"
+          :items="vItems"
           :item-value="itemValue"
           :item-text="itemText"
           :parent-key="treeParentKey"
@@ -20,8 +20,7 @@
           :icon="treeNodeIcon"
           :searchable="searchable"
           :value="value"
-          fixed-search
-          height="260px"
+          sticky-search
           @select="item => itemSelect(item, data)"
         ></n-tree>
       </template>
@@ -31,16 +30,16 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Model, Emit, Prop } from 'vue-property-decorator'
+import { Vue, Component, Model, Emit, Prop, Mixins } from 'vue-property-decorator'
 import _ from 'lodash'
+import NDataSource from './Base/NDataSource'
 @Component({})
-export default class NDropDownTree extends Vue {
+export default class NDropDownTree extends Mixins(NDataSource) {
   @Prop({ type: String, default: 'none' }) treeNodeIcon!: string
   @Prop({ type: Boolean, default: false }) treeExpandAll!: boolean
   @Prop({ type: Boolean, default: false }) searchable!: boolean
   @Prop({ type: Number, default: 0 }) treeExpandToLevel!: number
   @Prop({ type: [String, Number], default: 'parentID' }) treeParentKey!: string | number
-  @Prop(String) treeReadUrl!: string
   @Prop({ type: String, default: 'value' }) itemValue!: string
   @Prop({ type: String, default: 'text' }) itemText!: string
   @Prop([String, Number]) dropDownWidth!: string | number
@@ -49,7 +48,6 @@ export default class NDropDownTree extends Vue {
   @Prop(Array) rules!: any[]
 
   @Model('input', [String, Number]) value!: any
-  @Emit() input(e) {}
 
   treeItems: any[] = []
   valid: boolean = true
@@ -85,9 +83,6 @@ export default class NDropDownTree extends Vue {
   }
   mounted() {
     this.treeComponent = this.$children[0].$children[0] as any
-  }
-  setItems(items: any[]) {
-    this.treeComponent.setItems(items)
   }
   private onOpen() {
     this.$nextTick(() => {
