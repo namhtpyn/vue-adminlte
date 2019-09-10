@@ -27,10 +27,16 @@ export default class NCheckbox extends Vue {
       })
       .on('ifChanged', this.iCheckChanged)
   }
+  check() {
+    this.checkboxEl.iCheck('check')
+  }
+  uncheck() {
+    this.checkboxEl.iCheck('uncheck')
+  }
 
   @Watch('isChecked')
   private onCheckedChange(n) {
-    this.checkboxEl.iCheck(n ? 'check' : 'uncheck')
+    n ? this.check() : this.uncheck()
   }
 
   private iCheckChanged(e) {

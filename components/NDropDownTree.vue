@@ -33,14 +33,7 @@
 <script lang="ts">
 import { Vue, Component, Model, Emit, Prop } from 'vue-property-decorator'
 import _ from 'lodash'
-import NDropDownList from './NDropDownList.vue'
-import NTree from './NTree.vue'
-@Component({
-  components: {
-    NDropDownList,
-    NTree
-  }
-})
+@Component({})
 export default class NDropDownTree extends Vue {
   @Prop({ type: Array, required: true }) treeItems!: any[]
   @Prop({ type: String, default: 'none' }) treeNodeIcon!: string

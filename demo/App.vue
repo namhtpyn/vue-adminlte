@@ -68,9 +68,9 @@
     {{ checkbox }}
     <n-btn app color="primary" text-color="white" @click="abc"> <n-icon color="yellow">play</n-icon>Play </n-btn> -->
     {{ def }}
-    <n-data-table v-model="def" :items="items" selectable row-select updatable deletable creatable expandable>
+    <n-data-table ref="table" v-model="def" :items="items" updatable deletable creatable expandable>
       <items>
-        <text-item header-valign="middle" text="Name" value="NamE"></text-item>
+        <text-item :header-valign.camel="`middle`" text="Name" value="NamE"></text-item>
         <text-item header-valign="middle" text="Calories" value="calories"></text-item>
         <band-item text="band" align="center">
           <items>
@@ -80,6 +80,9 @@
           </items>
         </band-item>
       </items>
+      <template v-slot:item.calories="{ value, index }">
+        <n-checkbox :ref="`abc[${index}]`"></n-checkbox>
+      </template>
       <template v-slot:modal="{ modal }">
         <input class="form-control" autofocus v-model="modal.data.name" />
         <input class="form-control" v-model="modal.data.fat" />
@@ -190,6 +193,7 @@ export default class extends Vue {
   unitID = 2
   mounted() {
     this.treeItems = data3
+    ;(this.$refs.table as any).setItems(this.items)
   }
 }
 </script>

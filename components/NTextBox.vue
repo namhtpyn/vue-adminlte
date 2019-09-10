@@ -32,11 +32,9 @@
 </template>
 
 <script lang="ts">
-import NIcon from './NIcon.vue'
-import NBtn from './NBtn.vue'
 import { Component, Vue, Prop, Emit, Model } from 'vue-property-decorator'
 import _ from 'lodash'
-@Component({ components: { NIcon, NBtn }, inheritAttrs: false })
+@Component({ inheritAttrs: false })
 export default class NTextBox extends Vue {
   @Prop({ type: String, default: 'text' }) type!: string
   @Prop(String) cssClass!: string

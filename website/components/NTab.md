@@ -5,9 +5,9 @@
 <!-- @vuese:NTab:props:start -->
 |Name|Description|Type|Required|Default|
 |---|---|---|---|---|
-|id|-|`String`|`true`|-|
-|value|-|`Number` /  `String`|`false`|1|
-|items|-|—|`false`|-|
+|active|-|`Boolean`|`false`|false|
+|value|-|`String` /  `Number` /  `Object`|`false`|-|
+|title|-|`String`|`false`|-|
 
 <!-- @vuese:NTab:props:end -->
 
@@ -17,7 +17,7 @@
 <!-- @vuese:NTab:slots:start -->
 |Name|Description|Default Slot Content|
 |---|---|---|
-|`${id}-tab${k + 1}`|-|-|
+|default|-|-|
 
 <!-- @vuese:NTab:slots:end -->
 

@@ -6,6 +6,7 @@
 |Name|Description|Type|Required|Default|
 |---|---|---|---|---|
 |label|-|—|`false`|-|
+|color|-|`String`|`false`|'blue'|
 |value|-|`String` /  `Number` /  `Boolean` /  `Object`|`false`|true|
 
 <!-- @vuese:NRadio:props:end -->

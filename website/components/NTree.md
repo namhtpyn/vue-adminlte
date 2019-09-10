@@ -10,6 +10,8 @@
 |multiple|-|`Boolean`|`false`|false|
 |expandAll|-|`Boolean`|`false`|false|
 |searchable|-|`Boolean`|`false`|true|
+|fixedSearch|-|`Boolean`|`false`|false|
+|height|-|`String`|`false`|-|
 |expandToLevel|-|`Number`|`false`|0|
 |itemValue|-|`String`|`false`|'value'|
 |itemText|-|`String`|`false`|'text'|
@@ -25,6 +27,7 @@
 |---|---|---|
 |input|-|-|
 |select|-|-|
+|loaded|-|-|
 
 <!-- @vuese:NTree:events:end -->
 

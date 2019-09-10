@@ -50,7 +50,7 @@
             @click="e => rowClick(e, item)"
           >
             <td :class="cssClass.cell" :style="cellStyle(header)" v-for="(header, colIndex) in headerColumns()" :key="colIndex">
-              <slot :name="`item.${kebabCase(header.value)}`" :item="item" :value="item[header.value]">
+              <slot :name="`item.${kebabCase(header.value)}`" :item="item" :value="item[header.value]" :index="rowIndex">
                 <template v-if="header.value === '$selection'">
                   <n-checkbox
                     v-if="multiple"
@@ -64,12 +64,14 @@
                   <n-icon style="cursor:pointer" @click="expandRow(rowIndex)">chevron-down</n-icon>
                 </template>
                 <template v-else-if="header.value === '$action'">
-                  <n-btn v-if="updatable" @click="updateClick(item)">
-                    <n-icon>pencil</n-icon>
-                  </n-btn>
-                  <n-btn v-if="deletable" @click="removeClick(item)">
-                    <n-icon>trash</n-icon>
-                  </n-btn>
+                  <div class="btn-group">
+                    <n-btn v-if="updatable" @click="updateClick(item)">
+                      <n-icon>pencil</n-icon>
+                    </n-btn>
+                    <n-btn v-if="deletable" @click="removeClick(item)">
+                      <n-icon>trash</n-icon>
+                    </n-btn>
+                  </div>
                 </template>
                 <template v-else>
                   {{ formatItemValue(item, header) }}
@@ -145,19 +147,11 @@ import { Vue, Component, Prop, Emit, Model, Watch } from 'vue-property-decorator
 import { TableHeader } from '../types/Table'
 import _ from 'lodash'
 import axios from 'axios'
-import NPagination from './NPagination.vue'
-import NBtn from './NBtn.vue'
-import NIcon from './NIcon.vue'
-import NModal from './NModal.vue'
-import NCheckbox from './NCheckbox.vue'
-import NRadio from './NRadio.vue'
-import NOverlay from './NOverlay.vue'
 import NForm from './NForm.vue'
 import { VNode } from 'vue'
 
 @Component({
-  inheritAttrs: false,
-  components: { NPagination, NBtn, NIcon, NModal, NCheckbox, NRadio, NOverlay, NForm }
+  inheritAttrs: false
 })
 export default class NDataTable extends Vue {
   @Prop({ type: Boolean, default: true }) readonly bordered!: boolean
