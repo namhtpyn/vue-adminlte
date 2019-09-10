@@ -1,9 +1,9 @@
 <template>
   <div style="position:relative" v-click-out="closeDropDown">
     <input type="hidden" :value="value" />
-    <div class="has-feedback">
-      <div @click="openDropDown" class="form-control text-overflow">
-        {{ textSync }}
+    <div class="has-feedback" @click="toggleDropDown">
+      <div :class="containerCss" style="width: 100%">
+        {{ isShowHint ? hint : textSync }}
       </div>
       <span :class="`fa fa-caret-${data.isOpen ? 'up' : 'down'} form-control-feedback`"></span>
     </div>
@@ -23,11 +23,18 @@ import vClickOutside from 'v-click-outside'
 })
 export default class NDropDownList extends Vue {
   @PropSync('text', { type: String, default: '' }) textSync!: string
+  @Prop(String) hint!: string
+  @Prop({ type: Boolean, default: false }) small!: boolean
+  @Prop({ type: Boolean, default: false }) large!: boolean
   @Prop([String, Number]) value!: any
   @Prop([String, Number]) dropDownWidth!: string | number
 
   data = {
     isOpen: false
+  }
+
+  toggleDropDown(e) {
+    this.data.isOpen ? this.closeDropDown(e) : this.openDropDown(e)
   }
 
   @Emit('open') openDropDown(e) {
@@ -39,10 +46,25 @@ export default class NDropDownList extends Vue {
   get searchWidth() {
     return 8 * this.textSync.length + 15
   }
+  get isShowHint() {
+    return this.hint && this.textSync === ''
+  }
+  get containerCss() {
+    return {
+      'form-control': true,
+      'text-overflow': true,
+      hint: this.isShowHint,
+      'input-sm': this.small,
+      'input-lg': this.large
+    }
+  }
 }
 </script>
 
 <style scoped>
+.hint {
+  color: #ccc;
+}
 .input-flat,
 .input-flat:active {
   margin: 0;

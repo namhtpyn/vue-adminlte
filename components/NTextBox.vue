@@ -1,6 +1,8 @@
 <template>
   <div :class="classComponent">
-    <label v-if="hasLabel" class="control-label">{{ label }}</label>
+    <label v-if="hasLabel" class="control-label" :style="{ 'font-size': this.small ? '12px' : this.large ? '18px' : '14px' }">
+      {{ label }}
+    </label>
     <div :class="divClass">
       <span v-if="prefix" class="input-group-addon">{{ prefix }}</span>
       <span v-if="prependIcon" class="input-group-addon">

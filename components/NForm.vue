@@ -1,5 +1,5 @@
 <template>
-  <form role="form">
+  <form role="form" :class="{ 'form-inline': inline }">
     <slot />
   </form>
 </template>
@@ -10,6 +10,7 @@ import _ from 'lodash'
 @Component({ inheritAttrs: false })
 export default class NForm extends Vue {
   @Prop({ type: Boolean, default: false }) lazyValidation!: boolean
+  @Prop({ type: Boolean, default: false }) inline!: boolean
   @Model('input', { type: Boolean, default: false }) value!: boolean
   @Emit() input(e) {}
   @Emit() submit(e) {}
@@ -57,4 +58,8 @@ export default class NForm extends Vue {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+form {
+  margin-bottom: 0px;
+}
+</style>

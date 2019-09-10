@@ -1,16 +1,22 @@
 <template>
   <div :class="{ 'form-group': form, 'has-error': !valid }">
-    <label v-if="hasLabel" class="control-label">{{ label }}</label>
+    <label v-if="hasLabel" class="control-label" :style="{ 'font-size': this.small ? '12px' : this.large ? '18px' : '14px' }">
+      {{ label }}
+    </label>
     <n-drop-down-list
       :value="value"
       @input="input"
       :text.sync="text"
       :drop-down-width="dropDownWidth"
+      :hint="hint"
+      :small="small"
+      :large="large"
       @open="onOpen"
       @close="onClose"
     >
       <template #content="{data}">
         <n-tree
+          ref="tree"
           :read-url="treeReadUrl"
           :item-value="itemValue"
           :item-text="itemText"
@@ -23,6 +29,7 @@
           fixed-search
           height="260px"
           @select="item => itemSelect(item, data)"
+          @error="error"
         ></n-tree>
       </template>
     </n-drop-down-list>
@@ -31,8 +38,9 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Model, Emit, Prop } from 'vue-property-decorator'
+import { Vue, Component, Model, Emit, Prop, Ref } from 'vue-property-decorator'
 import _ from 'lodash'
+import NTree from './NTree.vue'
 @Component({})
 export default class NDropDownTree extends Vue {
   @Prop({ type: String, default: 'none' }) treeNodeIcon!: string
@@ -44,18 +52,21 @@ export default class NDropDownTree extends Vue {
   @Prop({ type: String, default: 'value' }) itemValue!: string
   @Prop({ type: String, default: 'text' }) itemText!: string
   @Prop([String, Number]) dropDownWidth!: string | number
-  @Prop() label!: string
+  @Prop(String) label!: string
+  @Prop(String) hint!: string
+  @Prop({ type: Boolean, default: false }) small!: boolean
+  @Prop({ type: Boolean, default: false }) large!: boolean
   @Prop({ type: Boolean, default: true }) form!: boolean
   @Prop(Array) rules!: any[]
-
+  @Ref('tree') tree!: NTree
   @Model('input', [String, Number]) value!: string | number
   @Emit() input(e) {}
+  @Emit() error(e) {}
 
   //treeItems: any[] = []
   valid: boolean = true
   lazyValidation: boolean = false
   private text: string = ''
-  private treeComponent!: any
 
   get hasLabel() {
     return !_.isEmpty(this.label)
@@ -85,20 +96,17 @@ export default class NDropDownTree extends Vue {
     if (!this.lazyValidation || !this.valid) this.validate(item.id)
     data.isOpen = false
   }
-  mounted() {
-    this.treeComponent = this.$children[0].$children[0] as any
-  }
   setItems(items: any[]) {
-    this.treeComponent.setItems(items)
+    this.tree.setItems(items)
   }
   private onOpen() {
     this.$nextTick(() => {
-      this.treeComponent.focusSelectedNode()
-      this.treeComponent.focusSearch()
+      this.tree.focusSelectedNode()
+      this.tree.focusSearch()
     })
   }
   private onClose() {
-    this.treeComponent.searchText = ''
+    this.tree.searchText = ''
   }
 }
 </script>

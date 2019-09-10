@@ -1,14 +1,40 @@
 <template>
   <div>
+    <n-form>
+      <div class="row">
+        <div class="col-xs-4">
+          <n-text-box hint="abc" label="example textbox"></n-text-box>
+        </div>
+        <div class="col-xs-4">
+          <n-select2 label="example select"></n-select2>
+        </div>
+        <div class="col-xs-4">
+          <n-drop-down-tree label="example dropdowntree"></n-drop-down-tree>
+        </div>
+      </div>
+    </n-form>
+    <n-form inline>
+      <n-text-box label="example textbox"></n-text-box>
+      <n-select2 label="example select"></n-select2>
+      <n-drop-down-tree
+        ref="treeselect"
+        label="example dropdowntree"
+        item-value="UnitID"
+        item-text="UnitName"
+        tree-parent-key="ParentID"
+        :tree-expand-to-level="1"
+        drop-down-width="500"
+        hint="Example hint"
+      ></n-drop-down-tree>
+    </n-form>
     <!-- <n-drop-down-tree
-      v-model="unitID2"
-      label="Đơn vị"
-      :tree-read-url="`https://localhost:5001/linetest/vnptunit/GetUnitListByID?unitID=${unitID}`"
+      ref="treeselect"
+      searchable
       item-value="UnitID"
       item-text="UnitName"
       tree-parent-key="ParentID"
-      searchable
       :tree-expand-to-level="1"
+      label="Đơn vị"
     ></n-drop-down-tree> -->
     <!-- {{ unitID2 }}
     <n-tree
@@ -23,15 +49,15 @@
       v-model="unitID2"
     ></n-tree>
     <input type="text" v-model="unitID" /> -->
-    <div class="col-xs-3">
+    <!-- <div class="col-xs-3">
       <n-select2
         :read-url="`https://localhost:5001/Linetest/Test/GetActivatedAdslPort?deviceIp=172.20.225.101`"
         item-text="SlotPort"
         item-value="SlotPort"
         label="cake"
       ></n-select2>
-    </div>
-    {{ cake }}
+    </div> -->
+    <!-- {{ cake }} -->
     <!-- <div style="width:50%">
       <n-form ref="form" lazy-validation>
         <n-drop-down-table
@@ -71,8 +97,14 @@
     <n-checkbox form label="checkbox" v-model="checkbox"></n-checkbox>
     {{ checkbox }}
     <n-btn app color="primary" text-color="white" @click="abc"> <n-icon color="yellow">play</n-icon>Play </n-btn> -->
+    <n-radio-group v-model="radio">
+      <n-radio :value="1"></n-radio>
+      <n-radio :value="2"></n-radio>
+      <n-radio :value="3"></n-radio>
+      <n-radio :value="4"></n-radio>
+    </n-radio-group>
     {{ def }}
-    <n-data-table ref="table" v-model="def" :items="items" updatable deletable creatable expandable>
+    <n-data-table ref="table" v-model="def" updatable deletable creatable expandable selectable>
       <items>
         <text-item :header-valign.camel="`middle`" text="Name" value="NamE"></text-item>
         <text-item header-valign="middle" text="Calories" value="calories"></text-item>
@@ -104,7 +136,6 @@
         NAME
       </template>
     </n-data-table>
-    -->
 
     <!-- <n-pagination :length="10" v-model="page"></n-pagination>
 
@@ -118,9 +149,9 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { TableHeader } from '../types/Table'
+// import { TableHeader } from '../types/Table'
 import jsonData from './data.json'
-import data2 from './data2.json'
+// import data2 from './data2.json'
 import data3 from './data3.json'
 import NSelect2 from '../components/NSelect2.vue'
 
@@ -130,89 +161,87 @@ import NSelect2 from '../components/NSelect2.vue'
   }
 })
 export default class extends Vue {
+  opentree(e) {
+    console.log('open')
+    console.log(e)
+  }
   def: any = {}
-  expandToLevel = null
-  select_node(node) {
-    console.log(node)
-  }
-  cake: any = null
-  value: any = null
-
-  //checkbox
-  checkbox: boolean = true
-
-  //pagination
-  page = 1
-
-  //Table
-  tableHeaders: TableHeader[] = [
-    { text: 'IpAddress', value: 'DeviceID', width: '500px' },
-    { text: 'IpAddress', value: 'DeviceID' },
-    { text: 'IpAddress', value: 'DeviceID' },
-    { text: 'IpAddress', value: 'DeviceID' },
-    { text: 'IpAddress', value: 'DeviceID' },
-    { text: 'SystemName', value: 'SystemName' }
-  ]
-  tableItems: any[] = data2
-  doAdd(modal) {
-    console.log(modal)
-    modal.visible = false
-  }
-
-  //Select
-  selectItems: any[] = jsonData
-
-  //Modal
-  modalVisibility = false
-
-  message = 'hello world'
-  validate() {
-    ;(this.$refs.form as any).validate()
-  }
-  abc(a) {
-    console.log(a)
-  }
-  headers = [
-    {
-      text: 'Dessert (100g serving)',
-      value: 'Name'
-    },
-    {
-      text: 'abc',
-      children: [
-        { text: 'Calories', value: 'calories' },
-        { text: 'Fat (g)', value: 'fat', sortable: true },
-        {
-          text: 'def',
-          children: [
-            { text: 'Carbs (g)', value: 'carbs' },
-            { text: 'Protein (g)', value: 'protein' },
-            {
-              text: 'def',
-              children: [{ text: 'Carbs (g)', value: 'carbs' }, { text: 'Protein (g)', value: 'protein' }]
-            }
-          ]
-        }
-      ]
-    },
-
-    { text: 'Iron (%))', value: 'iron' }
-  ]
-  items: any[] = jsonData
-  treeItems: any[] = []
-  unitID = 1
-  unitID2 = 0
+  radio = 1
+  // expandToLevel = null
+  // select_node(node) {
+  //   console.log(node)
+  // }
+  // cake: any = null
+  // value: any = null
+  // //checkbox
+  // checkbox: boolean = true
+  // //pagination
+  // page = 1
+  // //Table
+  // tableHeaders: TableHeader[] = [
+  //   { text: 'IpAddress', value: 'DeviceID', width: '500px' },
+  //   { text: 'IpAddress', value: 'DeviceID' },
+  //   { text: 'IpAddress', value: 'DeviceID' },
+  //   { text: 'IpAddress', value: 'DeviceID' },
+  //   { text: 'IpAddress', value: 'DeviceID' },
+  //   { text: 'SystemName', value: 'SystemName' }
+  // ]
+  // tableItems: any[] = data2
+  // doAdd(modal) {
+  //   console.log(modal)
+  //   modal.visible = false
+  // }
+  // //Select
+  // selectItems: any[] = jsonData
+  // //Modal
+  // modalVisibility = false
+  // message = 'hello world'
+  // validate() {
+  //   ;(this.$refs.form as any).validate()
+  // }
+  // abc(a) {
+  //   console.log(a)
+  // }
+  // headers = [
+  //   {
+  //     text: 'Dessert (100g serving)',
+  //     value: 'Name'
+  //   },
+  //   {
+  //     text: 'abc',
+  //     children: [
+  //       { text: 'Calories', value: 'calories' },
+  //       { text: 'Fat (g)', value: 'fat', sortable: true },
+  //       {
+  //         text: 'def',
+  //         children: [
+  //           { text: 'Carbs (g)', value: 'carbs' },
+  //           { text: 'Protein (g)', value: 'protein' },
+  //           {
+  //             text: 'def',
+  //             children: [{ text: 'Carbs (g)', value: 'carbs' }, { text: 'Protein (g)', value: 'protein' }]
+  //           }
+  //         ]
+  //       }
+  //     ]
+  //   },
+  //   { text: 'Iron (%))', value: 'iron' }
+  // ]
+  // items: any[] = jsonData
+  // treeItems: any[] = []
+  // unitID = 1
+  // unitID2 = 0
   mounted() {
-    this.treeItems = data3
-    ;(this.$refs.table as any).setItems(this.items)
+    ;(this.$refs.treeselect as any).setItems(data3)
+    ;(this.$refs.table as any).setItems(jsonData)
   }
 }
 </script>
 
 <style>
-#app {
+/* #app {
   font-size: 18px;
   font-family: 'Roboto', sans-serif;
   color: blue;
-}
+} */
 </style>

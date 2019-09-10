@@ -1,11 +1,10 @@
 <template>
   <div :class="classComponent">
-    <label v-if="hasLabel" class="control-label">{{ label }}</label>
+    <label v-if="hasLabel" class="control-label" :style="{ 'font-size': this.small ? '12px' : this.large ? '18px' : '14px' }">
+      {{ label }}
+    </label>
     <select :class="cCssClass" :value="value"> </select>
     <span v-if="!valid" class="help-block">{{ errorText }}</span>
-    <n-overlay absolute :value="loading">
-      <n-icon css-class="fa-spin fa-5x" style="color:white">circle-o-notch</n-icon>
-    </n-overlay>
   </div>
   <!-- <select :class="selectCssClass"></select> -->
 </template>
@@ -151,6 +150,8 @@ export default class NSelect2 extends Vue {
 span.select2-container {
   width: 100% !important;
 }
+</style>
+<style scoped>
 .input-sm-rendered {
   font-size: 12px !important;
   line-height: 23px !important;
