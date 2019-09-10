@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- <n-drop-down-tree
-      v-model="unitID"
+      v-model="unitID2"
       label="Đơn vị"
       :tree-read-url="`https://localhost:5001/linetest/vnptunit/GetUnitListByID?unitID=${unitID}`"
       item-value="UnitID"
@@ -10,6 +10,7 @@
       searchable
       :tree-expand-to-level="1"
     ></n-drop-down-tree> -->
+    <!-- {{ unitID2 }}
     <n-tree
       :read-url="`https://localhost:5001/linetest/vnptunit/GetUnitListByID?unitID=${unitID}`"
       item-value="UnitID"
@@ -19,18 +20,19 @@
       :expand-to-level="1"
       fixed-search
       height="500px"
+      v-model="unitID2"
     ></n-tree>
-    <input type="text" v-model="unitID" />
-    <!-- <n-select2
-      :items="selectItems"
-      item-text="name"
-      item-value="fat"
-      :rules="[v => v != 3.7 || 'fat']"
-      v-model="cake"
-      label="cake"
-    ></n-select2>
+    <input type="text" v-model="unitID" /> -->
+    <div class="col-xs-3">
+      <n-select2
+        :read-url="`https://localhost:5001/Linetest/Test/GetActivatedAdslPort?deviceIp=172.20.225.101`"
+        item-text="SlotPort"
+        item-value="SlotPort"
+        label="cake"
+      ></n-select2>
+    </div>
     {{ cake }}
-    <div style="width:50%">
+    <!-- <div style="width:50%">
       <n-form ref="form" lazy-validation>
         <n-drop-down-table
           v-model="value"
@@ -116,8 +118,13 @@ import { TableHeader } from '../types/Table'
 import jsonData from './data.json'
 import data2 from './data2.json'
 import data3 from './data3.json'
+import NSelect2 from '../components/NSelect2.vue'
 
-@Component({})
+@Component({
+  components: {
+    NSelect2
+  }
+})
 export default class extends Vue {
   def: any = {}
   expandToLevel = null
@@ -189,7 +196,8 @@ export default class extends Vue {
   ]
   items: any[] = jsonData
   treeItems: any[] = []
-  unitID = 2
+  unitID = 1
+  unitID2 = 0
   mounted() {
     this.treeItems = data3
   }

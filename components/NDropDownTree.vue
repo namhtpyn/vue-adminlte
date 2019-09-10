@@ -4,7 +4,7 @@
     <n-drop-down-list
       :value="value"
       @input="input"
-      :text.sync="getText"
+      :text.sync="text"
       :drop-down-width="dropDownWidth"
       @open="onOpen"
       @close="onClose"
@@ -55,24 +55,25 @@ export default class NDropDownTree extends Vue {
   @Prop({ type: Boolean, default: true }) form!: boolean
   @Prop(Array) rules!: any[]
 
-  @Model('input', [String, Number]) value!: any
+  @Model('input', [String, Number]) value!: string | number
   @Emit() input(e) {}
 
-  treeItems: any[] = []
+  //treeItems: any[] = []
   valid: boolean = true
   lazyValidation: boolean = false
+  private text: string = ''
   private treeComponent!: any
 
   get hasLabel() {
     return !_.isEmpty(this.label)
   }
-  get getText() {
-    if (!this.treeItems || this.treeItems.length <= 0) return ''
-    const item = this.treeItems.find(item => item[this.itemValue] === this.value)
-    if (!item || !Object.hasOwnProperty.call(item, this.itemText)) return ''
-    this.$emit('change', item)
-    return item[this.itemText].toString()
-  }
+  // get getText() {
+  //   if (_.isEmpty(this.treeItems)) return ''
+  //   const item = this.treeItems.find(item => item[this.itemValue] === this.value)
+  //   if (!item || !Object.hasOwnProperty.call(item, this.itemText)) return ''
+  //   this.$emit('change', item)
+  //   return item[this.itemText].toString()
+  // }
   get errorText() {
     if (!this.valid && this.rules) {
       const f = this.rules.find(r => r(this.value) !== true)
@@ -86,7 +87,8 @@ export default class NDropDownTree extends Vue {
     return this.valid
   }
   private itemSelect(item, data) {
-    if (Object.hasOwnProperty.call(item, 'id')) this.input(item.id)
+    this.text = item.text
+    this.input(item.id)
     if (!this.lazyValidation || !this.valid) this.validate(item.id)
     data.isOpen = false
   }

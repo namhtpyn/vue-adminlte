@@ -36,6 +36,8 @@ export default class NTree extends Vue {
   @Emit() error(e) {}
   @Emit() loaded(e) {
     if (this.expandAll) this.theTree.jstree().open_all()
+    this.focusSelectedNode()
+    if (this.searchable) this.focusSearch()
   }
 
   private items: any[] = []
@@ -45,21 +47,28 @@ export default class NTree extends Vue {
 
   get treeData() {
     if (_.isEmpty(this.items)) return []
+    const root = this.items.find(i => !this.items.some(n => _.isEqual(n[this.itemValue], i[this.parentKey])))[this.parentKey]
+    // const itemsMap = _.cloneDeep(this.items).map(m => {
+    //   return {
+    //     id: m[this.itemValue],
+    //     text: m[this.itemText],
+    //     parent: _.isEqual(m[this.parentKey], root) ? '#' : m[this.parentKey],
+    //     state: {
+    //       opened: false,
+    //       showed: true,
+    //       selected: _.isEqual(m[this.itemValue], this.value)
+    //     }
+    //   }
+    // })
+    // return itemsMap
     const itemsMap = _.cloneDeep(this.items).map(m => {
       return {
         id: m[this.itemValue],
         text: m[this.itemText],
         parentID: m[this.parentKey],
-        state: { opened: false, matched: true }
+        state: { opened: false, showed: true }
       }
     })
-    if (_.isEmpty(this.items)) return []
-    const root = itemsMap.reduce((cur, next) => {
-      if (next) {
-        if (cur > next.parentID) return next.parentID
-        return cur
-      }
-    }, itemsMap[0].parentID)
     const convertData = this.convertHereditaryToObject(itemsMap, root, 1)
     return convertData
   }
@@ -78,13 +87,11 @@ export default class NTree extends Vue {
   }
   mounted() {
     this.theTree = $($(this.$el as any).find('#component-tree-view')) as any
-    this.init(this.treeData)
+    this.init()
   }
   @Watch('treeData')
   private onTreeDataChange(n, o) {
-    if (o !== undefined) {
-      this.init(n)
-    }
+    this.init()
   }
   @Watch('readUrl')
   private onReadUrlChange(n, o) {
@@ -104,10 +111,8 @@ export default class NTree extends Vue {
   setItems(items: any[]) {
     this.items = items
   }
-  private init(data) {
-    if (this.theTree.hasClass('jstree')) {
-      this.theTree.jstree().destroy()
-    }
+  private init() {
+    if (this.theTree.hasClass('jstree')) this.theTree.jstree().destroy()
     this.theTree
       .jstree({
         types: {
@@ -116,12 +121,12 @@ export default class NTree extends Vue {
           }
         },
         core: {
-          data: data,
+          data: this.treeData,
           multiple: this.multiple
         },
         plugins: ['types']
       })
-      .on('ready.jstree', this.loaded)
+      .on('loaded.jstree', this.loaded)
       .on('select_node.jstree', (e, data) => {
         this.input(data.selected[0])
         this.select(data.node.original)
@@ -129,6 +134,7 @@ export default class NTree extends Vue {
   }
   focusSelectedNode() {
     if (!this.value) return
+    this.theTree.jstree().select_node(this.value)
     const node = this.theTree.jstree().get_node(this.value)
     if (node && !_.isEmpty(node.a_attr)) {
       $(this.$el)
@@ -142,21 +148,19 @@ export default class NTree extends Vue {
       .find('input')
       .focus()
   }
-  private convertHereditaryToObject(arr, idRoot, level) {
+  private convertHereditaryToObject(arr, parent, level) {
     const result: Object[] = []
-    if (!arr.some(i => i.parentID === idRoot)) return result
-
-    const children = arr.filter(i => i.parentID === idRoot)
+    if (!arr.some(i => i.parentID === parent)) return result
+    const children = arr.filter(i => i.parentID === parent)
     children.forEach(v => {
-      v.state.selected = v.id === this.value
       v.state.opened = level <= this.expandToLevel
       v.children = this.convertHereditaryToObject(arr, v.id, level + 1)
       if (!_.isEmpty(this.searchText)) {
-        const matchSearch = v.text.toUpperCase().includes(this.searchText.toUpperCase())
-        v.state.matched = matchSearch
-        v.state.opened = matchSearch || v.children.some(c => c.state.matched)
+        const isShow = v.text.toUpperCase().includes(this.searchText.toUpperCase()) || v.children.some(i => i.state.showed)
+        v.state.showed = isShow
+        v.state.opened = isShow
       }
-      if (v.state.matched || v.children.some(c => c.state.matched)) result.push(v)
+      if (v.state.showed) result.push(v)
     })
     return result
   }
