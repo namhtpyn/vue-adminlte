@@ -1,6 +1,5 @@
 <template>
   <div>
-<<<<<<< HEAD
     n-tree component
     <div style="max-height:100px; overflow:auto">
       <n-tree
@@ -24,18 +23,6 @@
         </template>
       </n-data-table>
     </div>
-=======
-    <!-- <n-tree :items="units" item-value="UnitID" item-text="UnitName" parent-key="ParentID" v-model="unitID" sticky-search></n-tree> -->
-    <n-drop-down-tree
-      :items="units"
-      item-value="UnitID"
-      item-text="UnitName"
-      tree-parent-key="ParentID"
-      :tree-expand-to-level="1"
-      v-model="unitID"
-      searchable
-    ></n-drop-down-tree>
->>>>>>> 7fc25a36d29f76c5fc9dec0d7b03e89b7e6d0f50
   </div>
 </template>
 
