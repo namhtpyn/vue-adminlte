@@ -1,6 +1,6 @@
 <template>
   <div>
-    <n-form>
+    <!-- <n-form>
       <div class="row">
         <div class="col-xs-4">
           <n-text-box hint="abc" label="example textbox" small></n-text-box>
@@ -34,6 +34,9 @@
         hint="Example hint"
         searchable
       ></n-drop-down-tree>
+<<<<<<< HEAD
+    </n-form> -->
+=======
     </n-form>
     <n-drop-down-table
       v-model="value"
@@ -71,6 +74,7 @@
         <text-item text="Khu vực" value="areaID"></text-item>
       </items>
     </n-drop-down-table>
+>>>>>>> e0f92527297753c7f1b200fa0f8c9b0bbafa5b3e
     <!-- <n-drop-down-tree
       ref="treeselect"
       searchable
@@ -143,12 +147,10 @@
     <n-btn app color="primary" text-color="white" @click="abc"> <n-icon color="yellow">play</n-icon>Play </n-btn> -->
     {{ radio }} {{ check }}
     <input type="number" v-model="radio" />
-    <n-radio-group v-model="radio">
-      <n-radio :value="1"></n-radio>
-      <n-radio :value="2"></n-radio>
-      <n-radio :value="3"></n-radio>
-      <n-radio :value="4"></n-radio>
-    </n-radio-group>
+    <n-radio v-model="radio" :value="1"></n-radio>
+    <n-radio v-model="radio" :value="2"></n-radio>
+    <n-radio v-model="radio" :value="3"></n-radio>
+    <n-radio v-model="radio" :value="4"></n-radio>
     <n-checkbox v-model="check" :value="1"></n-checkbox>
     <n-checkbox v-model="check" :value="2"></n-checkbox>
     <n-checkbox v-model="check" :value="3"></n-checkbox>
@@ -269,7 +271,11 @@ import { Component, Vue } from 'vue-property-decorator'
 import jsonData from './data.json'
 // import data2 from './data2.json'
 //import data3 from './data3.json'
+<<<<<<< HEAD
+import NSelect2 from '../components/NSelect2.vue'
+=======
 //import NSelect2 from '../components/NSelect2.vue'
+>>>>>>> e0f92527297753c7f1b200fa0f8c9b0bbafa5b3e
 
 @Component({})
 export default class VApp extends Vue {
@@ -282,6 +288,7 @@ export default class VApp extends Vue {
     console.log('open')
     console.log(e)
   }
+  provinceCode = []
   def: any = {}
   radio = 1
   check = [1, 3]
@@ -346,12 +353,22 @@ export default class VApp extends Vue {
   //   { text: 'Iron (%))', value: 'iron' }
   // ]
   items: any[] = jsonData
+<<<<<<< HEAD
+  // treeItems: any[] = []
+  // unitID = 1
+  // unitID2 = 0
+  mounted() {
+    // ;(this.$refs.treeselect as any).setItems(data3)
+    // ;(this.$refs.table as any).setItems(jsonData)
+  }
+=======
   value: any | any[] = ['Frozen Yogurt', 'Eclair']
   provinceCode = []
   // treeItems: any[] = []
   // unitID = 1
   // unitID2 = 0
   mounted() {}
+>>>>>>> e0f92527297753c7f1b200fa0f8c9b0bbafa5b3e
 }
 </script>
 

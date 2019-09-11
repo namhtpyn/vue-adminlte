@@ -20,7 +20,7 @@ export default class NCheckbox extends Vue {
   }
   checkboxEl!: any
   mounted() {
-    this.checkboxEl = $(this.$el).find('input') as any
+    this.checkboxEl = $(this.$el) as any
     this.checkboxEl
       .iCheck({
         checkboxClass: 'icheckbox_square-' + this.color
@@ -34,7 +34,8 @@ export default class NCheckbox extends Vue {
     this.checkboxEl.iCheck('uncheck')
   }
   toggle() {
-    this.isChecked ? this.uncheck() : this.check()
+    this.checkboxEl.click()
+    //this.isChecked ? this.uncheck() : this.check()
   }
 
   @Watch('isChecked')
