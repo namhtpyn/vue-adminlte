@@ -59,7 +59,6 @@ export default class NDropDownTable extends Mixins(NBase, NDataSource) {
   }
   //search=
   get getText() {
-    console.log('xxx')
     if (this.multiple) {
       return this.vItems
         .filter(item => (this.value as any[]).includes(item[this.itemValue]))
