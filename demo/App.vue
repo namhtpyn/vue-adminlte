@@ -6,7 +6,14 @@
           <n-text-box hint="abc" label="example textbox" small></n-text-box>
         </div>
         <div class="col-xs-4">
-          <n-select2 label="example select" small></n-select2>
+          <n-select
+            label="example select"
+            small
+            @input="textboxinput"
+            read-url="http://127.0.0.1:3001/home"
+            item-text="provinceName"
+            item-value="provinceCode"
+          ></n-select>
         </div>
         <div class="col-xs-4">
           <n-drop-down-tree label="example dropdowntree" small></n-drop-down-tree>
@@ -36,7 +43,7 @@
       item-value="NamE"
       searchable
       :rules="[v => v < 1 || 'Không lớn hơn 1']"
-      multiple
+      modal
     >
       <items>
         <text-item :header-valign.camel="`middle`" text="Name" value="NamE"></text-item>
@@ -168,8 +175,87 @@
 
     <n-modal caption="OK" v-model="modalVisibility" hide-footer>tui thu ne haha</n-modal>
     <n-btn @click="modalVisibility = !modalVisibility">Click</n-btn> -->
-    <n-modal v-model="modal">
+    <n-modal v-model="modal" scrollable large>
       <n-btn @click="modal = !modal">Click Me</n-btn>
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
+      a<br />
     </n-modal>
     <n-btn @click="modal = !modal">Click Me</n-btn>
     <n-text-box v-model="textbox" @input="textboxinput"></n-text-box>
