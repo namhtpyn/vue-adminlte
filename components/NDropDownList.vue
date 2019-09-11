@@ -1,6 +1,5 @@
 <template>
   <div style="position:relative" v-click-out="closeDropDown">
-    <input type="hidden" :value="value" />
     <div class="has-feedback" @click="toggleDropDown">
       <div :class="containerCss" style="width: 100%">
         {{ isShowHint ? hint : text }}
@@ -26,7 +25,6 @@ export default class NDropDownList extends Vue {
   @Prop(String) hint!: string
   @Prop({ type: Boolean, default: false }) small!: boolean
   @Prop({ type: Boolean, default: false }) large!: boolean
-  @Prop([String, Number]) value!: any
   @Prop([String, Number]) dropDownWidth!: string | number
 
   data = {
@@ -65,6 +63,11 @@ export default class NDropDownList extends Vue {
 .hint {
   color: #ccc;
 }
+.text-overflow {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
 .input-flat,
 .input-flat:active {
   margin: 0;
@@ -78,7 +81,7 @@ export default class NDropDownList extends Vue {
   height: auto;
   position: absolute;
   width: 100%;
-  height: 300px;
+  max-height: 300px;
   overflow-y: auto;
   padding: 0px 0px;
   z-index: 9999;

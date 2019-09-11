@@ -3,16 +3,7 @@
     <label v-if="hasLabel" class="control-label" :style="{ 'font-size': this.small ? '12px' : this.large ? '18px' : '14px' }">
       {{ label }}
     </label>
-    <n-drop-down-list
-      :value="value"
-      @input="input"
-      :text.sync="getText"
-      :drop-down-width="dropDownWidth"
-      @open="onOpen"
-      :hint="hint"
-      :small="small"
-      :large="large"
-    >
+    <n-drop-down-list :text="getText" :drop-down-width="dropDownWidth" @open="onOpen" :hint="hint" :small="small" :large="large">
       <template #content="{data}">
         <n-data-table
           ref="table"
@@ -20,12 +11,14 @@
           :items="vItems"
           :searchable="searchable"
           :hide-top="!searchable"
+          :multiple="multiple"
           selectable
           row-select
           hide-footer
           hide-bottom
           sticky-top
           @error="error"
+          @row-click="e => rowClick(e, data)"
         >
           <slot></slot>
         </n-data-table>
@@ -36,9 +29,8 @@
 </template>
 
 <script lang="ts">
-import { Component, Model, Prop, Ref, Mixins } from 'vue-property-decorator'
+import { Component, Model, Prop, Mixins, Watch } from 'vue-property-decorator'
 import _ from 'lodash'
-import NDataTable from './NDataTable/index.vue'
 import NDataSource from './Base/NDataSource'
 import NBase from './Base/NBase'
 @Component({})
@@ -56,10 +48,9 @@ export default class NDropDownTable extends Mixins(NBase, NDataSource) {
   @Prop({ type: Boolean, default: true }) form!: boolean
   @Prop(Array) rules!: any[]
 
-  @Ref('table') table!: NDataTable
-  @Model('input', [String, Number]) value!: any
+  @Model('input', [String, Number, Array]) value!: any | any[]
 
-  selectedValue: any[] | any = ''
+  selectedValue: any[] | object = this.multiple ? [] : {}
   valid: boolean = true
   lazyValidation: boolean = false
 
@@ -68,9 +59,15 @@ export default class NDropDownTable extends Mixins(NBase, NDataSource) {
   }
   //search=
   get getText() {
-    if (this.table && this.table.vItems && this.table.vItems.length > 0) {
-      const item = this.table.vItems.find(item => item[this.itemValue] === this.value)
-      if (item && Object.hasOwnProperty.call(item, this.itemText)) return item[this.itemText].toString()
+    console.log('xxx')
+    if (this.multiple) {
+      return this.vItems
+        .filter(item => (this.value as any[]).includes(item[this.itemValue]))
+        .map(item => item[this.itemText].toString())
+        .join('; ')
+    } else {
+      const item = this.vItems.find(item => item[this.itemValue] === this.value)
+      if (item) return item[this.itemText].toString()
     }
     return ''
   }
@@ -86,13 +83,24 @@ export default class NDropDownTable extends Mixins(NBase, NDataSource) {
     if (this.rules) this.valid = !this.rules.some(e => e(value) !== true)
     return this.valid
   }
-  itemSelect(e, data) {
-    if (Object.hasOwnProperty.call(e.item, this.itemValue)) this.input(e.item[this.itemValue])
-    if (!this.lazyValidation || !this.valid) this.validate(e.item[this.itemValue])
-    data.isOpen = false
-  }
+
   onOpen() {
     if (this.searchable) this.$nextTick(() => this.$children[0].$children[0].$el.querySelector('input').focus())
+  }
+  rowClick({ item }, data) {
+    if (!this.multiple) data.isOpen = false
+  }
+  @Watch('selectedValue')
+  onSelectedValueChanged(values: any[], any) {
+    if (!_.isNil(values)) {
+      if (Array.isArray(values)) this.input(values.map(v => v[this.itemValue]))
+      else this.input(values[this.itemValue])
+    }
+  }
+  created() {
+    if (Array.isArray(this.value))
+      this.selectedValue = this.vItems.filter(item => (this.value as any[]).includes(item[this.itemValue])) || []
+    else this.selectedValue = this.vItems.find(item => item[this.itemValue] === this.value) || {}
   }
 }
 </script>

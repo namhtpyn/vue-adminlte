@@ -83,7 +83,7 @@
         </tbody>
         <tbody v-else>
           <tr>
-            <td :colspan="headerColumns().length" class="text-center">{{ noDataText }}</td>
+            <td :colspan="headerColumns().length" class="text-center">{{ tableText.noData }}</td>
           </tr>
         </tbody>
         <tfoot v-if="!hideFooter">
@@ -185,7 +185,7 @@ export default class NDataTable extends Mixins(mixin1, mixin2) {
     //Row select
     if (this.selectable && this.rowSelect) {
       if (this.multiple) (this.$refs.checkbox[rowIndex] as NCheckBox).toggle()
-      else (this.$refs.radio[rowIndex] as NRadio).toggle()
+      else (this.$refs.radio[rowIndex] as NRadio).check()
     }
     this.$emit('row-click', { event, item, rowIndex })
   }
@@ -244,7 +244,7 @@ export default class NDataTable extends Mixins(mixin1, mixin2) {
     return ''
   }
   /** selectable */
-  selectAll(e) {
+  async selectAll(e) {
     if (!this.selectable || !this.multiple) return
     if (e) {
       if (!this.keyField) this.input(this.vItems)
