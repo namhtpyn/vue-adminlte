@@ -1,6 +1,15 @@
 <template>
   <div>
-    <n-tree :items="units" item-value="UnitID" item-text="UnitName" parent-key="ParentID" v-model="unitID" sticky-search></n-tree>
+    <!-- <n-tree :items="units" item-value="UnitID" item-text="UnitName" parent-key="ParentID" v-model="unitID" sticky-search></n-tree> -->
+    <n-drop-down-tree
+      :items="units"
+      item-value="UnitID"
+      item-text="UnitName"
+      tree-parent-key="ParentID"
+      :tree-expand-to-level="1"
+      v-model="unitID"
+      searchable
+    ></n-drop-down-tree>
   </div>
 </template>
 
@@ -13,7 +22,7 @@ import provinces from './data/provinces.json'
 export default class VApp extends Vue {
   units = units
   provinces = provinces
-  unitID = -1
+  unitID = 103
 }
 </script>
 
