@@ -27,9 +27,6 @@
         hint="Example hint"
         searchable
       ></n-drop-down-tree>
-<<<<<<< HEAD
-    </n-form> -->
-=======
     </n-form>
     <n-drop-down-table
       v-model="value"
@@ -67,8 +64,7 @@
         <text-item text="Khu vực" value="areaID"></text-item>
       </items>
     </n-drop-down-table>
->>>>>>> e0f92527297753c7f1b200fa0f8c9b0bbafa5b3e
-    <!-- <n-drop-down-tree
+     <n-drop-down-tree
       ref="treeselect"
       searchable
       item-value="UnitID"
@@ -185,11 +181,7 @@ import { Component, Vue } from 'vue-property-decorator'
 import jsonData from './data.json'
 // import data2 from './data2.json'
 //import data3 from './data3.json'
-<<<<<<< HEAD
-import NSelect2 from '../components/NSelect2.vue'
-=======
 //import NSelect2 from '../components/NSelect2.vue'
->>>>>>> e0f92527297753c7f1b200fa0f8c9b0bbafa5b3e
 
 @Component({})
 export default class VApp extends Vue {
@@ -267,22 +259,11 @@ export default class VApp extends Vue {
   //   { text: 'Iron (%))', value: 'iron' }
   // ]
   items: any[] = jsonData
-<<<<<<< HEAD
-  // treeItems: any[] = []
-  // unitID = 1
-  // unitID2 = 0
-  mounted() {
-    // ;(this.$refs.treeselect as any).setItems(data3)
-    // ;(this.$refs.table as any).setItems(jsonData)
-  }
-=======
   value: any | any[] = ['Frozen Yogurt', 'Eclair']
-  provinceCode = []
   // treeItems: any[] = []
   // unitID = 1
   // unitID2 = 0
   mounted() {}
->>>>>>> e0f92527297753c7f1b200fa0f8c9b0bbafa5b3e
 }
 </script>
 
