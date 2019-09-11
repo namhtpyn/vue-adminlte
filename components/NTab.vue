@@ -1,5 +1,5 @@
 <template>
-  <div :id="`n-tab-${title}`" :class="{ 'tab-pane': true, active: active }">
+  <div :id="id" :class="{ 'tab-pane': true, active: active }">
     <slot></slot>
   </div>
 </template>
@@ -11,6 +11,7 @@ export default class NTab extends Vue {
   @Prop({ type: Boolean, default: false }) active!: boolean
   @Prop({ type: [String, Number, Object] }) value!: string | number | object
   @Prop(String) title!: string
+  id: string = ''
 }
 </script>
 

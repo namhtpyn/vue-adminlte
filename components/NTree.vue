@@ -28,7 +28,7 @@ export default class NTree extends Mixins(NDataSource) {
   @Prop({ type: Boolean, default: false }) expandAll!: boolean
   @Prop({ type: Boolean, default: true }) searchable!: boolean
   @Prop({ type: Boolean, default: false }) stickySearch!: boolean
-  @Prop({ type: String }) height!: string
+  @Prop({ type: String, default: 'auto' }) height!: string
   @Prop({ type: Number, default: 0 }) expandToLevel!: number
   @Prop({ type: String, default: 'value' }) itemValue!: string
   @Prop({ type: String, default: 'text' }) itemText!: string
@@ -156,5 +156,6 @@ export default class NTree extends Mixins(NDataSource) {
   position: sticky;
   top: 0px;
   z-index: 99;
+  width: 100%;
 }
 </style>

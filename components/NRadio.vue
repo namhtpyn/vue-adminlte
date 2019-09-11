@@ -25,7 +25,7 @@ export default class NRadio extends Vue {
       .iCheck({
         radioClass: 'iradio_square-' + this.color
       })
-      .on('ifChanged', this.modifiedModel)
+      .on('ifClicked', e => this.modifiedModel(!this.isChecked))
   }
 
   check() {
@@ -40,11 +40,11 @@ export default class NRadio extends Vue {
 
   @Watch('isChecked')
   private onCheckedChange(n) {
-    this.radioEl.iCheck(n ? 'check' : 'uncheck')
+    n ? this.check() : this.uncheck()
   }
 
-  private modifiedModel(e) {
-    if (e.target.checked) {
+  private modifiedModel(checked) {
+    if (checked) {
       if (!this.model) this.groupModel = _.cloneDeep(this.value)
       else this.input(this.value)
     }

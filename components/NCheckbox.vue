@@ -25,7 +25,7 @@ export default class NCheckbox extends Vue {
       .iCheck({
         checkboxClass: 'icheckbox_square-' + this.color
       })
-      .on('ifChanged', this.iCheckChanged)
+      .on('ifClicked', e => this.iCheckChanged(!this.isChecked))
   }
   check() {
     this.checkboxEl.iCheck('check')
@@ -42,17 +42,17 @@ export default class NCheckbox extends Vue {
     n ? this.check() : this.uncheck()
   }
 
-  private iCheckChanged(e) {
+  private iCheckChanged(checked) {
     let cModel = _.cloneDeep(this.model)
     if (cModel instanceof Array) {
-      if (e.target.checked) {
+      if (checked) {
         if (!cModel.some(m => _.isEqual(m, this.value))) cModel.push(this.value)
       } else {
         const idx = cModel.findIndex(m => _.isEqual(m, this.value))
         if (idx >= 0) cModel.splice(idx, 1)
       }
     } else {
-      if (e.target.checked) cModel = this.value
+      if (checked) cModel = this.value
       else cModel = null
     }
     this.input(cModel)

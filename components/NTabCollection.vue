@@ -2,7 +2,7 @@
   <div class="nav nav-tabs-custom">
     <ul class="nav nav-tabs">
       <li v-for="(i, k) in headers" :key="k" :class="{ active: k === tabActive }">
-        <a :href="`#n-tab-${i.text}`" data-toggle="tab" @click="tabClicked(i)">{{ i.text }}</a>
+        <a :href="`#n-tab-${k}`" data-toggle="tab" @click="tabClicked(i)">{{ i.text }}</a>
       </li>
     </ul>
     <div class="tab-content">
@@ -21,6 +21,7 @@ export default class NTabCollection extends Vue {
   private tabComponents: any[] = []
   mounted() {
     this.findDeep(this.$slots.default)
+    this.setTabID()
     if (this.changeOnCreated && !_.isEmpty(this.headers)) this.valueTabActive = this.headers[this.tabActive].value
   }
 
@@ -52,6 +53,12 @@ export default class NTabCollection extends Vue {
 
   tabClicked(item) {
     this.valueTabActive = item.value
+  }
+
+  private setTabID() {
+    for (let i = 0; i < this.tabComponents.length; i++) {
+      this.tabComponents[i].id = 'n-tab-' + i
+    }
   }
 
   private findDeep(obj) {
