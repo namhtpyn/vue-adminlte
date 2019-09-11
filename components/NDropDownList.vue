@@ -1,14 +1,22 @@
 <template>
-  <div style="position:relative" v-click-out="closeDropDown">
-    <div class="has-feedback" @click="toggleDropDown">
+  <div style="position:relative" v-click-out="close">
+    <div class="has-feedback" @click="toggle">
       <div :class="containerCss" style="width: 100%">
-        {{ isShowHint ? hint : text }}
+        <input type="text" readonly class="input-flat text-overflow" :placeholder="hint" :value="text" />
       </div>
-      <span :class="`fa fa-caret-${data.isOpen ? 'up' : 'down'} form-control-feedback`"></span>
+      <span v-if="!modal" :class="`fa fa-caret-${data.isOpen ? 'up' : 'down'} form-control-feedback`"></span>
     </div>
-    <div v-show="data.isOpen" class="form-control drop-down-container" :style="dropDownWidth ? `width:${dropDownWidth}px` : ''">
+    <div
+      v-if="!modal"
+      v-show="data.isOpen"
+      class="form-control drop-down-container"
+      :style="dropDownWidth ? `width:${dropDownWidth}px` : ''"
+    >
       <slot name="content" :data="data"></slot>
     </div>
+    <n-modal v-else v-model="data.isOpen">
+      <slot name="content" :data="data"></slot>
+    </n-modal>
   </div>
 </template>
 
@@ -25,20 +33,21 @@ export default class NDropDownList extends Vue {
   @Prop(String) hint!: string
   @Prop({ type: Boolean, default: false }) small!: boolean
   @Prop({ type: Boolean, default: false }) large!: boolean
+  @Prop({ type: Boolean, default: false }) modal!: boolean
   @Prop([String, Number]) dropDownWidth!: string | number
 
   data = {
     isOpen: false
   }
 
-  toggleDropDown(e) {
-    this.data.isOpen ? this.closeDropDown(e) : this.openDropDown(e)
+  toggle(e) {
+    this.data.isOpen ? this.close(e) : this.open(e)
   }
 
-  @Emit('open') openDropDown(e) {
+  @Emit() open(e) {
     this.data.isOpen = true
   }
-  @Emit('close') closeDropDown(e) {
+  @Emit() close(e) {
     this.data.isOpen = false
   }
   get searchWidth() {
@@ -76,6 +85,7 @@ export default class NDropDownList extends Vue {
   outline: none;
   box-sizing: content-box;
   box-shadow: none;
+  width: 100%;
 }
 .drop-down-container {
   height: auto;
