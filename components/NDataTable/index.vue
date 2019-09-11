@@ -159,7 +159,7 @@ import NCheckBox from '../NCheckbox.vue'
 import NRadio from '../NRadio.vue'
 
 //Mixins limit 5 instances
-class mixin1 extends Mixins(NTableData, NTableHeader, NTableProp, NTableCRUD, NTableCssClass) {}
+class mixin1 extends Mixins(NTableProp, NTableData, NTableHeader, NTableCRUD, NTableCssClass) {}
 class mixin2 extends Mixins(NTableText) {}
 
 @Component({
@@ -256,6 +256,9 @@ export default class NDataTable extends Mixins(mixin1, mixin2) {
   //console.log(this.items, this.__items)
   private kebabCase(t) {
     return _.kebabCase(t)
+  }
+  mounted() {
+    console.log(this.readUrl, this.createUrl, this.updateUrl, this.deleteUrl)
   }
 }
 </script>

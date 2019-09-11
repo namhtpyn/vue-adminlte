@@ -28,6 +28,14 @@ export default class VueSlot {
       data.push(myNode)
     })
   }
+  find(fn: Function = (node: VueNode) => false, nodes: VueNode[] = this.data) {
+    const myNodes: VueNode[] = []
+    nodes.forEach(node => {
+      if (fn(node)) myNodes.push(node)
+      if (!_.isEmpty(node.children)) myNodes.concat(this.find(fn, node.children))
+    })
+    return myNodes
+  }
   private toCamelKey(obj: Object) {
     return Object.fromEntries(
       Object.entries(obj).map(e => {

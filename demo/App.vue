@@ -1,6 +1,28 @@
 <template>
   <div>
-    <n-tree :items="units" item-value="UnitID" item-text="UnitName" parent-key="ParentID" v-model="unitID" sticky-search></n-tree>
+    n-tree component
+    <div style="max-height:100px; overflow:auto">
+      <n-tree
+        :items="units"
+        item-value="UnitID"
+        item-text="UnitName"
+        parent-key="ParentID"
+        v-model="unitID"
+        sticky-search
+      ></n-tree>
+    </div>
+
+    n-data-table component
+    <div style="max-height:100px; overflow:auto">
+      <n-data-table :items="provinces" updatable update-url="/haha">
+        <items>
+          <text-item text="provinceName" value="provinceName"></text-item>
+        </items>
+        <template #modal="{modal}">
+          <!-- <n-text-box v-model="modal.data.provinceName"></n-text-box> -->
+        </template>
+      </n-data-table>
+    </div>
   </div>
 </template>
 
