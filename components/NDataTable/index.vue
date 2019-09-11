@@ -11,14 +11,12 @@
           </div>
         </div>
         <div v-if="!caption && !searchable" style="flex:auto"></div>
-        <div v-if="creatable">
-          <div class="btn-group">
-            <n-btn @click="createClick">
-              <n-icon>plus</n-icon>
-              <span class="hidden-xs">Thêm</span>
-            </n-btn>
-            <slot name="top.button-group"></slot>
-          </div>
+        <div class="btn-group" v-if="creatable || !isEmpty($slots['top.button-group'])">
+          <n-btn v-if="creatable" @click="createClick">
+            <n-icon>plus</n-icon>
+            <span class="hidden-xs">Thêm</span>
+          </n-btn>
+          <slot name="top.button-group"></slot>
         </div>
       </slot>
       <slot name="top.append"></slot>
@@ -258,8 +256,11 @@ export default class NDataTable extends Mixins(mixin1, mixin2) {
   /**helper function */
 
   //console.log(this.items, this.__items)
-  private kebabCase(t) {
-    return _.kebabCase(t)
+  private kebabCase(o) {
+    return _.kebabCase(o)
+  }
+  private isEmpty(o) {
+    return _.isEmpty(o)
   }
   mounted() {}
 }
