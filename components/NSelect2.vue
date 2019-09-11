@@ -34,7 +34,6 @@ export default class NSelect2 extends Mixins(NDataSource) {
   @Prop(Array) rules!: any[]
   @Model('input', [String, Number, Array, Object]) value!: any[] | any
   @Emit() async input(e) {
-    console.log(e)
     if (!this.lazyValidation || !this.valid) this.validate(e)
   }
 
@@ -86,13 +85,8 @@ export default class NSelect2 extends Mixins(NDataSource) {
   }
   @Watch('value')
   private onValueChange(n, o) {
-    this.theSelect.val(n).trigger('change')
+    this.theSelect.val(this.tryParseNumber(n)).trigger('change')
   }
-
-  // @Watch('value')
-  // private onValueChange(n, o) {
-  //   this.theSelect.val(n).trigger('change')
-  // }
 
   mounted() {
     this.theSelect = $(this.$el).find('select') as any
@@ -120,7 +114,7 @@ export default class NSelect2 extends Mixins(NDataSource) {
           }
         }
       })
-      .on('select2:select', e => this.input(isNaN(e.target.value) ? e.target.value : Number(e.target.value)))
+      .on('select2:select', e => this.input(this.tryParseNumber(e.target.value)))
       .val(this.value)
       .trigger('change')
     this.setSize()
@@ -140,6 +134,9 @@ export default class NSelect2 extends Mixins(NDataSource) {
     this.valid = true
     if (this.rules) this.valid = !this.rules.some(e => e(value) !== true)
     return this.valid
+  }
+  tryParseNumber(value) {
+    return isNaN(value) ? value : Number(value)
   }
 }
 </script>

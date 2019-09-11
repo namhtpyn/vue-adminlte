@@ -32,14 +32,15 @@
     <br />
     n-select2 component
     <div>
-      <n-text-box v-model="province"></n-text-box>
-      <n-select2
+      <n-text-box v-model="channelID"></n-text-box>
+      <!-- <n-select2
         v-model="province"
         :items="provinces"
         item-text="provinceName"
         item-value="provinceCode"
         :rules="[v => !!v || 'abc']"
-      ></n-select2>
+      ></n-select2> -->
+      <n-select2 v-model="channelID" hint="Công suất phát" :items="channels" hide-error-text small></n-select2>
     </div>
   </div>
 </template>
@@ -49,6 +50,7 @@ import { Component, Vue } from 'vue-property-decorator'
 // import { TableHeader } from '../types/Table'
 import units from './data/units.json'
 import provinces from './data/provinces.json'
+import _ from 'lodash'
 @Component({})
 export default class VApp extends Vue {
   units = units
@@ -56,6 +58,10 @@ export default class VApp extends Vue {
   unitID = 103
   modal = false
   province = 'PYN'
+  channelID = 3
+  channels = _.range(0, 11, 1).map(o => {
+    return { text: o == 0 ? 'Auto' : o, value: o }
+  })
   mounted() {
     this.provinces = provinces
   }
