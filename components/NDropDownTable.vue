@@ -1,6 +1,6 @@
 <template>
   <div :class="{ 'form-group': form, 'has-error': !valid }">
-    <label v-if="hasLabel" class="control-label" :style="{ 'font-size': this.small ? '12px' : this.large ? '18px' : '14px' }">
+    <label v-if="hasLabel" class="control-label" :style="styleLabel">
       {{ label }}
     </label>
     <n-drop-down-list
@@ -65,6 +65,12 @@ export default class NDropDownTable extends Mixins(NBase, NDataSource) {
 
   get hasLabel() {
     return !_.isEmpty(this.label)
+  }
+  get styleLabel() {
+    return {
+      'control-label': true,
+      'font-size': `${this.small ? '11px' : this.large ? '15px' : '13px'} !important`
+    }
   }
   //search=
   get getText() {

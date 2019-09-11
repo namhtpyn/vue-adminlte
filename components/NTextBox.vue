@@ -99,7 +99,7 @@ export default class NTextBox extends Vue {
   get styleLabel() {
     return {
       'control-label': true,
-      'font-size': this.small ? '12px' : this.large ? '18px' : '14px' + ' !important'
+      'font-size': `${this.small ? '11px' : this.large ? '15px' : '13px'} !important`
     }
   }
 

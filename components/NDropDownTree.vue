@@ -1,17 +1,9 @@
 <template>
   <div :class="{ 'form-group': form, 'has-error': !valid }">
-    <label v-if="hasLabel" class="control-label" :style="{ 'font-size': this.small ? '12px' : this.large ? '18px' : '14px' }">
+    <label v-if="hasLabel" class="control-label" :style="styleLabel">
       {{ label }}
     </label>
-    <n-drop-down-list
-      :text="text"
-      :drop-down-width="dropDownWidth"
-      :hint="hint"
-      :small="small"
-      :large="large"
-      @open="onOpen"
-      @close="onClose"
-    >
+    <n-drop-down-list :text="text" :drop-down-width="dropDownWidth" :hint="hint" :small="small" :large="large" @open="onOpen">
       <template #content="{data}">
         <n-tree
           ref="tree"
@@ -25,7 +17,6 @@
           :searchable="searchable"
           :value="value"
           sticky-search
-          :height="height"
           @select="item => itemSelect(item, data)"
           @error="error"
         ></n-tree>
@@ -65,6 +56,13 @@ export default class NDropDownTree extends Mixins(NDataSource) {
   private text: string = ''
   private height: string = ''
 
+  get styleLabel() {
+    return {
+      'control-label': true,
+      'font-size': `${this.small ? '11px' : this.large ? '15px' : '13px'} !important`
+    }
+  }
+
   get hasLabel() {
     return !_.isEmpty(this.label)
   }
@@ -94,19 +92,15 @@ export default class NDropDownTree extends Mixins(NDataSource) {
     data.isOpen = false
   }
   mounted() {
-    this.height =
-      $(this.$el)
-        .find('.drop-down-container')
-        .height() + 'px'
+    if (this.value && !_.isEmpty(this.tree.items)) {
+      this.text = this.tree.items.find(t => t[this.itemValue] === this.value)[this.itemText]
+    }
   }
   private onOpen() {
     this.$nextTick(() => {
       this.tree.focusSelectedNode()
       this.tree.focusSearch()
     })
-  }
-  private onClose() {
-    this.tree.searchText = ''
   }
 }
 </script>

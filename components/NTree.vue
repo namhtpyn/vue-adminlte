@@ -26,7 +26,7 @@ export default class NTree extends Mixins(NDataSource) {
   @Prop({ type: String, default: 'none' }) icon!: string
   @Prop({ type: Boolean, default: false }) multiple!: boolean
   @Prop({ type: Boolean, default: false }) expandAll!: boolean
-  @Prop({ type: Boolean, default: true }) searchable!: boolean
+  @Prop({ type: Boolean, default: false }) searchable!: boolean
   @Prop({ type: Boolean, default: false }) stickySearch!: boolean
   @Prop({ type: Number, default: 0 }) expandToLevel!: number
   @Prop({ type: String, default: 'value' }) itemValue!: string
@@ -67,7 +67,7 @@ export default class NTree extends Mixins(NDataSource) {
         id: m[this.itemValue],
         text: m[this.itemText],
         parentID: m[this.parentKey],
-        state: { opened: false, showed: true }
+        state: { opened: false, showed: true, selected: m[this.itemValue] === this.value }
       }
     })
     const convertData = this.convertHereditaryToObject(itemsMap, root, 1)
@@ -117,7 +117,7 @@ export default class NTree extends Mixins(NDataSource) {
   }
   focusSelectedNode() {
     if (!this.value) return
-    this.theTree.jstree().select_node(this.value)
+    //this.theTree.jstree().select_node(this.value)
     const node = this.theTree.jstree().get_node(this.value)
     if (node && !_.isEmpty(node.a_attr)) {
       $(this.$el)
