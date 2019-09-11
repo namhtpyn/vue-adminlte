@@ -12,10 +12,13 @@
         </div>
         <div v-if="!caption && !searchable" style="flex:auto"></div>
         <div v-if="creatable">
-          <n-btn @click="createClick">
-            <n-icon>plus</n-icon>
-            <span class="hidden-xs">Thêm</span>
-          </n-btn>
+          <div class="btn-group">
+            <n-btn @click="createClick">
+              <n-icon>plus</n-icon>
+              <span class="hidden-xs">Thêm</span>
+            </n-btn>
+            <slot name="top.button-group"></slot>
+          </div>
         </div>
       </slot>
       <slot name="top.append"></slot>
@@ -105,10 +108,11 @@
           Trang {{ vPage }}/{{ pageLength }} ({{ itemsLength }} mục)
         </div>
 
-        <div style="flex:auto">
+        <div>
           <n-pagination :length="pageLength" v-model="vPage" small class="no-margin"></n-pagination>
         </div>
-        <div>
+
+        <div style="margin-left:auto">
           <select
             @change="changeItemPerPage"
             class="form-control"
@@ -257,9 +261,7 @@ export default class NDataTable extends Mixins(mixin1, mixin2) {
   private kebabCase(t) {
     return _.kebabCase(t)
   }
-  mounted() {
-    console.log(this.readUrl, this.createUrl, this.updateUrl, this.deleteUrl)
-  }
+  mounted() {}
 }
 </script>
 
