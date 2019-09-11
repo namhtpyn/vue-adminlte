@@ -14,7 +14,7 @@
     >
       <slot name="content" :data="data"></slot>
     </div>
-    <n-modal v-else v-model="data.isOpen" hide-header hide-footer>
+    <n-modal v-else v-model="data.isOpen" hide-header hide-footer scrollable>
       <slot name="content" :data="data"></slot>
     </n-modal>
   </div>
