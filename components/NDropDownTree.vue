@@ -25,6 +25,7 @@
           :searchable="searchable"
           :value="value"
           sticky-search
+          :height="height"
           @select="item => itemSelect(item, data)"
           @error="error"
         ></n-tree>
@@ -62,6 +63,7 @@ export default class NDropDownTree extends Mixins(NDataSource) {
   valid: boolean = true
   lazyValidation: boolean = false
   private text: string = ''
+  private height: string = ''
 
   get hasLabel() {
     return !_.isEmpty(this.label)
@@ -91,7 +93,12 @@ export default class NDropDownTree extends Mixins(NDataSource) {
     if (!this.lazyValidation || !this.valid) this.validate(item.id)
     data.isOpen = false
   }
-  mounted() {}
+  mounted() {
+    this.height =
+      $(this.$el)
+        .find('.drop-down-container')
+        .height() + 'px'
+  }
   private onOpen() {
     this.$nextTick(() => {
       this.tree.focusSelectedNode()

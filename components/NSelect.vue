@@ -10,18 +10,18 @@
 
 <script lang="ts">
 import _ from 'lodash'
-import { Component, Vue, Prop, Emit, Model } from 'vue-property-decorator'
+import { Component, Prop, Emit, Model, Mixins } from 'vue-property-decorator'
+import NDataSource from './Base/NDataSource'
 @Component({ inheritAttrs: false })
-export default class NSelect extends Vue {
+export default class NSelect extends Mixins(NDataSource) {
   @Prop({ type: Boolean, default: false }) hideDetails!: boolean
   @Prop(String) label!: string
   @Prop(String) cssClass!: string
-  @Prop(Array) items!: any[]
   @Prop(Array) rules!: any[]
   @Prop({ type: String, default: 'text' }) itemText!: string
   @Prop({ type: String, default: 'value' }) itemValue!: string
   @Model('input') vModel!: any
-  @Emit() input(e) {
+  @Emit() async input(e) {
     this.validate(e)
   }
   valid: boolean = true

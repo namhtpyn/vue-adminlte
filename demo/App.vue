@@ -3,13 +3,13 @@
     <n-form>
       <div class="row">
         <div class="col-xs-4">
-          <n-text-box hint="abc" label="example textbox"></n-text-box>
+          <n-text-box hint="abc" label="example textbox" small></n-text-box>
         </div>
         <div class="col-xs-4">
-          <n-select2 label="example select"></n-select2>
+          <n-select2 label="example select" small></n-select2>
         </div>
         <div class="col-xs-4">
-          <n-drop-down-tree label="example dropdowntree"></n-drop-down-tree>
+          <n-drop-down-tree label="example dropdowntree" small></n-drop-down-tree>
         </div>
       </div>
     </n-form>
@@ -25,6 +25,7 @@
         :tree-expand-to-level="1"
         drop-down-width="500"
         hint="Example hint"
+        searchable
       ></n-drop-down-tree>
     </n-form>
     <n-drop-down-table
@@ -133,12 +134,18 @@
 
     {{ checkbox }}
     <n-btn app color="primary" text-color="white" @click="abc"> <n-icon color="yellow">play</n-icon>Play </n-btn> -->
+    {{ radio }} {{ check }}
+    <input type="number" v-model="radio" />
     <n-radio-group v-model="radio">
       <n-radio :value="1"></n-radio>
       <n-radio :value="2"></n-radio>
       <n-radio :value="3"></n-radio>
       <n-radio :value="4"></n-radio>
     </n-radio-group>
+    <n-checkbox v-model="check" :value="1"></n-checkbox>
+    <n-checkbox v-model="check" :value="2"></n-checkbox>
+    <n-checkbox v-model="check" :value="3"></n-checkbox>
+    <n-checkbox v-model="check" :value="4"></n-checkbox>
     {{ def }}
     <n-data-table ref="table" v-model="def" :items="items" updatable deletable creatable expandable selectable row-select>
       <items>
@@ -191,6 +198,7 @@ export default class VApp extends Vue {
   }
   def: any = {}
   radio = 1
+  check = [1, 3]
   // expandToLevel = null
   // select_node(node) {
   //   console.log(node)
