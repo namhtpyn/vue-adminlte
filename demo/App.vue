@@ -11,10 +11,9 @@
         sticky-search
       ></n-tree>
     </div>
-
     n-data-table component
-    <div style="max-height:100px; overflow:auto">
-      <n-data-table :items="provinces" updatable update-url="/haha">
+    <div style="max-height:200px; overflow:auto">
+      <n-data-table :items="provinces" updatable update-url="/haha" caption="hihi" searchable>
         <items>
           <text-item text="provinceName" value="provinceName"></text-item>
         </items>
@@ -23,6 +22,13 @@
         </template>
       </n-data-table>
     </div>
+    n-modal component
+    <n-btn @click="modal = !modal" color="primary">Toggle Modal</n-btn>
+    <n-modal v-model="modal">
+      <ul>
+        <li v-for="i in 100" :key="i">{{ i }}</li>
+      </ul>
+    </n-modal>
   </div>
 </template>
 
@@ -36,6 +42,7 @@ export default class VApp extends Vue {
   units = units
   provinces = provinces
   unitID = 103
+  modal = false
 }
 </script>
 
