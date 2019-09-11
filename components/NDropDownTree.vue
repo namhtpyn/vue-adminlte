@@ -17,7 +17,7 @@
       <template #content="{data}">
         <n-tree
           ref="tree"
-          :read-url="treeReadUrl"
+          :items="vItems"
           :item-value="itemValue"
           :item-text="itemText"
           :parent-key="treeParentKey"
@@ -26,8 +26,7 @@
           :icon="treeNodeIcon"
           :searchable="searchable"
           :value="value"
-          fixed-search
-          height="260px"
+          sticky-search
           @select="item => itemSelect(item, data)"
           @error="error"
         ></n-tree>
@@ -38,17 +37,17 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Model, Emit, Prop, Ref } from 'vue-property-decorator'
+import { Component, Model, Prop, Mixins, Ref } from 'vue-property-decorator'
 import _ from 'lodash'
 import NTree from './NTree.vue'
+import NDataSource from './Base/NDataSource'
 @Component({})
-export default class NDropDownTree extends Vue {
+export default class NDropDownTree extends Mixins(NDataSource) {
   @Prop({ type: String, default: 'none' }) treeNodeIcon!: string
   @Prop({ type: Boolean, default: false }) treeExpandAll!: boolean
   @Prop({ type: Boolean, default: false }) searchable!: boolean
   @Prop({ type: Number, default: 0 }) treeExpandToLevel!: number
   @Prop({ type: [String, Number], default: 'parentID' }) treeParentKey!: string | number
-  @Prop(String) treeReadUrl!: string
   @Prop({ type: String, default: 'value' }) itemValue!: string
   @Prop({ type: String, default: 'text' }) itemText!: string
   @Prop([String, Number]) dropDownWidth!: string | number
@@ -60,8 +59,6 @@ export default class NDropDownTree extends Vue {
   @Prop(Array) rules!: any[]
   @Ref('tree') tree!: NTree
   @Model('input', [String, Number]) value!: string | number
-  @Emit() input(e) {}
-  @Emit() error(e) {}
 
   //treeItems: any[] = []
   valid: boolean = true
@@ -96,9 +93,7 @@ export default class NDropDownTree extends Vue {
     if (!this.lazyValidation || !this.valid) this.validate(item.id)
     data.isOpen = false
   }
-  setItems(items: any[]) {
-    this.tree.setItems(items)
-  }
+  mounted() {}
   private onOpen() {
     this.$nextTick(() => {
       this.tree.focusSelectedNode()

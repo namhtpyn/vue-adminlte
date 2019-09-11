@@ -3,18 +3,18 @@
     <input type="hidden" :value="value" />
     <div class="has-feedback" @click="toggleDropDown">
       <div :class="containerCss" style="width: 100%">
-        {{ isShowHint ? hint : textSync }}
+        {{ isShowHint ? hint : text }}
       </div>
       <span :class="`fa fa-caret-${data.isOpen ? 'up' : 'down'} form-control-feedback`"></span>
     </div>
-    <div v-show="data.isOpen" class="form-control auto-height" :style="dropDownWidth ? `width:${dropDownWidth}px` : ''">
+    <div v-show="data.isOpen" class="form-control drop-down-container" :style="dropDownWidth ? `width:${dropDownWidth}px` : ''">
       <slot name="content" :data="data"></slot>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop, PropSync, Emit } from 'vue-property-decorator'
+import { Vue, Component, Prop, Emit } from 'vue-property-decorator'
 import vClickOutside from 'v-click-outside'
 @Component({
   directives: {
@@ -22,7 +22,7 @@ import vClickOutside from 'v-click-outside'
   }
 })
 export default class NDropDownList extends Vue {
-  @PropSync('text', { type: String, default: '' }) textSync!: string
+  @Prop({ type: String, default: '' }) text!: string
   @Prop(String) hint!: string
   @Prop({ type: Boolean, default: false }) small!: boolean
   @Prop({ type: Boolean, default: false }) large!: boolean
@@ -44,10 +44,10 @@ export default class NDropDownList extends Vue {
     this.data.isOpen = false
   }
   get searchWidth() {
-    return 8 * this.textSync.length + 15
+    return 8 * this.text.length + 15
   }
   get isShowHint() {
-    return this.hint && this.textSync === ''
+    return this.hint && this.text === ''
   }
   get containerCss() {
     return {
@@ -74,7 +74,7 @@ export default class NDropDownList extends Vue {
   box-sizing: content-box;
   box-shadow: none;
 }
-.auto-height {
+.drop-down-container {
   height: auto;
   position: absolute;
   width: 100%;

@@ -104,8 +104,6 @@ export default class NTextBox extends Vue {
     }
   }
 
-  mounted() {}
-
   validate(value) {
     this.valid = true
     if (this.rules) this.valid = !this.rules.some(e => e(value) !== true)

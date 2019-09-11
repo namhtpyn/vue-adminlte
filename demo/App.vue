@@ -94,7 +94,7 @@
       </n-drop-down-list> -->
     <!-- {{ value }} -->
     <!-- <n-radio label="radio 1" value="1"></n-radio>
-    <n-checkbox form label="checkbox" v-model="checkbox"></n-checkbox>
+
     {{ checkbox }}
     <n-btn app color="primary" text-color="white" @click="abc"> <n-icon color="yellow">play</n-icon>Play </n-btn> -->
     <n-radio-group v-model="radio">
@@ -112,29 +112,10 @@
           <items>
             <text-item text="Calories" value="calories" summary="sum"></text-item>
             <number-item text="Fat" value="calories"></number-item>
-            <date-item></date-item>
           </items>
         </band-item>
       </items>
-      <template v-slot:item.calories="{ value, index }">
-        <n-checkbox :ref="`abc[${index}]`"></n-checkbox>
-      </template>
-      <template v-slot:modal="{ modal }">
-        <input class="form-control" autofocus v-model="modal.data.name" />
-        <input class="form-control" v-model="modal.data.fat" />
-      </template>
-      <template v-slot:item.iron="{ item }">
-        <span class="badge bg-red">{{ item.iron }}</span>
-      </template>
-      <template v-slot:item.protein="{ item }">
-        <span class="badge bg-green">{{ item.protein }}</span>
-      </template>
-      <template v-slot:item.Name="{ item }">
-        <span class="badge bg-green">{{ item.protein }}</span>
-      </template>
-      <template v-slot:item.nam-e="{ item }">
-        NAME
-      </template>
+      <css-class></css-class>
     </n-data-table>
 
     <!-- <n-pagination :length="10" v-model="page"></n-pagination>

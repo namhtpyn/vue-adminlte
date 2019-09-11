@@ -15,3 +15,9 @@ export class TableHeader {
   summary?: string
   children?: TableHeader[]
 }
+
+declare global {
+  interface Object {
+    fromEntries(o: any): Object
+  }
+}

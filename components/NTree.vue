@@ -1,53 +1,54 @@
 <template>
-  <div style="position: relative;">
-    <input type="text" v-if="searchable" class="form-control" v-model="searchText" placeholder="Tìm kiếm" />
-    <div :style="{ 'overflow-y': fixedSearch ? 'scroll' : 'none', height: height }">
+  <div :style="{ position: 'relative', 'overflow-y': 'auto', height: height }">
+    <input
+      type="text"
+      v-if="searchable"
+      :class="{ 'form-control': true, 'sticky-search': stickySearch }"
+      v-model="searchText"
+      placeholder="Tìm kiếm"
+    />
+    <div>
       <span v-if="!hasData">Không có dữ liệu</span>
       <div id="component-tree-view"></div>
     </div>
-    <n-overlay absolute :value="loading">
+    <n-overlay absolute :value="vLoading">
       <n-icon css-class="fa-spin fa-5x" style="color:white">circle-o-notch</n-icon>
     </n-overlay>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, Model, Emit, Watch } from 'vue-property-decorator'
+import { Component, Prop, Model, Emit, Watch, Mixins } from 'vue-property-decorator'
 import _ from 'lodash'
-import axios from 'axios'
+import NDataSource from './Base/NDataSource'
 @Component({ inheritAttrs: false })
-export default class NTree extends Vue {
+export default class NTree extends Mixins(NDataSource) {
   @Prop({ type: String, default: 'none' }) icon!: string
   @Prop({ type: Boolean, default: false }) multiple!: boolean
   @Prop({ type: Boolean, default: false }) expandAll!: boolean
   @Prop({ type: Boolean, default: true }) searchable!: boolean
-  @Prop({ type: Boolean, default: false }) fixedSearch!: boolean
-  @Prop({ type: Boolean, default: true }) autoRead!: boolean
+  @Prop({ type: Boolean, default: false }) stickySearch!: boolean
   @Prop({ type: String }) height!: string
   @Prop({ type: Number, default: 0 }) expandToLevel!: number
   @Prop({ type: String, default: 'value' }) itemValue!: string
   @Prop({ type: String, default: 'text' }) itemText!: string
   @Prop({ type: String, default: 'parentID' }) parentKey!: string
-  @Prop(String) readUrl
 
   @Model('input', [String, Number]) value!: string | number
-  @Emit() input(e) {}
+
   @Emit() select(e) {}
-  @Emit() error(e) {}
   @Emit() loaded(e) {
     if (this.expandAll) this.theTree.jstree().open_all()
     this.focusSelectedNode()
     if (this.searchable) this.focusSearch()
   }
 
-  private items: any[] = []
   searchText: string = ''
   private theTree!: any
-  loading: boolean = false
 
   get treeData() {
-    if (_.isEmpty(this.items)) return []
-    const root = this.items.find(i => !this.items.some(n => _.isEqual(n[this.itemValue], i[this.parentKey])))[this.parentKey]
+    // if (_.isEmpty(this.items)) return []
+    // const root = this.items.find(i => !this.items.some(n => _.isEqual(n[this.itemValue], i[this.parentKey])))[this.parentKey]
     // const itemsMap = _.cloneDeep(this.items).map(m => {
     //   return {
     //     id: m[this.itemValue],
@@ -60,8 +61,9 @@ export default class NTree extends Vue {
     //     }
     //   }
     // })
-    // return itemsMap
-    const itemsMap = _.cloneDeep(this.items).map(m => {
+    if (_.isEmpty(this.vItems)) return []
+    const root = this.vItems.find(i => !this.vItems.some(n => _.isEqual(n[this.itemValue], i[this.parentKey])))[this.parentKey]
+    const itemsMap = _.cloneDeep(this.vItems).map(m => {
       return {
         id: m[this.itemValue],
         text: m[this.itemText],
@@ -82,9 +84,6 @@ export default class NTree extends Vue {
   get hasData() {
     return !_.isEmpty(this.treeData)
   }
-  async created() {
-    if (this.autoRead) await this.read()
-  }
   mounted() {
     this.theTree = $($(this.$el as any).find('#component-tree-view')) as any
     this.init()
@@ -93,26 +92,11 @@ export default class NTree extends Vue {
   private onTreeDataChange(n, o) {
     this.init()
   }
-  @Watch('readUrl')
-  private onReadUrlChange(n, o) {
-    if (this.autoRead) this.read()
-  }
-  async read() {
-    if (_.isEmpty(this.readUrl)) return
-    this.loading = true
-    try {
-      const res = await axios.get(this.readUrl)
-      this.items = res.data
-    } catch (e) {
-      this.error(e)
-    }
-    this.loading = false
-  }
-  setItems(items: any[]) {
-    this.items = items
-  }
+
   private init() {
-    if (this.theTree.hasClass('jstree')) this.theTree.jstree().destroy()
+    if (this.theTree.hasClass('jstree')) {
+      this.theTree.jstree().destroy()
+    }
     this.theTree
       .jstree({
         types: {
@@ -167,4 +151,10 @@ export default class NTree extends Vue {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.sticky-search {
+  position: sticky;
+  top: 0px;
+  z-index: 99;
+}
+</style>

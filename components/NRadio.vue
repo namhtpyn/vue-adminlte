@@ -1,5 +1,5 @@
 <template>
-  <label><input type="radio" :checked="checked" :value="value" v-bind="$attrs" /> {{ label }}</label>
+  <label><input type="radio" :checked="isChecked" :value="value" v-bind="$attrs" /> {{ label }}</label>
 </template>
 
 <script lang="ts">
@@ -15,7 +15,7 @@ export default class NRadio extends Vue {
   @Emit() input(e) {}
   private radioEl!: any
   groupModel: any = null
-  get checked() {
+  get isChecked() {
     if (!this.model) return _.isEqual(this.groupModel, this.value)
     return _.isEqual(this.model, this.value)
   }
@@ -23,11 +23,22 @@ export default class NRadio extends Vue {
     this.radioEl = $(this.$el) as any
     this.radioEl
       .iCheck({
-        radioClass: 'iradio_flat-' + this.color
+        radioClass: 'iradio_square-' + this.color
       })
       .on('ifChanged', this.modifiedModel)
   }
-  @Watch('checked')
+
+  check() {
+    this.radioEl.iCheck('check')
+  }
+  uncheck() {
+    this.radioEl.iCheck('uncheck')
+  }
+  toggle() {
+    this.isChecked ? this.uncheck() : this.check()
+  }
+
+  @Watch('isChecked')
   private onCheckedChange(n) {
     this.radioEl.iCheck(n ? 'check' : 'uncheck')
   }

@@ -1,5 +1,5 @@
 <template>
-  <form role="form" :class="{ 'form-inline': inline }">
+  <form @submit="submit" role="form" :class="{ 'form-inline': inline }">
     <slot />
   </form>
 </template>
