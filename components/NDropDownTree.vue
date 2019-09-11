@@ -4,9 +4,7 @@
       {{ label }}
     </label>
     <n-drop-down-list
-      :value="value"
-      @input="input"
-      :text.sync="text"
+      :text="text"
       :drop-down-width="dropDownWidth"
       :hint="hint"
       :small="small"

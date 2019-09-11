@@ -1,6 +1,5 @@
 <template>
   <div style="position:relative" v-click-out="closeDropDown">
-    <input type="hidden" :value="value" />
     <div class="has-feedback" @click="toggleDropDown">
       <div :class="containerCss" style="width: 100%">
         {{ isShowHint ? hint : text }}
@@ -26,7 +25,6 @@ export default class NDropDownList extends Vue {
   @Prop(String) hint!: string
   @Prop({ type: Boolean, default: false }) small!: boolean
   @Prop({ type: Boolean, default: false }) large!: boolean
-  @Prop([String, Number]) value!: any
   @Prop([String, Number]) dropDownWidth!: string | number
 
   data = {

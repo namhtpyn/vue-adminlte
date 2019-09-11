@@ -46,7 +46,6 @@ export default class NTableData extends Mixins(NBase, NData, NTableProp) {
   }
 
   get pageLength() {
-    console.log(this.itemsLength, this.vItemPerPage, this.vPage)
     return Math.ceil(this.itemsLength / this.vItemPerPage)
   }
 }

@@ -185,7 +185,7 @@ export default class NDataTable extends Mixins(mixin1, mixin2) {
     //Row select
     if (this.selectable && this.rowSelect) {
       if (this.multiple) (this.$refs.checkbox[rowIndex] as NCheckBox).toggle()
-      else (this.$refs.radio[rowIndex] as NRadio).toggle()
+      else (this.$refs.radio[rowIndex] as NRadio).check()
     }
     this.$emit('row-click', { event, item, rowIndex })
   }
