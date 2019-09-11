@@ -44,8 +44,10 @@ export default class NRadio extends Vue {
   }
 
   private modifiedModel(e) {
-    if (!this.model) this.groupModel = _.cloneDeep(this.value)
-    else this.input(this.value)
+    if (e.target.checked) {
+      if (!this.model) this.groupModel = _.cloneDeep(this.value)
+      else this.input(this.value)
+    }
   }
 }
 </script>

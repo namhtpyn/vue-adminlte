@@ -10,14 +10,13 @@ import _ from 'lodash'
 @Component({ inheritAttrs: false })
 export default class NRadioGroup extends Vue {
   @Prop({ type: Boolean, default: true }) form!: boolean
-  @Prop() label!: string
   @Model('input', { type: [String, Number, Boolean, Object] }) value: number | string | boolean | object
   @Emit() input(e) {}
 
   private radioComponents: any[] = []
   mounted() {
     this.findDeep(this.$slots.default)
-    if (!_.isEmpty(this.value)) this.setGroupModel(this.value)
+    if (this.value) this.setGroupModel(this.value)
   }
 
   get groupModelArray() {

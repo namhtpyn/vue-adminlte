@@ -1,7 +1,18 @@
 <template>
   <div :class="{ 'form-group': form, 'has-error': !valid }">
-    <label v-if="hasLabel" class="control-label">{{ label }}</label>
-    <n-drop-down-list :value="value" @input="input" :text.sync="getText" :drop-down-width="dropDownWidth" @open="onOpen">
+    <label v-if="hasLabel" class="control-label" :style="{ 'font-size': this.small ? '12px' : this.large ? '18px' : '14px' }">
+      {{ label }}
+    </label>
+    <n-drop-down-list
+      :value="value"
+      @input="input"
+      :text.sync="getText"
+      :drop-down-width="dropDownWidth"
+      @open="onOpen"
+      :hint="hint"
+      :small="small"
+      :large="large"
+    >
       <template #content="{data}">
         <n-data-table
           ref="table"
@@ -38,7 +49,10 @@ export default class NDropDownTable extends Mixins(NBase, NDataSource) {
   @Prop({ type: Boolean, default: false }) multiple!: boolean
 
   @Prop([String, Number]) dropDownWidth!: string | number
-  @Prop() label!: string
+  @Prop(String) label!: string
+  @Prop(String) hint!: string
+  @Prop({ type: Boolean, default: false }) small!: boolean
+  @Prop({ type: Boolean, default: false }) large!: boolean
   @Prop({ type: Boolean, default: true }) form!: boolean
   @Prop(Array) rules!: any[]
 
@@ -54,7 +68,6 @@ export default class NDropDownTable extends Mixins(NBase, NDataSource) {
   }
   //search=
   get getText() {
-    console.log('')
     if (this.table && this.table.vItems && this.table.vItems.length > 0) {
       const item = this.table.vItems.find(item => item[this.itemValue] === this.value)
       if (item && Object.hasOwnProperty.call(item, this.itemText)) return item[this.itemText].toString()
