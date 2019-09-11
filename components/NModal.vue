@@ -1,6 +1,6 @@
 <template>
-  <div :class="`modal modal-${color} fade`">
-    <div :class="{ 'modal-dialog': true, 'modal-lg': large, 'modal-sm': small }">
+  <div :class="`modal modal-${color} fade ${fullscreen ? 'no-padding' : ''}`">
+    <div :class="{ 'modal-dialog': true, 'modal-lg': large, 'modal-sm': small, 'modal-fullscreen': fullscreen }">
       <div class="modal-content">
         <div v-if="!hideHeader" class="modal-header" style="display:flex">
           <h4 class="modal-title" style="flex:1">{{ caption }}</h4>
@@ -33,6 +33,7 @@ export default class NModal extends Mixins(NBase) {
   @Prop({ type: Boolean, default: false }) large!: boolean
   @Prop({ type: Boolean, default: false }) small!: boolean
   @Prop({ type: Boolean, default: false }) scrollable!: boolean
+  @Prop({ type: Boolean, default: false }) fullscreen!: boolean
 
   @Model('input', { type: Boolean, default: false }) value!: boolean
 
@@ -60,10 +61,24 @@ export default class NModal extends Mixins(NBase) {
   }
   get bodyStyle() {
     let style = ''
-    style += this.scrollable ? `overflow: auto; max-height: calc(100vh - ${this.offsetHeight}px)` : ''
+    style += this.scrollable ? `overflow: auto; ` : ''
+    style += this.scrollable ? `max-height: calc(100vh - ${this.offsetHeight}px); ` : ''
+    style += this.fullscreen ? `min-height: calc(100vh - ${this.offsetHeight}px); ` : ''
     return style
   }
 }
 </script>
 
-<style></style>
+<style scoped>
+.no-padding {
+  padding: 0px !important;
+}
+.modal-fullscreen {
+  width: auto;
+  margin: auto;
+  min-height: 100vh;
+}
+.modal-fullscreen > .modal-content {
+  min-height: 100%;
+}
+</style>
