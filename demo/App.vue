@@ -140,7 +140,7 @@
     <n-radio v-model="radio" :value="2"></n-radio>
     <n-radio v-model="radio" :value="3"></n-radio>
     <n-radio v-model="radio" :value="4"></n-radio>
-    <n-checkbox v-model="check" :value="1"></n-checkbox>
+    <n-checkbox :value="1" @input="checkall"></n-checkbox>
     <n-checkbox v-model="check" :value="2"></n-checkbox>
     <n-checkbox v-model="check" :value="3"></n-checkbox>
     <n-checkbox v-model="check" :value="4"></n-checkbox>
@@ -186,6 +186,9 @@ import jsonData from './data.json'
 @Component({})
 export default class VApp extends Vue {
   textboxinput(e) {
+    console.log(e)
+  }
+  checkall(e) {
     console.log(e)
   }
   textbox = ''
