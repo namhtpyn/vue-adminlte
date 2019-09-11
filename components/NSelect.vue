@@ -1,8 +1,8 @@
 <template>
   <div :class="'form-group ' + (!valid ? 'has-error' : '')">
     <label v-if="!hideDetails" class="control-label">{{ label }}</label>
-    <select :class="cCssClass" :value="vModel" @input="e => input(e.target.value)">
-      <option v-for="(item, idx) in items" :key="idx" :value="item[itemValue]">{{ item[itemText] }}</option>
+    <select :class="cCssClass" :value="value" @input="e => input(e.target.value)">
+      <option v-for="(item, idx) in vItems" :key="idx" :value="item[itemValue]">{{ item[itemText] }}</option>
     </select>
     <span v-if="!valid && !hideDetails" class="help-block">{{ errorText }}</span>
   </div>
@@ -20,7 +20,7 @@ export default class NSelect extends Mixins(NDataSource) {
   @Prop(Array) rules!: any[]
   @Prop({ type: String, default: 'text' }) itemText!: string
   @Prop({ type: String, default: 'value' }) itemValue!: string
-  @Model('input') vModel!: any
+  @Model('input') value!: any
   @Emit() async input(e) {
     this.validate(e)
   }
@@ -34,8 +34,8 @@ export default class NSelect extends Mixins(NDataSource) {
   }
   get errorText() {
     if (this.rules) {
-      const f = this.rules.find(r => r(this.vModel) !== true)
-      return f ? f(this.vModel) : ''
+      const f = this.rules.find(r => r(this.value) !== true)
+      return f ? f(this.value) : ''
     }
     return ''
   }
