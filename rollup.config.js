@@ -7,8 +7,8 @@ import multiInput from 'rollup-plugin-multi-input'
 import fs from 'fs'
 import path from 'path'
 
-const componentPath = 'components'
-const components = fs
+const componentPath = './components'
+let components = fs
   .readdirSync(componentPath)
   .map(f => componentPath + '/' + f)
   .map(p => {
@@ -18,11 +18,15 @@ const components = fs
     }
   })
   .filter(o => fs.existsSync(o.path))
+  .filter(o => o.path.endsWith('.vue'))
 
-const imports = components.map(c => `import './${c.name}.js';`)
-const VueComponents = components.map(c => `Vue.component('${c.name}', ${c.name});`)
+const imports = components.map(c => `import ${c.name} from '${c.path.replace('components', '.')}'`)
+imports.unshift("import Vue from 'vue'")
+const VueComponents = components.map(c => `Vue.component('${c.name}', ${c.name})`)
+VueComponents.push('')
+fs.writeFileSync(componentPath + '/index.ts', imports.concat(VueComponents).join('\n'))
 
-fs.writeFileSync('./dist/index.js', imports.concat(VueComponents).join('\n'))
+components = [{ name: 'VueAdminLTE', path: componentPath + '/index.ts' }]
 
 const xxx = components.map(o => {
   return {

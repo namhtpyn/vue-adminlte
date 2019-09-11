@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Document</title>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/icheck@1.0.2/icheck.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
@@ -25,6 +26,8 @@
   </head>
   <body>
     <div id="app">
+      <n-btn>aaaa</n-btn>
+      <NBtn>aaaa</NBtn>
       {{ def }}
       <n-data-table v-model="def" :items="items" selectable updatable deletable creatable expandable>
         <items>
@@ -56,7 +59,6 @@
     </div>
     <script>
       var app = new Vue({
-        components: { NDataTable },
         el: '#app',
         data: {
           def: '',

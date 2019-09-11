@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
 import kebabCase from 'lodash/kebabCase'
-import path from 'path'
 if (process.env.NODE_ENV === 'development') {
   // Inject base component
   const baseComponent = require.context('../components/', true, /\.vue$/) // extract js files inside modules folder
