@@ -14,7 +14,16 @@
     >
       <slot name="content" :data="data"></slot>
     </div>
-    <n-modal v-else v-model="data.isOpen" hide-header hide-footer scrollable>
+    <n-modal
+      v-else
+      v-model="data.isOpen"
+      hide-header
+      hide-footer
+      scrollable
+      :large="modalLarge"
+      :small="modalSmall"
+      :fullscreen="modalFullscreen"
+    >
       <slot name="content" :data="data"></slot>
     </n-modal>
   </div>
@@ -34,6 +43,9 @@ export default class NDropDownList extends Vue {
   @Prop({ type: Boolean, default: false }) small!: boolean
   @Prop({ type: Boolean, default: false }) large!: boolean
   @Prop({ type: Boolean, default: false }) modal!: boolean
+  @Prop({ type: Boolean, default: false }) modalLarge!: boolean
+  @Prop({ type: Boolean, default: false }) modalSmall!: boolean
+  @Prop({ type: Boolean, default: false }) modalFullscreen!: boolean
   @Prop([String, Number]) dropDownWidth!: string | number
 
   data = {

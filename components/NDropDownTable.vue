@@ -3,15 +3,7 @@
     <label v-if="hasLabel" class="control-label" :style="styleLabel">
       {{ label }}
     </label>
-    <n-drop-down-list
-      :modal="modal"
-      :text="getText"
-      :drop-down-width="dropDownWidth"
-      @open="onOpen"
-      :hint="hint"
-      :small="small"
-      :large="large"
-    >
+    <n-drop-down-list :text="getText" @open="onOpen" :small="small" :large="large" v-bind="$attrs">
       <template #content="{data}">
         <n-data-table
           ref="table"
@@ -41,20 +33,18 @@ import { Component, Model, Prop, Mixins, Watch } from 'vue-property-decorator'
 import _ from 'lodash'
 import NDataSource from './Base/NDataSource'
 import NBase from './Base/NBase'
-@Component({})
+@Component({ inheritAttrs: false })
 export default class NDropDownTable extends Mixins(NBase, NDataSource) {
   @Prop({ type: String, default: 'text' }) itemText!: string
   @Prop({ type: String, default: 'value' }) itemValue!: string
   @Prop({ type: Boolean, default: false }) searchable!: boolean
   @Prop({ type: Boolean, default: false }) multiple!: boolean
 
-  @Prop([String, Number]) dropDownWidth!: string | number
   @Prop(String) label!: string
-  @Prop(String) hint!: string
   @Prop({ type: Boolean, default: false }) small!: boolean
   @Prop({ type: Boolean, default: false }) large!: boolean
-  @Prop({ type: Boolean, default: false }) modal!: boolean
   @Prop({ type: Boolean, default: true }) form!: boolean
+
   @Prop(Array) rules!: any[]
 
   @Model('input', [String, Number, Array]) value!: any | any[]
@@ -77,11 +67,11 @@ export default class NDropDownTable extends Mixins(NBase, NDataSource) {
     if (this.multiple) {
       return this.vItems
         .filter(item => (this.value as any[]).includes(item[this.itemValue]))
-        .map(item => item[this.itemText].toString())
+        .map(item => (item[this.itemText] || '').toString())
         .join('; ')
     } else {
       const item = this.vItems.find(item => item[this.itemValue] === this.value)
-      if (item) return item[this.itemText].toString()
+      if (item) return (item[this.itemText] || '').toString()
     }
     return ''
   }

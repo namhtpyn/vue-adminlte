@@ -22,13 +22,26 @@
         </template>
       </n-data-table>
     </div>
-    n-modal component
+    n-modal component<br />
     <n-btn @click="modal = !modal" color="primary">Toggle Modal</n-btn>
     <n-modal v-model="modal">
       <ul>
         <li v-for="i in 100" :key="i">{{ i }}</li>
       </ul>
     </n-modal>
+
+    <n-drop-down-table
+      v-model="dropDownTableModel"
+      :items="provinces"
+      item-text="provinceName"
+      modal
+      modal-large
+      item-value="provinceCode"
+    >
+      <items>
+        <text-item text="provinceName" value="provinceName"></text-item>
+      </items>
+    </n-drop-down-table>
   </div>
 </template>
 
@@ -43,6 +56,7 @@ export default class VApp extends Vue {
   provinces = provinces
   unitID = 103
   modal = false
+  dropDownTableModel: any | any[] = ''
 }
 </script>
 
