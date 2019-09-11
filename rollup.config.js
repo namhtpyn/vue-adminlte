@@ -18,10 +18,11 @@ const components = fs
     }
   })
   .filter(o => fs.existsSync(o.path))
-//.filter(f => f.toLowerCase().endsWith('.vue'))
 
-// const fileArg = process.argv.slice(4, process.argv.length).map(f => f + '.vue')
-// if (fileArg.length > 0) components = components.filter(c => fileArg.includes(c))l
+const imports = components.map(c => `import './${c.name}.js';`)
+const VueComponents = components.map(c => `Vue.component('${c.name}', ${c.name});`)
+
+fs.writeFileSync('./dist/index.js', imports.concat(VueComponents).join('\n'))
 
 const xxx = components.map(o => {
   return {
