@@ -59,15 +59,17 @@ export default class NDropDownTable extends Mixins(NBase, NDataSource) {
   }
   //search=
   get getText() {
+    console.log('xxx')
     if (this.multiple) {
       return this.vItems
         .filter(item => (this.value as any[]).includes(item[this.itemValue]))
         .map(item => item[this.itemText].toString())
-        .join(';')
+        .join('; ')
     } else {
       const item = this.vItems.find(item => item[this.itemValue] === this.value)
-      return item[this.itemText].toString()
+      if (item) return item[this.itemText].toString()
     }
+    return ''
   }
   get errorText() {
     if (!this.valid && this.rules) {
@@ -90,13 +92,15 @@ export default class NDropDownTable extends Mixins(NBase, NDataSource) {
   }
   @Watch('selectedValue')
   onSelectedValueChanged(values: any[], any) {
-    if (Array.isArray(values)) this.input(values.map(v => v[this.itemValue]))
-    else this.input(values[this.itemValue])
+    if (!_.isNil(values)) {
+      if (Array.isArray(values)) this.input(values.map(v => v[this.itemValue]))
+      else this.input(values[this.itemValue])
+    }
   }
   created() {
     if (Array.isArray(this.value))
-      this.selectedValue = this.vItems.filter(item => (this.value as any[]).includes(item[this.itemValue]))
-    else this.selectedValue = this.vItems.find(item => item[this.itemValue] === this.value)
+      this.selectedValue = this.vItems.filter(item => (this.value as any[]).includes(item[this.itemValue])) || []
+    else this.selectedValue = this.vItems.find(item => item[this.itemValue] === this.value) || {}
   }
 }
 </script>

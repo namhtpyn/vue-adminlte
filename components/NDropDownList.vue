@@ -63,6 +63,11 @@ export default class NDropDownList extends Vue {
 .hint {
   color: #ccc;
 }
+.text-overflow {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
 .input-flat,
 .input-flat:active {
   margin: 0;
@@ -76,7 +81,7 @@ export default class NDropDownList extends Vue {
   height: auto;
   position: absolute;
   width: 100%;
-  height: 300px;
+  max-height: 300px;
   overflow-y: auto;
   padding: 0px 0px;
   z-index: 9999;
