@@ -9,4 +9,7 @@ export default class NBase extends Vue {
   }
   @Emit() async input(e) {}
   @Emit() async error(e) {}
+  setLoading(state: boolean) {
+    this.vLoading = state
+  }
 }
