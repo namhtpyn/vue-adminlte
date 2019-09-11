@@ -1,5 +1,5 @@
 <template>
-  <div :style="{ position: 'relative', 'overflow-y': 'auto', height: height }">
+  <div :style="{ position: 'relative' }">
     <input
       type="text"
       v-if="searchable"
@@ -28,7 +28,6 @@ export default class NTree extends Mixins(NDataSource) {
   @Prop({ type: Boolean, default: false }) expandAll!: boolean
   @Prop({ type: Boolean, default: true }) searchable!: boolean
   @Prop({ type: Boolean, default: false }) stickySearch!: boolean
-  @Prop({ type: String, default: 'auto' }) height!: string
   @Prop({ type: Number, default: 0 }) expandToLevel!: number
   @Prop({ type: String, default: 'value' }) itemValue!: string
   @Prop({ type: String, default: 'text' }) itemText!: string
