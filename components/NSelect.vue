@@ -21,7 +21,7 @@ export default class NSelect extends Mixins(NDataSource) {
   @Prop({ type: String, default: 'text' }) itemText!: string
   @Prop({ type: String, default: 'value' }) itemValue!: string
   @Model('input') vModel!: any
-  @Emit() input(e) {
+  @Emit() async input(e) {
     this.validate(e)
   }
   valid: boolean = true

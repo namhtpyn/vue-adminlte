@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Model, Watch, Mixins } from 'vue-property-decorator'
+import { Component, Prop, Model, Watch, Mixins, Emit } from 'vue-property-decorator'
 import _ from 'lodash'
 import NDataSource from './Base/NDataSource'
 @Component({ inheritAttrs: false })
@@ -30,7 +30,7 @@ export default class NSelect2 extends Mixins(NDataSource) {
   @Prop(String) label!: string
   @Prop(Array) rules!: any[]
   @Model('input', [String, Number, Array, Object]) value!: any[] | any
-  input(e) {
+  @Emit() async input(e) {
     if (!this.lazyValidation || !this.valid) this.validate(e)
     this.$emit('input', isNaN(e) ? e : Number(e))
   }
