@@ -22,6 +22,7 @@ export default class NDataSource extends Mixins(NBase, NData) {
     try {
       const res = await axios.get(this.readUrl)
       this.vItems = res.data
+      this.$emit('readed', true)
     } catch (e) {
       this.error(e)
     }
