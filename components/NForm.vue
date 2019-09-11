@@ -1,5 +1,5 @@
 <template>
-  <form role="form">
+  <form @submit="submit" role="form" :class="{ 'form-inline': inline }">
     <slot />
   </form>
 </template>
@@ -10,44 +10,45 @@ import _ from 'lodash'
 @Component({ inheritAttrs: false })
 export default class NForm extends Vue {
   @Prop({ type: Boolean, default: false }) lazyValidation!: boolean
+  @Prop({ type: Boolean, default: false }) inline!: boolean
   @Model('input', { type: Boolean, default: false }) value!: boolean
   @Emit() input(e) {}
   @Emit() submit(e) {}
 
-  vueComponents: any[] = []
+  private formControlComponents: any[] = []
 
   mounted() {
     this.findDeep(this.$slots.default)
     if (this.lazyValidation) {
-      this.vueComponents.forEach(v => {
+      this.formControlComponents.forEach(v => {
         v.lazyValidation = true
       })
     }
   }
   @Watch('value')
-  onValueChange(n) {
+  private onValueChange(n) {
     if (!n) this.resetValidation()
   }
 
   validate() {
-    const valid = !this.vueComponents.map(v => v.validate(v.value)).some(v => !v)
+    const valid = !this.formControlComponents.map(v => v.validate(v.value)).some(v => !v)
     this.input(valid)
     return valid
   }
 
   resetValidation() {
-    this.vueComponents.forEach(v => (v.valid = true))
+    this.formControlComponents.forEach(v => (v.valid = true))
     this.input(false)
   }
 
-  findDeep(obj) {
+  private findDeep(obj) {
     if (obj instanceof Array) {
       for (let i = 0; i < obj.length; i++) {
         this.findDeep(obj[i])
       }
     } else {
       if (!_.isEmpty(obj.componentInstance) && obj.componentInstance.form) {
-        this.vueComponents.push(obj.componentInstance)
+        this.formControlComponents.push(obj.componentInstance)
       }
       if (!_.isEmpty(obj.children)) {
         this.findDeep(obj.children)
@@ -57,4 +58,8 @@ export default class NForm extends Vue {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+form {
+  margin-bottom: 0px;
+}
+</style>

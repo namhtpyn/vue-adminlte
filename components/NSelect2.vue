@@ -1,6 +1,8 @@
 <template>
   <div :class="classComponent">
-    <label v-if="hasLabel" class="control-label">{{ label }}</label>
+    <label v-if="hasLabel" class="control-label" :style="{ 'font-size': this.small ? '12px' : this.large ? '18px' : '14px' }">
+      {{ label }}
+    </label>
     <select :class="cCssClass" :value="value"> </select>
     <span v-if="!valid" class="help-block">{{ errorText }}</span>
   </div>
@@ -8,8 +10,9 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, Model, Watch } from 'vue-property-decorator'
+import { Component, Vue, Prop, Model, Watch, Emit } from 'vue-property-decorator'
 import _ from 'lodash'
+import axios from 'axios'
 @Component({ inheritAttrs: false })
 export default class NSelect2 extends Vue {
   @Prop({ type: String, default: '' }) cssClass!: string
@@ -21,21 +24,25 @@ export default class NSelect2 extends Vue {
   @Prop({ type: String, default: 'text' }) itemText!: string
   @Prop({ type: String, default: 'value' }) itemValue!: string
   @Prop({ type: Boolean, default: true }) form!: boolean
-  @Prop({ type: Array, required: true }) items!: any[]
   @Prop({ type: Boolean, default: false }) small!: boolean
   @Prop({ type: Boolean, default: false }) large!: boolean
+  @Prop({ type: Boolean, default: true }) autoRead!: boolean
   @Prop(String) hint!: string
   @Prop(String) label!: string
+  @Prop(String) readUrl: string
   @Prop(Array) rules!: any[]
   @Model('input', [String, Number, Array, Object]) value!: any[] | any
   input(e) {
     if (!this.lazyValidation || !this.valid) this.validate(e)
     this.$emit('input', isNaN(e) ? e : Number(e))
   }
+  @Emit() error(e) {}
 
   valid: boolean = true
   lazyValidation: boolean = false
-  widthComponent = 0
+  items: any[] = []
+  private theSelect!: any
+  loading: boolean = false
   get hasLabel() {
     return !_.isEmpty(this.label)
   }
@@ -61,18 +68,38 @@ export default class NSelect2 extends Vue {
     return { 'form-group': this.form, 'has-error': !this.valid }
   }
   @Watch('select2Data')
-  onSelect2DataChange(n, o) {
+  private onSelect2DataChange(n, o) {
     this.init(n)
   }
   @Watch('valid')
-  onValidChange(n, o) {
+  private onValidChange(n, o) {
     if (n) {
       ;($(this.$el).find('span.select2-selection') as any).css('border-color', '')
     } else {
       ;($(this.$el).find('span.select2-selection') as any).css('border-color', '#dd4b39')
     }
   }
-  theSelect!: any
+  @Watch('readUrl')
+  private onReadUrlChange(n, o) {
+    if (this.autoRead) this.read()
+  }
+  async read() {
+    if (_.isEmpty(this.readUrl)) return
+    this.loading = true
+    try {
+      const res = await axios.get(this.readUrl)
+      this.items = res.data
+    } catch (e) {
+      this.error(e)
+    }
+    this.loading = false
+  }
+  setItems(items: any[]) {
+    this.items = items
+  }
+  async created() {
+    if (this.autoRead) await this.read()
+  }
   mounted() {
     this.theSelect = $(this.$el).find('select') as any
     this.init(this.select2Data)
@@ -80,7 +107,7 @@ export default class NSelect2 extends Vue {
     this.valid = true
   }
 
-  init(data) {
+  private init(data) {
     this.theSelect.empty()
     this.theSelect
       .select2({
@@ -102,7 +129,7 @@ export default class NSelect2 extends Vue {
       .trigger('change')
   }
 
-  setSize() {
+  private setSize() {
     if (!this.small && !this.large) return
     ;($(this.$el).find('.select2-selection__rendered') as any).addClass(`input-${this.small ? 'sm' : 'lg'}-rendered`)
     ;($(this.$el).find('.select2-container .select2-selection--single') as any).addClass(
@@ -123,6 +150,8 @@ export default class NSelect2 extends Vue {
 span.select2-container {
   width: 100% !important;
 }
+</style>
+<style scoped>
 .input-sm-rendered {
   font-size: 12px !important;
   line-height: 23px !important;

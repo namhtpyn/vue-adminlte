@@ -1,6 +1,8 @@
 <template>
   <div :class="classComponent">
-    <label v-if="hasLabel" class="control-label">{{ label }}</label>
+    <label v-if="hasLabel" class="control-label" :style="{ 'font-size': this.small ? '12px' : this.large ? '18px' : '14px' }">
+      {{ label }}
+    </label>
     <div :class="divClass">
       <span v-if="prefix" class="input-group-addon">{{ prefix }}</span>
       <span v-if="prependIcon" class="input-group-addon">
@@ -32,11 +34,9 @@
 </template>
 
 <script lang="ts">
-import NIcon from '../component/NIcon.vue'
-import NBtn from '../component/NBtn.vue'
 import { Component, Vue, Prop, Emit, Model } from 'vue-property-decorator'
 import _ from 'lodash'
-@Component({ components: { NIcon, NBtn }, inheritAttrs: false })
+@Component({ inheritAttrs: false })
 export default class NTextBox extends Vue {
   @Prop({ type: String, default: 'text' }) type!: string
   @Prop(String) cssClass!: string
@@ -103,8 +103,6 @@ export default class NTextBox extends Vue {
       'input-group-lg': this.inputGroup && this.large
     }
   }
-
-  mounted() {}
 
   validate(value) {
     this.valid = true

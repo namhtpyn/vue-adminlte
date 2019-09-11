@@ -22,9 +22,7 @@
 
 <script lang="ts">
 import { Component, Vue, Model, Watch, Emit, Prop } from 'vue-property-decorator'
-import NIcon from '../component/NIcon.vue'
-import NOverlay from '../component/NOverlay.vue'
-@Component({ inheritAttrs: false, components: { NIcon, NOverlay } })
+@Component({ inheritAttrs: false })
 export default class NModal extends Vue {
   @Prop({ type: Boolean, default: false }) loading!: boolean
 

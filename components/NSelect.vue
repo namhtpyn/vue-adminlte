@@ -9,10 +9,9 @@
 </template>
 
 <script lang="ts">
-import NIcon from '../component/NIcon.vue'
 import _ from 'lodash'
 import { Component, Vue, Prop, Emit, Model } from 'vue-property-decorator'
-@Component({ components: { NIcon }, inheritAttrs: false })
+@Component({ inheritAttrs: false })
 export default class NSelect extends Vue {
   @Prop({ type: Boolean, default: false }) hideDetails!: boolean
   @Prop(String) label!: string

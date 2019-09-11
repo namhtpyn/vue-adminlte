@@ -7,18 +7,35 @@ import multiInput from 'rollup-plugin-multi-input'
 import fs from 'fs'
 import path from 'path'
 
-let components = fs.readdirSync(path.join('component')).filter(f => f.toLowerCase().endsWith('.vue'))
-const fileArg = process.argv.slice(4, process.argv.length).map(f => f + '.vue')
-if (fileArg.length > 0) components = components.filter(c => fileArg.includes(c))
+const componentPath = './components'
+let components = fs
+  .readdirSync(componentPath)
+  .map(f => componentPath + '/' + f)
+  .map(p => {
+    return {
+      name: path.parse(p).name,
+      path: p + (fs.lstatSync(p).isDirectory() ? '/index.vue' : '')
+    }
+  })
+  .filter(o => fs.existsSync(o.path))
+  .filter(o => o.path.endsWith('.vue'))
 
-export default components.map(c => {
+const imports = components.map(c => `import ${c.name} from '${c.path.replace('components', '.')}'`)
+imports.unshift("import Vue from 'vue'")
+const VueComponents = components.map(c => `Vue.component('${c.name}', ${c.name})`)
+VueComponents.push('')
+fs.writeFileSync(componentPath + '/index.ts', imports.concat(VueComponents).join('\n'))
+
+components = [{ name: 'VueAdminLTE', path: componentPath + '/index.ts' }]
+
+const xxx = components.map(o => {
   return {
-    input: './component/' + c,
+    input: o.path,
     output: {
-      format: 'iife',
-      name: path.parse(c).name,
+      format: 'umd',
+      name: o.name,
       dir: './dist/',
-      entryFileNames: path.parse(c).name + '.js'
+      entryFileNames: o.name + '.js'
     },
     external: ['vue', 'lodash', 'axios'],
     plugins: [
@@ -33,3 +50,5 @@ export default components.map(c => {
     ]
   }
 })
+console.log(xxx)
+export default xxx

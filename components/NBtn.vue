@@ -1,29 +1,28 @@
 <template>
-  <a :class="cCssClass" @click="btnClick">
+  <a :class="cssClass" @click="click">
     <slot></slot>
   </a>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop, Emit } from 'vue-property-decorator'
-@Component({ inheritAttrs: false })
+@Component({})
 export default class NBtn extends Vue {
-  @Prop(String) cssClass!: string
-  @Prop({ type: String, default: 'default' }) color!: string
-  @Prop(String) textColor!: string
-  @Prop(Boolean) app!: boolean
-  @Prop(Boolean) block!: boolean
-  @Prop(Boolean) large!: boolean
-  @Prop(Boolean) small!: boolean
-  @Prop(Boolean) xSmall!: boolean
-  @Prop(Boolean) flat!: boolean
-  @Prop(Boolean) disabled!: boolean
+  @Prop({ type: String, default: 'default' }) readonly color!: string
+  @Prop(String) readonly textColor!: string
+  @Prop(Boolean) readonly app!: boolean
+  @Prop(Boolean) readonly block!: boolean
+  @Prop(Boolean) readonly large!: boolean
+  @Prop(Boolean) readonly small!: boolean
+  @Prop(Boolean) readonly xSmall!: boolean
+  @Prop(Boolean) readonly flat!: boolean
+  @Prop(Boolean) readonly disabled!: boolean
 
-  @Emit('click') btnClick(e) {}
+  @Emit() click(e) {}
 
-  get cCssClass() {
+  private get cssClass() {
     let css = 'btn '
-    css += this.cCssColor + ' '
+    css += this.cssColor + ' '
     css += this.textColor ? 'text-' + this.textColor + ' ' : ''
     css += this.block ? 'btn-block ' : ''
     css += this.large ? 'btn-lg ' : ''
@@ -32,10 +31,9 @@ export default class NBtn extends Vue {
     css += this.flat ? 'btn-flat ' : ''
     css += this.app ? 'btn-app ' : ''
     css += this.disabled ? 'disabled ' : ''
-    css += this.cssClass || ''
     return css
   }
-  get cCssColor() {
+  private get cssColor() {
     if (['default', 'primary', 'danger', 'warning', 'success', 'info'].includes(this.color)) return 'btn-' + this.color
     else return 'bg-' + this.color
   }

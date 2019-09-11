@@ -29,5 +29,8 @@ module.exports = {
       template: './demo/index.html'
     }),
     new VueLoaderPlugin()
-  ]
+  ],
+  resolve: {
+    extensions: ['.ts', '.js', '.json', '.vue', '.html']
+  }
 }

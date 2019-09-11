@@ -1,34 +1,64 @@
 <template>
   <div>
-    <n-drop-down-tree
-      v-model="unitID"
-      label="Đơn vị"
-      :tree-items="treeItems"
+    <n-form>
+      <div class="row">
+        <div class="col-xs-4">
+          <n-text-box hint="abc" label="example textbox"></n-text-box>
+        </div>
+        <div class="col-xs-4">
+          <n-select2 label="example select"></n-select2>
+        </div>
+        <div class="col-xs-4">
+          <n-drop-down-tree label="example dropdowntree"></n-drop-down-tree>
+        </div>
+      </div>
+    </n-form>
+    <n-form inline>
+      <n-text-box label="example textbox"></n-text-box>
+      <n-select2 label="example select"></n-select2>
+      <n-drop-down-tree
+        ref="treeselect"
+        label="example dropdowntree"
+        item-value="UnitID"
+        item-text="UnitName"
+        tree-parent-key="ParentID"
+        :tree-expand-to-level="1"
+        drop-down-width="500"
+        hint="Example hint"
+      ></n-drop-down-tree>
+    </n-form>
+    <!-- <n-drop-down-tree
+      ref="treeselect"
+      searchable
       item-value="UnitID"
       item-text="UnitName"
-      parent-key="ParentID"
-      searchable
-      :expand-to-level="1"
-    ></n-drop-down-tree>
-    <!-- <n-tree
-      :items="treeItems"
+      tree-parent-key="ParentID"
+      :tree-expand-to-level="1"
+      label="Đơn vị"
+    ></n-drop-down-tree> -->
+    <!-- {{ unitID2 }}
+    <n-tree
+      :read-url="`https://localhost:5001/linetest/vnptunit/GetUnitListByID?unitID=${unitID}`"
       item-value="UnitID"
       item-text="UnitName"
       parent-key="ParentID"
       @select="select_node"
-      :expand-to-level="expandToLevel"
-    ></n-tree> -->
-    {{ unitID }}
-    <!-- <n-select2
-      :items="selectItems"
-      item-text="name"
-      item-value="fat"
-      :rules="[v => v != 3.7 || 'fat']"
-      v-model="cake"
-      label="cake"
-    ></n-select2>
-    {{ cake }}
-    <div style="width:50%">
+      :expand-to-level="1"
+      fixed-search
+      height="500px"
+      v-model="unitID2"
+    ></n-tree>
+    <input type="text" v-model="unitID" /> -->
+    <!-- <div class="col-xs-3">
+      <n-select2
+        :read-url="`https://localhost:5001/Linetest/Test/GetActivatedAdslPort?deviceIp=172.20.225.101`"
+        item-text="SlotPort"
+        item-value="SlotPort"
+        label="cake"
+      ></n-select2>
+    </div> -->
+    <!-- {{ cake }} -->
+    <!-- <div style="width:50%">
       <n-form ref="form" lazy-validation>
         <n-drop-down-table
           v-model="value"
@@ -62,32 +92,30 @@
           </n-data-table>
         </template>
       </n-drop-down-list> -->
-    {{ value }}
+    <!-- {{ value }} -->
     <!-- <n-radio label="radio 1" value="1"></n-radio>
-    <n-checkbox form label="checkbox" v-model="checkbox"></n-checkbox>
+
     {{ checkbox }}
     <n-btn app color="primary" text-color="white" @click="abc"> <n-icon color="yellow">play</n-icon>Play </n-btn> -->
+    <n-radio-group v-model="radio">
+      <n-radio :value="1"></n-radio>
+      <n-radio :value="2"></n-radio>
+      <n-radio :value="3"></n-radio>
+      <n-radio :value="4"></n-radio>
+    </n-radio-group>
     {{ def }}
-    <n-data-table v-model="def" :items="items" selectable updatable deletable creatable expandable>
+    <n-data-table ref="table" v-model="def" updatable deletable creatable expandable selectable>
       <items>
-        <text-item :editable="false" header-valign="middle" text="Calories" value="calories"></text-item>
+        <text-item :header-valign.camel="`middle`" text="Name" value="NamE"></text-item>
+        <text-item header-valign="middle" text="Calories" value="calories"></text-item>
         <band-item text="band" align="center">
           <items>
             <text-item text="Calories" value="calories" summary="sum"></text-item>
             <number-item text="Fat" value="calories"></number-item>
-            <date-item></date-item>
           </items>
         </band-item>
       </items>
-      <!-- <template v-slot:item.iron="{ item }">
-        <span class="badge bg-red">{{ item.iron }}</span>
-      </template>
-      <template v-slot:item.protein="{ item }">
-        <span class="badge bg-green">{{ item.protein }}</span>
-      </template>
-      <template v-slot:item.Name="{ item }">
-        <span class="badge bg-green">{{ item.protein }}</span>
-      </template> -->
+      <css-class></css-class>
     </n-data-table>
 
     <!-- <n-pagination :length="10" v-model="page"></n-pagination>
@@ -102,123 +130,99 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import NDataTable from '../component/NDataTable.vue'
-import NBtn from '../component/NBtn.vue'
-import NIcon from '../component/NIcon.vue'
-import NPagination from '../component/NPagination.vue'
-import { TableHeader } from '../types/Table'
+// import { TableHeader } from '../types/Table'
 import jsonData from './data.json'
-import data2 from './data2.json'
+// import data2 from './data2.json'
 import data3 from './data3.json'
-import NSelect2 from '../component/NSelect2.vue'
-import NModal from '../component/NModal.vue'
-import NCheckbox from '../component/NCheckbox.vue'
-import NRadio from '../component/NRadio.vue'
-import NDropDownList from '../component/NDropDownList.vue'
-import NDropDownTable from '../component/NDropDownTable.vue'
-import NForm from '../component/NForm.vue'
-import NTree from '../component/NTree.vue'
-import NDropDownTree from '../component/NDropDownTree.vue'
+import NSelect2 from '../components/NSelect2.vue'
 
 @Component({
   components: {
-    NDataTable,
-    NBtn,
-    NIcon,
-    NPagination,
-    NSelect2,
-    NModal,
-    NCheckbox,
-    NRadio,
-    NDropDownList,
-    NDropDownTable,
-    NForm,
-    NTree,
-    NDropDownTree
+    NSelect2
   }
 })
 export default class extends Vue {
+  opentree(e) {
+    console.log('open')
+    console.log(e)
+  }
   def: any = {}
-  expandToLevel = null
-  select_node(node) {
-    console.log(node)
-  }
-  cake: any = null
-  value: any = null
-
-  //checkbox
-  checkbox: boolean = true
-
-  //pagination
-  page = 1
-
-  //Table
-  tableHeaders: TableHeader[] = [
-    { text: 'IpAddress', value: 'DeviceID', width: '500px' },
-    { text: 'IpAddress', value: 'DeviceID' },
-    { text: 'IpAddress', value: 'DeviceID' },
-    { text: 'IpAddress', value: 'DeviceID' },
-    { text: 'IpAddress', value: 'DeviceID' },
-    { text: 'SystemName', value: 'SystemName' }
-  ]
-  tableItems: any[] = data2
-  doAdd(modal) {
-    console.log(modal)
-    modal.visible = false
-  }
-
-  //Select
-  selectItems: any[] = jsonData
-
-  //Modal
-  modalVisibility = false
-
-  message = 'hello world'
-  validate() {
-    ;(this.$refs.form as any).validate()
-  }
-  abc(a) {
-    console.log(a)
-  }
-  headers = [
-    {
-      text: 'Dessert (100g serving)',
-      value: 'Name'
-    },
-    {
-      text: 'abc',
-      children: [
-        { text: 'Calories', value: 'calories' },
-        { text: 'Fat (g)', value: 'fat', sortable: true },
-        {
-          text: 'def',
-          children: [
-            { text: 'Carbs (g)', value: 'carbs' },
-            { text: 'Protein (g)', value: 'protein' },
-            {
-              text: 'def',
-              children: [{ text: 'Carbs (g)', value: 'carbs' }, { text: 'Protein (g)', value: 'protein' }]
-            }
-          ]
-        }
-      ]
-    },
-
-    { text: 'Iron (%))', value: 'iron' }
-  ]
-  items: any[] = jsonData
-  treeItems: any[] = []
-  unitID = 2
+  radio = 1
+  // expandToLevel = null
+  // select_node(node) {
+  //   console.log(node)
+  // }
+  // cake: any = null
+  // value: any = null
+  // //checkbox
+  // checkbox: boolean = true
+  // //pagination
+  // page = 1
+  // //Table
+  // tableHeaders: TableHeader[] = [
+  //   { text: 'IpAddress', value: 'DeviceID', width: '500px' },
+  //   { text: 'IpAddress', value: 'DeviceID' },
+  //   { text: 'IpAddress', value: 'DeviceID' },
+  //   { text: 'IpAddress', value: 'DeviceID' },
+  //   { text: 'IpAddress', value: 'DeviceID' },
+  //   { text: 'SystemName', value: 'SystemName' }
+  // ]
+  // tableItems: any[] = data2
+  // doAdd(modal) {
+  //   console.log(modal)
+  //   modal.visible = false
+  // }
+  // //Select
+  // selectItems: any[] = jsonData
+  // //Modal
+  // modalVisibility = false
+  // message = 'hello world'
+  // validate() {
+  //   ;(this.$refs.form as any).validate()
+  // }
+  // abc(a) {
+  //   console.log(a)
+  // }
+  // headers = [
+  //   {
+  //     text: 'Dessert (100g serving)',
+  //     value: 'Name'
+  //   },
+  //   {
+  //     text: 'abc',
+  //     children: [
+  //       { text: 'Calories', value: 'calories' },
+  //       { text: 'Fat (g)', value: 'fat', sortable: true },
+  //       {
+  //         text: 'def',
+  //         children: [
+  //           { text: 'Carbs (g)', value: 'carbs' },
+  //           { text: 'Protein (g)', value: 'protein' },
+  //           {
+  //             text: 'def',
+  //             children: [{ text: 'Carbs (g)', value: 'carbs' }, { text: 'Protein (g)', value: 'protein' }]
+  //           }
+  //         ]
+  //       }
+  //     ]
+  //   },
+  //   { text: 'Iron (%))', value: 'iron' }
+  // ]
+  // items: any[] = jsonData
+  // treeItems: any[] = []
+  // unitID = 1
+  // unitID2 = 0
   mounted() {
-    this.treeItems = data3
+    ;(this.$refs.treeselect as any).setItems(data3)
+    ;(this.$refs.table as any).setItems(jsonData)
   }
 }
 </script>
 
 <style>
-#app {
+/* #app {
   font-size: 18px;
   font-family: 'Roboto', sans-serif;
   color: blue;
-}
+} */
 </style>
