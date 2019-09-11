@@ -29,6 +29,18 @@
         <li v-for="i in 100" :key="i">{{ i }}</li>
       </ul>
     </n-modal>
+    <br />
+    n-select2 component
+    <div>
+      <n-text-box v-model="province"></n-text-box>
+      <n-select2
+        v-model="province"
+        :items="provinces"
+        item-text="provinceName"
+        item-value="provinceCode"
+        :rules="[v => !!v || 'abc']"
+      ></n-select2>
+    </div>
   </div>
 </template>
 
@@ -40,9 +52,13 @@ import provinces from './data/provinces.json'
 @Component({})
 export default class VApp extends Vue {
   units = units
-  provinces = provinces
+  provinces = []
   unitID = 103
   modal = false
+  province = 'PYN'
+  mounted() {
+    this.provinces = provinces
+  }
 }
 </script>
 

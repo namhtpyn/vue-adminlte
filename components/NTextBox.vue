@@ -29,7 +29,7 @@
       </span>
       <span v-if="innerIcon" :class="`form-control-feedback fa fa-${innerIcon}`" aria-hidden="true"></span>
     </div>
-    <span v-if="!valid" class="help-block">{{ errorText }}</span>
+    <span v-if="!valid && !hideErrorText" class="help-block">{{ errorText }}</span>
   </div>
 </template>
 
@@ -46,6 +46,7 @@ export default class NTextBox extends Vue {
   @Prop(Boolean) readonly!: boolean
   @Prop({ type: String, default: 'default' }) color!: string
   @Prop({ type: Boolean, default: true }) form!: string
+  @Prop({ type: Boolean, default: false }) hideErrorText!: string
   @Prop(String) prefix!: string
   @Prop(String) suffix!: string
   @Prop(String) prependIcon!: string

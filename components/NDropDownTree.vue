@@ -22,7 +22,7 @@
         ></n-tree>
       </template>
     </n-drop-down-list>
-    <span v-if="!valid" class="help-block">{{ errorText }}</span>
+    <span v-if="!valid && !hideErrorText" class="help-block">{{ errorText }}</span>
   </div>
 </template>
 
@@ -46,6 +46,7 @@ export default class NDropDownTree extends Mixins(NDataSource) {
   @Prop({ type: Boolean, default: false }) small!: boolean
   @Prop({ type: Boolean, default: false }) large!: boolean
   @Prop({ type: Boolean, default: true }) form!: boolean
+  @Prop({ type: Boolean, default: false }) hideErrorText!: string
   @Prop(Array) rules!: any[]
   @Ref('tree') tree!: NTree
   @Model('input', [String, Number]) value!: string | number

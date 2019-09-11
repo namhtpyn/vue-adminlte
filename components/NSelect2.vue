@@ -4,13 +4,15 @@
       {{ label }}
     </label>
     <select :class="cCssClass" :value="value"> </select>
-    <span v-if="!valid" class="help-block">{{ errorText }}</span>
+    <span v-if="!valid && !hideErrorText" class="help-block">{{ errorText }}</span>
+    <n-overlay absolute :value="vLoading">
+      <n-icon css-class="fa-spin fa-5x" style="color:white">circle-o-notch</n-icon>
+    </n-overlay>
   </div>
-  <!-- <select :class="selectCssClass"></select> -->
 </template>
 
 <script lang="ts">
-import { Component, Prop, Model, Watch, Mixins } from 'vue-property-decorator'
+import { Component, Prop, Model, Watch, Mixins, Emit } from 'vue-property-decorator'
 import _ from 'lodash'
 import NDataSource from './Base/NDataSource'
 @Component({ inheritAttrs: false })
@@ -24,22 +26,22 @@ export default class NSelect2 extends Mixins(NDataSource) {
   @Prop({ type: String, default: 'text' }) itemText!: string
   @Prop({ type: String, default: 'value' }) itemValue!: string
   @Prop({ type: Boolean, default: true }) form!: boolean
+  @Prop({ type: Boolean, default: false }) hideErrorText!: string
   @Prop({ type: Boolean, default: false }) small!: boolean
   @Prop({ type: Boolean, default: false }) large!: boolean
   @Prop(String) hint!: string
   @Prop(String) label!: string
   @Prop(Array) rules!: any[]
   @Model('input', [String, Number, Array, Object]) value!: any[] | any
-  async input(e) {
+  @Emit() async input(e) {
+    console.log(e)
     if (!this.lazyValidation || !this.valid) this.validate(e)
-    this.$emit('input', isNaN(e) ? e : Number(e))
   }
 
   valid: boolean = true
   lazyValidation: boolean = false
 
   private theSelect!: any
-  loading: boolean = false
   get hasLabel() {
     return !_.isEmpty(this.label)
   }
@@ -82,16 +84,27 @@ export default class NSelect2 extends Mixins(NDataSource) {
       ;($(this.$el).find('span.select2-selection') as any).css('border-color', '#dd4b39')
     }
   }
+  @Watch('value')
+  private onValueChange(n, o) {
+    this.theSelect.val(n).trigger('change')
+  }
+
+  // @Watch('value')
+  // private onValueChange(n, o) {
+  //   this.theSelect.val(n).trigger('change')
+  // }
 
   mounted() {
     this.theSelect = $(this.$el).find('select') as any
     this.init()
-    this.valid = true
-    this.setSize()
   }
 
   private init() {
-    this.theSelect.empty()
+    if (this.theSelect.hasClass('select2-hidden-accessible')) {
+      this.theSelect.select2('destroy')
+      this.theSelect.off('select2:select')
+      this.theSelect.empty()
+    }
     this.theSelect
       .select2({
         data: this.select2Data,
@@ -107,9 +120,10 @@ export default class NSelect2 extends Mixins(NDataSource) {
           }
         }
       })
-      .change(e => this.input(e.target.value))
+      .on('select2:select', e => this.input(isNaN(e.target.value) ? e.target.value : Number(e.target.value)))
       .val(this.value)
       .trigger('change')
+    this.setSize()
   }
   private setSize() {
     if (!this.small && !this.large) return
