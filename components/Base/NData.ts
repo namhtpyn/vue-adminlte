@@ -20,7 +20,7 @@ export default class NData extends Vue {
   onPropItemsChanged(items) {
     this.vItems = items
   }
-  @Watch('__items')
+  @Watch('vItems')
   onVarItemsChanged(items) {
     this.$emit('update:items', items)
   }
