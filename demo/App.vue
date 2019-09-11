@@ -1,6 +1,6 @@
 <template>
   <div>
-    <n-form>
+    <!-- <n-form>
       <div class="row">
         <div class="col-xs-4">
           <n-text-box hint="abc" label="example textbox" small></n-text-box>
@@ -27,7 +27,7 @@
         hint="Example hint"
         searchable
       ></n-drop-down-tree>
-    </n-form>
+    </n-form> -->
     <!-- <n-drop-down-tree
       ref="treeselect"
       searchable
@@ -100,17 +100,32 @@
     <n-btn app color="primary" text-color="white" @click="abc"> <n-icon color="yellow">play</n-icon>Play </n-btn> -->
     {{ radio }} {{ check }}
     <input type="number" v-model="radio" />
-    <n-radio-group v-model="radio">
-      <n-radio :value="1"></n-radio>
-      <n-radio :value="2"></n-radio>
-      <n-radio :value="3"></n-radio>
-      <n-radio :value="4"></n-radio>
-    </n-radio-group>
+    <n-radio v-model="radio" :value="1"></n-radio>
+    <n-radio v-model="radio" :value="2"></n-radio>
+    <n-radio v-model="radio" :value="3"></n-radio>
+    <n-radio v-model="radio" :value="4"></n-radio>
     <n-checkbox v-model="check" :value="1"></n-checkbox>
     <n-checkbox v-model="check" :value="2"></n-checkbox>
     <n-checkbox v-model="check" :value="3"></n-checkbox>
     <n-checkbox v-model="check" :value="4"></n-checkbox>
     {{ def }}
+    {{ provinceCode }}
+    <n-drop-down-table
+      label="Tỉnh/Tp"
+      :auto-read="false"
+      :items="items"
+      item-text="calories"
+      item-value="calories"
+      v-model="provinceCode"
+      searchable
+      multiple
+    >
+      <items>
+        <text-item text="Code" value="provinceCode"></text-item>
+        <text-item text="Tên tỉnh/tp" value="provinceName"></text-item>
+        <text-item text="Khu vực" value="areaID"></text-item>
+      </items>
+    </n-drop-down-table>
     <n-data-table ref="table" v-model="def" updatable deletable creatable expandable selectable>
       <items>
         <text-item :header-valign.camel="`middle`" text="Name" value="NamE"></text-item>
@@ -140,7 +155,7 @@ import { Component, Vue } from 'vue-property-decorator'
 // import { TableHeader } from '../types/Table'
 import jsonData from './data.json'
 // import data2 from './data2.json'
-import data3 from './data3.json'
+//import data3 from './data3.json'
 import NSelect2 from '../components/NSelect2.vue'
 
 @Component({
@@ -153,6 +168,7 @@ export default class extends Vue {
     console.log('open')
     console.log(e)
   }
+  provinceCode = []
   def: any = {}
   radio = 1
   check = [1, 3]
@@ -216,13 +232,13 @@ export default class extends Vue {
   //   },
   //   { text: 'Iron (%))', value: 'iron' }
   // ]
-  // items: any[] = jsonData
+  items: any[] = jsonData
   // treeItems: any[] = []
   // unitID = 1
   // unitID2 = 0
   mounted() {
-    ;(this.$refs.treeselect as any).setItems(data3)
-    ;(this.$refs.table as any).setItems(jsonData)
+    // ;(this.$refs.treeselect as any).setItems(data3)
+    // ;(this.$refs.table as any).setItems(jsonData)
   }
 }
 </script>

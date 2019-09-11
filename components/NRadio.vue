@@ -34,8 +34,9 @@ export default class NRadio extends Vue {
   uncheck() {
     this.radioEl.iCheck('uncheck')
   }
+
   toggle() {
-    this.isChecked ? this.uncheck() : this.check()
+    this.radioEl.click()
   }
 
   @Watch('isChecked')
