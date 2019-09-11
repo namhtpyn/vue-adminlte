@@ -27,7 +27,47 @@
         hint="Example hint"
         searchable
       ></n-drop-down-tree>
+<<<<<<< HEAD
     </n-form> -->
+=======
+    </n-form>
+    <n-drop-down-table
+      v-model="value"
+      label="drop down list"
+      :items="items"
+      item-text="NamE"
+      item-value="NamE"
+      searchable
+      :rules="[v => v < 1 || 'Không lớn hơn 1']"
+      multiple
+    >
+      <items>
+        <text-item :header-valign.camel="`middle`" text="Name" value="NamE"></text-item>
+        <text-item header-valign="middle" text="Calories" value="calories"></text-item>
+        <band-item text="band" align="center">
+          <items>
+            <text-item text="Calories" value="calories" summary="sum"></text-item>
+            <number-item text="Fat" value="calories"></number-item>
+          </items>
+        </band-item>
+      </items>
+    </n-drop-down-table>
+
+    <n-drop-down-table
+      label="Tỉnh/Tp"
+      read-url="http://127.0.0.1:3001/home"
+      item-text="provinceName"
+      item-value="provinceCode"
+      v-model="provinceCode"
+      multiple
+    >
+      <items>
+        <text-item text="Code" value="provinceCode"></text-item>
+        <text-item text="Tên tỉnh/tp" value="provinceName"></text-item>
+        <text-item text="Khu vực" value="areaID"></text-item>
+      </items>
+    </n-drop-down-table>
+>>>>>>> e0f92527297753c7f1b200fa0f8c9b0bbafa5b3e
     <!-- <n-drop-down-tree
       ref="treeselect"
       searchable
@@ -109,24 +149,7 @@
     <n-checkbox v-model="check" :value="3"></n-checkbox>
     <n-checkbox v-model="check" :value="4"></n-checkbox>
     {{ def }}
-    {{ provinceCode }}
-    <n-drop-down-table
-      label="Tỉnh/Tp"
-      :auto-read="false"
-      :items="items"
-      item-text="calories"
-      item-value="calories"
-      v-model="provinceCode"
-      searchable
-      multiple
-    >
-      <items>
-        <text-item text="Code" value="provinceCode"></text-item>
-        <text-item text="Tên tỉnh/tp" value="provinceName"></text-item>
-        <text-item text="Khu vực" value="areaID"></text-item>
-      </items>
-    </n-drop-down-table>
-    <n-data-table ref="table" v-model="def" updatable deletable creatable expandable selectable>
+    <n-data-table ref="table" v-model="def" :items="items" updatable deletable creatable expandable selectable row-select>
       <items>
         <text-item :header-valign.camel="`middle`" text="Name" value="NamE"></text-item>
         <text-item header-valign="middle" text="Calories" value="calories"></text-item>
@@ -147,6 +170,12 @@
 
     <n-modal caption="OK" v-model="modalVisibility" hide-footer>tui thu ne haha</n-modal>
     <n-btn @click="modalVisibility = !modalVisibility">Click</n-btn> -->
+    <n-modal v-model="modal">
+      <n-btn @click="modal = !modal">Click Me</n-btn>
+    </n-modal>
+    <n-btn @click="modal = !modal">Click Me</n-btn>
+    <n-text-box v-model="textbox" @input="textboxinput"></n-text-box>
+    <n-text-box v-model="textbox"></n-text-box>
   </div>
 </template>
 
@@ -156,14 +185,19 @@ import { Component, Vue } from 'vue-property-decorator'
 import jsonData from './data.json'
 // import data2 from './data2.json'
 //import data3 from './data3.json'
+<<<<<<< HEAD
 import NSelect2 from '../components/NSelect2.vue'
+=======
+//import NSelect2 from '../components/NSelect2.vue'
+>>>>>>> e0f92527297753c7f1b200fa0f8c9b0bbafa5b3e
 
-@Component({
-  components: {
-    NSelect2
+@Component({})
+export default class VApp extends Vue {
+  textboxinput(e) {
+    console.log(e)
   }
-})
-export default class extends Vue {
+  textbox = ''
+  modal = false
   opentree(e) {
     console.log('open')
     console.log(e)
@@ -233,6 +267,7 @@ export default class extends Vue {
   //   { text: 'Iron (%))', value: 'iron' }
   // ]
   items: any[] = jsonData
+<<<<<<< HEAD
   // treeItems: any[] = []
   // unitID = 1
   // unitID2 = 0
@@ -240,6 +275,14 @@ export default class extends Vue {
     // ;(this.$refs.treeselect as any).setItems(data3)
     // ;(this.$refs.table as any).setItems(jsonData)
   }
+=======
+  value: any | any[] = ['Frozen Yogurt', 'Eclair']
+  provinceCode = []
+  // treeItems: any[] = []
+  // unitID = 1
+  // unitID2 = 0
+  mounted() {}
+>>>>>>> e0f92527297753c7f1b200fa0f8c9b0bbafa5b3e
 }
 </script>
 

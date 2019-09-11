@@ -3,7 +3,15 @@
     <label v-if="hasLabel" class="control-label" :style="{ 'font-size': this.small ? '12px' : this.large ? '18px' : '14px' }">
       {{ label }}
     </label>
-    <n-drop-down-list :text="getText" :drop-down-width="dropDownWidth" @open="onOpen" :hint="hint" :small="small" :large="large">
+    <n-drop-down-list
+      :modal="modal"
+      :text="getText"
+      :drop-down-width="dropDownWidth"
+      @open="onOpen"
+      :hint="hint"
+      :small="small"
+      :large="large"
+    >
       <template #content="{data}">
         <n-data-table
           ref="table"
@@ -45,6 +53,7 @@ export default class NDropDownTable extends Mixins(NBase, NDataSource) {
   @Prop(String) hint!: string
   @Prop({ type: Boolean, default: false }) small!: boolean
   @Prop({ type: Boolean, default: false }) large!: boolean
+  @Prop({ type: Boolean, default: false }) modal!: boolean
   @Prop({ type: Boolean, default: true }) form!: boolean
   @Prop(Array) rules!: any[]
 
@@ -59,7 +68,6 @@ export default class NDropDownTable extends Mixins(NBase, NDataSource) {
   }
   //search=
   get getText() {
-    console.log('xxx')
     if (this.multiple) {
       return this.vItems
         .filter(item => (this.value as any[]).includes(item[this.itemValue]))
