@@ -52,7 +52,7 @@ export default class NTableCRUD extends Mixins(NBase, NDataSource, NTableProp) {
     this.vLoading = true
     try {
       if (confirm('Bạn có chắc muốn xóa?')) {
-        await axios.delete(this.readUrl, { params: item })
+        await axios.delete(this.deleteUrl, { data: item })
         this.$emit('deleted', item)
         await this.read()
       }
