@@ -96,9 +96,11 @@ export default class NDropDownTable extends Mixins(NBase, NDataSource) {
   }
   @Watch('selectedValue')
   onSelectedValueChanged(values: any[], any) {
-    if (!_.isNil(values)) {
-      if (Array.isArray(values)) this.input(values.map(v => v[this.itemValue]))
-      else this.input(values[this.itemValue])
+    if (!_.isNil(values) && !_.isNil(values[this.itemValue])) {
+      let output: any
+      if (Array.isArray(values)) output = values.map(v => v[this.itemValue])
+      else output = values[this.itemValue]
+      if (!_.isEqual(output, this.value)) this.input(output)
     }
   }
   created() {
