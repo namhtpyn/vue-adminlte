@@ -6,7 +6,7 @@
         <div class="title" v-if="caption" style="flex:auto">{{ caption }}</div>
         <div v-if="searchable" class="has-feedback" style="flex:auto">
           <div class="has-feedback">
-            <input type="text" class="form-control" v-model="vSearch" />
+            <input ref="search" type="text" class="form-control" v-model="vSearch" />
             <span class="glyphicon glyphicon-search form-control-feedback"></span>
           </div>
         </div>
@@ -130,7 +130,7 @@
     </div>
 
     <n-overlay absolute :value="vLoading">
-      <n-icon css-class="fa-spin fa-5x" style="color:white">circle-o-notch</n-icon>
+      <n-icon css-class="fa-spin fa-4x" style="color:white">circle-o-notch</n-icon>
     </n-overlay>
 
     <n-modal :loading="vModal.loading" :caption="vModal.new ? 'Thêm' : 'Sửa'" v-model="vModal.visible">
@@ -274,9 +274,8 @@ export default class NDataTable extends Mixins(mixin1, mixin2) {
   padding-bottom: 10px;
   align-items: center;
 }
-.tbl-header > * {
+.tbl-header > * + * {
   padding-left: 5px;
-  padding-right: 5px;
 }
 .sticky-top {
   position: sticky;

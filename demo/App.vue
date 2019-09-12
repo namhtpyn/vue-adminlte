@@ -23,7 +23,11 @@
       </n-data-table>
     </div>
     n-modal component<br />
-    <n-btn @click="modal = !modal" color="primary">Toggle Modal</n-btn>
+    <div class="row">
+      <div class="col-xs-1">
+        <n-btn @click="modal = !modal" color="primary">Toggle Modalsssssssssssssssssssssssssssssssssssssss</n-btn>
+      </div>
+    </div>
     <n-modal v-model="modal">
       <ul>
         <li v-for="i in 100" :key="i">{{ i }}</li>
@@ -33,7 +37,13 @@
     n-drop-down-table component<br />
     {{ dropDownTableModel }}
     <div style="width:200px">
-      <n-drop-down-table v-model="dropDownTableModel" :items="provinces" item-text="provinceName" item-value="provinceName">
+      <n-drop-down-table
+        v-model="dropDownTableModel"
+        :items="provinces"
+        item-text="provinceName"
+        item-value="provinceName"
+        searchable
+      >
         <items>
           <text-item text="provinceID" value="provinceID"></text-item>
           <text-item text="provinceCode" value="provinceCode"></text-item>
@@ -74,13 +84,13 @@
 import { Component, Vue } from 'vue-property-decorator'
 // import { TableHeader } from '../types/Table'
 import units from './data/units.json'
-// import provinces from './data/provinces.json'
+import provinces from './data/provinces.json'
 // import _ from 'lodash'
 @Component({})
 export default class VApp extends Vue {
   check = 1
   units = units
-  provinces = []
+  provinces = provinces
   unitID = 103
   modal = false
   dataTableModel: any = {}

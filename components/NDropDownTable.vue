@@ -25,6 +25,10 @@
       </template>
     </n-drop-down-list>
     <span v-if="!valid && !hideErrorText" class="help-block">{{ errorText }}</span>
+
+    <n-overlay absolute :value="vLoading">
+      <n-icon css-class="fa-spin fa-4x" style="color:white">circle-o-notch</n-icon>
+    </n-overlay>
   </div>
 </template>
 
@@ -33,6 +37,7 @@ import { Component, Model, Prop, Mixins, Watch } from 'vue-property-decorator'
 import _ from 'lodash'
 import NDataSource from './Base/NDataSource'
 import NBase from './Base/NBase'
+import NDataTable from './NDataTable/index.vue'
 @Component({ inheritAttrs: false })
 export default class NDropDownTable extends Mixins(NBase, NDataSource) {
   @Prop({ type: String, default: 'text' }) itemText!: string
@@ -89,18 +94,19 @@ export default class NDropDownTable extends Mixins(NBase, NDataSource) {
   }
 
   onOpen() {
-    if (this.searchable) this.$nextTick(() => this.$children[0].$children[0].$el.querySelector('input').focus())
+    if (this.searchable) this.$nextTick(() => ((this.$refs.table as NDataTable).$refs.search as HTMLInputElement).focus())
   }
   rowClick({ item }, data) {
-    if (!this.multiple) data.isOpen = false
+    if (!this.multiple) this.$nextTick(() => (data.isOpen = false))
   }
   @Watch('selectedValue')
   onSelectedValueChanged(values: any[], any) {
-    if (!_.isNil(values) && !_.isNil(values[this.itemValue])) {
+    if (!_.isNil(values)) {
       let output: any
       if (Array.isArray(values)) output = values.map(v => v[this.itemValue])
       else output = values[this.itemValue]
-      if (!_.isEqual(output, this.value)) this.input(output)
+
+      if (!_.isNil(output) && !_.isEqual(output, this.value)) this.input(output)
     }
   }
   created() {
