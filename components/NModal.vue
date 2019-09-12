@@ -44,12 +44,16 @@ export default class NModal extends Mixins(NBase) {
   mounted() {
     ;($(this.$el) as any)
       .modal({ backdrop: !this.persistent, show: this.value })
-      .on('hidden.bs.modal', () => this.input(false))
+      .on('hidden.bs.modal', () => {
+        this.$emit('hidden')
+        this.input(false)
+      })
       .on('shown.bs.modal', () => {
         this.headerHeight = $(this.$el.querySelector('.modal-header')).outerHeight(true)
         this.footerHeight = $(this.$el.querySelector('.modal-footer')).outerHeight(true)
         this.dialogMargin =
           $(this.$el.querySelector('.modal-dialog')).outerHeight(true) - $(this.$el.querySelector('.modal-dialog')).innerHeight()
+        this.$emit('shown')
         this.input(true)
       })
   }

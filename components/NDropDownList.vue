@@ -15,14 +15,16 @@
       <slot name="content" :data="data"></slot>
     </div>
     <n-modal
+      :caption="hint"
       v-else
       v-model="data.isOpen"
-      hide-header
       hide-footer
       scrollable
       :large="modalLarge"
       :small="modalSmall"
       :fullscreen="modalFullscreen"
+      @shown="open"
+      @hidden="close"
     >
       <slot name="content" :data="data"></slot>
     </n-modal>
@@ -82,6 +84,7 @@ export default class NDropDownList extends Mixins(NBase) {
       'input-lg': this.large
     }
   }
+  @Emit() modalShown() {}
 }
 </script>
 
