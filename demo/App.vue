@@ -77,6 +77,10 @@
         <n-radio :value="3"></n-radio>
       </n-radio-group>
     </div>
+
+    <n-form ref="form" lazy-validation>
+      <n-text-box :rules="[v => !!v | 'required']"></n-text-box>
+    </n-form>
   </div>
 </template>
 
