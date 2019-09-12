@@ -24,7 +24,7 @@
         </n-data-table>
       </template>
     </n-drop-down-list>
-    <span v-if="!valid" class="help-block">{{ errorText }}</span>
+    <span v-if="!valid && !hideErrorText" class="help-block">{{ errorText }}</span>
   </div>
 </template>
 
@@ -44,7 +44,11 @@ export default class NDropDownTable extends Mixins(NBase, NDataSource) {
   @Prop({ type: Boolean, default: false }) small!: boolean
   @Prop({ type: Boolean, default: false }) large!: boolean
   @Prop({ type: Boolean, default: true }) form!: boolean
+<<<<<<< HEAD
 
+=======
+  @Prop({ type: Boolean, default: false }) hideErrorText!: string
+>>>>>>> 9510b94709569543d469d23eac8872c30669d0ae
   @Prop(Array) rules!: any[]
 
   @Model('input', [String, Number, Array]) value!: any | any[]

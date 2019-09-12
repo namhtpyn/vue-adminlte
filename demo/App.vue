@@ -74,11 +74,13 @@
 import { Component, Vue } from 'vue-property-decorator'
 // import { TableHeader } from '../types/Table'
 import units from './data/units.json'
-import provinces from './data/provinces.json'
+// import provinces from './data/provinces.json'
+// import _ from 'lodash'
 @Component({})
 export default class VApp extends Vue {
+  check = 1
   units = units
-  provinces = provinces
+  provinces = []
   unitID = 103
   modal = false
   dataTableModel: any = {}

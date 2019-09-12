@@ -4,7 +4,7 @@
     <select :class="cCssClass" :value="value" @input="e => input(e.target.value)">
       <option v-for="(item, idx) in vItems" :key="idx" :value="item[itemValue]">{{ item[itemText] }}</option>
     </select>
-    <span v-if="!valid && !hideDetails" class="help-block">{{ errorText }}</span>
+    <span v-if="!valid && !hideErrorText" class="help-block">{{ errorText }}</span>
   </div>
 </template>
 
@@ -14,7 +14,7 @@ import { Component, Prop, Emit, Model, Mixins } from 'vue-property-decorator'
 import NDataSource from './Base/NDataSource'
 @Component({ inheritAttrs: false })
 export default class NSelect extends Mixins(NDataSource) {
-  @Prop({ type: Boolean, default: false }) hideDetails!: boolean
+  @Prop({ type: Boolean, default: false }) hideErrorText!: boolean
   @Prop(String) label!: string
   @Prop(String) cssClass!: string
   @Prop(Array) rules!: any[]

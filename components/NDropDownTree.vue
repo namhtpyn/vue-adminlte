@@ -19,15 +19,16 @@
           sticky-search
           @select="item => itemSelect(item, data)"
           @error="error"
+          @loaded="getText"
         ></n-tree>
       </template>
     </n-drop-down-list>
-    <span v-if="!valid" class="help-block">{{ errorText }}</span>
+    <span v-if="!valid && !hideErrorText" class="help-block">{{ errorText }}</span>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Model, Prop, Mixins, Ref } from 'vue-property-decorator'
+import { Component, Model, Prop, Mixins, Ref, Emit } from 'vue-property-decorator'
 import _ from 'lodash'
 import NTree from './NTree.vue'
 import NDataSource from './Base/NDataSource'
@@ -46,9 +47,11 @@ export default class NDropDownTree extends Mixins(NDataSource) {
   @Prop({ type: Boolean, default: false }) small!: boolean
   @Prop({ type: Boolean, default: false }) large!: boolean
   @Prop({ type: Boolean, default: true }) form!: boolean
+  @Prop({ type: Boolean, default: false }) hideErrorText!: string
   @Prop(Array) rules!: any[]
   @Ref('tree') tree!: NTree
   @Model('input', [String, Number]) value!: string | number
+  @Emit() select(e) {}
 
   //treeItems: any[] = []
   valid: boolean = true
@@ -66,13 +69,6 @@ export default class NDropDownTree extends Mixins(NDataSource) {
   get hasLabel() {
     return !_.isEmpty(this.label)
   }
-  // get getText() {
-  //   if (_.isEmpty(this.treeItems)) return ''
-  //   const item = this.treeItems.find(item => item[this.itemValue] === this.value)
-  //   if (!item || !Object.hasOwnProperty.call(item, this.itemText)) return ''
-  //   this.$emit('change', item)
-  //   return item[this.itemText].toString()
-  // }
   get errorText() {
     if (!this.valid && this.rules) {
       const f = this.rules.find(r => r(this.value) !== true)
@@ -88,13 +84,17 @@ export default class NDropDownTree extends Mixins(NDataSource) {
   private itemSelect(item, data) {
     this.text = item.text
     this.input(item.id)
+    this.select(item)
     if (!this.lazyValidation || !this.valid) this.validate(item.id)
     data.isOpen = false
   }
-  mounted() {
-    if (this.value && !_.isEmpty(this.tree.items)) {
-      this.text = this.tree.items.find(t => t[this.itemValue] === this.value)[this.itemText]
-    }
+  mounted() {}
+  private getText() {
+    this.$nextTick(() => {
+      if (!this.text && this.value && !_.isEmpty(this.tree.items)) {
+        this.text = this.tree.items.find(t => t[this.itemValue] === this.value)[this.itemText]
+      }
+    })
   }
   private onOpen() {
     this.$nextTick(() => {
