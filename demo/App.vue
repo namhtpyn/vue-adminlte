@@ -23,7 +23,11 @@
       </n-data-table>
     </div>
     n-modal component<br />
-    <n-btn @click="modal = !modal" color="primary">Toggle Modal</n-btn>
+    <div class="row">
+      <div class="col-xs-1">
+        <n-btn @click="modal = !modal" color="primary">Toggle Modalsssssssssssssssssssssssssssssssssssssss</n-btn>
+      </div>
+    </div>
     <n-modal v-model="modal">
       <ul>
         <li v-for="i in 100" :key="i">{{ i }}</li>
