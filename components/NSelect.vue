@@ -5,6 +5,10 @@
       <option v-for="(item, idx) in vItems" :key="idx" :value="item[itemValue]">{{ item[itemText] }}</option>
     </select>
     <span v-if="!valid && !hideErrorText" class="help-block">{{ errorText }}</span>
+
+    <n-overlay absolute :value="vLoading">
+      <n-icon css-class="fa-spin fa-4x" style="color:white">circle-o-notch</n-icon>
+    </n-overlay>
   </div>
 </template>
 

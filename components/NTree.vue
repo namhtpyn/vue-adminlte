@@ -12,7 +12,7 @@
       <div id="component-tree-view"></div>
     </div>
     <n-overlay absolute :value="vLoading">
-      <n-icon css-class="fa-spin fa-5x" style="color:white">circle-o-notch</n-icon>
+      <n-icon css-class="fa-spin fa-4x" style="color:white">circle-o-notch</n-icon>
     </n-overlay>
   </div>
 </template>
