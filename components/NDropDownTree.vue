@@ -92,7 +92,9 @@ export default class NDropDownTree extends Mixins(NDataSource) {
   private getText() {
     this.$nextTick(() => {
       if (!this.text && this.value && !_.isEmpty(this.tree.items)) {
-        this.text = this.tree.items.find(t => t[this.itemValue] === this.value)[this.itemText]
+        const item = this.tree.items.find(t => t[this.itemValue] === this.value)
+        if (item) return item[this.itemText]
+        return ''
       }
     })
   }
