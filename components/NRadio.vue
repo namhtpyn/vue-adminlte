@@ -23,7 +23,8 @@ export default class NRadio extends Vue {
     this.radioEl = $(this.$el) as any
     this.radioEl
       .iCheck({
-        radioClass: 'iradio_square-' + this.color
+        radioClass: 'iradio_square-' + this.color,
+        disabledClass: 'hover_disabled'
       })
       .on('ifClicked', e => this.modifiedModel(!this.isChecked))
   }
@@ -53,4 +54,5 @@ export default class NRadio extends Vue {
 }
 </script>
 
-<style></style>
+<style>
+</style>

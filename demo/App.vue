@@ -44,7 +44,7 @@
     </div>
     <br/>
     n-checkbox
-    <n-checkbox :value="1" v-model="check"></n-checkbox>
+    <n-radio :value="1" v-model="check"></n-radio>
   </div>
 </template>
 
