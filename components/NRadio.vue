@@ -23,25 +23,6 @@ export default class NRadio extends Vue {
     if (!this.model) return _.isEqual(this.groupModel, this.value)
     return _.isEqual(this.model, this.value)
   }
-<<<<<<< HEAD
-=======
-  mounted() {
-    this.radioEl = $(this.$el) as any
-    this.radioEl
-      .iCheck({
-        radioClass: 'iradio_square-' + this.color,
-        disabledClass: 'hover_disabled'
-      })
-      .on('ifClicked', e => this.modifiedModel(!this.isChecked))
-  }
-
-  check() {
-    this.radioEl.iCheck('check')
-  }
-  uncheck() {
-    this.radioEl.iCheck('uncheck')
-  }
->>>>>>> 9510b94709569543d469d23eac8872c30669d0ae
 
   toggle() {
     ;(this.$el.querySelector('input[type="radio"]') as HTMLInputElement).click()
@@ -61,7 +42,6 @@ export default class NRadio extends Vue {
 </script>
 
 <style>
-<<<<<<< HEAD
 .n-radio {
   display: none;
 }
@@ -99,6 +79,4 @@ export default class NRadio extends Vue {
   left: 2px;
   color: #ffffff;
 }
-=======
->>>>>>> 9510b94709569543d469d23eac8872c30669d0ae
 </style>

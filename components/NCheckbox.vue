@@ -25,33 +25,8 @@ export default class NCheckbox extends Vue {
   @Model('input', { type: [Array, String, Number, Boolean] }) readonly model: any[] | any
 
   get isChecked() {
-<<<<<<< HEAD
     if (Array.isArray(this.model)) return this.model.some(m => _.isEqual(m, this.value))
     else return _.isEqual(this.model, this.value)
-=======
-    if (this.model instanceof Array) return this.model.some(m => _.isEqual(m, this.value))
-    return _.isEqual(this.model, this.value)
-  }
-  checkboxEl!: any
-  mounted() {
-    this.checkboxEl = $(this.$el) as any
-    this.checkboxEl
-      .iCheck({
-        checkboxClass: 'icheckbox_square-' + this.color,
-        disabledClass: 'hover_disabled'
-      })
-      .on('ifClicked', e => this.iCheckChanged(!this.isChecked))
-  }
-  check() {
-    this.checkboxEl.iCheck('check')
-  }
-  uncheck() {
-    this.checkboxEl.iCheck('uncheck')
-  }
-  toggle() {
-    this.checkboxEl.click()
-    //this.isChecked ? this.uncheck() : this.check()
->>>>>>> 9510b94709569543d469d23eac8872c30669d0ae
   }
 
   input(e) {
@@ -81,7 +56,6 @@ export default class NCheckbox extends Vue {
 </script>
 
 <style>
-<<<<<<< HEAD
 .n-checkbox {
   display: none;
 }
@@ -117,9 +91,5 @@ export default class NCheckbox extends Vue {
   top: 0px;
   left: 2px;
   color: #ffffff;
-=======
-.hover_disabled {
-  cursor: not-allowed !important;
->>>>>>> 9510b94709569543d469d23eac8872c30669d0ae
 }
 </style>
