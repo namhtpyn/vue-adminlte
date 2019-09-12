@@ -68,10 +68,26 @@ export default class NCheckbox extends Vue {
   margin: unset;
   cursor: pointer;
 }
+.n-checkbox[disabled] + label {
+  opacity: 0.6;
+}
+.n-checkbox[disabled] + label:hover {
+  border: 1px solid #d3cfc8;
+  box-shadow: unset;
+}
+.n-checkbox[disabled] + label:hover {
+  border: 1px solid #d3cfc8;
+  box-shadow: unset;
+}
+.n-checkbox[disabled]:checked + label:hover {
+  border: 1px solid #2489c0;
+}
+
 .n-checkbox + label:hover {
   border: 1px solid #2489c0;
   box-shadow: inset 0px 0px 0px 1px #2489c0;
 }
+
 .n-checkbox + label:active,
 .n-checkbox:checked + label:active {
   border: 1px solid #2489c0;

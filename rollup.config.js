@@ -15,7 +15,7 @@ let components = fs
   .map(p => {
     return {
       name: path.parse(p).name,
-      path: p + (fs.lstatSync(p).isDirectory() ? '/index.vue' : '')
+      path: p + (fs.lstatSync(p).isDirectory() ? '/' + path.parse(p).name + '.vue' : '')
     }
   })
   .filter(o => fs.existsSync(o.path))
@@ -47,7 +47,7 @@ const xxx = components.map(o => {
       vue(),
       strip({
         debugger: true,
-        sourceMap: fakse
+        sourceMap: false
       }),
       replace({
         'process.env.NODE_ENV': JSON.stringify('production')
