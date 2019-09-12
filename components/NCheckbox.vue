@@ -1,5 +1,5 @@
 <template>
-  <label><input type="checkbox" :checked="isChecked" :value="value" v-bind="$attrs" /> {{ label }}</label>
+  <label><input type="checkbox" :checked="isChecked" :value="value" :disabled="disabled" /> {{ label }}</label>
 </template>
 
 <script lang="ts">
@@ -8,6 +8,7 @@ import _ from 'lodash'
 @Component({ inheritAttrs: false })
 export default class NCheckbox extends Vue {
   @Prop({ type: Boolean, default: true }) readonly form!: boolean
+  @Prop({ type: Boolean, default: false }) readonly disabled!: boolean
   @Prop() label!: string
   @Prop({ type: [String, Number, Boolean, Object], default: true }) readonly value!: string | number | boolean | object
   @Prop({ type: String, default: 'blue' }) readonly color!: string
@@ -23,7 +24,8 @@ export default class NCheckbox extends Vue {
     this.checkboxEl = $(this.$el) as any
     this.checkboxEl
       .iCheck({
-        checkboxClass: 'icheckbox_square-' + this.color
+        checkboxClass: 'icheckbox_square-' + this.color,
+        disabledClass: 'hover_disabled'
       })
       .on('ifClicked', e => this.iCheckChanged(!this.isChecked))
   }
@@ -61,4 +63,8 @@ export default class NCheckbox extends Vue {
 }
 </script>
 
-<style></style>
+<style>
+.hover_disabled{
+  cursor: not-allowed !important
+}
+</style>

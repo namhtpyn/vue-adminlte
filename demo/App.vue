@@ -42,6 +42,9 @@
       ></n-select2> -->
       <n-select2 v-model="channelID" hint="Công suất phát" :items="channels" hide-error-text small></n-select2>
     </div>
+    <br/>
+    n-checkbox
+    <n-checkbox :value="1" v-model="check"></n-checkbox>
   </div>
 </template>
 
@@ -53,6 +56,7 @@ import provinces from './data/provinces.json'
 import _ from 'lodash'
 @Component({})
 export default class VApp extends Vue {
+  check=1
   units = units
   provinces = []
   unitID = 103
