@@ -1,5 +1,6 @@
 import { Vue, Component, Emit } from 'vue-property-decorator'
 import VueSlot from '../../extension/VueSlot'
+import _ from 'lodash'
 @Component({})
 export default class NBase extends Vue {
   vSlot: VueSlot = new VueSlot([])
@@ -11,5 +12,20 @@ export default class NBase extends Vue {
   @Emit() async error(e) {}
   setLoading(state: boolean) {
     this.vLoading = state
+  }
+  get isMobile() {
+    return !_.isEmpty(window.orientation) || navigator.userAgent.indexOf('IEMobile') !== -1
+  }
+  get isLg() {
+    return window.innerWidth >= 1200
+  }
+  get isMd() {
+    return window.innerWidth >= 992
+  }
+  get isSm() {
+    return window.innerWidth >= 768
+  }
+  get isXs() {
+    return window.innerWidth < 768
   }
 }

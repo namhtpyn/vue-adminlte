@@ -12,8 +12,8 @@
       ></n-tree>
     </div>
     n-data-table component
-    <div style="max-height:200px; overflow:auto">
-      <n-data-table :items="provinces" updatable update-url="/haha" caption="hihi" searchable>
+    <div style="max-height:100px; overflow:auto">
+      <n-data-table v-model="dataTableModel" :items="provinces" updatable update-url="/haha" caption="hihi" searchable selectable>
         <items>
           <text-item text="provinceName" value="provinceName"></text-item>
         </items>
@@ -30,18 +30,43 @@
       </ul>
     </n-modal>
 
-    <n-drop-down-table
-      v-model="dropDownTableModel"
-      :items="provinces"
-      item-text="provinceName"
-      modal
-      modal-large
-      item-value="provinceCode"
-    >
-      <items>
-        <text-item text="provinceName" value="provinceName"></text-item>
-      </items>
-    </n-drop-down-table>
+    n-drop-down-table component<br />
+    {{ dropDownTableModel }}
+    <div style="width:200px">
+      <n-drop-down-table v-model="dropDownTableModel" :items="provinces" item-text="provinceName" item-value="provinceName">
+        <items>
+          <text-item text="provinceID" value="provinceID"></text-item>
+          <text-item text="provinceCode" value="provinceCode"></text-item>
+          <text-item text="provinceName" value="provinceName"></text-item>
+          <text-item text="areaID" value="areaID"></text-item>
+        </items>
+      </n-drop-down-table>
+    </div>
+
+    <n-date-picker></n-date-picker>
+    {{ checkboxModel }}
+    <n-checkbox
+      v-model="checkboxModel"
+      :value="{ provinceID: 1016, provinceCode: 'AGG', provinceName: 'An Giang', areaID: 2 }"
+    ></n-checkbox>
+    <n-checkbox
+      v-model="checkboxModel"
+      :value="{ provinceID: 1019, provinceCode: 'BDG', provinceName: 'Bình Dương', areaID: 2 }"
+    ></n-checkbox>
+    <div>
+      {{ radioModel }}
+      <n-radio v-model="radioModel" :value="1"></n-radio>
+      <n-radio v-model="radioModel" :value="2"></n-radio>
+      <n-radio v-model="radioModel" :value="3"></n-radio>
+    </div>
+    <div>
+      {{ radioGroupModel }}
+      <n-radio-group v-model="radioGroupModel">
+        <n-radio :value="1"></n-radio>
+        <n-radio :value="2"></n-radio>
+        <n-radio :value="3"></n-radio>
+      </n-radio-group>
+    </div>
   </div>
 </template>
 
@@ -56,7 +81,15 @@ export default class VApp extends Vue {
   provinces = provinces
   unitID = 103
   modal = false
+  dataTableModel: any = {}
   dropDownTableModel: any | any[] = ''
+  checkboxModel: any[] = []
+  radioModel: any = {}
+  radioGroupModel: any = {}
+  console(...args) {
+    console.log(args)
+    console.log(this.checkboxModel)
+  }
 }
 </script>
 

@@ -4,10 +4,10 @@
       <div :class="containerCss" style="width: 100%">
         <input type="text" readonly class="input-flat text-overflow" :placeholder="hint" :value="text" />
       </div>
-      <span v-if="!modal" :class="`fa fa-caret-${data.isOpen ? 'up' : 'down'} form-control-feedback`"></span>
+      <span v-if="!useModal" :class="`fa fa-caret-${data.isOpen ? 'up' : 'down'} form-control-feedback`"></span>
     </div>
     <div
-      v-if="!modal"
+      v-if="!useModal"
       v-show="data.isOpen"
       class="form-control drop-down-container"
       :style="dropDownWidth ? `width:${dropDownWidth}px` : ''"
@@ -30,14 +30,15 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop, Emit } from 'vue-property-decorator'
+import { Component, Prop, Emit, Mixins } from 'vue-property-decorator'
 import vClickOutside from 'v-click-outside'
+import NBase from './Base/NBase'
 @Component({
   directives: {
     clickOut: vClickOutside.directive
   }
 })
-export default class NDropDownList extends Vue {
+export default class NDropDownList extends Mixins(NBase) {
   @Prop({ type: String, default: '' }) text!: string
   @Prop(String) hint!: string
   @Prop({ type: Boolean, default: false }) small!: boolean
@@ -54,6 +55,10 @@ export default class NDropDownList extends Vue {
 
   toggle(e) {
     this.data.isOpen ? this.close(e) : this.open(e)
+  }
+
+  get useModal() {
+    return this.modal || this.isXs
   }
 
   @Emit() open(e) {
@@ -101,10 +106,11 @@ export default class NDropDownList extends Vue {
 }
 .drop-down-container {
   height: auto;
+  width: fit-content;
   position: absolute;
-  width: 100%;
+  min-width: 100%;
   max-height: 300px;
-  overflow-y: auto;
+  overflow: auto;
   padding: 0px 0px;
   z-index: 9999;
 }

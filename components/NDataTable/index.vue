@@ -22,7 +22,7 @@
       <slot name="top.append"></slot>
     </div>
 
-    <div class="table-responsive">
+    <div :class="{ 'table-responsive': responsive }">
       <table :class="cssClass.table">
         <thead v-if="!hideHeader">
           <tr :class="cssClass.headerRow" v-for="headerRow in headerRows()" :key="headerRow">
@@ -46,9 +46,9 @@
             :class="cssClass.row"
             v-for="(item, rowIndex) in pageItems"
             :key="rowIndex"
-            @contextmenu="e => rowContextmenu(e, item, rowIndex)"
-            @dblclick="e => rowDblclick(e, item, rowIndex)"
-            @click="e => rowClick(e, item, rowIndex)"
+            @contextmenu.stop="e => rowContextmenu(e, item, rowIndex)"
+            @dblclick.stop="e => rowDblclick(e, item, rowIndex)"
+            @click.stop="e => rowClick(e, item, rowIndex)"
           >
             <td :class="cssClass.cell" :style="cellStyle(header)" v-for="(header, colIndex) in headerColumns()" :key="colIndex">
               <slot :name="`item.${kebabCase(header.value)}`" :item="item" :value="item[header.value]" :index="rowIndex">
@@ -56,8 +56,8 @@
                   <n-checkbox
                     ref="checkbox"
                     v-if="multiple"
-                    @input="input"
                     :model="value"
+                    @input="input"
                     :value="keyField ? item[keyField] : item"
                   ></n-checkbox>
                   <n-radio v-else ref="radio" @input="input" :model="value" :value="keyField ? item[keyField] : item"></n-radio>
@@ -186,6 +186,7 @@ export default class NDataTable extends Mixins(mixin1, mixin2) {
   private rowClick(event, item, rowIndex) {
     //Row select
     if (this.selectable && this.rowSelect) {
+      if (event.target.htmlFor && ['checkbox', 'radio'].some(f => event.target.htmlFor.includes(f))) return
       if (this.multiple) (this.$refs.checkbox[rowIndex] as NCheckBox).toggle()
       else (this.$refs.radio[rowIndex] as NRadio).toggle()
     }
