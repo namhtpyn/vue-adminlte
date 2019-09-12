@@ -4,6 +4,7 @@ import commonjs from 'rollup-plugin-commonjs'
 import resolve from 'rollup-plugin-node-resolve'
 import replace from 'rollup-plugin-replace'
 import multiInput from 'rollup-plugin-multi-input'
+import strip from 'rollup-plugin-strip'
 import fs from 'fs'
 import path from 'path'
 
@@ -37,13 +38,17 @@ const xxx = components.map(o => {
       dir: './dist/',
       entryFileNames: o.name + '.js'
     },
-    external: ['vue', 'lodash', 'axios', 'moment'],
+    external: ['vue', 'lodash', 'axios', 'moment', 'chart.js'],
     plugins: [
       multiInput(),
       typescript(),
       commonjs(),
       resolve(),
       vue(),
+      strip({
+        debugger: true,
+        sourceMap: fakse
+      }),
       replace({
         'process.env.NODE_ENV': JSON.stringify('production')
       })

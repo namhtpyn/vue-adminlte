@@ -53,7 +53,6 @@
       </n-drop-down-table>
     </div>
 
-    <n-date-picker></n-date-picker>
     {{ checkboxModel }}
     <n-checkbox
       v-model="checkboxModel"
@@ -81,6 +80,9 @@
     <n-form ref="form" lazy-validation>
       <n-text-box :rules="[v => !!v | 'required']"></n-text-box>
     </n-form>
+    <div style="width:300px">
+      <n-line-chart caption="HAHAHA"></n-line-chart>
+    </div>
   </div>
 </template>
 
