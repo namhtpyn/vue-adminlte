@@ -16,6 +16,12 @@ export class TableHeader {
   children?: TableHeader[]
 }
 
+export class TableItem {
+  index?: number
+  data?: any
+  isExpansion?: boolean
+}
+
 declare global {
   interface Object {
     fromEntries(o: any): Object

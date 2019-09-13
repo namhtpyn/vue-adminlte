@@ -22,8 +22,17 @@
       ></n-tree>
     </div> -->
     n-data-table component
-    <div style="max-height:100px; overflow:auto">
-      <n-data-table v-model="dataTableModel" :items="provinces" updatable update-url="/haha" caption="hihi" searchable selectable>
+    <div style="max-height:400px; overflow:auto">
+      <n-data-table
+        v-model="dataTableModel"
+        :items="provinces"
+        updatable
+        update-url="/haha"
+        caption="hihi"
+        searchable
+        selectable
+        expandable
+      >
         <items>
           <text-item text="provinceName" value="provinceName"></text-item>
         </items>
@@ -46,7 +55,7 @@
 
     n-drop-down-table component<br />
     {{ dropDownTableModel }}
-    <div style="width:200px">
+    <div style="width:400px">
       <n-drop-down-table
         v-model="dropDownTableModel"
         :items="provinces"

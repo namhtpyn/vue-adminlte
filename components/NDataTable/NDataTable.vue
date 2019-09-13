@@ -46,40 +46,57 @@
             :class="cssClass.row"
             v-for="(item, rowIndex) in pageItems"
             :key="rowIndex"
-            @contextmenu.stop="e => rowContextmenu(e, item, rowIndex)"
-            @dblclick.stop="e => rowDblclick(e, item, rowIndex)"
-            @click.stop="e => rowClick(e, item, rowIndex)"
+            @contextmenu.stop="e => rowContextmenu(e, item.data, rowIndex)"
+            @dblclick.stop="e => rowDblclick(e, item.data, rowIndex)"
+            @click.stop="e => rowClick(e, item.data, rowIndex)"
           >
-            <td :class="cssClass.cell" :style="cellStyle(header)" v-for="(header, colIndex) in headerColumns()" :key="colIndex">
-              <slot :name="`item.${kebabCase(header.value)}`" :item="item" :value="item[header.value]" :index="rowIndex">
-                <template v-if="header.value === '$selection'">
-                  <n-checkbox
-                    ref="checkbox"
-                    v-if="multiple"
-                    :model="value"
-                    @input="input"
-                    :value="keyField ? item[keyField] : item"
-                  ></n-checkbox>
-                  <n-radio v-else ref="radio" @input="input" :model="value" :value="keyField ? item[keyField] : item"></n-radio>
-                </template>
-                <template v-else-if="header.value === '$expansion'">
-                  <n-icon style="cursor:pointer" @click="expandRow(rowIndex)">chevron-down</n-icon>
-                </template>
-                <template v-else-if="header.value === '$action'">
-                  <div class="btn-group">
-                    <n-btn v-if="updatable" @click="updateClick(item)">
-                      <n-icon>pencil</n-icon>
-                    </n-btn>
-                    <n-btn v-if="deletable" @click="removeClick(item)">
-                      <n-icon>trash</n-icon>
-                    </n-btn>
-                  </div>
-                </template>
-                <template v-else>
-                  {{ formatItemValue(item, header) }}
-                </template>
-              </slot>
+            <td v-if="item.isExpansion" :colspan="headerColumns().length">
+              <slot :name="`item.${kebabCase(header.value)}.expand`" :item="item.data"></slot>
             </td>
+            <template v-else>
+              <td :class="cssClass.cell" :style="cellStyle(header)" v-for="(header, colIndex) in headerColumns()" :key="colIndex">
+                <slot
+                  :name="`item.${kebabCase(header.value)}`"
+                  :item="item.data"
+                  :value="item.data[header.value]"
+                  :index="item.index"
+                  :rowIndex="rowIndex"
+                >
+                  <template v-if="header.value === '$selection'">
+                    <n-checkbox
+                      ref="checkbox"
+                      v-if="multiple"
+                      :model="value"
+                      @input="input"
+                      :value="keyField ? item.data[keyField] : item.data"
+                    ></n-checkbox>
+                    <n-radio
+                      v-else
+                      ref="radio"
+                      @input="input"
+                      :model="value"
+                      :value="keyField ? item.data[keyField] : item.data"
+                    ></n-radio>
+                  </template>
+                  <template v-else-if="header.value === '$expansion'">
+                    <n-icon style="cursor:pointer" @click="expandRow(item.index)">chevron-down</n-icon>
+                  </template>
+                  <template v-else-if="header.value === '$action'">
+                    <div class="btn-group">
+                      <n-btn v-if="updatable" @click="updateClick(item.data)">
+                        <n-icon>pencil</n-icon>
+                      </n-btn>
+                      <n-btn v-if="deletable" @click="removeClick(item.data)">
+                        <n-icon>trash</n-icon>
+                      </n-btn>
+                    </div>
+                  </template>
+                  <template v-else>
+                    {{ formatItemValue(item.data, header) }}
+                  </template>
+                </slot>
+              </td>
+            </template>
           </tr>
         </tbody>
         <tbody v-else>
@@ -212,7 +229,10 @@ export default class NDataTable extends Mixins(mixin1, mixin2) {
   private formatItemValue(item: any, header: TableHeader) {
     return item[header.value]
   }
-  private expandRow(rowIndex: number) {}
+  private expandRow(itemIndex: number) {
+    if (!this.vExpansion.includes(itemIndex)) this.vExpansion.push(itemIndex)
+    else this.vExpansion.splice(this.vExpansion.findIndex(i => i === itemIndex), 1)
+  }
   /**pagination */
   private changeItemPerPage(e) {
     this.vItemPerPage = e.target.value
