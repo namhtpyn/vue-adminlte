@@ -63,20 +63,13 @@
       </n-drop-down-table>
     </div>
 
-    <n-date-picker></n-date-picker>
     {{ checkboxModel }}
-    <n-checkbox
-      v-model="checkboxModel"
-      :value="{ provinceID: 1016, provinceCode: 'AGG', provinceName: 'An Giang', areaID: 2 }"
-    ></n-checkbox>
-    <n-checkbox
-      v-model="checkboxModel"
-      :value="{ provinceID: 1019, provinceCode: 'BDG', provinceName: 'Bình Dương', areaID: 2 }"
-    ></n-checkbox>
+    <n-checkbox v-model="checkboxModel" :value="1"></n-checkbox>
+    <n-checkbox v-model="checkboxModel" disabled :value="2"></n-checkbox>
     <div>
       {{ radioModel }}
       <n-radio v-model="radioModel" :value="1"></n-radio>
-      <n-radio v-model="radioModel" :value="2"></n-radio>
+      <n-radio v-model="radioModel" disabled :value="2"></n-radio>
       <n-radio v-model="radioModel" :value="3"></n-radio>
     </div>
     <div>
@@ -87,9 +80,13 @@
         <n-radio :value="3"></n-radio>
       </n-radio-group>
     </div>
-    <n-tab-collection ref="tabCollection">
-      <n-tab v-for="(tab, idx) in tabs" :key="idx" :title="tab">{{ tab }}</n-tab>
-    </n-tab-collection>
+
+    <n-form ref="form" lazy-validation>
+      <n-text-box :rules="[v => !!v | 'required']"></n-text-box>
+    </n-form>
+    <div style="width:300px">
+      <n-line-chart caption="HAHAHA"></n-line-chart>
+    </div>
   </div>
 </template>
 
@@ -108,8 +105,8 @@ export default class VApp extends Vue {
   modal = false
   dataTableModel: any = {}
   dropDownTableModel: any | any[] = ''
-  checkboxModel: any[] = []
-  radioModel: any = {}
+  checkboxModel: any[] = [2]
+  radioModel: any = 2
   radioGroupModel: any = {}
   tabs = []
   console(...args) {

@@ -18,7 +18,8 @@ export default class NForm extends Mixins(NBase) {
   private formComponents: any[] = []
 
   mounted() {
-    this.formComponents = this.vSlot.find((node: VueNode) => node.isComponent).map(o => o.componentInstance)
+    const nodes = this.vSlot.find((node: VueNode) => node.isComponent)
+    this.formComponents = nodes.map(o => o.componentInstance)
     if (this.lazyValidation) {
       this.formComponents.forEach(v => {
         v.lazyValidation = true

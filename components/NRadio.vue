@@ -55,6 +55,20 @@ export default class NRadio extends Vue {
   cursor: pointer;
   border-radius: 17px;
 }
+.n-radio[disabled] + label {
+  opacity: 0.6;
+}
+.n-radio[disabled] + label:hover {
+  border: 1px solid #d3cfc8;
+  box-shadow: unset;
+}
+.n-radio[disabled] + label:hover {
+  border: 1px solid #d3cfc8;
+  box-shadow: unset;
+}
+.n-radio[disabled]:checked + label:hover {
+  border: 1px solid #2489c0;
+}
 .n-radio + label:hover {
   border: 1px solid #2489c0;
   box-shadow: inset 0px 0px 0px 1px #2489c0;

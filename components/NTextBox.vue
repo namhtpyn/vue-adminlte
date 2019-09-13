@@ -13,12 +13,12 @@
       </span>
       <input
         :type="type"
-        :class="cCssClass"
+        :class="cssClass"
         :placeholder="hint"
         :value="value"
         @input="e => input(e.target.value)"
         @blur="input(value)"
-        :disabled="readonly"
+        v-bind="$attrs"
       />
       <span v-if="suffix" class="input-group-addon">{{ suffix }}</span>
       <span v-if="appendIcon" class="input-group-addon">
@@ -39,11 +39,9 @@ import _ from 'lodash'
 @Component({ inheritAttrs: false })
 export default class NTextBox extends Vue {
   @Prop({ type: String, default: 'text' }) type!: string
-  @Prop(String) cssClass!: string
   @Prop(String) label!: string
   @Prop(String) hint!: string
   @Prop(Array) rules!: any[]
-  @Prop(Boolean) readonly!: boolean
   @Prop({ type: String, default: 'default' }) color!: string
   @Prop({ type: Boolean, default: true }) form!: string
   @Prop({ type: Boolean, default: false }) hideErrorText!: string
@@ -79,8 +77,8 @@ export default class NTextBox extends Vue {
       this.prefix || this.prependIcon || this.suffix || this.appendIcon || this.appendButton || this.prependBtn || this.appendBtn
     )
   }
-  get cCssClass() {
-    let css = 'form-control ' + (this.cssClass || '')
+  get cssClass() {
+    let css = 'form-control '
     css += this.large ? ' input-lg' : ''
     css += this.small ? ' input-sm' : ''
     return css
@@ -92,18 +90,15 @@ export default class NTextBox extends Vue {
     }
     return ''
   }
-
   get classComponent() {
     return { 'form-group': this.form, 'has-error': !this.valid, 'has-feedback': this.innerIcon }
   }
-
   get styleLabel() {
     return {
       'control-label': true,
       'font-size': `${this.small ? '11px' : this.large ? '15px' : '13px'} !important`
     }
   }
-
   get divClass() {
     return {
       'input-group': this.inputGroup,
@@ -111,7 +106,6 @@ export default class NTextBox extends Vue {
       'input-group-lg': this.inputGroup && this.large
     }
   }
-
   validate(value) {
     this.valid = true
     if (this.rules) this.valid = !this.rules.some(e => e(value) !== true)
@@ -119,5 +113,3 @@ export default class NTextBox extends Vue {
   }
 }
 </script>
-
-<style scoped></style>
