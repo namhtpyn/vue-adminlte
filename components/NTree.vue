@@ -117,7 +117,6 @@ export default class NTree extends Mixins(NDataSource) {
   }
   focusSelectedNode() {
     if (!this.value) return
-    //this.theTree.jstree().select_node(this.value)
     const node = this.theTree.jstree().get_node(this.value)
     if (node && !_.isEmpty(node.a_attr)) {
       $(this.$el)

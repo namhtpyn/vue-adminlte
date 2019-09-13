@@ -20,18 +20,13 @@ export default class NTabCollection extends Vue {
   private valueTabActive: any = null
   private tabComponents: any[] = []
   mounted() {
-    this.findDeep(this.$slots.default)
-    this.setTabID()
-    if (this.changeOnCreated && !_.isEmpty(this.headers)) this.valueTabActive = this.headers[this.tabActive].value
+    this.init()
   }
 
   get tabActive() {
     if (!_.isEmpty(this.tabComponents)) {
       const idx = this.tabComponents.findIndex(t => t.active)
-      if (idx < 0) {
-        this.tabComponents[0].active = true
-        return 0
-      }
+      if (idx < 0) return 0
       return idx
     }
     return -1
@@ -51,6 +46,13 @@ export default class NTabCollection extends Vue {
     this.$emit('tab-change', n)
   }
 
+  init() {
+    this.tabComponents = []
+    this.findDeep(this.$slots.default)
+    this.setTabID()
+    if (this.changeOnCreated && !_.isEmpty(this.headers)) this.valueTabActive = this.headers[this.tabActive].value
+  }
+
   tabClicked(item) {
     this.valueTabActive = item.value
   }
@@ -62,6 +64,7 @@ export default class NTabCollection extends Vue {
   }
 
   private findDeep(obj) {
+    if (!obj) return
     if (obj instanceof Array) {
       for (let i = 0; i < obj.length; i++) {
         this.findDeep(obj[i])

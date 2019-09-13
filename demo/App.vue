@@ -1,7 +1,16 @@
 <template>
   <div>
     n-tree component
-    <div style="max-height:100px; overflow:auto">
+    <n-drop-down-tree
+      :items="units"
+      item-value="UnitID"
+      item-text="UnitName"
+      tree-parent-key="ParentID"
+      v-model="unitID"
+      :tree-expand-to-level="1"
+      searchable
+    ></n-drop-down-tree>
+    <!-- <div style="max-height:100px; overflow:auto">
       <n-tree
         :items="units"
         item-value="UnitID"
@@ -9,8 +18,9 @@
         parent-key="ParentID"
         v-model="unitID"
         sticky-search
+        searchable
       ></n-tree>
-    </div>
+    </div> -->
     n-data-table component
     <div style="max-height:100px; overflow:auto">
       <n-data-table v-model="dataTableModel" :items="provinces" updatable update-url="/haha" caption="hihi" searchable selectable>
@@ -100,9 +110,14 @@ export default class VApp extends Vue {
   checkboxModel: any[] = [2]
   radioModel: any = 2
   radioGroupModel: any = {}
+  tabs = []
   console(...args) {
     console.log(args)
     console.log(this.checkboxModel)
+  }
+  mounted() {
+    this.tabs = ['1', '2', '3', '4', '5', '6']
+    this.$nextTick(() => (this.$refs.tabCollection as any).init())
   }
 }
 </script>
