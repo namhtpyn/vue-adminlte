@@ -9,6 +9,8 @@ import { Component, Prop, Mixins } from 'vue-property-decorator'
 import _ from 'lodash'
 import Chart from 'chart.js'
 import NDataSource from './Base/NDataSource'
+import { VueNode } from '../extension/VueSlot'
+import { ChartSeries, ChartCommon } from '../types/Chart'
 @Component({})
 export default class NLineChart extends Mixins(NDataSource) {
   @Prop({ type: String, default: '' }) caption!: string
@@ -17,19 +19,8 @@ export default class NLineChart extends Mixins(NDataSource) {
     new Chart(ctx, {
       type: 'line',
       data: {
-        labels: this.dates,
-        datasets: [
-          {
-            label: 'line 1',
-            data: this.ins,
-            backgroundColor: 'rgba(255, 99, 132, 0.2)'
-          },
-          {
-            label: 'line 2',
-            data: this.outs,
-            backgroundColor: 'rgba(54, 162, 235, 0.2)'
-          }
-        ]
+        labels: this.common.data,
+        datasets: this.series
       },
       options: this.chartOptions
     })
@@ -50,6 +41,31 @@ export default class NLineChart extends Mixins(NDataSource) {
   }
   get outs() {
     return this.vItems.map(o => o.trafficOut)
+  }
+  get common(): ChartCommon {
+    if (_.isEmpty(this.vSlot.data)) return new ChartCommon()
+    const commonNode = this.vSlot.data.find(node => node.tag === 'common') || new VueNode()
+    const common: ChartCommon = { ...new ChartCommon(), ...commonNode.attrs }
+    if (!_.isEmpty(common.value)) common.data = this.vItems.map(i => i[common.value])
+    return common
+  }
+  get series(): any[] {
+    if (_.isEmpty(this.vSlot.data)) return []
+    const seriesNode = this.vSlot.data.find(node => node.tag === 'series') || new VueNode()
+    const children = (seriesNode.children || []).filter(node => node.tag === 'item')
+    return children
+      .map(child => {
+        const item: ChartSeries = { ...new ChartSeries(), ...child.attrs }
+        if (!_.isEmpty(item.value)) item.data = this.vItems.map(i => i[item.value])
+        return item
+      })
+      .map(this.mapSeriesToDataset)
+  }
+  mapSeriesToDataset(item: ChartSeries) {
+    return {
+      ...item,
+      label: item.text
+    }
   }
   mounted() {
     this.drawChart()

@@ -85,7 +85,13 @@
       <n-text-box :rules="[v => !!v | 'required']"></n-text-box>
     </n-form>
     <div style="width:300px">
-      <n-line-chart :items="traffics" caption="HAHAHA"></n-line-chart>
+      <n-line-chart :items="traffics" caption="HAHAHA">
+        <common text="In" value="Statisticdate"></common>
+        <series>
+          <item text="In" value="trafficIN"></item>
+          <item text="Out" value="trafficOut"></item>
+        </series>
+      </n-line-chart>
     </div>
   </div>
 </template>
@@ -116,8 +122,8 @@ export default class VApp extends Vue {
     console.log(this.checkboxModel)
   }
   mounted() {
-    this.tabs = ['1', '2', '3', '4', '5', '6']
-    this.$nextTick(() => (this.$refs.tabCollection as any).init())
+    //this.tabs = ['1', '2', '3', '4', '5', '6']
+    //this.$nextTick(() => (this.$refs.tabCollection as any).init())
   }
 }
 </script>
