@@ -51,7 +51,7 @@ export default class NLineChart extends Mixins(NDataSource) {
     return children
       .map(child => {
         const item: ChartSeries = { ...new ChartSeries(), ...child.attrs }
-        if (!_.isEmpty(item.value)) item.data = this.vItems.map(i => item.format(i[item.value]))
+        if (!_.isEmpty(item.value)) item.data = this.vItems.map(i => i[item.value])
         return item
       })
       .map(this.mapSeriesToDataset)
