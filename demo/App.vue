@@ -39,6 +39,9 @@
         <template #modal="{modal}">
           <!-- <n-text-box v-model="modal.data.provinceName"></n-text-box> -->
         </template>
+        <template #item.expand="{item}">
+          {{ item }}
+        </template>
       </n-data-table>
     </div>
     n-modal component<br />

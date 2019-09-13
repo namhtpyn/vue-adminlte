@@ -51,7 +51,7 @@
             @click.stop="e => rowClick(e, item.data, rowIndex)"
           >
             <td v-if="item.isExpansion" :colspan="headerColumns().length">
-              <slot :name="`item.expansion`" :item="item.data"></slot>
+              <slot name="item.expand" :item="item.data"></slot>
             </td>
             <template v-else>
               <td :class="cssClass.cell" :style="cellStyle(header)" v-for="(header, colIndex) in headerColumns()" :key="colIndex">
@@ -79,7 +79,12 @@
                     ></n-radio>
                   </template>
                   <template v-else-if="header.value === '$expansion'">
-                    <n-icon style="cursor:pointer" @click="expandRow(item.index)">chevron-down</n-icon>
+                    <n-icon
+                      style="cursor:pointer"
+                      @click="expandRow(item.index)"
+                      :class="`fa-chevron-${isExpanded(item.index) ? 'up' : 'down'}`"
+                    >
+                    </n-icon>
                   </template>
                   <template v-else-if="header.value === '$action'">
                     <div class="btn-group">

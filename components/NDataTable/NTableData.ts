@@ -11,6 +11,10 @@ export default class NTableData extends Mixins(NBase, NData, NTableProp) {
   vPage: number = 1
   vExpansion: number[] = []
 
+  isExpanded(itemIndex: number) {
+    return this.vExpansion.includes(itemIndex)
+  }
+
   get computedItems(): TableItem[] {
     return this.vItems.map((data, index) => {
       return { index, data }
@@ -24,7 +28,7 @@ export default class NTableData extends Mixins(NBase, NData, NTableProp) {
       .sort()
       .forEach((itemIndex, index) => {
         const idx = items.findIndex(item => item.index === itemIndex)
-        if (idx >= 0) items.splice(idx + 1, 0, { ...items[itemIndex], isExpansion: true })
+        if (idx >= 0) items.splice(idx + 1, 0, { ...items[idx], isExpansion: true })
       })
     return items
   }
