@@ -1,11 +1,14 @@
 <template>
-  <div>
+  <div style="position:relative">
     <canvas ref="linechart" :id="chartID" width="400" height="400"></canvas>
+    <n-overlay absolute :value="vLoading">
+      <n-icon css-class="fa-spin fa-4x" style="color:white">circle-o-notch</n-icon>
+    </n-overlay>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Mixins } from 'vue-property-decorator'
+import { Component, Prop, Mixins, Watch } from 'vue-property-decorator'
 import _ from 'lodash'
 import Chart from 'chart.js'
 import NDataSource from './Base/NDataSource'
@@ -66,6 +69,10 @@ export default class NLineChart extends Mixins(NDataSource) {
       ...item,
       label: item.text
     }
+  }
+  @Watch('vItems')
+  onItemsChanged() {
+    this.drawChart()
   }
   mounted() {
     this.drawChart()

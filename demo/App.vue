@@ -85,7 +85,7 @@
       <n-text-box :rules="[v => !!v | 'required']"></n-text-box>
     </n-form>
     <div style="width:300px">
-      <n-line-chart :items="traffics" caption="HAHAHA">
+      <n-line-chart read-url="http://localhost:3001/home/traffics" caption="HAHAHA">
         <common text="In" value="Statisticdate"></common>
         <series>
           <item text="In" value="trafficIN"></item>
