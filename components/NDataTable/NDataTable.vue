@@ -51,7 +51,7 @@
             @click.stop="e => rowClick(e, item.data, rowIndex)"
           >
             <td v-if="item.isExpansion" :colspan="headerColumns().length">
-              <slot :name="`item.${kebabCase(header.value)}.expand`" :item="item.data"></slot>
+              <slot :name="`item.expansion`" :item="item.data"></slot>
             </td>
             <template v-else>
               <td :class="cssClass.cell" :style="cellStyle(header)" v-for="(header, colIndex) in headerColumns()" :key="colIndex">
