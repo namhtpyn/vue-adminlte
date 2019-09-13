@@ -5,8 +5,9 @@
   "main": "./dist/NDataTable.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --open --display-error-details --port 8888",
+    "dev:doc": "vuese serve --open",
     "build": "npm run clean && cross-env NODE_ENV=production rollup -c --config-custom ",
-    "doc": "vuese gen",
+    "build:doc": "vuese gen",
     "clean": "rimraf ./dist/*"
   },
   "author": "Nam Hoang",
