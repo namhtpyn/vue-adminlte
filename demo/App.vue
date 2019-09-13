@@ -85,7 +85,7 @@
       <n-text-box :rules="[v => !!v | 'required']"></n-text-box>
     </n-form>
     <div style="width:300px">
-      <n-line-chart caption="HAHAHA"></n-line-chart>
+      <n-line-chart :items="traffics" caption="HAHAHA"></n-line-chart>
     </div>
   </div>
 </template>
@@ -95,12 +95,14 @@ import { Component, Vue } from 'vue-property-decorator'
 // import { TableHeader } from '../types/Table'
 import units from './data/units.json'
 import provinces from './data/provinces.json'
+import traffics from './data/traffics.json'
 // import _ from 'lodash'
 @Component({})
 export default class VApp extends Vue {
   check = 1
   units = units
   provinces = provinces
+  traffics = traffics
   unitID = 103
   modal = false
   dataTableModel: any = {}

@@ -1,12 +1,14 @@
 {
   "name": "vue-adminlte",
-  "version": "1.0.0",
+  "version": "1.0.4",
   "description": "",
   "main": "./dist/NDataTable.js",
   "scripts": {
+    "init": "git config --local core.hooksPath .githooks",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --open --display-error-details --port 8888",
-    "build": "npm run clean && cross-env NODE_ENV=production rollup -c --config-custom ",
-    "doc": "vuese gen",
+    "dev:doc": "vuese serve --open",
+    "build": "npm run clean && cross-env NODE_ENV=production rollup -c",
+    "build:doc": "vuese gen",
     "clean": "rimraf ./dist/*"
   },
   "author": "Nam Hoang",
@@ -39,6 +41,7 @@
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-replace": "^2.2.0",
     "rollup-plugin-strip": "^1.2.2",
+    "rollup-plugin-terser": "^5.1.2",
     "rollup-plugin-typescript": "^1.0.1",
     "rollup-plugin-vue": "^5.0.1",
     "ts-loader": "^6.0.4",
