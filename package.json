@@ -7,7 +7,7 @@
     "init": "git config --local core.hooksPath .githooks",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --open --display-error-details --port 8888",
     "dev:doc": "vuese serve --open",
-    "build": "npm run clean && cross-env NODE_ENV=production rollup -c && npm version patch",
+    "build": "npm run clean && cross-env NODE_ENV=production rollup -c",
     "build:doc": "vuese gen",
     "clean": "rimraf ./dist/*"
   },
@@ -41,6 +41,7 @@
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-replace": "^2.2.0",
     "rollup-plugin-strip": "^1.2.2",
+    "rollup-plugin-terser": "^5.1.2",
     "rollup-plugin-typescript": "^1.0.1",
     "rollup-plugin-vue": "^5.0.1",
     "ts-loader": "^6.0.4",
