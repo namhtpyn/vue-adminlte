@@ -36,20 +36,12 @@ export default class NLineChart extends Mixins(NDataSource) {
       }
     }
   }
-  get dates() {
-    return this.vItems.map(o => o.Statisticdate)
-  }
-  get ins() {
-    return this.vItems.map(o => o.trafficIN)
-  }
-  get outs() {
-    return this.vItems.map(o => o.trafficOut)
-  }
+
   get common(): ChartCommon {
     if (_.isEmpty(this.vSlot.data)) return new ChartCommon()
     const commonNode = this.vSlot.data.find(node => node.tag === 'common') || new VueNode()
     const common: ChartCommon = { ...new ChartCommon(), ...commonNode.attrs }
-    if (!_.isEmpty(common.value)) common.data = this.vItems.map(i => i[common.value])
+    if (!_.isEmpty(common.value)) common.data = this.vItems.map(i => common.format(i[common.value]))
     return common
   }
   get series(): any[] {
@@ -59,11 +51,13 @@ export default class NLineChart extends Mixins(NDataSource) {
     return children
       .map(child => {
         const item: ChartSeries = { ...new ChartSeries(), ...child.attrs }
-        if (!_.isEmpty(item.value)) item.data = this.vItems.map(i => i[item.value])
+        if (!_.isEmpty(item.value)) item.data = this.vItems.map(i => item.format(i[item.value]))
         return item
       })
       .map(this.mapSeriesToDataset)
   }
+
+  //https://www.chartjs.org/docs/latest/charts/line.html
   mapSeriesToDataset(item: ChartSeries) {
     return {
       ...item,

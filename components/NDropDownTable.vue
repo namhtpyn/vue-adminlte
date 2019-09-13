@@ -100,7 +100,7 @@ export default class NDropDownTable extends Mixins(NBase, NDataSource) {
     if (!this.multiple) this.$nextTick(() => (data.isOpen = false))
   }
   @Watch('selectedValue')
-  onSelectedValueChanged(values: any[], any) {
+  onSelectedValueChanged(values: any[] | any) {
     if (!_.isNil(values)) {
       let output: any
       if (Array.isArray(values)) output = values.map(v => v[this.itemValue])
@@ -109,10 +109,14 @@ export default class NDropDownTable extends Mixins(NBase, NDataSource) {
       if (!_.isNil(output) && !_.isEqual(output, this.value)) this.input(output)
     }
   }
+  @Watch('value')
+  onValueChanged(value) {
+    if (Array.isArray(value))
+      this.selectedValue = this.vItems.filter(item => (value as any[]).includes(item[this.itemValue])) || []
+    else this.selectedValue = this.vItems.find(item => item[this.itemValue] === value) || {}
+  }
   created() {
-    if (Array.isArray(this.value))
-      this.selectedValue = this.vItems.filter(item => (this.value as any[]).includes(item[this.itemValue])) || []
-    else this.selectedValue = this.vItems.find(item => item[this.itemValue] === this.value) || {}
+    this.onValueChanged(this.value)
   }
 }
 </script>
