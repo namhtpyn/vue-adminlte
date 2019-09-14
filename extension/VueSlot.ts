@@ -7,6 +7,7 @@ export class VueNode {
   componentInstance: Vue
   attrs: object
   children: VueNode[]
+  text: string
 }
 export default class VueSlot {
   constructor(slot: VNode[]) {
@@ -23,6 +24,7 @@ export default class VueSlot {
       myNode.isComponent = !_.isEmpty(node.componentInstance)
       myNode.componentInstance = node.componentInstance
       myNode.attrs = this.toCamelKey((node.data || {}).attrs || {})
+      myNode.text = node.text || ''
       myNode.children = []
       if (!_.isEmpty(node.children)) this.parse(myNode.children, node.children)
       data.push(myNode)

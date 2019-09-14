@@ -11,7 +11,7 @@
           :items="vItems"
           :searchable="searchable"
           :hide-top="!searchable"
-          :multiple="multiple"
+          :multiple-select="multiple"
           selectable
           row-select
           hide-footer
