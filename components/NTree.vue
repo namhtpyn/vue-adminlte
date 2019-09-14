@@ -1,12 +1,19 @@
 <template>
   <div :style="{ position: 'relative' }">
-    <input
+    <n-text-box
+      v-if="searchable"
+      v-model="searchText"
+      :css-class="stickySearch ? 'sticky-search' : ''"
+      hint="Nhấn Enter để tìm kiếm"
+      @submit="search"
+    ></n-text-box>
+    <!-- <input
       type="text"
       v-if="searchable"
       :class="{ 'form-control': true, 'sticky-search': stickySearch }"
       v-model="searchText"
       placeholder="Tìm kiếm"
-    />
+    /> -->
     <div>
       <span v-if="!hasData">Không có dữ liệu</span>
       <div id="component-tree-view"></div>
@@ -28,6 +35,7 @@ export default class NTree extends Mixins(NDataSource) {
   @Prop({ type: Boolean, default: false }) expandAll!: boolean
   @Prop({ type: Boolean, default: false }) searchable!: boolean
   @Prop({ type: Boolean, default: false }) stickySearch!: boolean
+  @Prop({ type: Boolean, default: false }) noFocusOnLoaded!: boolean
   @Prop({ type: Number, default: 0 }) expandToLevel!: number
   @Prop({ type: String, default: 'value' }) itemValue!: string
   @Prop({ type: String, default: 'text' }) itemText!: string
@@ -37,13 +45,16 @@ export default class NTree extends Mixins(NDataSource) {
 
   @Emit() select(e) {}
   @Emit() loaded(e) {
-    if (this.expandAll) this.theTree.jstree().open_all()
-    this.focusSelectedNode()
-    if (this.searchable) this.focusSearch()
+    if (this.expandAll || !_.isEmpty(this.searchText)) this.theTree.jstree().open_all()
+    if (!this.noFocusOnLoaded) {
+      this.focusSelectedNode()
+      if (this.searchable) this.focusSearch()
+    }
   }
 
   searchText: string = ''
   private theTree!: any
+  itemMatchedSearch: any[] = []
 
   get treeData() {
     // if (_.isEmpty(this.items)) return []
@@ -62,7 +73,7 @@ export default class NTree extends Mixins(NDataSource) {
     // })
     if (_.isEmpty(this.vItems)) return []
     const root = this.vItems.find(i => !this.vItems.some(n => _.isEqual(n[this.itemValue], i[this.parentKey])))[this.parentKey]
-    const itemsMap = _.cloneDeep(this.vItems).map(m => {
+    const itemsMap = (!_.isEmpty(this.itemMatchedSearch) ? this.itemMatchedSearch : this.vItems).map(m => {
       return {
         id: m[this.itemValue],
         text: m[this.itemText],
@@ -88,14 +99,16 @@ export default class NTree extends Mixins(NDataSource) {
     this.init()
   }
   @Watch('treeData')
-  private onTreeDataChange(n, o) {
+  private onTreeDataChange() {
+    this.theTree.jstree().destroy()
     this.init()
+  }
+  @Watch('searchText')
+  private onSearchText(n) {
+    if (_.isEmpty(n)) this.itemMatchedSearch = []
   }
 
   private init() {
-    if (this.theTree.hasClass('jstree')) {
-      this.theTree.jstree().destroy()
-    }
     this.theTree
       .jstree({
         types: {
@@ -112,7 +125,8 @@ export default class NTree extends Mixins(NDataSource) {
       .on('loaded.jstree', this.loaded)
       .on('select_node.jstree', (e, data) => {
         this.input(data.selected[0])
-        this.select(data.node.original)
+        const node = this.vItems.find(o => _.isEqual(String(o[this.itemValue]), data.selected[0]))
+        this.select(node)
       })
   }
   focusSelectedNode() {
@@ -135,16 +149,45 @@ export default class NTree extends Mixins(NDataSource) {
     if (!arr.some(i => i.parentID === parent)) return result
     const children = arr.filter(i => i.parentID === parent)
     children.forEach(v => {
-      v.state.opened = level <= this.expandToLevel
-      v.children = this.convertHereditaryToObject(arr, v.id, level + 1)
-      if (!_.isEmpty(this.searchText)) {
-        const isShow = v.text.toUpperCase().includes(this.searchText.toUpperCase()) || v.children.some(i => i.state.showed)
-        v.state.showed = isShow
-        v.state.opened = isShow
-      }
-      if (v.state.showed) result.push(v)
+      const node = _.cloneDeep(v)
+      node.state.opened = level <= this.expandToLevel
+      node.children = this.convertHereditaryToObject(arr, v.id, level + 1)
+      result.push(node)
     })
     return result
+  }
+
+  search() {
+    if (_.isEmpty(this.searchText)) return
+    let result = []
+    const idMatches = this.vItems.filter(o => o[this.itemText].toUpperCase().includes(this.searchText.toUpperCase()))
+    idMatches.forEach(o => {
+      const parents = this.getParents(o[this.parentKey])
+      const children = this.getChildren(o[this.itemValue])
+      result = _.union(result, parents, children, [String(o[this.itemValue])])
+    })
+    this.itemMatchedSearch = this.vItems.filter(o => result.includes(String(o[this.itemValue])))
+  }
+
+  getParents(parentID) {
+    const result = []
+    let node = _.cloneDeep(this.vItems.find(o => _.isEqual(o[this.itemValue], parentID)))
+    while (!_.isEmpty(node)) {
+      result.push(String(node[this.itemValue]))
+      node = _.cloneDeep(this.vItems.find(o => _.isEqual(o[this.itemValue], node[this.parentKey])))
+    }
+    return result
+  }
+
+  getChildren(id) {
+    const result = []
+    const children = this.vItems.filter(o => _.isEqual(o[this.parentKey], id))
+    if (_.isEmpty(children)) return result
+    children.forEach(o => {
+      const node = _.cloneDeep(o)
+      result.push(String(node[this.itemValue]), this.getChildren(node[this.itemValue]))
+    })
+    return _.flattenDeep(result)
   }
 }
 </script>
@@ -155,5 +198,8 @@ export default class NTree extends Mixins(NDataSource) {
   top: 0px;
   z-index: 99;
   width: 100%;
+}
+div.form-group {
+  margin-bottom: 0px;
 }
 </style>

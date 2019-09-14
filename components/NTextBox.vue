@@ -13,12 +13,13 @@
       </span>
       <input
         :type="type"
-        :class="cssClass"
+        :class="cClass"
         :placeholder="hint"
         :value="value"
         @input="e => input(e.target.value)"
         @blur="input(value)"
         v-bind="$attrs"
+        @keypress="keyPressed"
       />
       <span v-if="suffix" class="input-group-addon">{{ suffix }}</span>
       <span v-if="appendIcon" class="input-group-addon">
@@ -58,12 +59,14 @@ export default class NTextBox extends Vue {
   @Prop(String) innerIcon!: string
   @Prop({ type: Boolean, default: false }) large!: boolean
   @Prop({ type: Boolean, default: false }) small!: boolean
+  @Prop({ type: String, default: '' }) cssClass!: string
   @Model('input', { type: [String, Number] }) value!: string | number
   @Emit() input(e) {
     if (!this.lazyValidation || !this.valid) this.validate(e)
   }
   @Emit('append-btn-click') appendBtnClick(e) {}
   @Emit('prepend-btn-click') prependBtnClick(e) {}
+  @Emit() submit(e) {}
   valid: boolean = true
   lazyValidation: boolean = false
   get hasLabel() {
@@ -77,7 +80,7 @@ export default class NTextBox extends Vue {
       this.prefix || this.prependIcon || this.suffix || this.appendIcon || this.appendButton || this.prependBtn || this.appendBtn
     )
   }
-  get cssClass() {
+  get cClass() {
     let css = 'form-control '
     css += this.large ? ' input-lg' : ''
     css += this.small ? ' input-sm' : ''
@@ -91,7 +94,11 @@ export default class NTextBox extends Vue {
     return ''
   }
   get classComponent() {
-    return { 'form-group': this.form, 'has-error': !this.valid, 'has-feedback': this.innerIcon }
+    let css = this.form ? 'form-group ' : ''
+    css += !this.valid ? 'has-error ' : ''
+    css += this.innerIcon ? 'has-feedback ' : ''
+    css += this.cssClass ? this.cssClass : ''
+    return css
   }
   get styleLabel() {
     return {
@@ -110,6 +117,10 @@ export default class NTextBox extends Vue {
     this.valid = true
     if (this.rules) this.valid = !this.rules.some(e => e(value) !== true)
     return this.valid
+  }
+
+  keyPressed(e) {
+    if (e.keyCode === 13) this.submit(e.target.value)
   }
 }
 </script>

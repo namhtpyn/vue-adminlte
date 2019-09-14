@@ -17,9 +17,9 @@
           :searchable="searchable"
           :value="value"
           sticky-search
+          no-focus-on-loaded
           @select="item => itemSelect(item, data)"
           @error="error"
-          @loaded="getText"
         ></n-tree>
       </template>
     </n-drop-down-list>
@@ -60,8 +60,12 @@ export default class NDropDownTree extends Mixins(NDataSource) {
   //treeItems: any[] = []
   valid: boolean = true
   lazyValidation: boolean = false
-  private text: string = ''
-  private height: string = ''
+
+  get text() {
+    const item = this.vItems.find(item => item[this.itemValue] === this.value)
+    if (item) return (item[this.itemText] || '').toString()
+    return ''
+  }
 
   get styleLabel() {
     return {
@@ -86,22 +90,12 @@ export default class NDropDownTree extends Mixins(NDataSource) {
     return this.valid
   }
   private itemSelect(item, data) {
-    this.text = item.text
-    this.input(item.id)
+    this.input(item[this.itemValue])
     this.select(item)
-    if (!this.lazyValidation || !this.valid) this.validate(item.id)
+    if (!this.lazyValidation || !this.valid) this.validate(item[this.itemValue])
     data.isOpen = false
   }
   mounted() {}
-  private getText() {
-    this.$nextTick(() => {
-      if (!this.text && this.value && !_.isEmpty(this.tree.items)) {
-        const item = this.tree.items.find(t => t[this.itemValue] === this.value)
-        if (item) return item[this.itemText]
-        return ''
-      }
-    })
-  }
   private onOpen() {
     this.$nextTick(() => {
       this.tree.focusSelectedNode()
