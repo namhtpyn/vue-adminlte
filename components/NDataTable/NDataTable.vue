@@ -35,7 +35,7 @@
               :style="headerCellStyle(header)"
             >
               <div v-if="header.value === '$selection'">
-                <n-checkbox v-if="multiple" @input="selectAll"></n-checkbox>
+                <n-checkbox v-if="multipleSelect" @input="selectAll"></n-checkbox>
               </div>
               <slot v-else :name="`header.${kebabCase(header.value)}`" :item="header">{{ header.text }}</slot>
             </th>
@@ -65,7 +65,7 @@
                   <template v-if="header.value === '$selection'">
                     <n-checkbox
                       ref="checkbox"
-                      v-if="multiple"
+                      v-if="multipleSelect"
                       :model="value"
                       @input="input"
                       :value="keyField ? item.data[keyField] : item.data"
@@ -209,7 +209,7 @@ export default class NDataTable extends Mixins(mixin1, mixin2) {
     //Row select
     if (this.selectable && this.rowSelect) {
       if (event.target.htmlFor && ['checkbox', 'radio'].some(f => event.target.htmlFor.includes(f))) return
-      if (this.multiple) (this.$refs.checkbox[rowIndex] as NCheckBox).toggle()
+      if (this.multipleSelect) (this.$refs.checkbox[rowIndex] as NCheckBox).toggle()
       else (this.$refs.radio[rowIndex] as NRadio).toggle()
     }
     this.$emit('row-click', { event, item, rowIndex })
@@ -235,7 +235,8 @@ export default class NDataTable extends Mixins(mixin1, mixin2) {
     return item[header.value]
   }
   private expandRow(itemIndex: number) {
-    if (!this.vExpansion.includes(itemIndex)) this.vExpansion.push(itemIndex)
+    if (!this.vExpansion.includes(itemIndex))
+      this.multipleExpand ? this.vExpansion.push(itemIndex) : (this.vExpansion = [itemIndex])
     else this.vExpansion.splice(this.vExpansion.findIndex(i => i === itemIndex), 1)
   }
   /**pagination */
@@ -273,7 +274,7 @@ export default class NDataTable extends Mixins(mixin1, mixin2) {
   }
   /** selectable */
   async selectAll(e) {
-    if (!this.selectable || !this.multiple) return
+    if (!this.selectable || !this.multipleSelect) return
     if (e) {
       if (!this.keyField) this.input(this.vItems)
       else this.input(this.vItems.map(i => i[this.keyField]))

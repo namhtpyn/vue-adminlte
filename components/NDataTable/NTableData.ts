@@ -21,17 +21,6 @@ export default class NTableData extends Mixins(NBase, NData, NTableProp) {
     })
   }
 
-  itemsExpanded(items: TableItem[]) {
-    const itemsIndex = items.map(item => item.index)
-    this.vExpansion
-      .filter(itemIndex => itemsIndex.includes(itemIndex))
-      .sort()
-      .forEach((itemIndex, index) => {
-        const idx = items.findIndex(item => item.index === itemIndex)
-        if (idx >= 0) items.splice(idx + 1, 0, { ...items[idx], isExpansion: true })
-      })
-    return items
-  }
   itemsFiltered(items: TableItem[]) {
     return items
   }
@@ -58,16 +47,24 @@ export default class NTableData extends Mixins(NBase, NData, NTableProp) {
       this.vPage * this.vItemPerPage < this.itemsLength ? this.vPage * this.vItemPerPage : this.itemsLength
     )
   }
+  itemsExpanded(items: TableItem[]) {
+    if (!this.expandable) return items
+    const itemsIndex = items.map(item => item.index)
+    this.vExpansion
+      .filter(itemIndex => itemsIndex.includes(itemIndex))
+      .forEach(itemIndex => {
+        const idx = items.findIndex(item => item.index === itemIndex)
+        if (idx >= 0) items.splice(idx + 1, 0, { ...items[idx], isExpansion: true })
+      })
+    return items
+  }
   get pageItems() {
     let items = this.computedItems
     items = this.itemsFiltered(items)
     items = this.itemsSearched(items)
     items = this.itemsSorted(items)
     items = this.itemsPaginated(items)
-    console.log(items)
-
     items = this.itemsExpanded(items)
-    console.log(items)
 
     return items
   }
