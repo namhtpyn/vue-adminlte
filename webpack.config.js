@@ -32,5 +32,10 @@ module.exports = {
   ],
   resolve: {
     extensions: ['.ts', '.js', '.json', '.vue', '.html']
+  },
+  devServer: {
+    contentBase: './demo',
+    compress: true,
+    port: 8888
   }
 }

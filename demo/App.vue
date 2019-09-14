@@ -1,7 +1,7 @@
 <template>
   <div>
     <n-drop-down-tree
-      read-url="https://localhost:5001/vnptunit/GetUnitListByID?unitID=1"
+      read-url="/data/units.json"
       item-value="UnitID"
       item-text="UnitName"
       tree-parent-key="ParentID"
@@ -11,12 +11,12 @@
       @select="selectNode"
       v-model="unitID"
     ></n-drop-down-tree>
-    <!-- <n-drop-down-table read-url="https://localhost:5001/vnptunit/GetUnitListByID" item-text="UnitName" item-value="UnitID">
+    <n-drop-down-table read-url="/data/units.json" item-text="UnitName" item-value="UnitID" searchable>
       <items>
         <text-item text="UnitName" value="UnitName"></text-item>
       </items>
-    </n-drop-down-table> -->
-    <!-- <div style="max-height:100px; overflow:auto">
+    </n-drop-down-table>
+    <div style="max-height:100px; overflow:auto">
       <n-tree
         :items="units"
         item-value="UnitID"
@@ -31,7 +31,7 @@
     <div style="max-height:400px; overflow:auto">
       <n-data-table
         v-model="dataTableModel"
-        :items="provinces"
+        read-url="/data/provinces.json"
         updatable
         update-url="/haha"
         caption="hihi"
@@ -39,6 +39,7 @@
         selectable
         expandable
         sortable
+        row-select
       >
         <items>
           <text-item text="provinceName" value="provinceName" sortable></text-item>
@@ -68,7 +69,7 @@
     <div style="width:400px">
       <n-drop-down-table
         v-model="dropDownTableModel"
-        :items="provinces"
+        read-url="/data/provinces.json"
         item-text="provinceName"
         item-value="provinceName"
         searchable
@@ -104,14 +105,14 @@
       <n-text-box :rules="[v => !!v | 'required']"></n-text-box>
     </n-form>
     <div style="width:300px">
-      <n-line-chart read-url="http://localhost:3001/home/traffics" caption="HAHAHA">
+      <n-line-chart read-url="/data/traffics.json" caption="HAHAHA">
         <common text="In" value="Statisticdate"></common>
         <series>
           <item text="In" value="trafficIN"></item>
           <item text="Out" value="trafficOut"></item>
         </series>
       </n-line-chart>
-    </div> -->
+    </div>
   </div>
 </template>
 

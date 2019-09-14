@@ -4,6 +4,7 @@ import NBase from '../Base/NBase'
 import NData from '../Base/NData'
 import NTableProp from './NTableProp'
 import { TableItem, TableSort } from '../../types/Table'
+import natsort from 'natsort'
 @Component({})
 export default class NTableData extends Mixins(NBase, NData, NTableProp) {
   vSearch: string = ''
@@ -40,12 +41,12 @@ export default class NTableData extends Mixins(NBase, NData, NTableProp) {
   }
   itemsSorted(items: TableItem[]) {
     if (_.isEmpty(this.vSort)) return items
+    const asc = natsort({ insensitive: true })
+    const desc = natsort({ desc: true, insensitive: true })
     items.sort((a, b) => {
       const sort = this.vSort
         .map(sort => {
-          if (a.data[sort.name] > b.data[sort.name]) return sort.desc ? -1 : 1
-          else if (a.data[sort.name] < b.data[sort.name]) return sort.desc ? 1 : -1
-          else return 0
+          return sort.desc ? desc(a.data[sort.name], b.data[sort.name]) : asc(a.data[sort.name], b.data[sort.name])
         })
         .filter(sort => _.isEmpty(sort))
       if (!_.isEmpty(sort)) return sort[0]
@@ -82,6 +83,6 @@ export default class NTableData extends Mixins(NBase, NData, NTableProp) {
   }
 
   get pageLength() {
-    return Math.ceil(this.itemsLength / this.vItemPerPage)
+    return this.vItemPerPage < 0 ? 1 : Math.ceil(this.itemsLength / this.vItemPerPage)
   }
 }
