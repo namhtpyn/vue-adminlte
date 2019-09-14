@@ -1,15 +1,21 @@
 <template>
   <div>
-    n-tree component
     <n-drop-down-tree
-      :items="units"
+      read-url="https://localhost:5001/vnptunit/GetUnitListByID?unitID=1"
       item-value="UnitID"
       item-text="UnitName"
       tree-parent-key="ParentID"
-      v-model="unitID"
       :tree-expand-to-level="1"
       searchable
+      sticky-search
+      @select="selectNode"
+      v-model="unitID"
     ></n-drop-down-tree>
+    <!-- <n-drop-down-table read-url="https://localhost:5001/vnptunit/GetUnitListByID" item-text="UnitName" item-value="UnitID">
+      <items>
+        <text-item text="UnitName" value="UnitName"></text-item>
+      </items>
+    </n-drop-down-table> -->
     <!-- <div style="max-height:100px; overflow:auto">
       <n-tree
         :items="units"
@@ -20,7 +26,7 @@
         sticky-search
         searchable
       ></n-tree>
-    </div> -->
+    </div>
     n-data-table component
     <div style="max-height:100px; overflow:auto">
       <n-data-table v-model="dataTableModel" :items="provinces" updatable update-url="/haha" caption="hihi" searchable selectable>
@@ -28,7 +34,7 @@
           <text-item text="provinceName" value="provinceName"></text-item>
         </items>
         <template #modal="{modal}">
-          <!-- <n-text-box v-model="modal.data.provinceName"></n-text-box> -->
+          <n-text-box v-model="modal.data.provinceName"></n-text-box>
         </template>
       </n-data-table>
     </div>
@@ -92,7 +98,7 @@
           <item text="Out" value="trafficOut"></item>
         </series>
       </n-line-chart>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -109,7 +115,7 @@ export default class VApp extends Vue {
   units = units
   provinces = provinces
   traffics = traffics
-  unitID = 103
+  unitID = 9
   modal = false
   dataTableModel: any = {}
   dropDownTableModel: any | any[] = ''
@@ -120,6 +126,9 @@ export default class VApp extends Vue {
   console(...args) {
     console.log(args)
     console.log(this.checkboxModel)
+  }
+  selectNode(item) {
+    console.log(item)
   }
   mounted() {
     //this.tabs = ['1', '2', '3', '4', '5', '6']
