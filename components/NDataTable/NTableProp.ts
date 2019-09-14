@@ -16,6 +16,10 @@ export default class NTableProp extends Mixins(NBase) {
   @Prop({ type: Boolean, default: false }) readonly hideHeader!: boolean
 
   @Prop({ type: Boolean, default: false }) readonly searchable!: boolean
+
+  @Prop({ type: Boolean, default: false }) readonly multipleSort!: boolean
+  @Prop({ type: Boolean, default: false }) readonly multipleFilter!: boolean
+
   @Prop({ type: Boolean, default: false }) readonly expandable!: boolean
   @Prop({ type: Boolean, default: false }) readonly multipleExpand!: boolean
 

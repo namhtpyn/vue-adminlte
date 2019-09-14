@@ -3,13 +3,14 @@ import _ from 'lodash'
 import NBase from '../Base/NBase'
 import NData from '../Base/NData'
 import NTableProp from './NTableProp'
-import { TableItem } from '../../types/Table'
+import { TableItem, TableSort } from '../../types/Table'
 @Component({})
 export default class NTableData extends Mixins(NBase, NData, NTableProp) {
   vSearch: string = ''
   vItemPerPage: number = 10
   vPage: number = 1
   vExpansion: number[] = []
+  vSort: TableSort[] = []
 
   isExpanded(itemIndex: number) {
     return this.vExpansion.includes(itemIndex)
@@ -38,6 +39,17 @@ export default class NTableData extends Mixins(NBase, NData, NTableProp) {
     )
   }
   itemsSorted(items: TableItem[]) {
+    if (_.isEmpty(this.vSort)) return items
+    items.sort((a, b) => {
+      const sort = this.vSort
+        .map(sort => {
+          if (a.data[sort.name] > b.data[sort.name]) return sort.desc ? -1 : 1
+          else if (a.data[sort.name] < b.data[sort.name]) return sort.desc ? 1 : -1
+          else return 0
+        })
+        .filter(sort => _.isEmpty(sort))
+      if (!_.isEmpty(sort)) return sort[0]
+    })
     return items
   }
   itemsPaginated(items: TableItem[]) {
@@ -48,7 +60,7 @@ export default class NTableData extends Mixins(NBase, NData, NTableProp) {
     )
   }
   itemsExpanded(items: TableItem[]) {
-    if (!this.expandable) return items
+    if (!this.expandable || _.isEmpty(this.vExpansion)) return items
     const itemsIndex = items.map(item => item.index)
     this.vExpansion
       .filter(itemIndex => itemsIndex.includes(itemIndex))
@@ -59,7 +71,7 @@ export default class NTableData extends Mixins(NBase, NData, NTableProp) {
     return items
   }
   get pageItems() {
-    let items = this.computedItems
+    let items = _.cloneDeep(this.computedItems)
     items = this.itemsFiltered(items)
     items = this.itemsSearched(items)
     items = this.itemsSorted(items)

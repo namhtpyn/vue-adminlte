@@ -32,9 +32,10 @@
         searchable
         selectable
         expandable
+        sortable
       >
         <items>
-          <text-item text="provinceName" value="provinceName"></text-item>
+          <text-item text="provinceName" value="provinceName" sortable></text-item>
         </items>
         <template #modal="{modal}">
           <!-- <n-text-box v-model="modal.data.provinceName"></n-text-box> -->

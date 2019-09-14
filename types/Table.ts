@@ -4,12 +4,12 @@ export class TableHeader {
   type?: string = 'text'
   width?: string
   align?: string = 'left'
-  valign?: string = 'center'
+  valign?: string = 'middle'
   bgcolor?: string
   color?: string
   sortable?: boolean = false
   headerAlign?: string = 'left'
-  headerValign?: string = 'center'
+  headerValign?: string = 'middle'
   headerBgcolor?: string
   headerColor?: string
   summary?: string
@@ -20,6 +20,14 @@ export class TableItem {
   index?: number
   data?: any
   isExpansion?: boolean
+}
+
+export class TableSort {
+  name?: string = ''
+  desc?: boolean = false
+  constructor(name: string) {
+    this.name = name
+  }
 }
 
 declare global {

@@ -31,8 +31,9 @@
               :key="colIndex"
               :colspan="headerColspan(header)"
               :rowspan="headerRowspan(header)"
-              :class="cssClass.headerCell"
+              :class="`${cssClass.headerCell} ${header.sortable ? 'sortable' : ''}`"
               :style="headerCellStyle(header)"
+              @click="sort(header)"
             >
               <div v-if="header.value === '$selection'">
                 <n-checkbox v-if="multipleSelect" @input="selectAll"></n-checkbox>
@@ -177,7 +178,7 @@ import NTableProp from './NTableProp'
 import NTableCRUD from './NTableCRUD'
 import NTableCssClass from './NTableCssClass'
 import NTableText from './NTableText'
-import { TableHeader } from '../../types/Table'
+import { TableHeader, TableSort } from '../../types/Table'
 
 import NCheckBox from '../NCheckbox.vue'
 import NRadio from '../NRadio.vue'
@@ -235,9 +236,17 @@ export default class NDataTable extends Mixins(mixin1, mixin2) {
     return item[header.value]
   }
   private expandRow(itemIndex: number) {
+    if (!this.expandable) return
     if (!this.vExpansion.includes(itemIndex))
       this.multipleExpand ? this.vExpansion.push(itemIndex) : (this.vExpansion = [itemIndex])
     else this.vExpansion.splice(this.vExpansion.findIndex(i => i === itemIndex), 1)
+  }
+  private sort(header: TableHeader) {
+    if (!header.sortable) return
+    const index = this.vSort.findIndex(sort => sort.name === header.value)
+    if (index < 0) this.vSort.push(new TableSort(header.value))
+    else if (!this.vSort[index].desc) this.vSort.splice(index, 1, { name: header.value, desc: true })
+    else this.vSort.splice(index, 1)
   }
   /**pagination */
   private changeItemPerPage(e) {
@@ -294,6 +303,15 @@ export default class NDataTable extends Mixins(mixin1, mixin2) {
 </script>
 
 <style scoped>
+.table thead .sortable {
+  cursor: pointer;
+}
+.table thead .sortable.asc:after {
+  content: '↓';
+}
+.table thead .sortable.desc:after {
+  content: '↑';
+}
 .tbl-header {
   display: flex;
   padding-top: 10px;

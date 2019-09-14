@@ -23,7 +23,7 @@ export default class VueSlot {
       myNode.tag = node.tag || ''
       myNode.isComponent = !_.isEmpty(node.componentInstance)
       myNode.componentInstance = node.componentInstance
-      myNode.attrs = this.toCamelKey((node.data || {}).attrs || {})
+      myNode.attrs = this.toProps((node.data || {}).attrs || {})
       myNode.text = node.text || ''
       myNode.children = []
       if (!_.isEmpty(node.children)) this.parse(myNode.children, node.children)
@@ -38,10 +38,11 @@ export default class VueSlot {
     })
     return myNodes
   }
-  private toCamelKey(obj: Object) {
+  private toProps(obj: Object) {
     return Object.fromEntries(
       Object.entries(obj).map(e => {
         e[0] = _.camelCase(e[0])
+        e[1] = _.isEmpty(e[1]) ? true : e[1]
         return e
       })
     )
