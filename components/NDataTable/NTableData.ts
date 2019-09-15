@@ -1,9 +1,9 @@
-import { Component, Mixins } from 'vue-property-decorator'
+import { Component, Mixins, Watch } from 'vue-property-decorator'
 import _ from 'lodash'
 import NBase from '../Base/NBase'
 import NData from '../Base/NData'
 import NTableProp from './NTableProp'
-import { TableItem, TableSort } from '../../types/Table'
+import { TableItem, TableSort, TableHeader } from '../../types/Table'
 import natsort from 'natsort'
 @Component({})
 export default class NTableData extends Mixins(NBase, NData, NTableProp) {
@@ -16,11 +16,8 @@ export default class NTableData extends Mixins(NBase, NData, NTableProp) {
   isExpanded(itemIndex: number) {
     return this.vExpansion.includes(itemIndex)
   }
-
-  get computedItems(): TableItem[] {
-    return this.vItems.map((data, index) => {
-      return { index, data }
-    })
+  getSort(header: TableHeader) {
+    return this.vSort.find(sort => sort.name === header.value)
   }
 
   itemsFiltered(items: TableItem[]) {
@@ -71,18 +68,29 @@ export default class NTableData extends Mixins(NBase, NData, NTableProp) {
       })
     return items
   }
-  get pageItems() {
-    let items = _.cloneDeep(this.computedItems)
+  get tableItems(): TableItem[] {
+    let items: TableItem[] = this.vItems.map((data, index) => {
+      return { index, data }
+    })
     items = this.itemsFiltered(items)
     items = this.itemsSearched(items)
     items = this.itemsSorted(items)
+    return items
+  }
+  get pageItems() {
+    let items = _.cloneDeep(this.tableItems)
     items = this.itemsPaginated(items)
     items = this.itemsExpanded(items)
-
     return items
   }
 
   get pageLength() {
-    return this.vItemPerPage < 0 ? 1 : Math.ceil(this.itemsLength / this.vItemPerPage)
+    return this.vItemPerPage < 0 ? 1 : Math.ceil(this.tableItems.length / this.vItemPerPage)
+  }
+
+  @Watch('pageLength')
+  onPageLengthChanged(n, o) {
+    if (this.vPage === 0 && n > 0) this.vPage = 1
+    else if (this.vPage > n) this.vPage = n
   }
 }

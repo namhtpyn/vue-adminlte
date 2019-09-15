@@ -40,6 +40,7 @@
         expandable
         sortable
         row-select
+        @row-click="console"
       >
         <items>
           <text-item text="provinceName" value="provinceName" sortable></text-item>
@@ -48,7 +49,7 @@
           <n-text-box v-model="modal.data.provinceName"></n-text-box>
         </template>
         <template #item.expand="{item}">
-          {{ item }}
+          <n-btn>a</n-btn>
         </template>
       </n-data-table>
     </div>
@@ -139,7 +140,6 @@ export default class VApp extends Vue {
   tabs = []
   console(...args) {
     console.log(args)
-    console.log(this.checkboxModel)
   }
   selectNode(item) {
     console.log(item)

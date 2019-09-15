@@ -31,7 +31,11 @@
               :key="colIndex"
               :colspan="headerColspan(header)"
               :rowspan="headerRowspan(header)"
-              :class="`${cssClass.headerCell} ${header.sortable ? 'sortable' : ''}`"
+              :class="
+                `${cssClass.headerCell} ${header.sortable ? 'sortable' : ''} ${
+                  getSort(header) ? (getSort(header).desc ? 'desc' : 'asc') : ''
+                }`
+              "
               :style="headerCellStyle(header)"
               @click="sort(header)"
             >
@@ -47,11 +51,11 @@
             :class="cssClass.row"
             v-for="(item, rowIndex) in pageItems"
             :key="rowIndex"
-            @contextmenu.stop="e => rowContextmenu(e, item.data, rowIndex)"
-            @dblclick.stop="e => rowDblclick(e, item.data, rowIndex)"
-            @click.stop="e => rowClick(e, item.data, rowIndex)"
+            @contextmenu="e => rowContextmenu(e, item.data, rowIndex)"
+            @dblclick="e => rowDblclick(e, item.data, rowIndex)"
+            @click="e => rowClick(e, item.data, rowIndex)"
           >
-            <td v-if="item.isExpansion" :colspan="headerColumns().length">
+            <td v-if="item.isExpansion" :colspan="headerColumns().length" @click.stop>
               <slot name="item.expand" :item="item.data"></slot>
             </td>
             <template v-else>
@@ -69,12 +73,14 @@
                       v-if="multipleSelect"
                       :model="value"
                       @input="input"
+                      @click.stop=""
                       :value="keyField ? item.data[keyField] : item.data"
                     ></n-checkbox>
                     <n-radio
                       v-else
                       ref="radio"
                       @input="input"
+                      @click.stop=""
                       :model="value"
                       :value="keyField ? item.data[keyField] : item.data"
                     ></n-radio>
@@ -82,17 +88,17 @@
                   <template v-else-if="header.value === '$expansion'">
                     <n-icon
                       style="cursor:pointer"
-                      @click="expandRow(item.index)"
+                      @click.stop="expandRow(item.index)"
                       :class="`fa-chevron-${isExpanded(item.index) ? 'up' : 'down'}`"
                     >
                     </n-icon>
                   </template>
                   <template v-else-if="header.value === '$action'">
                     <div class="btn-group">
-                      <n-btn v-if="updatable" @click="updateClick(item.data)">
+                      <n-btn v-if="updatable" @click.stop="updateClick(item.data)">
                         <n-icon>pencil</n-icon>
                       </n-btn>
-                      <n-btn v-if="deletable" @click="removeClick(item.data)">
+                      <n-btn v-if="deletable" @click.stop="removeClick(item.data)">
                         <n-icon>trash</n-icon>
                       </n-btn>
                     </div>
@@ -126,7 +132,7 @@
       <slot name="bottom.prepend"></slot>
       <slot name="bottom">
         <div class="hidden-xs" style="height: 30px;min-height: 32px;padding: 6px 10px 6px 0px;font-size: 12px; line-height: 1.5;">
-          Trang {{ vPage }}/{{ pageLength }} ({{ itemsLength }} mục)
+          Trang {{ vPage }}/{{ pageLength }} ({{ tableItems.length }} mục)
         </div>
 
         <div>
@@ -209,7 +215,6 @@ export default class NDataTable extends Mixins(mixin1, mixin2) {
   private rowClick(event, item, rowIndex) {
     //Row select
     if (this.selectable && this.rowSelect) {
-      if (event.target.htmlFor && ['checkbox', 'radio'].some(f => event.target.htmlFor.includes(f))) return
       if (this.multipleSelect) (this.$refs.checkbox[rowIndex] as NCheckBox).toggle()
       else (this.$refs.radio[rowIndex] as NRadio).toggle()
     }

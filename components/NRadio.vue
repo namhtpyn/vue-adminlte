@@ -1,14 +1,22 @@
 <template>
   <label>
-    <input :id="radioID" type="radio" class="n-radio" :checked="isChecked" :value="value" @input="input" v-bind="$attrs" /><label
-      :for="radioID"
-    ></label>
+    <input
+      ref="radio"
+      :id="radioID"
+      type="radio"
+      class="n-radio"
+      :checked="isChecked"
+      :value="value"
+      @input="input"
+      v-bind="$attrs"
+      @click="click"
+    /><label :for="radioID" @click.stop></label>
     {{ label }}
   </label>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, Model } from 'vue-property-decorator'
+import { Component, Vue, Prop, Model, Emit } from 'vue-property-decorator'
 import _ from 'lodash'
 
 @Component({ inheritAttrs: false })
@@ -19,13 +27,14 @@ export default class NRadio extends Vue {
   @Model('input', { type: [String, Number, Boolean, Object] }) model: number | string | boolean | object
 
   groupModel: any = null
+  @Emit() click(e) {}
   get isChecked() {
     if (!this.model) return _.isEqual(this.groupModel, this.value)
     return _.isEqual(this.model, this.value)
   }
 
   toggle() {
-    ;(this.$el.querySelector('input[type="radio"]') as HTMLInputElement).click()
+    ;(this.$refs.radio as HTMLInputElement).click()
   }
 
   input(e) {

@@ -8,14 +8,15 @@
       :value="value"
       v-bind="$attrs"
       @input="input"
+      @click="click"
     />
-    <label :for="checkboxID"></label>
+    <label :for="checkboxID" @click.stop></label>
     {{ label }}
   </label>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, Model } from 'vue-property-decorator'
+import { Component, Vue, Prop, Model, Emit } from 'vue-property-decorator'
 import _ from 'lodash'
 @Component({ inheritAttrs: false })
 export default class NCheckbox extends Vue {
@@ -23,7 +24,7 @@ export default class NCheckbox extends Vue {
   @Prop() label!: string
   @Prop({ type: [String, Number, Boolean, Object], default: true }) readonly value!: string | number | boolean | object
   @Model('input', { type: [Array, String, Number, Boolean] }) readonly model: any[] | any
-
+  @Emit() click(e) {}
   get isChecked() {
     if (Array.isArray(this.model)) return this.model.some(m => _.isEqual(m, this.value))
     else return _.isEqual(this.model, this.value)
