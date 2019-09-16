@@ -110,22 +110,20 @@
         <n-text-box :rules="[v => !!v | 'required']"></n-text-box>
       </div>
     </n-form>
-    <div style="width:300px">
-      <n-line-chart read-url="/data/traffics.json" caption="HAHAHA">
-        <common value="Statisticdate"></common>
-        <series>
-          <item text="In" value="trafficIN" y-axis-i-d="first"></item>
-          <item text="Out" value="trafficOut" y-axis-i-d="second"></item>
-        </series>
-        <options>
-          <axises>
-            <x-axis text="Thời gian"></x-axis>
-            <y-axis id="first" position="left" text="Tốc độ upload (mpbs)"></y-axis>
-            <y-axis id="second" position="right" text="Tốc độ download (mpbs)"></y-axis>
-          </axises>
-        </options>
-      </n-line-chart>
-    </div>
+    <n-line-chart read-url="/data/traffics.json" caption="HAHAHA">
+      <common value="Statisticdate" :format="v => 'aaa'"></common>
+      <series>
+        <item text="In" value="trafficIN" y-axis-i-d="first"></item>
+        <item text="Out" value="trafficOut" y-axis-i-d="second"></item>
+      </series>
+      <options>
+        <axises>
+          <x-axis text="Thời gian"></x-axis>
+          <y-axis id="first" position="left" text="Tốc độ upload (mpbs)"></y-axis>
+          <y-axis id="second" position="right" text="Tốc độ download (mpbs)"></y-axis>
+        </axises>
+      </options>
+    </n-line-chart>
   </div>
 </template>
 
