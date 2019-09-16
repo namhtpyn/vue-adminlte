@@ -14,7 +14,7 @@ export default class NTableHeader extends Mixins(NBase, NData, NTableProp) {
     const items: VueNode = nodes.find(node => node.tag === 'items') || new VueNode()
     const children = (items.children || []).filter(node => itemNode.includes(node.tag))
     return children.map(child => {
-      const header: TableHeader = { ...{ text: '', value: '', headerValign: 'center' }, ...child.attrs }
+      const header: TableHeader = { ...new TableHeader(), ...child.attrs }
       header.type = child.tag.slice(0, -5)
       if (child.tag === 'band-item') {
         header.children = this.getHeaders(child.children)

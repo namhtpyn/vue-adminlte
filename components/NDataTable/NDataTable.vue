@@ -109,7 +109,7 @@
                     </div>
                   </template>
                   <template v-else>
-                    {{ formatItemValue(item.data, header) }}
+                    {{ header.format(item.data) }}
                   </template>
                 </slot>
               </td>
@@ -261,9 +261,6 @@ export default class NDataTable extends Mixins(mixin1, mixin2) {
     }
   }
 
-  private formatItemValue(item: any, header: TableHeader) {
-    return item[header.value]
-  }
   private expandRow(itemIndex: number) {
     if (!this.expandable) return
     if (!this.vExpansion.includes(itemIndex))
@@ -282,7 +279,7 @@ export default class NDataTable extends Mixins(mixin1, mixin2) {
     this.vFilterModal.value = this.getFilterValue(header) || []
     this.vFilterModal.items = _.uniqBy(
       this.vItems.map(i => {
-        return { text: i[header.value], value: i[header.value] }
+        return { text: header.format(i[header.value]), value: i[header.value] }
       }),
       'value'
     )
@@ -329,6 +326,8 @@ export default class NDataTable extends Mixins(mixin1, mixin2) {
   private footerSummary(items: any[], header: TableHeader) {
     if (header.summary === 'sum') return items.reduce((a, b) => a + (b[header.value] || 0), 0)
     else if (header.summary === 'count') return items.map(o => o[header.value]).length
+    else if (header.summary === 'average')
+      return items.reduce((a, b) => a + (b[header.value] || 0), 0) / items.map(o => o[header.value]).length
     return ''
   }
   /** selectable */

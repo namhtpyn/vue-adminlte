@@ -13,6 +13,7 @@ export class TableHeader {
   headerBgcolor?: string
   headerColor?: string
   summary?: string
+  format?: Function = v => v
   children?: TableHeader[]
 }
 
