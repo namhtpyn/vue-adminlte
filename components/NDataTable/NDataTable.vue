@@ -372,7 +372,7 @@ export default class NDataTable extends Mixins(mixin1, mixin2) {
 } */
 .table thead th .sortable,
 .table thead th .filterable {
-  opacity: 0;
+  opacity: 0.5;
 }
 .table thead th:hover .sortable,
 .table thead .sortable.asc::before,

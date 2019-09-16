@@ -79,7 +79,13 @@
       >
         <items>
           <text-item text="provinceName" value="provinceName" sortable filterable></text-item>
-          <text-item text="provinceCode" value="provinceCode" sortable filterable></text-item>
+          <text-item
+            text="provinceCode"
+            value="provinceCode"
+            sortable
+            filterable
+            :format="v => provinces.find(i => i.provinceCode === v).provinceName"
+          ></text-item>
           <text-item text="areaID" value="areaID" sortable filterable></text-item>
         </items>
         <template #modal="{modal}">
