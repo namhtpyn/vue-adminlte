@@ -109,7 +109,7 @@
                     </div>
                   </template>
                   <template v-else>
-                    {{ header.format(item.data) }}
+                    {{ header.format(item.data[header.value]) }}
                   </template>
                 </slot>
               </td>
