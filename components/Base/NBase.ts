@@ -8,6 +8,9 @@ export default class NBase extends Vue {
   mounted() {
     this.vSlot = new VueSlot(this.$slots.default)
   }
+  updateVSlot() {
+    this.vSlot = new VueSlot(this.$slots.default)
+  }
   @Emit() async input(e) {}
   @Emit() async error(e) {}
   setLoading(state: boolean) {

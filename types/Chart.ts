@@ -9,4 +9,6 @@ export class ChartSeries {
   value: string = ''
   data: any[] = []
   fill: boolean = false
+  backgroundColor: string = 'rgba(0, 0, 0, 0.1)'
+  borderColor: string = 'rgba(0, 0, 0, 0.1)'
 }

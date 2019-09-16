@@ -5,8 +5,8 @@ export class VueNode {
   tag: string
   isComponent: boolean
   componentInstance: Vue
-  attrs: object
-  children: VueNode[]
+  attrs: any = {}
+  children: VueNode[] = []
   text: string
 }
 export default class VueSlot {
