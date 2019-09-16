@@ -7,17 +7,21 @@ import NTableProp from './NTableProp'
 export default class NTableCssClass extends Mixins(NBase, NTableProp) {
   private get cssClass() {
     const cssClass: any = this.vSlot.data.find(e => e.tag === 'css-class') || {}
-    cssClass.top = {
-      stickyTop: this.stickyTop,
-      ...(cssClass.top || {})
-    }
-    cssClass.table = {
-      tableBordered: this.bordered,
-      tableHover: this.hovered,
-      tableCondensed: this.densed,
-      tableStriped: this.striped,
-      ...(cssClass.table || {})
-    }
+    cssClass.top = [
+      {
+        'sticky-top': this.stickyTop
+      },
+      cssClass.top
+    ]
+    cssClass.table = [
+      {
+        'table-bordered': this.bordered,
+        'table-hover': this.hovered,
+        'table-condensed': this.densed,
+        'table-striped': this.striped
+      },
+      cssClass.table
+    ]
     return cssClass
   }
 }
