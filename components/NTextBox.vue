@@ -19,7 +19,7 @@
         @input="e => input(e.target.value)"
         @blur="input(value)"
         v-bind="$attrs"
-        @keypress="keyPressed"
+        @keypress="keypress"
       />
       <span v-if="suffix" class="input-group-addon">{{ suffix }}</span>
       <span v-if="appendIcon" class="input-group-addon">
@@ -66,7 +66,7 @@ export default class NTextBox extends Vue {
   }
   @Emit('append-btn-click') appendBtnClick(e) {}
   @Emit('prepend-btn-click') prependBtnClick(e) {}
-  @Emit() submit(e) {}
+  @Emit() keypress(e) {}
   valid: boolean = true
   lazyValidation: boolean = false
   get hasLabel() {
@@ -117,10 +117,6 @@ export default class NTextBox extends Vue {
     this.valid = true
     if (this.rules) this.valid = !this.rules.some(e => e(value) !== true)
     return this.valid
-  }
-
-  keyPressed(e) {
-    if (e.keyCode === 13) this.submit(e.target.value)
   }
 }
 </script>

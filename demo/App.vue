@@ -1,6 +1,40 @@
 <template>
   <div>
-    <n-drop-down-tree
+    <n-form ref="form2" lazy-validation>
+      <div class="row">
+        <div class="col-xs-4">
+          <n-drop-down-tree
+            v-model="unitID"
+            label="Đơn vị"
+            searchable
+            read-url="/data/units.json"
+            item-value="UnitID"
+            item-text="UnitName"
+            tree-parent-key="ParentID"
+            :tree-expand-to-level="1"
+            :rules="[v => !!v || 'abc']"
+          ></n-drop-down-tree>
+        </div>
+        <div class="col-xs-3">
+          <n-drop-down-table
+            v-model="deviceIP"
+            label="Thiết bị"
+            item-text="SystemName"
+            item-value="IpAddress"
+            :rules="[v => !!v || 'abc']"
+          >
+            <items>
+              <text-item text="Tên hệ thống" value="SystemName"></text-item>
+              <text-item text="Loại" value="ProductCode"></text-item>
+              <text-item text="Trạm" value="BuildingName"></text-item>
+              <text-item text="Địa chỉ IP" value="IpAddress"></text-item>
+              <text-item text="Ghi chú" value="Note"></text-item>
+            </items>
+          </n-drop-down-table>
+        </div>
+      </div>
+    </n-form>
+    <!-- <n-drop-down-tree
       read-url="/data/units.json"
       item-value="UnitID"
       item-text="UnitName"
@@ -136,11 +170,13 @@ import traffics from './data/traffics.json'
 // import _ from 'lodash'
 @Component({})
 export default class VApp extends Vue {
+  deviceIP = null
+  account = ''
   check = 1
   units = units
   provinces = provinces
   traffics = traffics
-  unitID = 9
+  unitID = 0
   modal = false
   dataTableModel: any = {}
   dropDownTableModel: any | any[] = ''
