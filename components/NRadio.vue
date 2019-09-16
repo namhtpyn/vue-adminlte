@@ -10,7 +10,7 @@
       @input="input"
       v-bind="$attrs"
       @click="click"
-    /><label :for="radioID" @click.stop></label>
+    /><label :for="radioID" @click.stop style="vertical-align: middle;"></label>
     {{ label }}
   </label>
 </template>

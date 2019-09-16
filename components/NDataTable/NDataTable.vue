@@ -60,7 +60,7 @@
             :key="rowIndex"
             @contextmenu="e => rowContextmenu(e, item.data, rowIndex)"
             @dblclick="e => rowDblclick(e, item.data, rowIndex)"
-            @click="e => rowClick(e, item.data, rowIndex)"
+            @click="e => rowClick(e, item, rowIndex)"
           >
             <td v-if="item.isExpansion" :colspan="headerColumns().length" @click.stop>
               <slot name="item.expand" :item="item.data"></slot>
@@ -76,7 +76,7 @@
                 >
                   <template v-if="header.value === '__selection'">
                     <n-checkbox
-                      ref="checkbox"
+                      :ref="`checkbox-${item.index}`"
                       v-if="multipleSelect"
                       :model="value"
                       @input="input"
@@ -85,7 +85,7 @@
                     ></n-checkbox>
                     <n-radio
                       v-else
-                      ref="radio"
+                      :ref="`radio-${item.index}`"
                       @input="input"
                       @click.stop=""
                       :model="value"
@@ -211,7 +211,7 @@ import NTableProp from './NTableProp'
 import NTableCRUD from './NTableCRUD'
 import NTableCssClass from './NTableCssClass'
 import NTableText from './NTableText'
-import { TableHeader } from '../../types/Table'
+import { TableHeader, TableItem } from '../../types/Table'
 
 import NCheckBox from '../NCheckbox.vue'
 import NRadio from '../NRadio.vue'
@@ -239,13 +239,13 @@ export default class NDataTable extends Mixins(mixin1, mixin2) {
     this.vModal.loading = false
     this.vModal.valid = true
   }
-  private rowClick(event, item, rowIndex) {
+  private rowClick(event, item: TableItem, rowIndex: number) {
     //Row select
     if (this.selectable && this.rowSelect) {
-      if (this.multipleSelect) (this.$refs.checkbox[rowIndex] as NCheckBox).toggle()
-      else (this.$refs.radio[rowIndex] as NRadio).toggle()
+      if (this.multipleSelect) (this.$refs[`checkbox-${item.index}`][0] as NCheckBox).toggle()
+      else (this.$refs[`radio-${item.index}`][0] as NRadio).toggle()
     }
-    this.$emit('row-click', { event, item, rowIndex })
+    this.$emit('row-click', { event, item: item.data, rowIndex })
   }
   private rowDblclick(event, item, rowIndex) {
     this.$emit('row-dblclick', { event, item, rowIndex })
