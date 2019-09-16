@@ -167,7 +167,7 @@
       <n-icon css-class="fa-spin fa-4x" style="color:white">circle-o-notch</n-icon>
     </n-overlay>
 
-    <n-modal :loading="vModal.loading" :caption="vModal.new ? 'Thêm' : 'Sửa'" v-model="vModal.visible">
+    <n-modal large scrollable :loading="vModal.loading" :caption="vModal.new ? 'Thêm' : 'Sửa'" v-model="vModal.visible">
       <n-form ref="form" v-model="vModal.valid">
         <slot name="modal" :modal="vModal"></slot>
       </n-form>
