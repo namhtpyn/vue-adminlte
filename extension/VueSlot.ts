@@ -19,6 +19,7 @@ export default class VueSlot {
   private parse(data: VueNode[] = this.data, nodes: VNode[] = this.slot) {
     if (_.isEmpty(nodes)) return
     nodes.forEach(node => {
+      if (_.isEmpty(node.tag)) return
       const myNode = new VueNode()
       myNode.tag = node.tag || ''
       myNode.isComponent = !_.isEmpty(node.componentInstance)
@@ -31,10 +32,10 @@ export default class VueSlot {
     })
   }
   find(fn: Function = (node: VueNode) => false, nodes: VueNode[] = this.data) {
-    const myNodes: VueNode[] = []
+    let myNodes: VueNode[] = []
     nodes.forEach(node => {
       if (fn(node)) myNodes.push(node)
-      if (!_.isEmpty(node.children)) myNodes.concat(this.find(fn, node.children))
+      if (!_.isEmpty(node.children)) myNodes = myNodes.concat(this.find(fn, node.children))
     })
     return myNodes
   }

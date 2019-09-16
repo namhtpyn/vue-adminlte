@@ -106,7 +106,9 @@
     </div>
 
     <n-form ref="form" lazy-validation>
-      <n-text-box :rules="[v => !!v | 'required']"></n-text-box>
+      <div>
+        <n-text-box :rules="[v => !!v | 'required']"></n-text-box>
+      </div>
     </n-form>
     <div style="width:300px">
       <n-line-chart read-url="/data/traffics.json" caption="HAHAHA">
