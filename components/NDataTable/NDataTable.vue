@@ -1,6 +1,6 @@
 <template>
   <div style="position:relative">
-    <div v-if="!hideTop" :class="{ 'tbl-header': true, 'bg-white': true, 'sticky-top': stickyTop }">
+    <div v-if="!hideTop" class="n-data-table-top" :class="cssClass.top">
       <slot name="top.prepend"></slot>
       <slot name="top">
         <div class="title" v-if="caption" style="flex:auto">{{ caption }}</div>
@@ -23,7 +23,7 @@
     </div>
 
     <div :class="{ 'table-responsive': responsive }">
-      <table :class="cssClass.table">
+      <table class="table no-margin" :class="cssClass.table">
         <thead v-if="!hideHeader">
           <tr :class="cssClass.headerRow" v-for="headerRow in headerRows()" :key="headerRow">
             <th
@@ -35,17 +35,19 @@
               :style="headerCellStyle(header)"
               @click="toggleSort(header)"
             >
-              <div v-if="header.value === '$selection'">
+              <div v-if="header.value === '__selection'">
                 <n-checkbox v-if="multipleSelect" @input="selectAll"></n-checkbox>
               </div>
-              <slot v-else :name="`header.${kebabCase(header.value)}`" :item="header">{{ header.text }}</slot>
+              <slot v-else :name="`header.${header.kebabValue()}`" :item="header">{{ header.text }}</slot>
               <i
                 v-if="header.sortable"
-                :class="`sortable fa fa-sort ${getSort(header) ? (getSort(header).desc ? 'desc' : 'asc') : ''}`"
+                class="sortable fa fa-sort"
+                :class="`${getSort(header) ? (getSort(header).desc ? 'desc' : 'asc') : ''}`"
               ></i>
               <i
                 v-if="header.filterable"
-                :class="`filterable fa fa-filter ${isFiltered(header) ? 'active' : ''}`"
+                class="filterable fa fa-filter"
+                :class="`${isFiltered(header) ? 'active' : ''}`"
                 @click.stop="openFilter(header)"
               ></i>
             </th>
@@ -66,13 +68,13 @@
             <template v-else>
               <td :class="cssClass.cell" :style="cellStyle(header)" v-for="(header, colIndex) in headerColumns()" :key="colIndex">
                 <slot
-                  :name="`item.${kebabCase(header.value)}`"
+                  :name="`item.${header.kebabValue()}`"
                   :item="item.data"
                   :value="item.data[header.value]"
                   :index="item.index"
                   :rowIndex="rowIndex"
                 >
-                  <template v-if="header.value === '$selection'">
+                  <template v-if="header.value === '__selection'">
                     <n-checkbox
                       ref="checkbox"
                       v-if="multipleSelect"
@@ -90,7 +92,7 @@
                       :value="keyField ? item.data[keyField] : item.data"
                     ></n-radio>
                   </template>
-                  <template v-else-if="header.value === '$expansion'">
+                  <template v-else-if="header.value === '__expansion'">
                     <n-icon
                       style="cursor:pointer"
                       @click.stop="expandRow(item.index)"
@@ -98,7 +100,7 @@
                     >
                     </n-icon>
                   </template>
-                  <template v-else-if="header.value === '$action'">
+                  <template v-else-if="header.value === '__action'">
                     <div class="btn-group">
                       <n-btn v-if="updatable" @click.stop="updateClick(item.data)">
                         <n-icon>pencil</n-icon>
@@ -124,7 +126,7 @@
         <tfoot v-if="!hideFooter">
           <tr :class="cssClass.footerRow">
             <td :class="cssClass.footerCell" v-for="(header, colIndex) in headerColumns()" :key="colIndex">
-              <slot :name="`footer.${kebabCase(header.value)}`" :items="items">
+              <slot :name="`footer.${header.kebabValue()}`" :items="items">
                 {{ footerSummary(items, header) }}
               </slot>
             </td>
@@ -165,6 +167,7 @@
 
     <n-overlay absolute :value="vLoading">
       <n-icon css-class="fa-spin fa-4x" style="color:white">circle-o-notch</n-icon>
+      Đang tải dữ liệu
     </n-overlay>
 
     <n-modal large scrollable :loading="vModal.loading" :caption="vModal.new ? 'Thêm' : 'Sửa'" v-model="vModal.visible">
@@ -324,11 +327,14 @@ export default class NDataTable extends Mixins(mixin1, mixin2) {
     return style
   }
   private footerSummary(items: any[], header: TableHeader) {
-    if (header.summary === 'sum') return items.reduce((a, b) => a + (b[header.value] || 0), 0)
-    else if (header.summary === 'count') return items.map(o => o[header.value]).length
-    else if (header.summary === 'average')
-      return items.reduce((a, b) => a + (b[header.value] || 0), 0) / items.map(o => o[header.value]).length
-    return ''
+    if (header.summary instanceof Function) {
+      return header.summary(items)
+    } else {
+      if (header.summary === 'sum') return items.reduce((a, b) => a + (b[header.value] || 0), 0)
+      else if (header.summary === 'count') return items.length
+      else if (header.summary === 'average') return items.reduce((a, b) => a + (b[header.value] || 0), 0) / items.length
+      return ''
+    }
   }
   /** selectable */
   async selectAll(e) {
@@ -341,9 +347,6 @@ export default class NDataTable extends Mixins(mixin1, mixin2) {
   /**helper function */
 
   //console.log(this.items, this.__items)
-  private kebabCase(o) {
-    return _.kebabCase(o)
-  }
   private isEmpty(o) {
     return _.isEmpty(o)
   }
@@ -387,21 +390,19 @@ export default class NDataTable extends Mixins(mixin1, mixin2) {
   opacity: 1;
 }
 
-.tbl-header {
+.n-data-table-top {
   display: flex;
   padding-top: 10px;
   padding-bottom: 10px;
   align-items: center;
+  background-color: white;
 }
-.tbl-header > * + * {
+.n-data-table-top > * + * {
   padding-left: 5px;
 }
 .sticky-top {
   position: sticky;
   top: 0px;
   z-index: 99;
-}
-.bg-white {
-  background-color: white;
 }
 </style>

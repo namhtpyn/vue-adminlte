@@ -1,6 +1,8 @@
+import _ from 'lodash'
 export class TableHeader {
   text: string = ''
   value: string = ''
+  kebabValue: Function = () => _.kebabCase(this.value)
   type?: string = 'text'
   width?: string
   align?: string = 'left'
@@ -12,7 +14,7 @@ export class TableHeader {
   headerValign?: string = 'middle'
   headerBgcolor?: string
   headerColor?: string
-  summary?: string
+  summary?: string | Function
   format?: Function = v => v
   children?: TableHeader[]
 }
