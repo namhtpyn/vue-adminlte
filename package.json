@@ -35,6 +35,7 @@
     "moment": "^2.24.0",
     "natsort": "^2.0.2",
     "prettier": "^1.18.2",
+    "remove-all-diacritics": "^1.0.5",
     "rimraf": "^3.0.0",
     "rollup": "^1.21.2",
     "rollup-plugin-commonjs": "^10.1.0",

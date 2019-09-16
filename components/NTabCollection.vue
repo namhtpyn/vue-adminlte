@@ -12,13 +12,16 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
+import { Component, Prop, Watch, Mixins } from 'vue-property-decorator'
 import _ from 'lodash'
+import NBase from './Base/NBase'
+import NTab from './NTab.vue'
+import { VueNode } from '../extension/VueSlot'
 @Component({ inheritAttrs: false })
-export default class NTabCollection extends Vue {
+export default class NTabCollection extends Mixins(NBase) {
   @Prop({ type: Boolean, default: false }) changeOnCreated!: boolean
   private valueTabActive: any = null
-  private tabComponents: any[] = []
+  private tabComponents: NTab[] = []
   mounted() {
     this.init()
   }
@@ -33,7 +36,7 @@ export default class NTabCollection extends Vue {
   }
 
   get headers() {
-    let result = []
+    let result: { text: string; value: any }[] = []
     if (!_.isEmpty(this.tabComponents))
       result = this.tabComponents.map(t => {
         return { text: t.title, value: t.value }
@@ -47,8 +50,9 @@ export default class NTabCollection extends Vue {
   }
 
   init() {
-    this.tabComponents = []
-    this.findDeep(this.$slots.default)
+    const nodes = this.vSlot.find((node: VueNode) => node.isComponent && node.componentInstance.$options.name === 'NTab')
+    this.tabComponents = nodes.map(o => o.componentInstance as NTab)
+
     this.setTabID()
     if (this.changeOnCreated && !_.isEmpty(this.headers)) this.valueTabActive = this.headers[this.tabActive].value
   }
@@ -58,29 +62,9 @@ export default class NTabCollection extends Vue {
   }
 
   private setTabID() {
-    for (let i = 0; i < this.tabComponents.length; i++) {
-      this.tabComponents[i].id = 'n-tab-' + i
-    }
-  }
-
-  private findDeep(obj) {
-    if (!obj) return
-    if (obj instanceof Array) {
-      for (let i = 0; i < obj.length; i++) {
-        this.findDeep(obj[i])
-      }
-    } else {
-      if (
-        Object.hasOwnProperty.call(obj, 'componentInstance') &&
-        !_.isEmpty(obj.componentInstance) &&
-        obj.componentInstance.$options._componentTag === 'n-tab'
-      ) {
-        this.tabComponents.push(obj.componentInstance)
-      }
-      if (Object.hasOwnProperty.call(obj, 'children') && !_.isEmpty(obj.children)) {
-        this.findDeep(obj.children)
-      }
-    }
+    this.tabComponents.forEach((component, index) => {
+      component.id = 'n-tab-' + index
+    })
   }
 }
 </script>

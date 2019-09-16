@@ -1,19 +1,6 @@
 <template>
   <div :style="{ position: 'relative' }">
-    <n-text-box
-      v-if="searchable"
-      v-model="searchText"
-      :css-class="stickySearch ? 'sticky-search' : ''"
-      hint="Nhấn Enter để tìm kiếm"
-      @keypress.enter="search"
-    ></n-text-box>
-    <!-- <input
-      type="text"
-      v-if="searchable"
-      :class="{ 'form-control': true, 'sticky-search': stickySearch }"
-      v-model="searchText"
-      placeholder="Tìm kiếm"
-    /> -->
+    <n-text-box v-if="searchable" v-model="searchText" :class="{ 'sticky-search': stickySearch }" hint="Tìm kiếm"></n-text-box>
     <div>
       <span v-if="!hasData">Không có dữ liệu</span>
       <div id="component-tree-view"></div>
@@ -28,6 +15,7 @@
 import { Component, Prop, Model, Emit, Watch, Mixins } from 'vue-property-decorator'
 import _ from 'lodash'
 import NDataSource from './Base/NDataSource'
+import diacritics from 'remove-all-diacritics'
 @Component({ inheritAttrs: false })
 export default class NTree extends Mixins(NDataSource) {
   @Prop({ type: String, default: 'none' }) icon!: string
@@ -54,26 +42,13 @@ export default class NTree extends Mixins(NDataSource) {
 
   searchText: string = ''
   private theTree!: any
-  itemMatchedSearch: any[] = []
 
   get treeData() {
-    // if (_.isEmpty(this.items)) return []
-    // const root = this.items.find(i => !this.items.some(n => _.isEqual(n[this.itemValue], i[this.parentKey])))[this.parentKey]
-    // const itemsMap = _.cloneDeep(this.items).map(m => {
-    //   return {
-    //     id: m[this.itemValue],
-    //     text: m[this.itemText],
-    //     parent: _.isEqual(m[this.parentKey], root) ? '#' : m[this.parentKey],
-    //     state: {
-    //       opened: false,
-    //       showed: true,
-    //       selected: _.isEqual(m[this.itemValue], this.value)
-    //     }
-    //   }
-    // })
     if (_.isEmpty(this.vItems)) return []
-    const root = this.vItems.find(i => !this.vItems.some(n => _.isEqual(n[this.itemValue], i[this.parentKey])))[this.parentKey]
-    const itemsMap = (!_.isEmpty(this.itemMatchedSearch) ? this.itemMatchedSearch : this.vItems).map(m => {
+    let items = _.cloneDeep(this.vItems)
+    const root = items.find(i => !items.some(n => _.isEqual(n[this.itemValue], i[this.parentKey])))[this.parentKey]
+    items = this.search(items, root)
+    const itemsMap = items.map(m => {
       return {
         id: m[this.itemValue],
         text: m[this.itemText],
@@ -99,13 +74,9 @@ export default class NTree extends Mixins(NDataSource) {
     this.init()
   }
   @Watch('treeData')
-  private onTreeDataChange() {
+  private onTreeDataChange(n) {
     this.theTree.jstree().destroy()
     this.init()
-  }
-  @Watch('searchText')
-  private onSearchText(n) {
-    if (_.isEmpty(n)) this.itemMatchedSearch = []
   }
 
   private init() {
@@ -145,49 +116,39 @@ export default class NTree extends Mixins(NDataSource) {
       .focus()
   }
   private convertHereditaryToObject(arr, parent, level) {
-    const result: Object[] = []
+    let result: Object[] = []
     if (!arr.some(i => i.parentID === parent)) return result
     const children = arr.filter(i => i.parentID === parent)
-    children.forEach(v => {
-      const node = _.cloneDeep(v)
-      node.state.opened = level <= this.expandToLevel
-      node.children = this.convertHereditaryToObject(arr, v.id, level + 1)
-      result.push(node)
+    result = children.map(v => {
+      v.state.opened = level <= this.expandToLevel
+      v.children = this.convertHereditaryToObject(arr, v.id, level + 1)
+      return v
     })
     return result
   }
 
-  search(e) {
-    if (_.isEmpty(this.searchText)) return
-    let result = []
-    const idMatches = this.vItems.filter(o => o[this.itemText].toUpperCase().includes(this.searchText.toUpperCase()))
-    idMatches.forEach(o => {
-      const parents = this.getParents(o[this.parentKey])
-      const children = this.getChildren(o[this.itemValue])
-      result = _.union(result, parents, children, [String(o[this.itemValue])])
-    })
-    this.itemMatchedSearch = this.vItems.filter(o => result.includes(String(o[this.itemValue])))
+  search(items, root) {
+    if (_.isEmpty(this.searchText)) return items
+
+    let foundItems = items.filter(i =>
+      diacritics
+        .remove(((i[this.itemText] as string) || '').toLowerCase())
+        .includes(diacritics.remove(this.searchText.toLowerCase()))
+    )
+    //exclude found items
+    items = _.differenceBy(items, foundItems, this.itemValue)
+    foundItems = foundItems.concat(foundItems.flatMap(item => this.getParents(items, item, root)))
+
+    return foundItems
   }
 
-  getParents(parentID) {
-    const result = []
-    let node = _.cloneDeep(this.vItems.find(o => _.isEqual(o[this.itemValue], parentID)))
-    while (!_.isEmpty(node)) {
-      result.push(String(node[this.itemValue]))
-      node = _.cloneDeep(this.vItems.find(o => _.isEqual(o[this.itemValue], node[this.parentKey])))
-    }
-    return result
-  }
-
-  getChildren(id) {
-    const result = []
-    const children = this.vItems.filter(o => _.isEqual(o[this.parentKey], id))
-    if (_.isEmpty(children)) return result
-    children.forEach(o => {
-      const node = _.cloneDeep(o)
-      result.push(String(node[this.itemValue]), this.getChildren(node[this.itemValue]))
-    })
-    return _.flattenDeep(result)
+  getParents(items: any[], item, root) {
+    const parentID = item[this.parentKey]
+    const parents = items.filter(i => _.isEqual(i[this.itemValue], parentID))
+    //exclude found items
+    items = _.differenceBy(items, parents, this.itemValue)
+    if (parentID === root) return parents
+    else return parents.concat(parents.flatMap(p => this.getParents(items, p, root)))
   }
 }
 </script>

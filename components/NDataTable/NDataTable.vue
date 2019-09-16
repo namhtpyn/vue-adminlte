@@ -23,7 +23,7 @@
     </div>
 
     <div :class="{ 'table-responsive': responsive }">
-      <table class="table no-margin" :class="cssClass.table">
+      <table class="n-data-table table no-margin" :class="cssClass.table">
         <thead v-if="!hideHeader">
           <tr :class="cssClass.headerRow" v-for="headerRow in headerRows()" :key="headerRow">
             <th
@@ -358,36 +358,22 @@ export default class NDataTable extends Mixins(mixin1, mixin2) {
 .table thead th {
   cursor: pointer;
 }
-
-/* .table thead .sortable:hover:after,
-.table thead .sortable.asc:after,
-.table thead .sortable.desc:after,
-.table thead .filterable:hover:before {
-  margin-left: auto;
-  display: inline-block;
-  font: normal normal normal 14px/1 FontAwesome;
-  font-size: inherit;
-  text-rendering: auto;
-  -webkit-font-smoothing: antialiased;
-} */
-.table thead th .sortable,
-.table thead th .filterable {
-  opacity: 0.5;
+.n-data-table thead th .sortable,
+.n-data-table thead th .filterable {
+  opacity: 0.3;
 }
-.table thead th:hover .sortable,
-.table thead .sortable.asc::before,
-.table thead .sortable.desc::before,
-.table thead th:hover .filterable {
+.n-data-table thead th:hover .sortable,
+.n-data-table thead .sortable.asc,
+.n-data-table thead .sortable.desc,
+.n-data-table thead th:hover .filterable,
+.n-data-table thead th .filterable.active {
   opacity: 1;
 }
-.table thead .sortable.asc::before {
+.n-data-table thead .sortable.asc::before {
   content: '\f0de';
 }
-.table thead .sortable.desc::before {
+.n-data-table thead .sortable.desc::before {
   content: '\f0dd';
-}
-.table thead th .filterable.active {
-  opacity: 1;
 }
 
 .n-data-table-top {
@@ -400,7 +386,7 @@ export default class NDataTable extends Mixins(mixin1, mixin2) {
 .n-data-table-top > * + * {
   padding-left: 5px;
 }
-.sticky-top {
+.n-data-table-top.sticky-top {
   position: sticky;
   top: 0px;
   z-index: 99;

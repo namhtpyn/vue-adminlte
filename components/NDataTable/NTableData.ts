@@ -5,6 +5,7 @@ import NData from '../Base/NData'
 import NTableProp from './NTableProp'
 import { TableItem, TableSort, TableHeader, TableFilter } from '../../types/Table'
 import natsort from 'natsort'
+import diacritics from 'remove-all-diacritics'
 @Component({})
 export default class NTableData extends Mixins(NBase, NData, NTableProp) {
   vSearch: string = ''
@@ -48,25 +49,23 @@ export default class NTableData extends Mixins(NBase, NData, NTableProp) {
       Object.values(item.data).some(field =>
         _.isNil(field)
           ? false
-          : field
-              .toString()
-              .toUpperCase()
-              .includes(this.vSearch.toUpperCase())
+          : diacritics.remove(field.toString().toUpperCase()).includes(diacritics.remove(this.vSearch.toUpperCase()))
       )
     )
   }
   itemsSorted(items: TableItem[]) {
     if (_.isEmpty(this.vSort)) return items
-    const asc = natsort({ insensitive: true })
-    const desc = natsort({ desc: true, insensitive: true })
+    const sortAsc = natsort({ insensitive: true })
+    const sortDesc = natsort({ desc: true, insensitive: true })
     items.sort((a, b) => {
-      const sort = this.vSort
-        .map(sort => {
-          return sort.desc ? desc(a.data[sort.name], b.data[sort.name]) : asc(a.data[sort.name], b.data[sort.name])
-        })
-        .filter(sort => _.isEmpty(sort))
-      if (!_.isEmpty(sort)) return sort[0]
+      for (const sort of this.vSort) {
+        const sortOrder = sort.desc
+          ? sortDesc(a.data[sort.name], b.data[sort.name])
+          : sortAsc(a.data[sort.name], b.data[sort.name])
+        return sortOrder
+      }
     })
+    console.log(items)
     return items
   }
   itemsPaginated(items: TableItem[]) {

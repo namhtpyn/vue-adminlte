@@ -17,7 +17,7 @@ export default class NBase extends Vue {
     this.vLoading = state
   }
   get isMobile() {
-    return !_.isEmpty(window.orientation) || navigator.userAgent.indexOf('IEMobile') !== -1
+    return !_.isNil(window.orientation) || navigator.userAgent.indexOf('IEMobile') !== -1
   }
   get isLg() {
     return window.innerWidth >= 1200
