@@ -47,8 +47,7 @@ const xxx = components.map(o => {
       resolve(),
       vue(),
       strip({
-        debugger: true,
-        sourceMap: false
+        debugger: true
       }),
       replace({
         'process.env.NODE_ENV': JSON.stringify('production')

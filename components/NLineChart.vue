@@ -140,7 +140,6 @@ export default class NLineChart extends Mixins(NDataSource) {
   }
   mounted() {
     this.drawChart()
-    console.log('')
   }
   get chartID() {
     return _.uniqueId('n_line_chart_')
