@@ -111,6 +111,12 @@ export default class NDropDownTable extends Mixins(NBase, NDataSource) {
   }
   @Watch('value')
   onValueChanged(value) {
+    this.$nextTick(() => {
+      if (!this.valid || !this.lazyValidation) {
+        this.validate(value)
+      }
+    })
+
     if (Array.isArray(value))
       this.selectedValue = this.vItems.filter(item => (value as any[]).includes(item[this.itemValue])) || []
     else this.selectedValue = this.vItems.find(item => item[this.itemValue] === value) || {}

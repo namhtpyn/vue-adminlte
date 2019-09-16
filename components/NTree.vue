@@ -5,7 +5,7 @@
       v-model="searchText"
       :css-class="stickySearch ? 'sticky-search' : ''"
       hint="Nhấn Enter để tìm kiếm"
-      @submit="search"
+      @keypress.enter="search"
     ></n-text-box>
     <!-- <input
       type="text"
@@ -157,7 +157,7 @@ export default class NTree extends Mixins(NDataSource) {
     return result
   }
 
-  search() {
+  search(e) {
     if (_.isEmpty(this.searchText)) return
     let result = []
     const idMatches = this.vItems.filter(o => o[this.itemText].toUpperCase().includes(this.searchText.toUpperCase()))
