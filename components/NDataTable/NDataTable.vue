@@ -31,18 +31,23 @@
               :key="colIndex"
               :colspan="headerColspan(header)"
               :rowspan="headerRowspan(header)"
-              :class="
-                `${cssClass.headerCell} ${header.sortable ? 'sortable' : ''} ${
-                  getSort(header) ? (getSort(header).desc ? 'desc' : 'asc') : ''
-                }`
-              "
+              :class="cssClass.headerCell"
               :style="headerCellStyle(header)"
-              @click="sort(header)"
+              @click="toggleSort(header)"
             >
               <div v-if="header.value === '$selection'">
                 <n-checkbox v-if="multipleSelect" @input="selectAll"></n-checkbox>
               </div>
               <slot v-else :name="`header.${kebabCase(header.value)}`" :item="header">{{ header.text }}</slot>
+              <i
+                v-if="header.sortable"
+                :class="`sortable fa fa-sort ${getSort(header) ? (getSort(header).desc ? 'desc' : 'asc') : ''}`"
+              ></i>
+              <i
+                v-if="header.filterable"
+                :class="`filterable fa fa-filter ${isFiltered(header) ? 'active' : ''}`"
+                @click.stop="openFilter(header)"
+              ></i>
             </th>
           </tr>
         </thead>
@@ -170,11 +175,30 @@
         <n-btn color="primary" @click="saveClick">Lưu</n-btn>
       </template>
     </n-modal>
+
+    <n-modal caption="Lọc" v-model="vFilterModal.visible" hide-footer scrollable small>
+      <n-data-table
+        v-model="vFilterModal.value"
+        :items="vFilterModal.items"
+        selectable
+        key-field="value"
+        multiple-select
+        hide-bottom
+        hide-footer
+        searchable
+        sticky-top
+        row-select
+      >
+        <items>
+          <text-item text="Giá trị" value="text"></text-item>
+        </items>
+      </n-data-table>
+    </n-modal>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Mixins } from 'vue-property-decorator'
+import { Component, Mixins, Watch } from 'vue-property-decorator'
 
 import _ from 'lodash'
 
@@ -184,7 +208,7 @@ import NTableProp from './NTableProp'
 import NTableCRUD from './NTableCRUD'
 import NTableCssClass from './NTableCssClass'
 import NTableText from './NTableText'
-import { TableHeader, TableSort } from '../../types/Table'
+import { TableHeader } from '../../types/Table'
 
 import NCheckBox from '../NCheckbox.vue'
 import NRadio from '../NRadio.vue'
@@ -246,12 +270,33 @@ export default class NDataTable extends Mixins(mixin1, mixin2) {
       this.multipleExpand ? this.vExpansion.push(itemIndex) : (this.vExpansion = [itemIndex])
     else this.vExpansion.splice(this.vExpansion.findIndex(i => i === itemIndex), 1)
   }
-  private sort(header: TableHeader) {
-    if (!header.sortable) return
-    const index = this.vSort.findIndex(sort => sort.name === header.value)
-    if (index < 0) this.vSort.push(new TableSort(header.value))
-    else if (!this.vSort[index].desc) this.vSort.splice(index, 1, { name: header.value, desc: true })
-    else this.vSort.splice(index, 1)
+  vFilterModal = {
+    items: [],
+    name: '',
+    value: [],
+    visible: false
+  }
+  openFilter(header: TableHeader) {
+    this.vFilterModal.name = header.value
+    this.vFilterModal.visible = true
+    this.vFilterModal.value = this.getFilterValue(header) || []
+    this.vFilterModal.items = _.uniqBy(
+      this.vItems.map(i => {
+        return { text: i[header.value], value: i[header.value] }
+      }),
+      'value'
+    )
+  }
+
+  @Watch('vFilterModal.value')
+  onFilterModalChanged() {
+    const index = this.vFilter.findIndex(f => f.name === this.vFilterModal.name)
+    if (index < 0) {
+      if (!_.isEmpty(this.vFilterModal.value)) this.vFilter.push({ name: this.vFilterModal.name, value: this.vFilterModal.value })
+    } else {
+      if (_.isEmpty(this.vFilterModal.value)) this.vFilter.splice(index, 1)
+      else this.vFilter.splice(index, 1, { name: this.vFilterModal.name, value: this.vFilterModal.value })
+    }
   }
   /**pagination */
   private changeItemPerPage(e) {
@@ -308,15 +353,41 @@ export default class NDataTable extends Mixins(mixin1, mixin2) {
 </script>
 
 <style scoped>
-.table thead .sortable {
+.table thead th {
   cursor: pointer;
 }
-.table thead .sortable.asc:after {
-  content: '↓';
+
+/* .table thead .sortable:hover:after,
+.table thead .sortable.asc:after,
+.table thead .sortable.desc:after,
+.table thead .filterable:hover:before {
+  margin-left: auto;
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+} */
+.table thead th .sortable,
+.table thead th .filterable {
+  opacity: 0;
 }
-.table thead .sortable.desc:after {
-  content: '↑';
+.table thead th:hover .sortable,
+.table thead .sortable.asc::before,
+.table thead .sortable.desc::before,
+.table thead th:hover .filterable {
+  opacity: 1;
 }
+.table thead .sortable.asc::before {
+  content: '\f0de';
+}
+.table thead .sortable.desc::before {
+  content: '\f0dd';
+}
+.table thead th .filterable.active {
+  opacity: 1;
+}
+
 .tbl-header {
   display: flex;
   padding-top: 10px;

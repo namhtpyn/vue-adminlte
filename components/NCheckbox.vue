@@ -10,7 +10,7 @@
       @input="input"
       @click="click"
     />
-    <label :for="checkboxID" @click.stop></label>
+    <label :for="checkboxID" @click.stop style="vertical-align: middle;"></label>
     {{ label }}
   </label>
 </template>

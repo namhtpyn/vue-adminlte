@@ -29,6 +29,7 @@
     </div>
     n-data-table component
     <div style="max-height:400px; overflow:auto">
+      {{ dataTableModel }}
       <n-data-table
         v-model="dataTableModel"
         read-url="/data/provinces.json"
@@ -38,12 +39,14 @@
         searchable
         selectable
         expandable
-        sortable
         row-select
         @row-click="console"
+        key-field="provinceCode"
       >
         <items>
-          <text-item text="provinceName" value="provinceName" sortable></text-item>
+          <text-item text="provinceName" value="provinceName" sortable filterable></text-item>
+          <text-item text="provinceCode" value="provinceCode" sortable filterable></text-item>
+          <text-item text="areaID" value="areaID" sortable filterable></text-item>
         </items>
         <template #modal="{modal}">
           <n-text-box v-model="modal.data.provinceName"></n-text-box>

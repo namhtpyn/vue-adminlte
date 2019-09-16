@@ -29,6 +29,13 @@ export class TableSort {
     this.name = name
   }
 }
+export class TableFilter {
+  name?: string = ''
+  value?: any[] = []
+  constructor(name: string) {
+    this.name = name
+  }
+}
 
 declare global {
   interface Object {

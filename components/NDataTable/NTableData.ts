@@ -3,7 +3,7 @@ import _ from 'lodash'
 import NBase from '../Base/NBase'
 import NData from '../Base/NData'
 import NTableProp from './NTableProp'
-import { TableItem, TableSort, TableHeader } from '../../types/Table'
+import { TableItem, TableSort, TableHeader, TableFilter } from '../../types/Table'
 import natsort from 'natsort'
 @Component({})
 export default class NTableData extends Mixins(NBase, NData, NTableProp) {
@@ -12,15 +12,34 @@ export default class NTableData extends Mixins(NBase, NData, NTableProp) {
   vPage: number = 1
   vExpansion: number[] = []
   vSort: TableSort[] = []
+  vFilter: TableFilter[] = []
 
   isExpanded(itemIndex: number) {
     return this.vExpansion.includes(itemIndex)
+  }
+  private toggleSort(header: TableHeader) {
+    if (!header.sortable) return
+    const index = this.vSort.findIndex(sort => sort.name === header.value)
+    if (index < 0) this.vSort.push(new TableSort(header.value))
+    else if (!this.vSort[index].desc) this.vSort.splice(index, 1, { name: header.value, desc: true })
+    else this.vSort.splice(index, 1)
   }
   getSort(header: TableHeader) {
     return this.vSort.find(sort => sort.name === header.value)
   }
 
+  getFilterValue(header: TableHeader) {
+    return (this.vFilter.find(f => f.name === header.value) || {}).value
+  }
+  isFiltered(header: TableHeader) {
+    return this.vFilter.find(f => f.name === header.value) ? true : false
+  }
+
   itemsFiltered(items: TableItem[]) {
+    if (_.isEmpty(this.vFilter)) return items
+    items = items.filter(item => {
+      return !this.vFilter.map(filter => filter.value.includes(item.data[filter.name])).some(o => !o)
+    })
     return items
   }
   itemsSearched(items: TableItem[]) {
