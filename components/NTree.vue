@@ -75,8 +75,10 @@ export default class NTree extends Mixins(NDataSource) {
   }
   @Watch('treeData')
   private onTreeDataChange(n) {
-    this.theTree.jstree().destroy()
-    this.init()
+    Promise.resolve().then(() => {
+      this.theTree.jstree().destroy()
+      this.init()
+    })
   }
 
   private init() {
