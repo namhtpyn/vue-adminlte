@@ -88,6 +88,10 @@
           ></text-item>
           <text-item text="areaID" value="areaID" sortable filterable></text-item>
         </items>
+        <template #item.area-id="prop">
+          aaaa
+          {{ prop }}
+        </template>
         <template #modal="{modal}">
           <n-text-box v-model="modal.data.provinceName"></n-text-box>
         </template>
@@ -164,6 +168,7 @@
         </axises>
       </options>
     </n-line-chart>
+    <n-date-picker></n-date-picker>
   </div>
 </template>
 

@@ -34,10 +34,12 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
 import moment from 'moment'
+import _ from 'lodash'
 //import _ from 'lodash'
 @Component({})
 export default class NDatePicker extends Vue {
   currentDate = moment()
+
   date = moment().toDate()
 
   // get date() {
@@ -69,7 +71,21 @@ export default class NDatePicker extends Vue {
     return this.firstDateOfMonth.isoWeek()
   }
   get weeksInMonths() {
-    return this.lastDateOfMonth.isoWeek() - this.firstDateOfMonth.isoWeek() + 1
+    return this.lastDateOfMonth.diff(this.firstDateOfMonth, 'week')
+  }
+  get datesInMonth() {
+    const dates = _.range(0, this.weeksInMonths).map(week =>
+      _.range(0, 7).map(day => {
+        const date = moment(this.firstDateOfMonth)
+          .add(week, 'week')
+          .startOf('isoWeek')
+          .add(day, 'day')
+        if (date.isSame(this.firstDateOfMonth, 'month')) return date
+        return null
+      })
+    )
+    console.log(dates)
+    return dates
   }
 
   getDay(week: number, day: number) {
