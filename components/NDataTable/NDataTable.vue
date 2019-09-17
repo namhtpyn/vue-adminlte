@@ -170,7 +170,7 @@
       Đang tải dữ liệu
     </n-overlay>
 
-    <n-modal large scrollable :loading="vModal.loading" :caption="vModal.new ? 'Thêm' : 'Sửa'" v-model="vModal.visible">
+    <n-modal persistent large :loading="vModal.loading" :caption="vModal.new ? 'Thêm' : 'Sửa'" v-model="vModal.visible">
       <n-form ref="form" v-model="vModal.valid">
         <slot name="modal" :modal="vModal"></slot>
       </n-form>

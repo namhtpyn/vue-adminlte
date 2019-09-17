@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- <n-form ref="form2" lazy-validation>
+    <n-form ref="form2" lazy-validation>
       <div class="row">
         <div class="col-xs-4">
           <n-drop-down-tree
@@ -45,11 +45,6 @@
       @select="selectNode"
       v-model="unitID"
     ></n-drop-down-tree>
-    <n-drop-down-table read-url="/data/units.json" item-text="UnitName" item-value="UnitID" searchable>
-      <items>
-        <text-item text="UnitName" value="UnitName"></text-item>
-      </items>
-    </n-drop-down-table>
     <div style="max-height:100px; overflow:auto">
       <n-tree
         :items="units"
@@ -90,7 +85,21 @@
           <text-item text="areaID" value="areaID" sortable filterable></text-item>
         </items>
         <template #modal="{modal}">
-          <n-text-box v-model="modal.data.provinceName"></n-text-box>
+          <n-drop-down-table
+            v-model="dropDownTableModel"
+            read-url="/data/provinces.json"
+            item-text="provinceName"
+            item-value="provinceName"
+            searchable
+            modal
+          >
+            <items>
+              <text-item text="provinceID" value="provinceID"></text-item>
+              <text-item text="provinceCode" value="provinceCode"></text-item>
+              <text-item text="provinceName" value="provinceName"></text-item>
+              <text-item text="areaID" value="areaID"></text-item>
+            </items>
+          </n-drop-down-table>
         </template>
         <template #item.expand="{item}">
           <n-btn>a</n-btn>
@@ -118,6 +127,7 @@
         item-text="provinceName"
         item-value="provinceName"
         searchable
+        multiple
       >
         <items>
           <text-item text="provinceID" value="provinceID"></text-item>
@@ -164,7 +174,7 @@
           <y-axis id="second" position="right" text="Tốc độ download (mpbs)"></y-axis>
         </axises>
       </options>
-    </n-line-chart> -->
+    </n-line-chart>
     {{ date }}
     <n-date-picker v-model="date"></n-date-picker>
     <n-drop-down-date-picker v-model="date"></n-drop-down-date-picker>

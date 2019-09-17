@@ -23,8 +23,8 @@
       :large="modalLarge"
       :small="modalSmall"
       :fullscreen="modalFullscreen"
-      @shown="open"
-      @hidden="close"
+      @open="open"
+      @close="close"
     >
       <slot name="content" :data="data"></slot>
     </n-modal>
