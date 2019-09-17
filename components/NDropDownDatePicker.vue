@@ -28,7 +28,7 @@ export default class NDropDownTable extends Mixins(NBase) {
   @Prop({ type: Boolean, default: false }) hideErrorText!: string
   @Prop(Array) rules!: any[]
 
-  @Model('input', [String]) value!: string
+  @Model('input', { type: String, required: true }) value!: string
 
   valid: boolean = true
   lazyValidation: boolean = false

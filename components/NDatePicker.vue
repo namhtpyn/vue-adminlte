@@ -45,7 +45,7 @@ import NBase from './Base/NBase'
 //import _ from 'lodash'
 @Component({})
 export default class NDatePicker extends mixins(NBase) {
-  @Model('input', { type: String, default: moment().format('YYYY-MM-DD') }) value!: string
+  @Model('input', { type: String, required: true }) value!: string
 
   vCurrentDate = moment().toDate()
   vDate = moment().toDate()
