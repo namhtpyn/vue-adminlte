@@ -1,13 +1,12 @@
 <template>
-  <div>
-    <div>
-      <!-- <div>{{ year }}</div>
-      <div>{{ date }}</div> -->
-      {{ date }}
-    </div>
-    <div>
-      <button @click="goToPreviousMonth">Previous</button>
-      <button @click="goToNextMonth">Next</button>
+  <div class="n-date-picker">
+    <div></div>
+    <div class="n-date-picker--toolbar">
+      <button @click="goToPreviousMonth" class="n-date-picker--button">
+        <i class="fa fa-angle-left" aria-hidden="true"></i>
+      </button>
+      <div>{{ moment(vDate).format('MMMM YYYY') }}</div>
+      <button @click="goToNextMonth" class="n-date-picker--button"><i class="fa fa-angle-right" aria-hidden="true"></i></button>
     </div>
     <div>
       <table class="n-date-picker--data-table">
@@ -22,9 +21,15 @@
             <th>CN</th>
           </tr>
         </thead>
-        <tr v-for="week in weeksInMonths" :key="week">
-          <td v-for="day in 7" :key="day">
-            {{ getDay(week, day) }}
+        <tr v-for="(week, weekIndex) in datesInMonth" :key="weekIndex">
+          <td v-for="(day, dayIndex) in week" :key="dayIndex">
+            <n-btn
+              class="n-date-picker--date-button"
+              :class="dateBtnClass(day)"
+              v-if="!isEmpty(day)"
+              @click="input(day.format('YYYY-MM-DD'))"
+              >{{ day.format('D') }}</n-btn
+            >
           </td>
         </tr>
       </table>
@@ -32,72 +37,100 @@
   </div>
 </template>
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
-import moment from 'moment'
+import { Component, Model } from 'vue-property-decorator'
+import moment, { Moment } from 'moment'
+import _ from 'lodash'
+import { mixins } from 'vue-class-component'
+import NBase from './Base/NBase'
 //import _ from 'lodash'
 @Component({})
-export default class NDatePicker extends Vue {
-  currentDate = moment()
-  date = moment().toDate()
+export default class NDatePicker extends mixins(NBase) {
+  @Model('input', { type: String, required: true }) value!: string
 
-  // get date() {
-  //   return moment(this.currentDate).format('ddd, MMM DD')
-  // }
-  get lastDateOfMonth() {
-    return moment(this.date).endOf('month')
-  }
+  vCurrentDate = moment().toDate()
+  vDate = moment().toDate()
+
   get firstDateOfMonth() {
-    return moment(this.date).startOf('month')
+    return moment(this.vDate).startOf('month')
   }
-  // get firstDateOfWeek() {
-  //   return this.firstDateOfMonth.day(1)
-  // }
-  // get lastDateOfWeek() {
-  //   return this.lastDateOfMonth.day(7)
-  // }
-  // get dateInMonths() {
-  //   const days = []
-  //   let day = this.firstDateOfWeek
-
-  //   while (day <= this.lastDateOfWeek) {
-  //     days.push(day.toDate())
-  //     day = day.clone().add(1, 'd')
-  //   }
-  //   return days
-  // }
-  get firstWeekOfMonth() {
-    return this.firstDateOfMonth.isoWeek()
+  get datesInMonth() {
+    const dates = _.range(0, 6).map(week =>
+      _.range(0, 7).map(day => {
+        const date = moment(this.firstDateOfMonth)
+          .add(week, 'week')
+          .startOf('isoWeek')
+          .add(day, 'day')
+        if (date.isSame(this.firstDateOfMonth, 'month')) return date
+        return null
+      })
+    )
+    return dates
   }
-  get weeksInMonths() {
-    return this.lastDateOfMonth.isoWeek() - this.firstDateOfMonth.isoWeek() + 1
-  }
-
-  getDay(week: number, day: number) {
-    const date = moment()
-      .set('week', this.firstWeekOfMonth + week - 1)
-      .day(day)
-    return date.get('month') === this.date.getMonth() ? date.date() : ''
-  }
-
   goToPreviousMonth() {
-    this.date = moment(this.date)
+    this.vDate = moment(this.vDate)
       .subtract(1, 'month')
       .toDate()
   }
   goToNextMonth() {
-    this.date = moment(this.date)
+    this.vDate = moment(this.vDate)
       .add(1, 'month')
       .toDate()
   }
   created() {}
-  mounted() {
-    console.log(this.weeksInMonths)
+  mounted() {}
+  isEmpty(e) {
+    return _.isEmpty(e)
+  }
+  dateBtnClass(date: Moment) {
+    return {
+      current: date.isSame(moment(this.vCurrentDate), 'day'),
+      active: date.isSame(moment(this.value), 'day')
+    }
+  }
+  moment(e) {
+    return moment(e)
   }
 }
 </script>
 <style>
+.n-date-picker {
+  width: 249px;
+}
+.n-date-picker--toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 .n-date-picker--data-table td,
 .n-date-picker--data-table th {
   width: 35px;
+  text-align: center;
+}
+.n-date-picker--data-table .n-date-picker--date-button,
+.n-date-picker--toolbar .n-date-picker--button {
+  border-radius: 40px;
+  font-size: 11px;
+  width: 30px;
+  height: 30px;
+  padding: 8px 0px 0px 0px;
+  text-align: center;
+  margin-top: 1px;
+  border: unset;
+  background-color: transparent;
+}
+.n-date-picker--toolbar .n-date-picker--button {
+  padding: 0px;
+}
+.n-date-picker--data-table .n-date-picker--date-button:hover {
+  background-color: #f4f4f4;
+}
+.n-date-picker--data-table .n-date-picker--date-button.active {
+  background-color: #3c8dbc;
+  color: #ffffff !important;
+  font-weight: bold;
+}
+.n-date-picker--data-table .n-date-picker--date-button.current {
+  box-shadow: inset 0px 0px 0px 1px #2489c0;
+  color: #2489c0;
 }
 </style>

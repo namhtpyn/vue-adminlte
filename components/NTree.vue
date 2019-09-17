@@ -1,6 +1,12 @@
 <template>
   <div :style="{ position: 'relative' }">
-    <n-text-box v-if="searchable" v-model="searchText" :class="{ 'sticky-search': stickySearch }" hint="Tìm kiếm"></n-text-box>
+    <n-text-box
+      v-if="searchable"
+      :value="searchText"
+      :class="{ 'sticky-search': stickySearch }"
+      hint="Nhấn Enter để tìm kiếm"
+      @keypress.enter.stop="e => (searchText = e.target.value)"
+    ></n-text-box>
     <div>
       <span v-if="!hasData">Không có dữ liệu</span>
       <div id="component-tree-view"></div>
@@ -75,8 +81,10 @@ export default class NTree extends Mixins(NDataSource) {
   }
   @Watch('treeData')
   private onTreeDataChange(n) {
-    this.theTree.jstree().destroy()
-    this.init()
+    Promise.resolve().then(() => {
+      this.theTree.jstree().destroy()
+      this.init()
+    })
   }
 
   private init() {
@@ -137,18 +145,28 @@ export default class NTree extends Mixins(NDataSource) {
     )
     //exclude found items
     items = _.differenceBy(items, foundItems, this.itemValue)
-    foundItems = foundItems.concat(foundItems.flatMap(item => this.getParents(items, item, root)))
-
+    foundItems = foundItems
+      .concat(foundItems.flatMap(item => this.getParents(items, item)))
+      .concat(foundItems.flatMap(item => this.getChildren(items, item)))
+    foundItems = _.uniqBy(foundItems, this.itemValue)
     return foundItems
   }
 
-  getParents(items: any[], item, root) {
+  getParents(items: any[], item) {
     const parentID = item[this.parentKey]
     const parents = items.filter(i => _.isEqual(i[this.itemValue], parentID))
     //exclude found items
     items = _.differenceBy(items, parents, this.itemValue)
-    if (parentID === root) return parents
-    else return parents.concat(parents.flatMap(p => this.getParents(items, p, root)))
+    if (_.isEmpty(parents)) return parents
+    else return parents.concat(parents.flatMap(p => this.getParents(items, p)))
+  }
+  getChildren(items: any[], item) {
+    const parentID = item[this.itemValue]
+    const children = items.filter(i => _.isEqual(i[this.parentKey], parentID))
+    //exclude found items
+    items = _.differenceBy(items, children, this.itemValue)
+    if (_.isEmpty(children)) return children
+    else return children.concat(children.flatMap(p => this.getChildren(items, p)))
   }
 }
 </script>

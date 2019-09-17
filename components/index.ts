@@ -4,6 +4,7 @@ import NCheckbox from '././NCheckbox.vue'
 import NDataTable from '././NDataTable/NDataTable.vue'
 import NDataTableOld from '././NDataTableOld.vue'
 import NDatePicker from '././NDatePicker.vue'
+import NDropDownDatePicker from '././NDropDownDatePicker.vue'
 import NDropDownList from '././NDropDownList.vue'
 import NDropDownTable from '././NDropDownTable.vue'
 import NDropDownTree from '././NDropDownTree.vue'
@@ -27,6 +28,7 @@ Vue.component('NCheckbox', NCheckbox)
 Vue.component('NDataTable', NDataTable)
 Vue.component('NDataTableOld', NDataTableOld)
 Vue.component('NDatePicker', NDatePicker)
+Vue.component('NDropDownDatePicker', NDropDownDatePicker)
 Vue.component('NDropDownList', NDropDownList)
 Vue.component('NDropDownTable', NDropDownTable)
 Vue.component('NDropDownTree', NDropDownTree)

@@ -3,7 +3,7 @@
     <label v-if="hasLabel" class="control-label" :style="styleLabel">
       {{ label }}
     </label>
-    <select :class="cCssClass" :value="value"> </select>
+    <select :class="cCssClass"> </select>
     <span v-if="!valid && !hideErrorText" class="help-block">{{ errorText }}</span>
     <n-overlay absolute :value="vLoading">
       <n-icon css-class="fa-spin fa-4x" style="color:white">circle-o-notch</n-icon>
@@ -114,7 +114,7 @@ export default class NSelect2 extends Mixins(NDataSource) {
           }
         }
       })
-      .on('select2:select', e => this.input(this.tryParseNumber(e.target.value)))
+      .on('select2:select', e => this.input(this.tryParseNumber($(e.target).val())))
       .val(this.value)
       .trigger('change')
     this.setSize()
