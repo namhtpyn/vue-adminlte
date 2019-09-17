@@ -1,16 +1,16 @@
 <template>
-  <transition name="fade">
+  <transition name="fade" @before-enter="beforeOpen" @after-enter="open" @after-leave="close">
     <div v-if="value" :class="`modal modal-${color} ${fullscreen ? 'no-padding' : ''}`" style="display: block">
       <div :class="{ 'modal-dialog': true, 'modal-lg': large, 'modal-sm': small, 'modal-fullscreen': fullscreen }">
-        <div class="modal-content" v-click-out="close">
-          <div v-if="!hideHeader" class="modal-header" style="display:flex">
+        <div class="modal-content" v-click-out="clickOut">
+          <div v-if="!hideHeader" class="modal-header margin-right-1px" style="display:flex">
             <h4 class="modal-title" style="flex:1">{{ caption }}</h4>
             <n-icon style="cursor:pointer" @click="input(false)">times</n-icon>
           </div>
-          <div class="modal-body" :style="bodyStyle" v-if="value">
+          <div class="modal-body margin-right-1px" :style="bodyStyle" v-if="value">
             <slot></slot>
           </div>
-          <div v-if="!hideFooter" class="modal-footer">
+          <div v-if="!hideFooter" class="modal-footer margin-right-1px">
             <slot name="footer"></slot>
           </div>
           <n-overlay absolute :value="vLoading">
@@ -23,7 +23,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Model, Prop, Mixins, Watch } from 'vue-property-decorator'
+import { Component, Model, Prop, Mixins, Emit } from 'vue-property-decorator'
 import vClickOutside from 'v-click-outside'
 import NBase from './Base/NBase'
 @Component({
@@ -45,28 +45,23 @@ export default class NModal extends Mixins(NBase) {
 
   @Model('input', { type: Boolean, default: false }) value!: boolean
 
-  close(e) {
-    console.log('aaaa')
+  clickOut(e) {
     if (!this.persistent) this.input(false)
   }
 
-  @Watch('value')
-  onValueChanged(val: boolean, oldVal: boolean) {
-    if (!val) {
-      this.$emit('close')
-      $('body').removeClass('modal-open') //Todo: need to fix since it remove even when multiple modal is opened
-    } else {
-      this.$emit('open')
-      $('body').addClass('modal-open')
-      //todo: Need to fix scrollable, scroll disappear after second open on multiple modal
-      this.$nextTick(() => {
-        this.headerHeight = $(this.$el.querySelector('.modal-header')).outerHeight(true)
-        this.footerHeight = $(this.$el.querySelector('.modal-footer')).outerHeight(true)
-        this.dialogMargin =
-          $(this.$el.querySelector('.modal-dialog')).outerHeight(true) - $(this.$el.querySelector('.modal-dialog')).innerHeight()
-      })
-    }
+  @Emit() close() {
+    if (!Array.from(document.querySelectorAll('.modal')).some(el => (el as HTMLElement).style.display === 'block'))
+      document.querySelector('body').classList.remove('modal-open')
   }
+  beforeOpen() {
+    document.querySelector('body').classList.add('modal-open')
+  }
+  @Emit() open() {
+    this.headerHeight = (this.$el.querySelector('.modal-header') || {}).clientHeight || 0
+    this.footerHeight = (this.$el.querySelector('.modal-footer') || {}).clientHeight || 0
+    this.dialogMargin = window.innerHeight - (this.$el.querySelector('.modal-dialog') || {}).clientHeight || 0
+  }
+
   mounted() {}
   headerHeight = 0
   footerHeight = 0
@@ -85,6 +80,9 @@ export default class NModal extends Mixins(NBase) {
 </script>
 
 <style scoped>
+.margin-right-1px {
+  margin-right: 1px;
+}
 .no-padding {
   padding: 0px !important;
 }

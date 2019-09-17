@@ -190,11 +190,12 @@ import { Component, Vue } from 'vue-property-decorator'
 import units from './data/units.json'
 import provinces from './data/provinces.json'
 import traffics from './data/traffics.json'
+import moment = require('moment')
 // import _ from 'lodash'
 @Component({})
 export default class VApp extends Vue {
   abc = ['PYN', 'HNI']
-  date = null
+  date = moment().format('YYYY-MM-DD')
   deviceIP = null
   account = ''
   check = 1
