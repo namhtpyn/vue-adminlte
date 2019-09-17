@@ -145,18 +145,28 @@ export default class NTree extends Mixins(NDataSource) {
     )
     //exclude found items
     items = _.differenceBy(items, foundItems, this.itemValue)
-    foundItems = foundItems.concat(foundItems.flatMap(item => this.getParents(items, item, root)))
-
+    foundItems = foundItems
+      .concat(foundItems.flatMap(item => this.getParents(items, item)))
+      .concat(foundItems.flatMap(item => this.getChildren(items, item)))
+    foundItems = _.uniqBy(foundItems, this.itemValue)
     return foundItems
   }
 
-  getParents(items: any[], item, root) {
+  getParents(items: any[], item) {
     const parentID = item[this.parentKey]
     const parents = items.filter(i => _.isEqual(i[this.itemValue], parentID))
     //exclude found items
     items = _.differenceBy(items, parents, this.itemValue)
-    if (parentID === root) return parents
-    else return parents.concat(parents.flatMap(p => this.getParents(items, p, root)))
+    if (_.isEmpty(parents)) return parents
+    else return parents.concat(parents.flatMap(p => this.getParents(items, p)))
+  }
+  getChildren(items: any[], item) {
+    const parentID = item[this.itemValue]
+    const children = items.filter(i => _.isEqual(i[this.parentKey], parentID))
+    //exclude found items
+    items = _.differenceBy(items, children, this.itemValue)
+    if (_.isEmpty(children)) return children
+    else return children.concat(children.flatMap(p => this.getChildren(items, p)))
   }
 }
 </script>
