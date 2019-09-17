@@ -1,46 +1,72 @@
 <template>
-  <div style="position:relative" v-click-out="closeDropDown">
-    <input type="hidden" :value="value" />
-    <div class="has-feedback" @click="toggleDropDown">
+  <div style="position:relative" v-click-out="close">
+    <div class="has-feedback" @click="toggle">
       <div :class="containerCss" style="width: 100%">
-        {{ isShowHint ? hint : text }}
+        <input type="text" readonly class="input-flat text-overflow" :placeholder="hint" :value="text" />
       </div>
-      <span :class="`fa fa-caret-${data.isOpen ? 'up' : 'down'} form-control-feedback`"></span>
+      <span v-if="!useModal" :class="`fa fa-caret-${data.isOpen ? 'up' : 'down'} form-control-feedback`"></span>
     </div>
-    <div v-show="data.isOpen" class="form-control drop-down-container" :style="dropDownWidth ? `width:${dropDownWidth}px` : ''">
+    <div
+      v-if="!useModal"
+      v-show="data.isOpen"
+      class="form-control drop-down-container"
+      :style="dropDownWidth ? `width:${dropDownWidth}px` : ''"
+    >
       <slot name="content" :data="data"></slot>
     </div>
+    <n-modal
+      :caption="hint"
+      v-else
+      v-model="data.isOpen"
+      hide-footer
+      scrollable
+      :large="modalLarge"
+      :small="modalSmall"
+      :fullscreen="modalFullscreen"
+      @shown="open"
+      @hidden="close"
+    >
+      <slot name="content" :data="data"></slot>
+    </n-modal>
   </div>
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop, Emit } from 'vue-property-decorator'
+import { Component, Prop, Emit, Mixins } from 'vue-property-decorator'
 import vClickOutside from 'v-click-outside'
+import NBase from './Base/NBase'
 @Component({
   directives: {
     clickOut: vClickOutside.directive
   }
 })
-export default class NDropDownList extends Vue {
+export default class NDropDownList extends Mixins(NBase) {
   @Prop({ type: String, default: '' }) text!: string
   @Prop(String) hint!: string
   @Prop({ type: Boolean, default: false }) small!: boolean
   @Prop({ type: Boolean, default: false }) large!: boolean
-  @Prop([String, Number]) value!: any
+  @Prop({ type: Boolean, default: false }) modal!: boolean
+  @Prop({ type: Boolean, default: false }) modalLarge!: boolean
+  @Prop({ type: Boolean, default: false }) modalSmall!: boolean
+  @Prop({ type: Boolean, default: false }) modalFullscreen!: boolean
   @Prop([String, Number]) dropDownWidth!: string | number
 
   data = {
     isOpen: false
   }
 
-  toggleDropDown(e) {
-    this.data.isOpen ? this.closeDropDown(e) : this.openDropDown(e)
+  toggle(e) {
+    this.data.isOpen ? this.close(e) : this.open(e)
   }
 
-  @Emit('open') openDropDown(e) {
+  get useModal() {
+    return this.modal || this.isXs
+  }
+
+  @Emit() open(e) {
     this.data.isOpen = true
   }
-  @Emit('close') closeDropDown(e) {
+  @Emit() close(e) {
     this.data.isOpen = false
   }
   get searchWidth() {
@@ -58,12 +84,18 @@ export default class NDropDownList extends Vue {
       'input-lg': this.large
     }
   }
+  @Emit() modalShown() {}
 }
 </script>
 
 <style scoped>
 .hint {
   color: #ccc;
+}
+.text-overflow {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 .input-flat,
 .input-flat:active {
@@ -73,13 +105,15 @@ export default class NDropDownList extends Vue {
   outline: none;
   box-sizing: content-box;
   box-shadow: none;
+  width: 100%;
 }
 .drop-down-container {
   height: auto;
+  width: fit-content;
   position: absolute;
-  width: 100%;
-  height: 300px;
-  overflow-y: auto;
+  min-width: 100%;
+  max-height: 300px;
+  overflow: auto;
   padding: 0px 0px;
   z-index: 9999;
 }

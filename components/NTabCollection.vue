@@ -2,7 +2,7 @@
   <div class="nav nav-tabs-custom">
     <ul class="nav nav-tabs">
       <li v-for="(i, k) in headers" :key="k" :class="{ active: k === tabActive }">
-        <a :href="`#n-tab-${i.text}`" data-toggle="tab" @click="tabClicked(i)">{{ i.text }}</a>
+        <a :href="`#n-tab-${k}`" data-toggle="tab" @click="tabClicked(i)">{{ i.text }}</a>
       </li>
     </ul>
     <div class="tab-content">
@@ -12,32 +12,31 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
+import { Component, Prop, Watch, Mixins } from 'vue-property-decorator'
 import _ from 'lodash'
+import NBase from './Base/NBase'
+import NTab from './NTab.vue'
+import { VueNode } from '../extension/VueSlot'
 @Component({ inheritAttrs: false })
-export default class NTabCollection extends Vue {
+export default class NTabCollection extends Mixins(NBase) {
   @Prop({ type: Boolean, default: false }) changeOnCreated!: boolean
   private valueTabActive: any = null
-  private tabComponents: any[] = []
+  private tabComponents: NTab[] = []
   mounted() {
-    this.findDeep(this.$slots.default)
-    if (this.changeOnCreated && !_.isEmpty(this.headers)) this.valueTabActive = this.headers[this.tabActive].value
+    this.init()
   }
 
   get tabActive() {
     if (!_.isEmpty(this.tabComponents)) {
       const idx = this.tabComponents.findIndex(t => t.active)
-      if (idx < 0) {
-        this.tabComponents[0].active = true
-        return 0
-      }
+      if (idx < 0) return 0
       return idx
     }
     return -1
   }
 
   get headers() {
-    let result = []
+    let result: { text: string; value: any }[] = []
     if (!_.isEmpty(this.tabComponents))
       result = this.tabComponents.map(t => {
         return { text: t.title, value: t.value }
@@ -50,27 +49,22 @@ export default class NTabCollection extends Vue {
     this.$emit('tab-change', n)
   }
 
+  init() {
+    const nodes = this.vSlot.find((node: VueNode) => node.isComponent && node.componentInstance.$options.name === 'NTab')
+    this.tabComponents = nodes.map(o => o.componentInstance as NTab)
+
+    this.setTabID()
+    if (this.changeOnCreated && !_.isEmpty(this.headers)) this.valueTabActive = this.headers[this.tabActive].value
+  }
+
   tabClicked(item) {
     this.valueTabActive = item.value
   }
 
-  private findDeep(obj) {
-    if (obj instanceof Array) {
-      for (let i = 0; i < obj.length; i++) {
-        this.findDeep(obj[i])
-      }
-    } else {
-      if (
-        Object.hasOwnProperty.call(obj, 'componentInstance') &&
-        !_.isEmpty(obj.componentInstance) &&
-        obj.componentInstance.$options._componentTag === 'n-tab'
-      ) {
-        this.tabComponents.push(obj.componentInstance)
-      }
-      if (Object.hasOwnProperty.call(obj, 'children') && !_.isEmpty(obj.children)) {
-        this.findDeep(obj.children)
-      }
-    }
+  private setTabID() {
+    this.tabComponents.forEach((component, index) => {
+      component.id = 'n-tab-' + index
+    })
   }
 }
 </script>

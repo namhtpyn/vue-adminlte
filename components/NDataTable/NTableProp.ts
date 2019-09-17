@@ -8,20 +8,26 @@ export default class NTableProp extends Mixins(NBase) {
   @Prop({ type: Boolean, default: false }) readonly densed!: boolean
   @Prop({ type: Boolean, default: false }) readonly striped!: boolean
 
+  @Prop({ type: Boolean, default: true }) readonly responsive!: boolean
+
   @Prop({ type: Boolean, default: false }) readonly hideBottom!: boolean
   @Prop({ type: Boolean, default: false }) readonly hideTop!: boolean
   @Prop({ type: Boolean, default: false }) readonly hideFooter!: boolean
   @Prop({ type: Boolean, default: false }) readonly hideHeader!: boolean
 
   @Prop({ type: Boolean, default: false }) readonly searchable!: boolean
+
+  @Prop({ type: Boolean, default: false }) readonly multipleSort!: boolean
+  @Prop({ type: Boolean, default: false }) readonly multipleFilter!: boolean
+
   @Prop({ type: Boolean, default: false }) readonly expandable!: boolean
+  @Prop({ type: Boolean, default: false }) readonly multipleExpand!: boolean
 
   @Prop({ type: Boolean, default: false }) readonly stickyTop!: boolean
 
   /**Enable selection */
   @Prop({ type: Boolean, default: false }) readonly selectable!: boolean
-  /**Only work with selectable, enable checkbox instead of radio */
-  @Prop({ type: Boolean, default: false }) readonly multiple!: boolean
+  @Prop({ type: Boolean, default: false }) readonly multipleSelect!: boolean
   @Prop({ type: Boolean, default: false }) readonly rowSelect!: boolean
   @Prop(String) readonly keyField!: string
 

@@ -1,19 +1,9 @@
 <template>
   <div :class="{ 'form-group': form, 'has-error': !valid }">
-    <label v-if="hasLabel" class="control-label" :style="{ 'font-size': this.small ? '12px' : this.large ? '18px' : '14px' }">
+    <label v-if="hasLabel" class="control-label" :style="styleLabel">
       {{ label }}
     </label>
-    <n-drop-down-list
-      :value="value"
-      @input="input"
-      :text.sync="text"
-      :drop-down-width="dropDownWidth"
-      :hint="hint"
-      :small="small"
-      :large="large"
-      @open="onOpen"
-      @close="onClose"
-    >
+    <n-drop-down-list :text="text" :drop-down-width="dropDownWidth" :hint="hint" :small="small" :large="large" @open="onOpen">
       <template #content="{data}">
         <n-tree
           ref="tree"
@@ -27,17 +17,22 @@
           :searchable="searchable"
           :value="value"
           sticky-search
+          no-focus-on-loaded
           @select="item => itemSelect(item, data)"
           @error="error"
         ></n-tree>
       </template>
     </n-drop-down-list>
-    <span v-if="!valid" class="help-block">{{ errorText }}</span>
+    <span v-if="!valid && !hideErrorText" class="help-block">{{ errorText }}</span>
+
+    <n-overlay absolute :value="vLoading">
+      <n-icon css-class="fa-spin fa-4x" style="color:white">circle-o-notch</n-icon>
+    </n-overlay>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Model, Prop, Mixins, Ref } from 'vue-property-decorator'
+import { Component, Model, Prop, Mixins, Ref, Emit } from 'vue-property-decorator'
 import _ from 'lodash'
 import NTree from './NTree.vue'
 import NDataSource from './Base/NDataSource'
@@ -56,25 +51,32 @@ export default class NDropDownTree extends Mixins(NDataSource) {
   @Prop({ type: Boolean, default: false }) small!: boolean
   @Prop({ type: Boolean, default: false }) large!: boolean
   @Prop({ type: Boolean, default: true }) form!: boolean
+  @Prop({ type: Boolean, default: false }) hideErrorText!: string
   @Prop(Array) rules!: any[]
   @Ref('tree') tree!: NTree
   @Model('input', [String, Number]) value!: string | number
+  @Emit() select(e) {}
 
   //treeItems: any[] = []
   valid: boolean = true
   lazyValidation: boolean = false
-  private text: string = ''
+
+  get text() {
+    const item = this.vItems.find(item => item[this.itemValue] === this.value)
+    if (item) return (item[this.itemText] || '').toString()
+    return ''
+  }
+
+  get styleLabel() {
+    return {
+      'control-label': true,
+      'font-size': `${this.small ? '11px' : this.large ? '15px' : '13px'} !important`
+    }
+  }
 
   get hasLabel() {
     return !_.isEmpty(this.label)
   }
-  // get getText() {
-  //   if (_.isEmpty(this.treeItems)) return ''
-  //   const item = this.treeItems.find(item => item[this.itemValue] === this.value)
-  //   if (!item || !Object.hasOwnProperty.call(item, this.itemText)) return ''
-  //   this.$emit('change', item)
-  //   return item[this.itemText].toString()
-  // }
   get errorText() {
     if (!this.valid && this.rules) {
       const f = this.rules.find(r => r(this.value) !== true)
@@ -88,9 +90,9 @@ export default class NDropDownTree extends Mixins(NDataSource) {
     return this.valid
   }
   private itemSelect(item, data) {
-    this.text = item.text
-    this.input(item.id)
-    if (!this.lazyValidation || !this.valid) this.validate(item.id)
+    this.input(item[this.itemValue])
+    this.select(item)
+    if (!this.lazyValidation || !this.valid) this.validate(item[this.itemValue])
     data.isOpen = false
   }
   mounted() {}
@@ -99,9 +101,6 @@ export default class NDropDownTree extends Mixins(NDataSource) {
       this.tree.focusSelectedNode()
       this.tree.focusSearch()
     })
-  }
-  private onClose() {
-    this.tree.searchText = ''
   }
 }
 </script>

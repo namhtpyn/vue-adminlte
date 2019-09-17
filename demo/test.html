@@ -14,7 +14,12 @@
     <script src="https://cdn.jsdelivr.net/npm/admin-lte@2.4.17/dist/js/adminlte.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios@0.19.0/dist/axios.min.js"></script>
-    <script src="../dist/index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
+    <script src="../dist/VueAdminLTE.js"></script>
+    <script src="./JSONbig.js"></script>
+    <script>
+      JSON = JSONbig
+    </script>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/css/select2.min.css" rel="stylesheet" />
@@ -26,133 +31,68 @@
   </head>
   <body>
     <div id="app">
-      <n-btn>aaaa</n-btn>
-      <NBtn>aaaa</NBtn>
-      {{ def }}
-      <n-data-table v-model="def" :items="items" selectable updatable deletable creatable expandable>
-        <items>
-          <text-item :editable="false" header-valign="middle" text="Calories" value="calories"></text-item>
-          <band-item text="band" align="center">
-            <items>
-              <text-item text="Calories" value="calories" summary="sum"></text-item>
-              <number-item text="Fat" value="calories"></number-item>
-              <date-item></date-item>
-            </items>
-          </band-item>
-        </items>
-      </n-data-table>
-
-      <n-data-table :headers="headers" :items="items" caption="Table" searchable creatable updatable deletable>
-        <template v-slot:modal="{ modal }">
-          <input class="form-control" autofocus v-model="modal.data.name" />
-          <input class="form-control" v-model="modal.data.fat" />
-        </template>
-        <template v-slot:footer.fat="{ item }">{{ item.reduce((a, b) => a + (b.fat || 0), 0) }}</template>
-        <template v-slot:footer.calories="{ item }">{{ item.reduce((a, b) => a + (b.calories || 0), 0) }}</template>
-        <template v-slot:item.Name="{ item }"
-          >name{{ item.Name }}</template
-        >
-        <template v-slot:item.fat="{value}"
-          >fat {{ value }}</template
-        >
-      </n-data-table>
+      <n-line-chart :items="traffics" caption="HAHAHA">
+        <common text="In" value="Statisticdate"></common>
+        <series>
+          <item text="In" value="trafficIN"></item>
+          <item text="Out" value="trafficOut"></item>
+        </series>
+      </n-line-chart>
     </div>
     <script>
       var app = new Vue({
         el: '#app',
         data: {
-          def: '',
-          message: 'Hello Vue!',
-          headers: [
+          traffics: [
             {
-              text: 'Dessert (100g serving)',
-              value: 'name'
-            },
-            { text: 'Calories', value: 'calories' },
-            { text: 'Fat (g)', value: 'fat', sortable: true },
-            { text: 'Carbs (g)', value: 'carbs' },
-            { text: 'Protein (g)', value: 'protein' }
-          ],
-          items: [
-            {
-              Name: 'Frozen Yogurt',
-              calories: 159,
-              fat: 6.0,
-              carbs: 24,
-              protein: 4.0,
-              iron: '1%'
+              Statisticdate: '01/08/2019',
+              trafficIN: '1653575',
+              trafficOut: '259200'
             },
             {
-              Name: 'Ice cream sandwich',
-              calories: 237,
-              fat: 9.0,
-              carbs: 37,
-              protein: 4.3,
-              iron: '1%'
+              Statisticdate: '02/08/2019',
+              trafficIN: '1701202',
+              trafficOut: '259384'
             },
             {
-              Name: 'Eclair',
-              calories: 262,
-              fat: 16.0,
-              carbs: 23,
-              protein: 6.0,
-              iron: '7%'
+              Statisticdate: '07/08/2019',
+              trafficIN: '1661505',
+              trafficOut: '272697'
             },
             {
-              Name: 'Cupcake',
-              calories: 305,
-              fat: 3.7,
-              carbs: 67,
-              protein: 4.3,
-              iron: '8%'
+              Statisticdate: '04/08/2019',
+              trafficIN: '1697294',
+              trafficOut: '267284'
             },
             {
-              Name: 'Gingerbread',
-              calories: 356,
-              fat: 16.0,
-              carbs: 49,
-              protein: 3.9,
-              iron: '16%'
+              Statisticdate: '05/08/2019',
+              trafficIN: '1657837',
+              trafficOut: '263536'
             },
             {
-              Name: 'Jelly bean',
-              calories: 375,
-              fat: 0.0,
-              carbs: 94,
-              protein: 0.0,
-              iron: '0%'
+              Statisticdate: '03/08/2019',
+              trafficIN: '1785211',
+              trafficOut: '305567'
             },
             {
-              Name: 'Lollipop',
-              calories: 392,
-              fat: 0.2,
-              carbs: 98,
-              protein: 0,
-              iron: '2%'
+              Statisticdate: '06/08/2019',
+              trafficIN: '1708732',
+              trafficOut: '256454'
             },
             {
-              Name: 'Honeycomb',
-              calories: 408,
-              fat: 3.2,
-              carbs: 87,
-              protein: 6.5,
-              iron: '45%'
+              Statisticdate: '09/08/2019',
+              trafficIN: '1677817',
+              trafficOut: '271038'
             },
             {
-              Name: 'Donut',
-              calories: 452,
-              fat: 25.0,
-              carbs: 51,
-              protein: 4.9,
-              iron: '22%'
+              Statisticdate: '08/08/2019',
+              trafficIN: '1696648',
+              trafficOut: '272324'
             },
             {
-              Name: 'KitKat',
-              calories: 518,
-              fat: 26.0,
-              carbs: 65,
-              protein: 7,
-              iron: '6%'
+              Statisticdate: '10/08/2019',
+              trafficIN: '1639246',
+              trafficOut: '274595'
             }
           ]
         }

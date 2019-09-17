@@ -1,20 +1,22 @@
 <template>
   <div :class="classComponent">
-    <label v-if="hasLabel" class="control-label" :style="{ 'font-size': this.small ? '12px' : this.large ? '18px' : '14px' }">
+    <label v-if="hasLabel" class="control-label" :style="styleLabel">
       {{ label }}
     </label>
     <select :class="cCssClass" :value="value"> </select>
-    <span v-if="!valid" class="help-block">{{ errorText }}</span>
+    <span v-if="!valid && !hideErrorText" class="help-block">{{ errorText }}</span>
+    <n-overlay absolute :value="vLoading">
+      <n-icon css-class="fa-spin fa-4x" style="color:white">circle-o-notch</n-icon>
+    </n-overlay>
   </div>
-  <!-- <select :class="selectCssClass"></select> -->
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, Model, Watch, Emit } from 'vue-property-decorator'
+import { Component, Prop, Model, Watch, Mixins, Emit } from 'vue-property-decorator'
 import _ from 'lodash'
-import axios from 'axios'
+import NDataSource from './Base/NDataSource'
 @Component({ inheritAttrs: false })
-export default class NSelect2 extends Vue {
+export default class NSelect2 extends Mixins(NDataSource) {
   @Prop({ type: String, default: '' }) cssClass!: string
   @Prop({ type: Boolean, default: false }) clearable!: boolean
   @Prop({ type: Boolean, default: false }) disabled!: boolean
@@ -24,25 +26,21 @@ export default class NSelect2 extends Vue {
   @Prop({ type: String, default: 'text' }) itemText!: string
   @Prop({ type: String, default: 'value' }) itemValue!: string
   @Prop({ type: Boolean, default: true }) form!: boolean
+  @Prop({ type: Boolean, default: false }) hideErrorText!: string
   @Prop({ type: Boolean, default: false }) small!: boolean
   @Prop({ type: Boolean, default: false }) large!: boolean
-  @Prop({ type: Boolean, default: true }) autoRead!: boolean
   @Prop(String) hint!: string
   @Prop(String) label!: string
-  @Prop(String) readUrl: string
   @Prop(Array) rules!: any[]
   @Model('input', [String, Number, Array, Object]) value!: any[] | any
-  input(e) {
+  @Emit() async input(e) {
     if (!this.lazyValidation || !this.valid) this.validate(e)
-    this.$emit('input', isNaN(e) ? e : Number(e))
   }
-  @Emit() error(e) {}
 
   valid: boolean = true
   lazyValidation: boolean = false
-  items: any[] = []
+
   private theSelect!: any
-  loading: boolean = false
   get hasLabel() {
     return !_.isEmpty(this.label)
   }
@@ -59,7 +57,7 @@ export default class NSelect2 extends Vue {
     return ''
   }
   get select2Data() {
-    const data = (this.items || []).map(item => {
+    const data = (this.vItems || []).map(item => {
       return { id: item[this.itemValue], text: item[this.itemText] }
     })
     return data
@@ -67,9 +65,15 @@ export default class NSelect2 extends Vue {
   get classComponent() {
     return { 'form-group': this.form, 'has-error': !this.valid }
   }
+  get styleLabel() {
+    return {
+      'control-label': true,
+      'font-size': `${this.small ? '11px' : this.large ? '15px' : '13px'} !important`
+    }
+  }
   @Watch('select2Data')
   private onSelect2DataChange(n, o) {
-    this.init(n)
+    this.init()
   }
   @Watch('valid')
   private onValidChange(n, o) {
@@ -79,39 +83,25 @@ export default class NSelect2 extends Vue {
       ;($(this.$el).find('span.select2-selection') as any).css('border-color', '#dd4b39')
     }
   }
-  @Watch('readUrl')
-  private onReadUrlChange(n, o) {
-    if (this.autoRead) this.read()
-  }
-  async read() {
-    if (_.isEmpty(this.readUrl)) return
-    this.loading = true
-    try {
-      const res = await axios.get(this.readUrl)
-      this.items = res.data
-    } catch (e) {
-      this.error(e)
-    }
-    this.loading = false
-  }
-  setItems(items: any[]) {
-    this.items = items
-  }
-  async created() {
-    if (this.autoRead) await this.read()
-  }
-  mounted() {
-    this.theSelect = $(this.$el).find('select') as any
-    this.init(this.select2Data)
-    this.setSize()
-    this.valid = true
+  @Watch('value')
+  private onValueChange(n, o) {
+    this.theSelect.val(this.tryParseNumber(n)).trigger('change')
   }
 
-  private init(data) {
-    this.theSelect.empty()
+  mounted() {
+    this.theSelect = $(this.$el).find('select') as any
+    this.init()
+  }
+
+  private init() {
+    if (this.theSelect.hasClass('select2-hidden-accessible')) {
+      this.theSelect.select2('destroy')
+      this.theSelect.off('select2:select')
+      this.theSelect.empty()
+    }
     this.theSelect
       .select2({
-        data: data,
+        data: this.select2Data,
         allowClear: this.clearable,
         disabled: this.disabled,
         multiple: this.multiple,
@@ -124,24 +114,29 @@ export default class NSelect2 extends Vue {
           }
         }
       })
-      .change(e => this.input(e.target.value))
+      .on('select2:select', e => this.input(this.tryParseNumber(e.target.value)))
       .val(this.value)
       .trigger('change')
+    this.setSize()
   }
-
   private setSize() {
     if (!this.small && !this.large) return
-    ;($(this.$el).find('.select2-selection__rendered') as any).addClass(`input-${this.small ? 'sm' : 'lg'}-rendered`)
-    ;($(this.$el).find('.select2-container .select2-selection--single') as any).addClass(
-      `input-${this.small ? 'sm' : 'lg'}-select`
-    )
-    ;($(this.$el).find('.select2-selection__arrow') as any).addClass(`input-${this.small ? 'sm' : 'lg'}-arrow`)
+    this.$nextTick(() => {
+      ;($(this.$el).find('span.select2-selection__rendered') as any).addClass(`input-${this.small ? 'sm' : 'lg'}-rendered`)
+      ;($(this.$el).find('span.select2-selection.select2-selection--single') as any).addClass(
+        `input-${this.small ? 'sm' : 'lg'}-select`
+      )
+      ;($(this.$el).find('span.select2-selection__arrow') as any).addClass(`input-${this.small ? 'sm' : 'lg'}-arrow`)
+    })
   }
 
   validate(value) {
     this.valid = true
     if (this.rules) this.valid = !this.rules.some(e => e(value) !== true)
     return this.valid
+  }
+  tryParseNumber(value) {
+    return isNaN(value) ? value : Number(value)
   }
 }
 </script>
@@ -150,8 +145,6 @@ export default class NSelect2 extends Vue {
 span.select2-container {
   width: 100% !important;
 }
-</style>
-<style scoped>
 .input-sm-rendered {
   font-size: 12px !important;
   line-height: 23px !important;
@@ -163,7 +156,7 @@ span.select2-container {
   height: 23px !important;
 }
 .input-sm-dropdown {
-  font-size: 12px;
+  font-size: 12px !important;
 }
 .input-lg-rendered {
   font-size: 18px !important;
@@ -176,6 +169,6 @@ span.select2-container {
   height: 40px !important;
 }
 .input-lg-dropdown {
-  font-size: 18px;
+  font-size: 18px !important;
 }
 </style>

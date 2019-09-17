@@ -1,10 +1,10 @@
 import { Component, Mixins } from 'vue-property-decorator'
 import { VueNode } from '../../extension/VueSlot'
-import { TableHeader } from '../../types/Table'
 import NBase from '../Base/NBase'
 import _ from 'lodash'
 import NTableProp from './NTableProp'
 import NData from './../Base/NData'
+import { TableHeader } from './../../types/Table'
 
 @Component({})
 export default class NTableHeader extends Mixins(NBase, NData, NTableProp) {
@@ -14,7 +14,7 @@ export default class NTableHeader extends Mixins(NBase, NData, NTableProp) {
     const items: VueNode = nodes.find(node => node.tag === 'items') || new VueNode()
     const children = (items.children || []).filter(node => itemNode.includes(node.tag))
     return children.map(child => {
-      const header: TableHeader = { ...{ text: '', value: '', headerValign: 'center' }, ...child.attrs }
+      const header: TableHeader = { ...new TableHeader(), ...child.attrs }
       header.type = child.tag.slice(0, -5)
       if (child.tag === 'band-item') {
         header.children = this.getHeaders(child.children)
@@ -47,38 +47,44 @@ export default class NTableHeader extends Mixins(NBase, NData, NTableProp) {
     //Headers from items
     if (_.isEmpty(headers) && !_.isEmpty(this.vItems)) {
       headers = Object.keys(this.vItems[0]).map(key => {
-        return { text: _.startCase(key), value: key }
+        return { ...new TableHeader(), ...{ text: _.startCase(key), value: key } }
       })
     }
     //expansion
     if (this.expandable)
       headers.unshift({
-        text: '',
-        value: '$expansion',
-        width: '36px',
-        headerAlign: 'center',
-        headerValign: 'middle',
-        align: 'center'
+        ...new TableHeader(),
+        ...{
+          text: '',
+          value: '__expansion',
+          width: '36px',
+          headerAlign: 'center',
+          align: 'center'
+        }
       })
     //selection
     if (this.selectable)
       headers.unshift({
-        text: '',
-        value: '$selection',
-        width: '36px',
-        headerAlign: 'center',
-        headerValign: 'middle',
-        align: 'center'
+        ...new TableHeader(),
+        ...{
+          text: '',
+          value: '__selection',
+          width: '36px',
+          headerAlign: 'center',
+          align: 'center'
+        }
       })
     //action
     if (this.updatable || this.deletable)
       headers.push({
-        text: 'Tác vụ',
-        value: '$action',
-        width: '96px',
-        headerAlign: 'center',
-        headerValign: 'middle',
-        align: 'center'
+        ...new TableHeader(),
+        ...{
+          text: 'Tác vụ',
+          value: '__action',
+          width: '96px',
+          headerAlign: 'center',
+          align: 'center'
+        }
       })
     return headers
   }

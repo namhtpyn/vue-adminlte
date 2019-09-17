@@ -5,8 +5,9 @@ export class VueNode {
   tag: string
   isComponent: boolean
   componentInstance: Vue
-  attrs: object
-  children: VueNode[]
+  attrs: any = {}
+  children: VueNode[] = []
+  text: string
 }
 export default class VueSlot {
   constructor(slot: VNode[]) {
@@ -18,20 +19,31 @@ export default class VueSlot {
   private parse(data: VueNode[] = this.data, nodes: VNode[] = this.slot) {
     if (_.isEmpty(nodes)) return
     nodes.forEach(node => {
+      if (_.isEmpty(node.tag)) return
       const myNode = new VueNode()
       myNode.tag = node.tag || ''
       myNode.isComponent = !_.isEmpty(node.componentInstance)
       myNode.componentInstance = node.componentInstance
-      myNode.attrs = this.toCamelKey((node.data || {}).attrs || {})
+      myNode.attrs = this.toProps((node.data || {}).attrs || {})
+      myNode.text = node.text || ''
       myNode.children = []
       if (!_.isEmpty(node.children)) this.parse(myNode.children, node.children)
       data.push(myNode)
     })
   }
-  private toCamelKey(obj: Object) {
+  find(fn: Function = (node: VueNode) => false, nodes: VueNode[] = this.data) {
+    let myNodes: VueNode[] = []
+    nodes.forEach(node => {
+      if (fn(node)) myNodes.push(node)
+      if (!_.isEmpty(node.children)) myNodes = myNodes.concat(this.find(fn, node.children))
+    })
+    return myNodes
+  }
+  private toProps(obj: Object) {
     return Object.fromEntries(
       Object.entries(obj).map(e => {
         e[0] = _.camelCase(e[0])
+        e[1] = e[1] ? e[1] : true
         return e
       })
     )

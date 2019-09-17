@@ -1,13 +1,15 @@
 import Vue from 'vue'
 import NBtn from '././NBtn.vue'
 import NCheckbox from '././NCheckbox.vue'
-import NDataTable from '././NDataTable/index.vue'
+import NDataTable from '././NDataTable/NDataTable.vue'
 import NDataTableOld from '././NDataTableOld.vue'
+import NDatePicker from '././NDatePicker.vue'
 import NDropDownList from '././NDropDownList.vue'
 import NDropDownTable from '././NDropDownTable.vue'
 import NDropDownTree from '././NDropDownTree.vue'
 import NForm from '././NForm.vue'
 import NIcon from '././NIcon.vue'
+import NLineChart from '././NLineChart.vue'
 import NModal from '././NModal.vue'
 import NOverlay from '././NOverlay.vue'
 import NPagination from '././NPagination.vue'
@@ -24,11 +26,13 @@ Vue.component('NBtn', NBtn)
 Vue.component('NCheckbox', NCheckbox)
 Vue.component('NDataTable', NDataTable)
 Vue.component('NDataTableOld', NDataTableOld)
+Vue.component('NDatePicker', NDatePicker)
 Vue.component('NDropDownList', NDropDownList)
 Vue.component('NDropDownTable', NDropDownTable)
 Vue.component('NDropDownTree', NDropDownTree)
 Vue.component('NForm', NForm)
 Vue.component('NIcon', NIcon)
+Vue.component('NLineChart', NLineChart)
 Vue.component('NModal', NModal)
 Vue.component('NOverlay', NOverlay)
 Vue.component('NPagination', NPagination)
