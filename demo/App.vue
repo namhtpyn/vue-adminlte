@@ -68,6 +68,7 @@
         searchable
         selectable
         expandable
+        multiple-select
         row-select
         @row-click="console"
         key-field="provinceCode"
@@ -202,7 +203,7 @@ export default class VApp extends Vue {
   traffics = traffics
   unitID = 0
   modal = false
-  dataTableModel: any = {}
+  dataTableModel: any = []
   dropDownTableModel: any | any[] = ''
   checkboxModel: any[] = [2]
   radioModel: any = 2

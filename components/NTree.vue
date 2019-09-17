@@ -4,7 +4,7 @@
       v-if="searchable"
       :value="searchText"
       :class="{ 'sticky-search': stickySearch }"
-      hint="Tìm kiếm"
+      hint="Nhấn Enter để tìm kiếm"
       @keypress.enter.stop="e => (searchText = e.target.value)"
     ></n-text-box>
     <div>
