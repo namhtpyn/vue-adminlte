@@ -1,6 +1,12 @@
 <template>
   <div :style="{ position: 'relative' }">
-    <n-text-box v-if="searchable" v-model="searchText" :class="{ 'sticky-search': stickySearch }" hint="Tìm kiếm"></n-text-box>
+    <n-text-box
+      v-if="searchable"
+      :value="searchText"
+      :class="{ 'sticky-search': stickySearch }"
+      hint="Tìm kiếm"
+      @keypress.enter.stop="e => (searchText = e.target.value)"
+    ></n-text-box>
     <div>
       <span v-if="!hasData">Không có dữ liệu</span>
       <div id="component-tree-view"></div>
