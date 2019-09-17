@@ -1,6 +1,6 @@
 <template>
   <div>
-    <n-form ref="form2" lazy-validation>
+    <!-- <n-form ref="form2" lazy-validation>
       <div class="row">
         <div class="col-xs-4">
           <n-drop-down-tree
@@ -76,6 +76,7 @@
         row-select
         @row-click="console"
         key-field="provinceCode"
+        creatable
       >
         <items>
           <text-item text="provinceName" value="provinceName" sortable filterable></text-item>
@@ -88,10 +89,6 @@
           ></text-item>
           <text-item text="areaID" value="areaID" sortable filterable></text-item>
         </items>
-        <template #item.area-id="prop">
-          aaaa
-          {{ prop }}
-        </template>
         <template #modal="{modal}">
           <n-text-box v-model="modal.data.provinceName"></n-text-box>
         </template>
@@ -167,8 +164,12 @@
           <y-axis id="second" position="right" text="Tốc độ download (mpbs)"></y-axis>
         </axises>
       </options>
-    </n-line-chart>
-    <n-date-picker></n-date-picker>
+    </n-line-chart> -->
+    {{ date }}
+    <n-date-picker v-model="date"></n-date-picker>
+    <n-drop-down-date-picker v-model="date"></n-drop-down-date-picker>
+    {{ abc }}
+    <n-select2 v-model="abc" multiple :items="provinces" item-text="provinceName" item-value="provinceCode"></n-select2>
   </div>
 </template>
 
@@ -181,6 +182,8 @@ import traffics from './data/traffics.json'
 // import _ from 'lodash'
 @Component({})
 export default class VApp extends Vue {
+  abc = ['PYN', 'HNI']
+  date = null
   deviceIP = null
   account = ''
   check = 1
