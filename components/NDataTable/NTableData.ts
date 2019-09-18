@@ -54,11 +54,12 @@ export default class NTableData extends Mixins(NBase, NData, NTableProp) {
     )
   }
   itemsSorted(items: TableItem[]) {
-    if (_.isEmpty(this.vSort)) return items
+    if (_.isEmpty(this.vSort) && _.isEmpty(this.groupBy)) return items
     const sortAsc = natsort({ insensitive: true })
     const sortDesc = natsort({ desc: true, insensitive: true })
+    const sortArray = this.groupBy.map(f => new TableSort(f)).concat(this.vSort)
     items.sort((a, b) => {
-      for (const sort of this.vSort) {
+      for (const sort of sortArray) {
         const sortOrder = sort.desc
           ? sortDesc(a.data[sort.name], b.data[sort.name])
           : sortAsc(a.data[sort.name], b.data[sort.name])
@@ -74,6 +75,7 @@ export default class NTableData extends Mixins(NBase, NData, NTableProp) {
       this.vPage * this.vItemPerPage < this.itemsLength ? this.vPage * this.vItemPerPage : this.itemsLength
     )
   }
+
   itemsExpanded(items: TableItem[]) {
     if (!this.expandable || _.isEmpty(this.vExpansion)) return items
     const itemsIndex = items.map(item => item.index)
@@ -83,6 +85,11 @@ export default class NTableData extends Mixins(NBase, NData, NTableProp) {
         const idx = items.findIndex(item => item.index === itemIndex)
         if (idx >= 0) items.splice(idx + 1, 0, { ...items[idx], isExpansion: true })
       })
+    return items
+  }
+
+  itemsGrouped(items: TableItem[]) {
+    if (_.isEmpty(this.groupBy)) return items
     return items
   }
   get tableItems(): TableItem[] {
@@ -98,6 +105,7 @@ export default class NTableData extends Mixins(NBase, NData, NTableProp) {
     let items = _.cloneDeep(this.tableItems)
     items = this.itemsPaginated(items)
     items = this.itemsExpanded(items)
+    items = this.itemsGrouped(items)
     return items
   }
 
@@ -109,5 +117,10 @@ export default class NTableData extends Mixins(NBase, NData, NTableProp) {
   onPageLengthChanged(n, o) {
     if (this.vPage === 0 && n > 0) this.vPage = 1
     else if (this.vPage > n) this.vPage = n
+  }
+
+  validGroupBy() {
+    if (!_.isEmpty(this.groupBy)) return []
+    //let groupBy = this.headerColumns().map(this.groupBy
   }
 }
