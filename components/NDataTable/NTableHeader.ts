@@ -11,9 +11,9 @@ import moment from 'moment'
 export default class NTableHeader extends Mixins(NBase, NData, NTableProp) {
   private getHeaders(nodes: VueNode[] = this.vSlot.data) {
     if (_.isEmpty(nodes)) return []
-    const itemNode = ['text-item', 'number-item', 'date-item', 'band-item']
+    const itemNode = ['text', 'number', 'date', 'time', 'datetime', 'band', 'image']
     const items: VueNode = nodes.find(node => node.tag === 'items') || new VueNode()
-    const children = (items.children || []).filter(node => itemNode.includes(node.tag))
+    const children = (items.children || []).filter(node => itemNode.includes(node.tag.slice(0, -5)))
     return children.map(child => {
       let header = new TableHeader()
       header.type = child.tag.slice(0, -5) as any
@@ -41,6 +41,9 @@ export default class NTableHeader extends Mixins(NBase, NData, NTableProp) {
         break
       case 'datetime':
         header.format = v => moment(v).format('DD/MM/YYYY HH:mm:ss')
+        break
+      case 'image':
+        header.format = v => `<img src="${v}" />`
         break
     }
     return header

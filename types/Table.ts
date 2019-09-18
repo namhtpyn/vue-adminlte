@@ -5,7 +5,7 @@ export class TableHeader {
   kebabValue: Function = function() {
     return _.kebabCase(this.value)
   }
-  type?: 'text' | 'number' | 'date' | 'time' | 'datetime' | 'band' = 'text'
+  type?: 'text' | 'number' | 'date' | 'time' | 'datetime' | 'band' | 'image' = 'text'
   width?: string
   align?: 'left' | 'right' | 'center' | 'justify' | 'initial' | 'inherit' = 'left'
   valign?:
