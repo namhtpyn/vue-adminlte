@@ -70,6 +70,7 @@
       @row-click="console"
       key-field="provinceCode"
       creatable
+      excelable
     >
       <items>
         <text-item text="provinceName" value="provinceName" sortable filterable></text-item>

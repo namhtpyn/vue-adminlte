@@ -16,6 +16,10 @@
             <n-icon>plus</n-icon>
             <span class="hidden-xs">Thêm</span>
           </n-btn>
+          <n-btn v-if="excelable" @click="exportExcel">
+            <n-icon>file-excel-o</n-icon>
+            <span class="hidden-xs">Excel</span>
+          </n-btn>
           <slot name="top.button-group"></slot>
         </div>
       </slot>
@@ -213,6 +217,7 @@
 import { Component, Mixins, Watch } from 'vue-property-decorator'
 
 import _ from 'lodash'
+import XLSX from 'xlsx'
 
 import NTableData from './NTableData'
 import NTableHeader from './NTableHeader'
@@ -360,6 +365,15 @@ export default class NDataTable extends Mixins(mixin1, mixin2) {
     return _.isEmpty(o)
   }
   mounted() {}
+
+  private exportExcel() {
+    //todo: convert items into table like items, for now it only export raw
+    const wb = XLSX.utils.book_new()
+    wb.Props = { CreatedDate: new Date() }
+    wb.SheetNames.push('Sheet 1')
+    wb.Sheets['Sheet 1'] = XLSX.utils.json_to_sheet(this.vItems)
+    XLSX.writeFile(wb, 'export.xlsx', { bookType: 'xlsx' })
+  }
 }
 </script>
 
