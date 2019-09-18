@@ -1,5 +1,6 @@
 <template>
   <div>
+    <n-time-picker></n-time-picker>
     <n-form ref="form2" lazy-validation>
       <div class="row">
         <div class="col-xs-4">
@@ -90,7 +91,6 @@
           item-text="provinceName"
           item-value="provinceName"
           searchable
-          modal
         >
           <items>
             <text-item text="provinceID" value="provinceID"></text-item>
@@ -188,7 +188,7 @@ import units from './data/units.json'
 import provinces from './data/provinces.json'
 import traffics from './data/traffics.json'
 import moment = require('moment')
-// import _ from 'lodash'
+import _, { Dictionary } from 'lodash'
 @Component({})
 export default class VApp extends Vue {
   abc = ['PYN', 'HNI']
@@ -213,7 +213,26 @@ export default class VApp extends Vue {
   selectNode(item) {
     console.log(item)
   }
+  createGroup(data: any[], field: string, group: Dictionary<any[]>) {
+    //group = Array.from(_.groupBy(group, o => o[field]))
+    //group.
+  }
   mounted() {
+    const groupBy = ['test', 'areaID']
+    const groups = Object.entries(_.groupBy(provinces, o => o[groupBy[0]])).map(([k, v]) => ({ group: k, items: v }))
+    // groupBy.splice(0, 1)
+    // groupBy.forEach(g => {
+    //   groups = groups.flatMap(a =>
+    //     _.chain(a)
+    //       .groupBy(x => x[g])
+    //       .values()
+    //       .value()
+    //   )
+    // })
+    console.log(groups)
+    // const group = _.uniqWith(provinces.map(o => ({ test: o.test, areaID: o.areaID })), _.isEqual)
+    // console.log(group)
+    // console.log(_.partition(provinces, o => ({ test: o.test, areaID: o.areaID })))
     //this.tabs = ['1', '2', '3', '4', '5', '6']
     //this.$nextTick(() => (this.$refs.tabCollection as any).init())
   }
