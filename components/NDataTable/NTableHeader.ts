@@ -11,7 +11,7 @@ import moment from 'moment'
 export default class NTableHeader extends Mixins(NBase, NData, NTableProp) {
   private getHeaders(nodes: VueNode[] = this.vSlot.data) {
     if (_.isEmpty(nodes)) return []
-    const itemNode = ['text', 'number', 'date', 'time', 'datetime', 'band', 'image']
+    const itemNode = ['text', 'number', 'date', 'time', 'datetime', 'band', 'image', 'checkbox']
     const items: VueNode = nodes.find(node => node.tag === 'items') || new VueNode()
     const children = (items.children || []).filter(node => itemNode.includes(node.tag.slice(0, -5)))
     return children.map(child => {
@@ -44,6 +44,15 @@ export default class NTableHeader extends Mixins(NBase, NData, NTableProp) {
         break
       case 'image':
         header.format = v => `<img src="${v}" />`
+        header.headerAlign = 'center'
+        header.align = 'center'
+        header.encodeHtml = false
+        break
+      case 'checkbox':
+        header.format = v => `<input type="checkbox" class="n-checkbox" disabled checked="${!!v}" /><label></label>`
+        header.headerAlign = 'center'
+        header.align = 'center'
+        header.encodeHtml = false
         break
     }
     return header
