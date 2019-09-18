@@ -7,7 +7,10 @@
     <span v-if="!valid && !hideErrorText" class="help-block">{{ errorText }}</span>
 
     <n-overlay absolute :value="vLoading">
-      <n-icon css-class="fa-spin fa-4x" style="color:white">circle-o-notch</n-icon>
+      <div style="text-align:center; color:#fff">
+        <n-icon class="fa-spin fa-1x fa-fw">circle-o-notch</n-icon>
+        <div class="small">Đang tải dữ liệu</div>
+      </div>
     </n-overlay>
   </div>
 </template>

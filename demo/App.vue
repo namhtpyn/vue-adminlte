@@ -45,68 +45,65 @@
       @select="selectNode"
       v-model="unitID"
     ></n-drop-down-tree>
-    <div style="max-height:100px; overflow:auto">
-      <n-tree
-        :items="units"
-        item-value="UnitID"
-        item-text="UnitName"
-        parent-key="ParentID"
-        v-model="unitID"
-        sticky-search
-        searchable
-      ></n-tree>
-    </div>
+    <n-tree
+      :items="units"
+      item-value="UnitID"
+      item-text="UnitName"
+      parent-key="ParentID"
+      v-model="unitID"
+      sticky-search
+      searchable
+    ></n-tree>
     n-data-table component
-    <div style="max-height:400px; overflow:auto">
-      {{ dataTableModel }}
-      <n-data-table
-        v-model="dataTableModel"
-        read-url="/data/provinces.json"
-        updatable
-        update-url="/haha"
-        caption="hihi"
-        searchable
-        selectable
-        expandable
-        multiple-select
-        row-select
-        @row-click="console"
-        key-field="provinceCode"
-        creatable
-      >
-        <items>
-          <text-item text="provinceName" value="provinceName" sortable filterable></text-item>
-          <text-item
-            text="provinceCode"
-            value="provinceCode"
-            sortable
-            filterable
-            :format="v => provinces.find(i => i.provinceCode === v).provinceName"
-          ></text-item>
-          <text-item text="areaID" value="areaID" sortable filterable></text-item>
-        </items>
-        <template #modal="{modal}">
-          <n-drop-down-table
-            v-model="dropDownTableModel"
-            read-url="/data/provinces.json"
-            item-text="provinceName"
-            item-value="provinceName"
-            searchable
-            modal
-          >
-            <items>
-              <text-item text="provinceID" value="provinceID"></text-item>
-              <text-item text="provinceCode" value="provinceCode"></text-item>
-              <text-item text="provinceName" value="provinceName"></text-item>
-              <text-item text="areaID" value="areaID"></text-item>
-            </items>
-          </n-drop-down-table>
-        </template>
-        <template #item.expand="{item}">
-          <n-btn>a</n-btn>
-        </template>
-      </n-data-table>
-    </div>
+    {{ dataTableModel }}
+    <n-data-table
+      v-model="dataTableModel"
+      read-url="/data/provinces.json"
+      updatable
+      update-url="/haha"
+      caption="hihi"
+      searchable
+      selectable
+      expandable
+      multiple-select
+      row-select
+      @row-click="console"
+      key-field="provinceCode"
+      creatable
+      excelable
+    >
+      <items>
+        <text-item text="provinceName" value="provinceName" sortable filterable></text-item>
+        <text-item
+          text="provinceCode"
+          value="provinceCode"
+          sortable
+          filterable
+          :format="v => provinces.find(i => i.provinceCode === v).provinceName"
+        ></text-item>
+        <number-item text="areaID" value="areaID" sortable filterable></number-item>
+      </items>
+      <template #modal="{modal}">
+        <n-drop-down-table
+          v-model="dropDownTableModel"
+          read-url="/data/provinces.json"
+          item-text="provinceName"
+          item-value="provinceName"
+          searchable
+          modal
+        >
+          <items>
+            <text-item text="provinceID" value="provinceID"></text-item>
+            <text-item text="provinceCode" value="provinceCode"></text-item>
+            <text-item text="provinceName" value="provinceName"></text-item>
+            <text-item text="areaID" value="areaID"></text-item>
+          </items>
+        </n-drop-down-table>
+      </template>
+      <template #item.expand="{item}">
+        <n-btn>a</n-btn>
+      </template>
+    </n-data-table>
     n-modal component<br />
     <div class="row">
       <div class="col-xs-1">
@@ -134,7 +131,7 @@
           <text-item text="provinceID" value="provinceID"></text-item>
           <text-item text="provinceCode" value="provinceCode"></text-item>
           <text-item text="provinceName" value="provinceName"></text-item>
-          <text-item text="areaID" value="areaID"></text-item>
+          <number-item text="areaID" value="areaID"></number-item>
         </items>
       </n-drop-down-table>
     </div>
