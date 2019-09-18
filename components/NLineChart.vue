@@ -2,7 +2,10 @@
   <div style="position:relative">
     <canvas ref="linechart" :id="chartID" width="400" height="400"></canvas>
     <n-overlay absolute :value="vLoading">
-      <n-icon css-class="fa-spin fa-4x" style="color:white">circle-o-notch</n-icon>
+      <div style="text-align:center; color:#fff">
+        <n-icon class="fa-spin fa-2x fa-fw">circle-o-notch</n-icon>
+        <div>Đang tải dữ liệu</div>
+      </div>
     </n-overlay>
   </div>
 </template>
