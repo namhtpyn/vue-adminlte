@@ -7,15 +7,37 @@ export class TableHeader {
   }
   type?: string = 'text'
   width?: string
-  align?: string = 'left'
-  valign?: string = 'middle'
+  align?: 'left' | 'right' | 'center' | 'justify' | 'initial' | 'inherit' = 'left'
+  valign?:
+    | 'baseline'
+    | 'length'
+    | 'sub'
+    | 'super'
+    | 'top'
+    | 'text-top'
+    | 'middle'
+    | 'bottom'
+    | 'text-bottom'
+    | 'initial'
+    | 'inherit' = 'middle'
   bgcolor?: string
   color?: string
   sortable?: boolean = false
-  headerAlign?: string = 'left'
-  headerValign?: string = 'middle'
-  headerBgcolor?: string
-  headerColor?: string
+  headerAlign?: 'left' | 'right' | 'center' | 'justify' | 'initial' | 'inherit' = 'left'
+  headerValign?:
+    | 'baseline'
+    | 'length'
+    | 'sub'
+    | 'super'
+    | 'top'
+    | 'text-top'
+    | 'middle'
+    | 'bottom'
+    | 'text-bottom'
+    | 'initial'
+    | 'inherit' = 'middle'
+  headerBgcolor?: string = '#3c8dbc'
+  headerColor?: string = '#ffffff'
   summary?: string | Function
   format?: Function = v => v
   children?: TableHeader[]
