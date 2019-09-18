@@ -35,7 +35,7 @@
       </div>
     </n-form>
     <n-drop-down-tree
-      read-url="/data/units.json"
+      :items="units"
       item-value="UnitID"
       item-text="UnitName"
       tree-parent-key="ParentID"

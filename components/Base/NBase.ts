@@ -5,6 +5,9 @@ import _ from 'lodash'
 export default class NBase extends Vue {
   vSlot: VueSlot = new VueSlot([])
   vLoading: boolean = false
+  get mySlot() {
+    return new VueSlot(this.$slots.default)
+  }
   mounted() {
     this.vSlot = new VueSlot(this.$slots.default)
   }

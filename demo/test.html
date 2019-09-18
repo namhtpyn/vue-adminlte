@@ -15,6 +15,8 @@
     <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios@0.19.0/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.24.0/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/numeral@2.0.6/numeral.min.js"></script>
     <script src="../dist/VueAdminLTE.js"></script>
     <script src="./JSONbig.js"></script>
     <script>
@@ -31,70 +33,43 @@
   </head>
   <body>
     <div id="app">
-      <n-line-chart :items="traffics" caption="HAHAHA">
-        <common text="In" value="Statisticdate"></common>
-        <series>
-          <item text="In" value="trafficIN"></item>
-          <item text="Out" value="trafficOut"></item>
-        </series>
-      </n-line-chart>
+      <n-drop-down-date-picker v-model="dddp"></n-drop-down-date-picker>
+      <n-data-table
+        read-url="data/provinces.json"
+        updatable
+        update-url="/haha"
+        caption="hihi"
+        searchable
+        expandable
+        key-field="provinceCode"
+        creatable
+        excelable
+      >
+        <items>
+          <text-item text="provinceName" value="provinceName" sortable filterable></text-item>
+          <text-item text="provinceCode" value="provinceCode" sortable filterable></text-item>
+          <checkbox-item text="areaID" value="areaID" sortable filterable></checkbox-item>
+        </items>
+        <template #modal="{modal}">
+          <n-drop-down-table read-url="data/provinces.json" item-text="provinceName" item-value="provinceName" searchable modal>
+            <items>
+              <text-item text="provinceID" value="provinceID"></text-item>
+              <text-item text="provinceCode" value="provinceCode"></text-item>
+              <text-item text="provinceName" value="provinceName"></text-item>
+              <text-item text="areaID" value="areaID"></text-item>
+            </items>
+          </n-drop-down-table>
+        </template>
+        <template #item.expand="{item}">
+          <n-btn>a</n-btn>
+        </template>
+      </n-data-table>
     </div>
     <script>
       var app = new Vue({
         el: '#app',
         data: {
-          traffics: [
-            {
-              Statisticdate: '01/08/2019',
-              trafficIN: '1653575',
-              trafficOut: '259200'
-            },
-            {
-              Statisticdate: '02/08/2019',
-              trafficIN: '1701202',
-              trafficOut: '259384'
-            },
-            {
-              Statisticdate: '07/08/2019',
-              trafficIN: '1661505',
-              trafficOut: '272697'
-            },
-            {
-              Statisticdate: '04/08/2019',
-              trafficIN: '1697294',
-              trafficOut: '267284'
-            },
-            {
-              Statisticdate: '05/08/2019',
-              trafficIN: '1657837',
-              trafficOut: '263536'
-            },
-            {
-              Statisticdate: '03/08/2019',
-              trafficIN: '1785211',
-              trafficOut: '305567'
-            },
-            {
-              Statisticdate: '06/08/2019',
-              trafficIN: '1708732',
-              trafficOut: '256454'
-            },
-            {
-              Statisticdate: '09/08/2019',
-              trafficIN: '1677817',
-              trafficOut: '271038'
-            },
-            {
-              Statisticdate: '08/08/2019',
-              trafficIN: '1696648',
-              trafficOut: '272324'
-            },
-            {
-              Statisticdate: '10/08/2019',
-              trafficIN: '1639246',
-              trafficOut: '274595'
-            }
-          ]
+          dddp: '2019-09-18'
         }
       })
     </script>

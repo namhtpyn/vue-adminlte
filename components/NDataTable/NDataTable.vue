@@ -209,7 +209,7 @@
         row-select
       >
         <items>
-          <text-item text="Giá trị" value="text"></text-item>
+          <text-item :encode-html="vFilterModal.encodeHtml" text="Giá trị" value="text"></text-item>
         </items>
       </n-data-table>
     </n-modal>
@@ -291,18 +291,22 @@ export default class NDataTable extends Mixins(mixin1, mixin2) {
     items: [],
     name: '',
     value: [],
-    visible: false
+    visible: false,
+    encodeHtml: true
   }
   openFilter(header: TableHeader) {
     this.vFilterModal.name = header.value
-    this.vFilterModal.visible = true
+
     this.vFilterModal.value = this.getFilterValue(header) || []
+    this.vFilterModal.encodeHtml = header.encodeHtml
+    this.vFilterModal.visible = true
     this.vFilterModal.items = _.uniqBy(
       this.vItems.map(i => {
         return { text: header.format(i[header.value]), value: i[header.value] }
       }),
       'value'
     )
+    console.log(this.vFilterModal)
   }
 
   @Watch('vFilterModal.value')
