@@ -80,7 +80,7 @@
           filterable
           :format="v => provinces.find(i => i.provinceCode === v).provinceName"
         ></text-item>
-        <text-item text="areaID" value="areaID" sortable filterable></text-item>
+        <number-item text="areaID" value="areaID" sortable filterable></number-item>
       </items>
       <template #modal="{modal}">
         <n-drop-down-table
@@ -130,7 +130,7 @@
           <text-item text="provinceID" value="provinceID"></text-item>
           <text-item text="provinceCode" value="provinceCode"></text-item>
           <text-item text="provinceName" value="provinceName"></text-item>
-          <text-item text="areaID" value="areaID"></text-item>
+          <number-item text="areaID" value="areaID"></number-item>
         </items>
       </n-drop-down-table>
     </div>

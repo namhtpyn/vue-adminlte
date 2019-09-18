@@ -5,7 +5,8 @@ import _ from 'lodash'
 import NTableProp from './NTableProp'
 import NData from './../Base/NData'
 import { TableHeader } from './../../types/Table'
-
+import numeral from 'numeral'
+import moment from 'moment'
 @Component({})
 export default class NTableHeader extends Mixins(NBase, NData, NTableProp) {
   private getHeaders(nodes: VueNode[] = this.vSlot.data) {
@@ -15,20 +16,34 @@ export default class NTableHeader extends Mixins(NBase, NData, NTableProp) {
     const children = (items.children || []).filter(node => itemNode.includes(node.tag))
     return children.map(child => {
       let header = new TableHeader()
-      header.type = child.tag.slice(0, -5)
-      switch (header.type) {
-        case 'band':
-          header.headerAlign = 'center'
-          break
-      }
-
+      header.type = child.tag.slice(0, -5) as any
+      header = this.setDefaultHeaderProps(header)
       header = { ...header, ...child.attrs }
-
-      if (header.type === 'band') {
-        header.children = this.getHeaders(child.children)
-      }
+      if (header.type === 'band') header.children = this.getHeaders(child.children)
       return header
     })
+  }
+  private setDefaultHeaderProps(header: TableHeader) {
+    switch (header.type) {
+      case 'band':
+        header.headerAlign = 'center'
+        break
+      case 'number':
+        header.headerAlign = 'right'
+        header.align = 'right'
+        header.format = v => numeral(v).format('0,0[.]00')
+        break
+      case 'date':
+        header.format = v => moment(v).format('DD/MM/YYYY')
+        break
+      case 'time':
+        header.format = v => moment(v).format('HH:mm:ss')
+        break
+      case 'datetime':
+        header.format = v => moment(v).format('DD/MM/YYYY HH:mm:ss')
+        break
+    }
+    return header
   }
 
   private headerRows(value: any[] = this.headers, childrenField = 'children') {
