@@ -16,6 +16,10 @@
             <n-icon>plus</n-icon>
             <span class="hidden-xs">Thêm</span>
           </n-btn>
+          <n-btn v-if="excelable" @click="exportExcel">
+            <n-icon>file-excel-o</n-icon>
+            <span class="hidden-xs">Excel</span>
+          </n-btn>
           <slot name="top.button-group"></slot>
         </div>
       </slot>
@@ -111,7 +115,10 @@
                     </div>
                   </template>
                   <template v-else>
-                    {{ header.format(item.data[header.value]) }}
+                    <template v-if="header.encodeHtml">
+                      {{ header.format(item.data[header.value]) }}
+                    </template>
+                    <span v-else v-html="header.format(item.data[header.value])"></span>
                   </template>
                 </slot>
               </td>
@@ -166,8 +173,10 @@
     </div>
 
     <n-overlay absolute :value="vLoading">
-      <n-icon css-class="fa-spin fa-4x" style="color:white">circle-o-notch</n-icon>
-      Đang tải dữ liệu
+      <div style="text-align:center; color:#fff">
+        <n-icon class="fa-spin fa-2x fa-fw">circle-o-notch</n-icon>
+        <div>Đang tải dữ liệu</div>
+      </div>
     </n-overlay>
 
     <n-modal
@@ -200,7 +209,7 @@
         row-select
       >
         <items>
-          <text-item text="Giá trị" value="text"></text-item>
+          <text-item :encode-html="vFilterModal.encodeHtml" text="Giá trị" value="text"></text-item>
         </items>
       </n-data-table>
     </n-modal>
@@ -211,6 +220,7 @@
 import { Component, Mixins, Watch } from 'vue-property-decorator'
 
 import _ from 'lodash'
+import XLSX from 'xlsx'
 
 import NTableData from './NTableData'
 import NTableHeader from './NTableHeader'
@@ -281,12 +291,15 @@ export default class NDataTable extends Mixins(mixin1, mixin2) {
     items: [],
     name: '',
     value: [],
-    visible: false
+    visible: false,
+    encodeHtml: true
   }
   openFilter(header: TableHeader) {
     this.vFilterModal.name = header.value
-    this.vFilterModal.visible = true
+
     this.vFilterModal.value = this.getFilterValue(header) || []
+    this.vFilterModal.encodeHtml = header.encodeHtml
+    this.vFilterModal.visible = true
     this.vFilterModal.items = _.uniqBy(
       this.vItems.map(i => {
         return { text: header.format(i[header.value]), value: i[header.value] }
@@ -353,11 +366,19 @@ export default class NDataTable extends Mixins(mixin1, mixin2) {
   }
   /**helper function */
 
-  //console.log(this.items, this.__items)
   private isEmpty(o) {
     return _.isEmpty(o)
   }
   mounted() {}
+
+  private exportExcel() {
+    //todo: convert items into table like items, for now it only export raw
+    const wb = XLSX.utils.book_new()
+    wb.Props = { CreatedDate: new Date() }
+    wb.SheetNames.push('Sheet 1')
+    wb.Sheets['Sheet 1'] = XLSX.utils.json_to_sheet(this.vItems)
+    XLSX.writeFile(wb, 'export.xlsx', { bookType: 'xlsx' })
+  }
 }
 </script>
 

@@ -11,7 +11,7 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 export default class NOverlay extends Vue {
   @Prop({ type: Boolean, default: false }) value!: boolean
   @Prop({ type: Boolean, default: false }) absolute!: boolean
-  @Prop({ type: [String, Number], default: 5 }) zIndex!: number | string
+  @Prop({ type: [String, Number], default: 9999 }) zIndex!: number | string
   @Prop({ type: [String, Number], default: 0.46 }) opacity!: number | string
   @Prop({ type: [String], default: 'black' }) color!: string
 

@@ -39,7 +39,7 @@ const xxx = components.map(o => {
       dir: './dist/',
       entryFileNames: o.name + '.js'
     },
-    external: ['vue', 'lodash', 'axios', 'moment', 'chart.js'],
+    external: ['vue', 'lodash', 'axios', 'moment', 'chart.js', 'numeral', 'xlsx'],
     plugins: [
       multiInput(),
       typescript(),
@@ -56,5 +56,4 @@ const xxx = components.map(o => {
     ]
   }
 })
-console.log(xxx)
 export default xxx

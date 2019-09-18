@@ -43,7 +43,7 @@ export default class VueSlot {
     return Object.fromEntries(
       Object.entries(obj).map(e => {
         e[0] = _.camelCase(e[0])
-        e[1] = e[1] ? e[1] : true
+        e[1] = e[1] === '' ? true : e[1]
         return e
       })
     )
