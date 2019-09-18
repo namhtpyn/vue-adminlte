@@ -306,7 +306,6 @@ export default class NDataTable extends Mixins(mixin1, mixin2) {
       }),
       'value'
     )
-    console.log(this.vFilterModal)
   }
 
   @Watch('vFilterModal.value')
@@ -367,7 +366,6 @@ export default class NDataTable extends Mixins(mixin1, mixin2) {
   }
   /**helper function */
 
-  //console.log(this.items, this.__items)
   private isEmpty(o) {
     return _.isEmpty(o)
   }

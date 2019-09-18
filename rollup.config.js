@@ -56,5 +56,4 @@ const xxx = components.map(o => {
     ]
   }
 })
-console.log(xxx)
 export default xxx

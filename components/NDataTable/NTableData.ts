@@ -65,7 +65,6 @@ export default class NTableData extends Mixins(NBase, NData, NTableProp) {
         return sortOrder
       }
     })
-    console.log(items)
     return items
   }
   itemsPaginated(items: TableItem[]) {

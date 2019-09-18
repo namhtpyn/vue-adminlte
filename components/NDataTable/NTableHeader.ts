@@ -34,13 +34,13 @@ export default class NTableHeader extends Mixins(NBase, NData, NTableProp) {
         header.format = v => numeral(v).format('0,0[.]00')
         break
       case 'date':
-        header.format = v => moment(v).format('DD/MM/YYYY')
+        header.format = v => (moment(v).isValid() ? moment(v).format('DD/MM/YYYY') : '')
         break
       case 'time':
-        header.format = v => moment(v).format('HH:mm:ss')
+        header.format = v => (moment(v).isValid() ? moment(v).format('HH:mm:ss') : '')
         break
       case 'datetime':
-        header.format = v => moment(v).format('DD/MM/YYYY HH:mm:ss')
+        header.format = v => (moment(v).isValid() ? moment(v).format('DD/MM/YYYY HH:mm:ss') : '')
         break
       case 'image':
         header.format = v => `<img src="${v}" />`
