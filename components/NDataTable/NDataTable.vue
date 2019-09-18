@@ -115,7 +115,10 @@
                     </div>
                   </template>
                   <template v-else>
-                    {{ header.format(item.data[header.value]) }}
+                    <template v-if="header.encodeHtml">
+                      {{ header.format(item.data[header.value]) }}
+                    </template>
+                    <span v-else v-html="header.format(item.data[header.value])"></span>
                   </template>
                 </slot>
               </td>

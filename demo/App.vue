@@ -81,7 +81,7 @@
           filterable
           :format="v => provinces.find(i => i.provinceCode === v).provinceName"
         ></text-item>
-        <number-item text="areaID" value="areaID" sortable filterable></number-item>
+        <checkbox-item text="areaID" value="areaID" sortable filterable></checkbox-item>
       </items>
       <template #modal="{modal}">
         <n-drop-down-table
