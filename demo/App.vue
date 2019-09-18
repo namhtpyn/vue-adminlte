@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- <n-form ref="form2" lazy-validation>
+    <n-form ref="form2" lazy-validation>
       <div class="row">
         <div class="col-xs-4">
           <n-drop-down-tree
@@ -35,7 +35,7 @@
       </div>
     </n-form>
     <n-drop-down-tree
-      read-url="/data/units.json"
+      :items="units"
       item-value="UnitID"
       item-text="UnitName"
       tree-parent-key="ParentID"
@@ -45,58 +45,65 @@
       @select="selectNode"
       v-model="unitID"
     ></n-drop-down-tree>
-    <n-drop-down-table read-url="/data/units.json" item-text="UnitName" item-value="UnitID" searchable>
-      <items>
-        <text-item text="UnitName" value="UnitName"></text-item>
-      </items>
-    </n-drop-down-table>
-    <div style="max-height:100px; overflow:auto">
-      <n-tree
-        :items="units"
-        item-value="UnitID"
-        item-text="UnitName"
-        parent-key="ParentID"
-        v-model="unitID"
-        sticky-search
-        searchable
-      ></n-tree>
-    </div>
+    <n-tree
+      :items="units"
+      item-value="UnitID"
+      item-text="UnitName"
+      parent-key="ParentID"
+      v-model="unitID"
+      sticky-search
+      searchable
+    ></n-tree>
     n-data-table component
-    <div style="max-height:400px; overflow:auto">
-      {{ dataTableModel }}
-      <n-data-table
-        v-model="dataTableModel"
-        read-url="/data/provinces.json"
-        updatable
-        update-url="/haha"
-        caption="hihi"
-        searchable
-        selectable
-        expandable
-        row-select
-        @row-click="console"
-        key-field="provinceCode"
-        creatable
-      >
-        <items>
-          <text-item text="provinceName" value="provinceName" sortable filterable></text-item>
-          <text-item
-            text="provinceCode"
-            value="provinceCode"
-            sortable
-            filterable
-            :format="v => provinces.find(i => i.provinceCode === v).provinceName"
-          ></text-item>
-          <text-item text="areaID" value="areaID" sortable filterable></text-item>
-        </items>
-        <template #modal="{modal}">
-          <n-text-box v-model="modal.data.provinceName"></n-text-box>
-        </template>
-        <template #item.expand="{item}">
-          <n-btn>a</n-btn>
-        </template>
-      </n-data-table>
-    </div>
+    {{ dataTableModel }}
+    <n-data-table
+      v-model="dataTableModel"
+      read-url="/data/provinces.json"
+      updatable
+      update-url="/haha"
+      caption="hihi"
+      searchable
+      selectable
+      expandable
+      multiple-select
+      row-select
+      @row-click="console"
+      key-field="provinceCode"
+      creatable
+      excelable
+    >
+      <items>
+        <text-item text="provinceName" value="provinceName" sortable filterable></text-item>
+        <text-item
+          text="provinceCode"
+          value="provinceCode"
+          sortable
+          filterable
+          :format="v => provinces.find(i => i.provinceCode === v).provinceName"
+        ></text-item>
+        <checkbox-item text="areaID" value="areaID" sortable filterable></checkbox-item>
+      </items>
+      <template #modal="{modal}">
+        <n-drop-down-table
+          v-model="dropDownTableModel"
+          read-url="/data/provinces.json"
+          item-text="provinceName"
+          item-value="provinceName"
+          searchable
+          modal
+        >
+          <items>
+            <text-item text="provinceID" value="provinceID"></text-item>
+            <text-item text="provinceCode" value="provinceCode"></text-item>
+            <text-item text="provinceName" value="provinceName"></text-item>
+            <text-item text="areaID" value="areaID"></text-item>
+          </items>
+        </n-drop-down-table>
+      </template>
+      <template #item.expand="{item}">
+        <n-btn>a</n-btn>
+      </template>
+    </n-data-table>
     n-modal component<br />
     <div class="row">
       <div class="col-xs-1">
@@ -118,12 +125,13 @@
         item-text="provinceName"
         item-value="provinceName"
         searchable
+        multiple
       >
         <items>
           <text-item text="provinceID" value="provinceID"></text-item>
           <text-item text="provinceCode" value="provinceCode"></text-item>
           <text-item text="provinceName" value="provinceName"></text-item>
-          <text-item text="areaID" value="areaID"></text-item>
+          <number-item text="areaID" value="areaID"></number-item>
         </items>
       </n-drop-down-table>
     </div>
@@ -164,7 +172,7 @@
           <y-axis id="second" position="right" text="Tốc độ download (mpbs)"></y-axis>
         </axises>
       </options>
-    </n-line-chart> -->
+    </n-line-chart>
     {{ date }}
     <n-date-picker v-model="date"></n-date-picker>
     <n-drop-down-date-picker v-model="date"></n-drop-down-date-picker>
@@ -179,11 +187,12 @@ import { Component, Vue } from 'vue-property-decorator'
 import units from './data/units.json'
 import provinces from './data/provinces.json'
 import traffics from './data/traffics.json'
+import moment = require('moment')
 // import _ from 'lodash'
 @Component({})
 export default class VApp extends Vue {
   abc = ['PYN', 'HNI']
-  date = null
+  date = moment().format('YYYY-MM-DD')
   deviceIP = null
   account = ''
   check = 1
@@ -192,7 +201,7 @@ export default class VApp extends Vue {
   traffics = traffics
   unitID = 0
   modal = false
-  dataTableModel: any = {}
+  dataTableModel: any = []
   dropDownTableModel: any | any[] = ''
   checkboxModel: any[] = [2]
   radioModel: any = 2

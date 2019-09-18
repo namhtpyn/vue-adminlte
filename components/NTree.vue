@@ -4,7 +4,7 @@
       v-if="searchable"
       :value="searchText"
       :class="{ 'sticky-search': stickySearch }"
-      hint="Tìm kiếm"
+      hint="Nhấn Enter để tìm kiếm"
       @keypress.enter.stop="e => (searchText = e.target.value)"
     ></n-text-box>
     <div>
@@ -12,7 +12,10 @@
       <div id="component-tree-view"></div>
     </div>
     <n-overlay absolute :value="vLoading">
-      <n-icon css-class="fa-spin fa-4x" style="color:white">circle-o-notch</n-icon>
+      <div style="text-align:center; color:#fff">
+        <n-icon class="fa-spin fa-1x fa-fw">circle-o-notch</n-icon>
+        <div class="small">Đang tải dữ liệu</div>
+      </div>
     </n-overlay>
   </div>
 </template>
@@ -145,18 +148,28 @@ export default class NTree extends Mixins(NDataSource) {
     )
     //exclude found items
     items = _.differenceBy(items, foundItems, this.itemValue)
-    foundItems = foundItems.concat(foundItems.flatMap(item => this.getParents(items, item, root)))
-
+    foundItems = foundItems
+      .concat(foundItems.flatMap(item => this.getParents(items, item)))
+      .concat(foundItems.flatMap(item => this.getChildren(items, item)))
+    foundItems = _.uniqBy(foundItems, this.itemValue)
     return foundItems
   }
 
-  getParents(items: any[], item, root) {
+  getParents(items: any[], item) {
     const parentID = item[this.parentKey]
     const parents = items.filter(i => _.isEqual(i[this.itemValue], parentID))
     //exclude found items
     items = _.differenceBy(items, parents, this.itemValue)
-    if (parentID === root) return parents
-    else return parents.concat(parents.flatMap(p => this.getParents(items, p, root)))
+    if (_.isEmpty(parents)) return parents
+    else return parents.concat(parents.flatMap(p => this.getParents(items, p)))
+  }
+  getChildren(items: any[], item) {
+    const parentID = item[this.itemValue]
+    const children = items.filter(i => _.isEqual(i[this.parentKey], parentID))
+    //exclude found items
+    items = _.differenceBy(items, children, this.itemValue)
+    if (_.isEmpty(children)) return children
+    else return children.concat(children.flatMap(p => this.getChildren(items, p)))
   }
 }
 </script>
@@ -165,7 +178,7 @@ export default class NTree extends Mixins(NDataSource) {
 .sticky-search {
   position: sticky;
   top: 0px;
-  z-index: 99;
+  z-index: 98;
   width: 100%;
 }
 div.form-group {

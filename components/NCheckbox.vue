@@ -23,7 +23,7 @@ export default class NCheckbox extends Vue {
   @Prop({ type: Boolean, default: true }) readonly form!: boolean
   @Prop() label!: string
   @Prop({ type: [String, Number, Boolean, Object], default: true }) readonly value!: string | number | boolean | object
-  @Model('input', { type: [Array, String, Number, Boolean] }) readonly model: any[] | any
+  @Model('input', { type: [Array, String, Number, Boolean, Object] }) readonly model: any[] | any
   @Emit() click(e) {}
   get isChecked() {
     if (Array.isArray(this.model)) return this.model.some(m => _.isEqual(m, this.value))

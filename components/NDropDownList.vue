@@ -6,12 +6,7 @@
       </div>
       <span v-if="!useModal" :class="`fa fa-caret-${data.isOpen ? 'up' : 'down'} form-control-feedback`"></span>
     </div>
-    <div
-      v-if="!useModal"
-      v-show="data.isOpen"
-      class="form-control drop-down-container"
-      :style="dropDownWidth ? `width:${dropDownWidth}px` : ''"
-    >
+    <div v-if="!useModal" v-show="data.isOpen" class="form-control drop-down-container" :style="containerStyle">
       <slot name="content" :data="data"></slot>
     </div>
     <n-modal
@@ -23,8 +18,8 @@
       :large="modalLarge"
       :small="modalSmall"
       :fullscreen="modalFullscreen"
-      @shown="open"
-      @hidden="close"
+      @open="open"
+      @close="close"
     >
       <slot name="content" :data="data"></slot>
     </n-modal>
@@ -32,7 +27,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Emit, Mixins } from 'vue-property-decorator'
+import { Component, Prop, Emit, Mixins, Watch } from 'vue-property-decorator'
 import vClickOutside from 'v-click-outside'
 import NBase from './Base/NBase'
 @Component({
@@ -84,7 +79,17 @@ export default class NDropDownList extends Mixins(NBase) {
       'input-lg': this.large
     }
   }
-  @Emit() modalShown() {}
+  @Watch('data.isOpen')
+  onToggleDropDown(n) {
+    if (n) this.componentWidth = this.$el.clientWidth
+  }
+  componentWidth: number = 0
+  get containerStyle() {
+    return {
+      width: this.dropDownWidth ? `${this.dropDownWidth}px` : 'fit-content',
+      'min-width': this.componentWidth ? `${this.componentWidth}px` : 'unset'
+    }
+  }
 }
 </script>
 
@@ -110,8 +115,7 @@ export default class NDropDownList extends Mixins(NBase) {
 .drop-down-container {
   height: auto;
   width: fit-content;
-  position: absolute;
-  min-width: 100%;
+  position: fixed;
   max-height: 300px;
   overflow: auto;
   padding: 0px 0px;
