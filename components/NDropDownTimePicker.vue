@@ -5,16 +5,18 @@
     </label>
     <n-drop-down-list :text="getText" :small="small" :large="large" v-bind="$attrs">
       <template #content="{data}">
-        <n-time-picker
-          :value="value"
-          @input="v => onTimePicked(v, data)"
-          :step-hour="stepHour"
-          :step-minute="stepMinute"
-          :step-second="stepSecond"
-          :hide-hour="hideHour"
-          :hide-minute="hideMinute"
-          :hide-second="hideSecond"
-        ></n-time-picker>
+        <div style="display: flex; justify-content: center;">
+          <n-time-picker
+            :value="value"
+            @input="v => onTimePicked(v, data)"
+            :step-hour="stepHour"
+            :step-minute="stepMinute"
+            :step-second="stepSecond"
+            :hide-hour="hideHour"
+            :hide-minute="hideMinute"
+            :hide-second="hideSecond"
+          ></n-time-picker>
+        </div>
       </template>
     </n-drop-down-list>
     <span v-if="!valid && !hideErrorText" class="help-block">{{ errorText }}</span>

@@ -101,18 +101,21 @@ export default class NTimePicker extends Mixins(NBase) {
   minutes = _.range(0, 60, this.stepMinute)
   seconds = _.range(0, 60, this.stepSecond)
   mounted() {
-    this.$el
-      .querySelector('.n-time-picker--hour')
-      .querySelector(`.n-time-picker--item[data-id="${this.hour}"]`)
-      .scrollIntoView()
-    this.$el
-      .querySelector('.n-time-picker--minute')
-      .querySelector(`.n-time-picker--item[data-id="${this.minute}"]`)
-      .scrollIntoView()
-    this.$el
-      .querySelector('.n-time-picker--second')
-      .querySelector(`.n-time-picker--item[data-id="${this.second}"]`)
-      .scrollIntoView()
+    try {
+      this.$el
+        .querySelector('.n-time-picker--hour')
+        .querySelector(`.n-time-picker--item[data-id="${this.hour}"]`)
+        .scrollIntoView()
+      this.$el
+        .querySelector('.n-time-picker--minute')
+        .querySelector(`.n-time-picker--item[data-id="${this.minute}"]`)
+        .scrollIntoView()
+      this.$el
+        .querySelector('.n-time-picker--second')
+        .querySelector(`.n-time-picker--item[data-id="${this.second}"]`)
+        .scrollIntoView()
+      // eslint-disable-next-line no-empty
+    } catch {}
   }
 
   toTime(h: number, m: number, s: number) {

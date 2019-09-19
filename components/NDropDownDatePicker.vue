@@ -5,7 +5,9 @@
     </label>
     <n-drop-down-list :text="getText" :small="small" :large="large" v-bind="$attrs">
       <template #content="{data}">
-        <n-date-picker :value="value" @input="v => onDatePicked(v, data)"></n-date-picker>
+        <div style="display: flex; justify-content: center;">
+          <n-date-picker :value="value" @input="v => onDatePicked(v, data)"></n-date-picker>
+        </div>
       </template>
     </n-drop-down-list>
     <span v-if="!valid && !hideErrorText" class="help-block">{{ errorText }}</span>

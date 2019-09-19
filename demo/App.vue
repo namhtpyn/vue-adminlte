@@ -1,6 +1,7 @@
 <template>
   <div>
     <n-drop-down-time-picker v-model="timepicker"></n-drop-down-time-picker>
+    <n-drop-down-date-picker v-model="date"></n-drop-down-date-picker>
     <n-time-picker v-model="timepicker" hide-second :step-hour="2" :step-minute="15"></n-time-picker>
     <!--
     <n-form ref="form2" lazy-validation>
