@@ -29,31 +29,33 @@
     <div :class="{ 'table-responsive': responsive }">
       <table class="n-data-table table no-margin" :class="cssClass.table">
         <thead v-if="!hideHeader">
-          <tr :class="cssClass.headerRow" v-for="headerRow in headerRows()" :key="headerRow">
+          <tr :class="cssClass.headerRow" v-for="(headers, rowIndex) in headersCollection" :key="rowIndex">
             <th
-              v-for="(header, colIndex) in headersLevel(headerRow)"
+              v-for="(header, colIndex) in headers"
               :key="colIndex"
-              :colspan="headerColspan(header)"
-              :rowspan="headerRowspan(header)"
+              :colspan="header._colspan"
+              :rowspan="header._rowspan"
               :class="cssClass.headerCell"
               :style="headerCellStyle(header)"
               @click="toggleSort(header)"
             >
-              <div v-if="header.value === '__selection'">
-                <n-checkbox v-if="multipleSelect" @input="selectAll"></n-checkbox>
-              </div>
-              <slot v-else :name="`header.${header.kebabValue()}`" :item="header">{{ header.text }}</slot>
-              <i
-                v-if="header.sortable"
-                class="sortable fa fa-sort"
-                :class="`${getSort(header) ? (getSort(header).desc ? 'desc' : 'asc') : ''}`"
-              ></i>
-              <i
-                v-if="header.filterable"
-                class="filterable fa fa-filter"
-                :class="`${isFiltered(header) ? 'active' : ''}`"
-                @click.stop="openFilter(header)"
-              ></i>
+              <template v-if="!groupBy.includes(header.value)">
+                <div v-if="header.value === '__selection'">
+                  <n-checkbox v-if="multipleSelect" @input="selectAll"></n-checkbox>
+                </div>
+                <slot v-else :name="`header.${header.kebabValue()}`" :item="header">{{ header.text }}</slot>
+                <i
+                  v-if="header.sortable"
+                  class="sortable fa fa-sort"
+                  :class="`${getSort(header) ? (getSort(header).desc ? 'desc' : 'asc') : ''}`"
+                ></i>
+                <i
+                  v-if="header.filterable"
+                  class="filterable fa fa-filter"
+                  :class="`${isFiltered(header) ? 'active' : ''}`"
+                  @click.stop="openFilter(header)"
+                ></i>
+              </template>
             </th>
           </tr>
         </thead>
@@ -66,11 +68,23 @@
             @dblclick="e => rowDblclick(e, item.data, rowIndex)"
             @click="e => rowClick(e, item, rowIndex)"
           >
-            <td v-if="item.isExpansion" :colspan="headerColumns().length" @click.stop>
-              <slot name="item.expand" :item="item.data"></slot>
-            </td>
-            <template v-else>
-              <td :class="cssClass.cell" :style="cellStyle(header)" v-for="(header, colIndex) in headerColumns()" :key="colIndex">
+            <template v-if="item.type === 'group'">
+              <td v-for="i in item.group.level" :key="i"></td>
+              <td :colspan="tableColumnsLength - item.group.level - 1" @click.stop>
+                {{ tableColumns.find(h => h.value === item.group.value).text }}:
+                {{ item.group.text }}
+              </td>
+            </template>
+
+            <template v-if="item.type === 'expand'">
+              <td v-for="i in groupBy" :key="i"></td>
+              <td v-if="item.type === 'expand'" :colspan="tableColumnsLength - groupBy.length" @click.stop>
+                <slot name="item.expand" :item="item.data"></slot>
+              </td>
+            </template>
+
+            <template v-else-if="item.type === 'item'">
+              <td :class="cssClass.cell" :style="cellStyle(header)" v-for="(header, colIndex) in tableColumns" :key="colIndex">
                 <slot
                   :name="`item.${header.kebabValue()}`"
                   :item="item.data"
@@ -115,10 +129,12 @@
                     </div>
                   </template>
                   <template v-else>
-                    <template v-if="header.encodeHtml">
-                      {{ header.format(item.data[header.value]) }}
+                    <template v-if="!groupBy.includes(header.value)">
+                      <template v-if="header.encodeHtml">
+                        {{ header.format(item.data[header.value]) }}
+                      </template>
+                      <span v-else v-html="header.format(item.data[header.value])"></span>
                     </template>
-                    <span v-else v-html="header.format(item.data[header.value])"></span>
                   </template>
                 </slot>
               </td>
@@ -127,12 +143,12 @@
         </tbody>
         <tbody v-else>
           <tr>
-            <td :colspan="headerColumns().length" class="text-center">{{ tableText.noData }}</td>
+            <td :colspan="tableColumnsLength" class="text-center">{{ tableText.noData }}</td>
           </tr>
         </tbody>
         <tfoot v-if="!hideFooter">
           <tr :class="cssClass.footerRow">
-            <td :class="cssClass.footerCell" v-for="(header, colIndex) in headerColumns()" :key="colIndex">
+            <td :class="cssClass.footerCell" v-for="(header, colIndex) in tableColumns" :key="colIndex">
               <slot :name="`footer.${header.kebabValue()}`" :items="items">
                 {{ footerSummary(items, header) }}
               </slot>

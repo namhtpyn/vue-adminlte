@@ -1,13 +1,13 @@
 import { Component, Mixins, Watch } from 'vue-property-decorator'
 import _ from 'lodash'
 import NBase from '../Base/NBase'
-import NData from '../Base/NData'
 import NTableProp from './NTableProp'
 import { TableItem, TableSort, TableHeader, TableFilter } from '../../types/Table'
 import natsort from 'natsort'
 import diacritics from 'remove-all-diacritics'
+import NDataSource from './../Base/NDataSource'
 @Component({})
-export default class NTableData extends Mixins(NBase, NData, NTableProp) {
+export default class NTableData extends Mixins(NBase, NDataSource, NTableProp) {
   vSearch: string = ''
   vItemPerPage: number = 10
   vPage: number = 1
@@ -21,8 +21,8 @@ export default class NTableData extends Mixins(NBase, NData, NTableProp) {
   private toggleSort(header: TableHeader) {
     if (!header.sortable) return
     const index = this.vSort.findIndex(sort => sort.name === header.value)
-    if (index < 0) this.vSort.push(new TableSort(header.value))
-    else if (!this.vSort[index].desc) this.vSort.splice(index, 1, { name: header.value, desc: true })
+    if (index < 0) this.multipleSort ? this.vSort.push(new TableSort(header.value)) : (this.vSort = [new TableSort(header.value)])
+    else if (!this.vSort[index].desc) this.vSort.splice(index, 1, new TableSort(header.value, true))
     else this.vSort.splice(index, 1)
   }
   getSort(header: TableHeader) {
@@ -63,8 +63,9 @@ export default class NTableData extends Mixins(NBase, NData, NTableProp) {
         const sortOrder = sort.desc
           ? sortDesc(a.data[sort.name], b.data[sort.name])
           : sortAsc(a.data[sort.name], b.data[sort.name])
-        return sortOrder
+        if (sortOrder != 0) return sortOrder
       }
+      return 0
     })
     return items
   }
@@ -78,23 +79,32 @@ export default class NTableData extends Mixins(NBase, NData, NTableProp) {
 
   itemsExpanded(items: TableItem[]) {
     if (!this.expandable || _.isEmpty(this.vExpansion)) return items
-    const itemsIndex = items.map(item => item.index)
-    this.vExpansion
-      .filter(itemIndex => itemsIndex.includes(itemIndex))
-      .forEach(itemIndex => {
-        const idx = items.findIndex(item => item.index === itemIndex)
-        if (idx >= 0) items.splice(idx + 1, 0, { ...items[idx], isExpansion: true })
-      })
+    items = items.reduce(
+      (ar, item) => ar.concat(item, { ...item, type: 'expand', visible: this.vExpansion.includes(item.index) }),
+      [] as TableItem[]
+    )
     return items
   }
 
   itemsGrouped(items: TableItem[]) {
     if (_.isEmpty(this.groupBy)) return items
+    this.groupBy.forEach((group, index) => {
+      items = items.reduce(
+        (ar, item) => {
+          if (item.type === 'item') {
+            if (_.isEmpty(ar) || _.last(ar).data[group] !== item.data[group] || _.last(ar).type === 'group')
+              ar = ar.concat({ ...item, type: 'group', group: { text: item.data[group], value: group, level: index } })
+          }
+          return ar.concat(item)
+        },
+        [] as TableItem[]
+      )
+    })
     return items
   }
   get tableItems(): TableItem[] {
     let items: TableItem[] = this.vItems.map((data, index) => {
-      return { index, data }
+      return new TableItem(index, data)
     })
     items = this.itemsFiltered(items)
     items = this.itemsSearched(items)
@@ -106,6 +116,7 @@ export default class NTableData extends Mixins(NBase, NData, NTableProp) {
     items = this.itemsPaginated(items)
     items = this.itemsExpanded(items)
     items = this.itemsGrouped(items)
+    items = items.filter(item => item.visible)
     return items
   }
 
@@ -117,10 +128,5 @@ export default class NTableData extends Mixins(NBase, NData, NTableProp) {
   onPageLengthChanged(n, o) {
     if (this.vPage === 0 && n > 0) this.vPage = 1
     else if (this.vPage > n) this.vPage = n
-  }
-
-  validGroupBy() {
-    if (!_.isEmpty(this.groupBy)) return []
-    //let groupBy = this.headerColumns().map(this.groupBy
   }
 }

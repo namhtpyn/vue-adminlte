@@ -42,19 +42,28 @@ export class TableHeader {
   format?: Function = v => v
   children?: TableHeader[]
   encodeHtml?: boolean = true
+  _colspan: number = 1
+  _rowspan: number = 1
 }
 
 export class TableItem {
   index?: number
-  data?: any
-  isExpansion?: boolean
+  data?: any[]
+  type: 'item' | 'expand' | 'group' = 'item'
+  visible: boolean = true
+  group: { text: string; value: string; level: number }
+  constructor(index: number, data: any[]) {
+    this.index = index
+    this.data = data
+  }
 }
 
 export class TableSort {
   name?: string = ''
   desc?: boolean = false
-  constructor(name: string) {
+  constructor(name: string, desc: boolean = false) {
     this.name = name
+    this.desc = desc
   }
 }
 export class TableFilter {

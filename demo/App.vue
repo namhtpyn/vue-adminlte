@@ -1,6 +1,6 @@
 <template>
   <div>
-    <n-time-picker></n-time-picker>
+    <!-- <n-time-picker></n-time-picker>
     <n-form ref="form2" lazy-validation>
       <div class="row">
         <div class="col-xs-4">
@@ -54,7 +54,7 @@
       v-model="unitID"
       sticky-search
       searchable
-    ></n-tree>
+    ></n-tree> -->
     n-data-table component
     {{ dataTableModel }}
     <n-data-table
@@ -72,6 +72,8 @@
       key-field="provinceCode"
       creatable
       excelable
+      multiple-sort
+      :group-by="['test', 'areaID']"
     >
       <items>
         <text-item text="provinceName" value="provinceName" sortable filterable></text-item>
@@ -82,29 +84,35 @@
           filterable
           :format="v => provinces.find(i => i.provinceCode === v).provinceName"
         ></text-item>
-        <checkbox-item text="areaID" value="areaID" sortable filterable></checkbox-item>
-      </items>
-      <template #modal="{modal}">
-        <n-drop-down-table
-          v-model="dropDownTableModel"
-          read-url="/data/provinces.json"
-          item-text="provinceName"
-          item-value="provinceName"
-          searchable
-        >
+        <text-item text="areaID" value="areaID" sortable filterable></text-item>
+        <text-item text="Tui Test" value="test"></text-item>
+        <band-item text="on shit">
           <items>
-            <text-item text="provinceID" value="provinceID"></text-item>
             <text-item text="provinceCode" value="provinceCode"></text-item>
             <text-item text="provinceName" value="provinceName"></text-item>
             <text-item text="areaID" value="areaID"></text-item>
+            <band-item text="on shit">
+              <items>
+                <text-item text="provinceCode" value="provinceCode"></text-item>
+                <text-item text="provinceName" value="provinceName"></text-item>
+                <text-item text="areaID" value="areaID"></text-item
+                ><band-item text="on shit">
+                  <items>
+                    <text-item text="provinceCode" value="provinceCode"></text-item>
+                    <text-item text="provinceName" value="provinceName"></text-item>
+                    <text-item text="areaID" value="areaID"></text-item>
+                  </items>
+                </band-item>
+              </items>
+            </band-item>
           </items>
-        </n-drop-down-table>
-      </template>
+        </band-item>
+      </items>
       <template #item.expand="{item}">
         <n-btn>a</n-btn>
       </template>
     </n-data-table>
-    n-modal component<br />
+    <!-- n-modal component<br />
     <div class="row">
       <div class="col-xs-1">
         <n-btn @click="modal = !modal" color="primary">Toggle Modalsssssssssssssssssssssssssssssssssssssss</n-btn>
@@ -177,7 +185,7 @@
     <n-date-picker v-model="date"></n-date-picker>
     <n-drop-down-date-picker v-model="date"></n-drop-down-date-picker>
     {{ abc }}
-    <n-select2 v-model="abc" multiple :items="provinces" item-text="provinceName" item-value="provinceCode"></n-select2>
+    <n-select2 v-model="abc" multiple :items="provinces" item-text="provinceName" item-value="provinceCode"></n-select2> -->
   </div>
 </template>
 
@@ -188,7 +196,6 @@ import units from './data/units.json'
 import provinces from './data/provinces.json'
 import traffics from './data/traffics.json'
 import moment = require('moment')
-import _, { Dictionary } from 'lodash'
 @Component({})
 export default class VApp extends Vue {
   abc = ['PYN', 'HNI']
@@ -208,34 +215,12 @@ export default class VApp extends Vue {
   radioGroupModel: any = {}
   tabs = []
   console(...args) {
-    console.log(args)
+    //console.log(args)
   }
   selectNode(item) {
-    console.log(item)
+    //console.log(item)
   }
-  createGroup(data: any[], field: string, group: Dictionary<any[]>) {
-    //group = Array.from(_.groupBy(group, o => o[field]))
-    //group.
-  }
-  mounted() {
-    const groupBy = ['test', 'areaID']
-    const groups = Object.entries(_.groupBy(provinces, o => o[groupBy[0]])).map(([k, v]) => ({ group: k, items: v }))
-    // groupBy.splice(0, 1)
-    // groupBy.forEach(g => {
-    //   groups = groups.flatMap(a =>
-    //     _.chain(a)
-    //       .groupBy(x => x[g])
-    //       .values()
-    //       .value()
-    //   )
-    // })
-    console.log(groups)
-    // const group = _.uniqWith(provinces.map(o => ({ test: o.test, areaID: o.areaID })), _.isEqual)
-    // console.log(group)
-    // console.log(_.partition(provinces, o => ({ test: o.test, areaID: o.areaID })))
-    //this.tabs = ['1', '2', '3', '4', '5', '6']
-    //this.$nextTick(() => (this.$refs.tabCollection as any).init())
-  }
+  mounted() {}
 }
 </script>
 
