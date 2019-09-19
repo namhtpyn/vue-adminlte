@@ -5,7 +5,16 @@
     </label>
     <n-drop-down-list :text="getText" :small="small" :large="large" v-bind="$attrs">
       <template #content="{data}">
-        <n-date-picker :value="value" @input="v => onDatePicked(v, data)"></n-date-picker>
+        <n-time-picker
+          :value="value"
+          @input="v => onTimePicked(v, data)"
+          :step-hour="stepHour"
+          :step-minute="stepMinute"
+          :step-second="stepSecond"
+          :hide-hour="hideHour"
+          :hide-minute="hideMinute"
+          :hide-second="hideSecond"
+        ></n-time-picker>
       </template>
     </n-drop-down-list>
     <span v-if="!valid && !hideErrorText" class="help-block">{{ errorText }}</span>
@@ -16,10 +25,14 @@
 import { Component, Model, Prop, Mixins } from 'vue-property-decorator'
 import _ from 'lodash'
 import NBase from './Base/NBase'
-import moment from 'moment'
 @Component({ inheritAttrs: false })
-export default class NDropDownDatePicker extends Mixins(NBase) {
-  @Prop({ type: String, default: 'DD/MM/YYYY' }) format!: string
+export default class NDropDownTimePicker extends Mixins(NBase) {
+  @Prop({ type: Number, default: 1 }) stepHour!: number
+  @Prop({ type: Number, default: 1 }) stepMinute!: number
+  @Prop({ type: Number, default: 1 }) stepSecond!: number
+  @Prop({ type: Boolean, default: false }) hideSecond!: number
+  @Prop({ type: Boolean, default: false }) hideMinute!: number
+  @Prop({ type: Boolean, default: false }) hideHour!: number
 
   @Prop(String) label!: string
   @Prop({ type: Boolean, default: false }) small!: boolean
@@ -45,7 +58,7 @@ export default class NDropDownDatePicker extends Mixins(NBase) {
   //search=
   get getText() {
     if (_.isNil(this.value)) return ''
-    else return moment(this.value).format(this.format)
+    else return this.value
   }
   get errorText() {
     if (!this.valid && this.rules) {
@@ -59,8 +72,8 @@ export default class NDropDownDatePicker extends Mixins(NBase) {
     if (this.rules) this.valid = !this.rules.some(e => e(value) !== true)
     return this.valid
   }
-  onDatePicked(v, data) {
-    this.$nextTick(() => (data.isOpen = false))
+  onTimePicked(v, data) {
+    //this.$nextTick(() => (data.isOpen = false))
     this.input(v)
     if (!this.lazyValidation || !this.valid) this.validate(v)
   }

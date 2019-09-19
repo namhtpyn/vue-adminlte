@@ -1,6 +1,51 @@
 <template>
-  <div style="width: 290px;">
-    <div class="v-time-picker-clock__container">
+  <div style="height:200px; display:flex">
+    <div v-if="!hideHour" style="width:90px; text-align:center; flex-direction: column; display:flex">
+      <div>Giờ</div>
+      <div class="n-time-picker--hour" style="overflow:auto;">
+        <div
+          class="n-time-picker--item"
+          :class="{ active: v === hour }"
+          v-for="v in hours"
+          :key="v"
+          :data-id="v"
+          @click="setHour(v)"
+        >
+          {{ v }}
+        </div>
+      </div>
+    </div>
+    <div v-if="!hideMinute" style="width:90px; text-align:center; flex-direction: column; display:flex">
+      <div>Phút</div>
+      <div class="n-time-picker--minute" style="overflow:auto;">
+        <div
+          class="n-time-picker--item"
+          :class="{ active: v === minute }"
+          v-for="v in minutes"
+          :key="v"
+          :data-id="v"
+          @click="setMinute(v)"
+        >
+          {{ v }}
+        </div>
+      </div>
+    </div>
+    <div v-if="!hideSecond" style="width:90px; text-align:center; flex-direction: column; display:flex">
+      <div>Giây</div>
+      <div class="n-time-picker--second" style="overflow:auto;">
+        <div
+          class="n-time-picker--item"
+          :class="{ active: v === second }"
+          v-for="v in seconds"
+          :key="v"
+          :data-id="v"
+          @click="setSecond(v)"
+        >
+          {{ v }}
+        </div>
+      </div>
+    </div>
+    <!-- <div class="v-time-picker-clock__container">
       <div class="v-time-picker-clock__ampm primary--text">
         <div class="v-picker__title__btn v-picker__title__btn--active">AM</div>
         <div class="v-picker__title__btn">PM</div>
@@ -23,80 +68,77 @@
           ><span class="v-time-picker-clock__item" style="left: 25%; top: 6.69873%;"><span>11</span></span>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Component, Model, Prop, Mixins } from 'vue-property-decorator'
+import _ from 'lodash'
+import NBase from './Base/NBase'
 @Component({})
-export default class NTimePicker extends Vue {}
+export default class NTimePicker extends Mixins(NBase) {
+  @Model('input', { type: String, required: true }) value!: string
+  @Prop({ type: Number, default: 1 }) stepHour!: number
+  @Prop({ type: Number, default: 1 }) stepMinute!: number
+  @Prop({ type: Number, default: 1 }) stepSecond!: number
+  @Prop({ type: Boolean, default: false }) hideSecond!: number
+  @Prop({ type: Boolean, default: false }) hideMinute!: number
+  @Prop({ type: Boolean, default: false }) hideHour!: number
+  get matchValue() {
+    return this.value.match(/\d+/g)
+  }
+  get hour() {
+    return Number(this.matchValue.length > 0 ? this.matchValue[0] : 0)
+  }
+  get minute() {
+    return Number(this.matchValue.length > 1 ? this.matchValue[1] : 0)
+  }
+  get second() {
+    return Number(this.matchValue.length > 2 ? this.matchValue[2] : 0)
+  }
+  hours = _.range(0, 24, this.stepHour)
+  minutes = _.range(0, 60, this.stepMinute)
+  seconds = _.range(0, 60, this.stepSecond)
+  mounted() {
+    this.$el
+      .querySelector('.n-time-picker--hour')
+      .querySelector(`.n-time-picker--item[data-id="${this.hour}"]`)
+      .scrollIntoView()
+    this.$el
+      .querySelector('.n-time-picker--minute')
+      .querySelector(`.n-time-picker--item[data-id="${this.minute}"]`)
+      .scrollIntoView()
+    this.$el
+      .querySelector('.n-time-picker--second')
+      .querySelector(`.n-time-picker--item[data-id="${this.second}"]`)
+      .scrollIntoView()
+  }
+
+  toTime(h: number, m: number, s: number) {
+    return _.padStart(h.toString(), 2, '0') + ':' + _.padStart(m.toString(), 2, '0') + ':' + _.padStart(s.toString(), 2, '0')
+  }
+  setHour(h) {
+    console.log(this.toTime(h, this.minute, this.second))
+    this.input(this.toTime(h, this.minute, this.second))
+  }
+  setMinute(m) {
+    this.input(this.toTime(this.hour, m, this.second))
+  }
+  setSecond(s) {
+    this.input(this.toTime(this.hour, this.minute, s))
+  }
+}
 </script>
 
 <style>
-.v-time-picker-clock__container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 10px;
+.n-time-picker--item {
+  cursor: pointer;
 }
-.v-time-picker-clock__ampm {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: flex-end;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  margin: 0;
-  padding: 10px;
+.n-time-picker--item:hover {
+  background-color: rgb(230, 230, 230);
 }
-.v-time-picker-clock {
-  border-radius: 100%;
-  position: relative;
-  transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  width: 100%;
-  padding-top: 100%;
-  flex: 1 0 auto;
-}
-.v-time-picker-clock__inner {
-  position: absolute;
-  bottom: 27px;
-  left: 27px;
-  right: 27px;
-  top: 27px;
-}
-.v-time-picker-clock__hand {
-  height: calc(50% - 4px);
-  width: 2px;
-  bottom: 50%;
-  left: calc(50% - 1px);
-  transform-origin: center bottom;
-  position: absolute;
-  will-change: transform;
-  z-index: 1;
-}
-.v-time-picker-clock__item {
-  align-items: center;
-  border-radius: 100%;
-  cursor: default;
-  display: flex;
-  font-size: 16px;
-  justify-content: center;
-  height: 40px;
-  position: absolute;
-  text-align: center;
-  width: 40px;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  transform: translate(-50%, -50%);
+.n-time-picker--item.active {
+  background-color: rgb(206, 206, 206);
 }
 </style>

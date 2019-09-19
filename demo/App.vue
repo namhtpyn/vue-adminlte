@@ -1,6 +1,8 @@
 <template>
   <div>
-    <!-- <n-time-picker></n-time-picker>
+    <n-drop-down-time-picker v-model="timepicker"></n-drop-down-time-picker>
+    <n-time-picker v-model="timepicker" hide-second :step-hour="2" :step-minute="15"></n-time-picker>
+    <!--
     <n-form ref="form2" lazy-validation>
       <div class="row">
         <div class="col-xs-4">
@@ -198,6 +200,7 @@ import traffics from './data/traffics.json'
 import moment = require('moment')
 @Component({})
 export default class VApp extends Vue {
+  timepicker = '14:21:30'
   abc = ['PYN', 'HNI']
   date = moment().format('YYYY-MM-DD')
   deviceIP = null
