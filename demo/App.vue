@@ -3,6 +3,20 @@
     <n-drop-down-time-picker v-model="timepicker"></n-drop-down-time-picker>
     <n-drop-down-date-picker v-model="date"></n-drop-down-date-picker>
     <n-time-picker v-model="timepicker" hide-second :step-hour="2" :step-minute="15"></n-time-picker>
+    <n-drop-down-table
+      v-model="dropDownTableModel"
+      read-url="/data/provinces.json"
+      item-text="provinceName"
+      item-value="provinceCode"
+      searchable
+    >
+      <items>
+        <text-item text="provinceID" value="provinceID"></text-item>
+        <text-item text="provinceCode" value="provinceCode"></text-item>
+        <text-item text="provinceName" value="provinceName"></text-item>
+        <number-item text="areaID" value="areaID"></number-item>
+      </items>
+    </n-drop-down-table>
     <!--
     <n-form ref="form2" lazy-validation>
       <div class="row">
@@ -213,7 +227,7 @@ export default class VApp extends Vue {
   unitID = 0
   modal = false
   dataTableModel: any = []
-  dropDownTableModel: any | any[] = ''
+  dropDownTableModel: any | any[] = 'PYN'
   checkboxModel: any[] = [2]
   radioModel: any = 2
   radioGroupModel: any = {}

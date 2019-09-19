@@ -57,7 +57,6 @@ export default class NDropDownTable extends Mixins(NBase, NDataSource) {
 
   @Model('input', [String, Number, Array]) value!: any | any[]
 
-  selectedValue: any[] | object = this.multiple ? [] : {}
   valid: boolean = true
   lazyValidation: boolean = false
 
@@ -102,16 +101,7 @@ export default class NDropDownTable extends Mixins(NBase, NDataSource) {
   rowClick({ item }, data) {
     if (!this.multiple) this.$nextTick(() => (data.isOpen = false))
   }
-  @Watch('selectedValue')
-  onSelectedValueChanged(values: any[] | any) {
-    if (!_.isNil(values)) {
-      let output: any
-      if (Array.isArray(values)) output = values.map(v => v[this.itemValue])
-      else output = values[this.itemValue]
 
-      if (!_.isNil(output) && !_.isEqual(output, this.value)) this.input(output)
-    }
-  }
   @Watch('value')
   onValueChanged(value) {
     this.$nextTick(() => {
@@ -119,10 +109,20 @@ export default class NDropDownTable extends Mixins(NBase, NDataSource) {
         this.validate(value)
       }
     })
+  }
 
-    if (Array.isArray(value))
-      this.selectedValue = this.vItems.filter(item => (value as any[]).includes(item[this.itemValue])) || []
-    else this.selectedValue = this.vItems.find(item => item[this.itemValue] === value) || {}
+  get selectedValue() {
+    if (Array.isArray(this.value)) return this.vItems.filter(item => (this.value as any[]).includes(item[this.itemValue])) || []
+    else return this.vItems.find(item => item[this.itemValue] === this.value) || {}
+  }
+  set selectedValue(values) {
+    if (!_.isNil(values)) {
+      let output: any
+      if (Array.isArray(values)) output = values.map(v => v[this.itemValue])
+      else output = values[this.itemValue]
+
+      if (!_.isNil(output) && !_.isEqual(output, this.value)) this.input(output)
+    }
   }
   created() {
     this.onValueChanged(this.value)
