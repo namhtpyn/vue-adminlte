@@ -1,5 +1,5 @@
 [
-  { "provinceID": 1683, "provinceCode": "BTE", "provinceName": "Bến Tre", "test": 1, "areaID": 2 },
+  { "provinceID": 1683, "provinceCode": "BTE", "provinceName": "Bến Tre", "test": 0, "areaID": 2 },
   { "provinceID": 1067, "provinceCode": "CBG", "provinceName": "Cao Bằng", "test": 1, "areaID": 1 },
   { "provinceID": -1, "provinceCode": null, "provinceName": "Chưa xác định", "test": 1, "areaID": 0 },
   { "provinceID": 1043, "provinceCode": "CMU", "provinceName": "Cà Mau", "test": 1, "areaID": 2 },
@@ -34,8 +34,8 @@
   { "provinceID": 1055, "provinceCode": "BGG", "provinceName": "Bắc Giang", "test": 1, "areaID": 1 },
   { "provinceID": 1028, "provinceCode": "BKN", "provinceName": "Bắc Kạn", "test": 1, "areaID": 1 },
   { "provinceID": 1023, "provinceCode": "BNH", "provinceName": "Bắc Ninh", "test": 1, "areaID": 1 },
-  { "provinceID": 144, "provinceCode": "KV3", "provinceName": "Khu vực 3", "test": 2, "areaID": 3 },
-  { "provinceID": 1045, "provinceCode": "KHA", "provinceName": "Khánh Hòa", "test": 2, "areaID": 3 },
+  { "provinceID": 144, "provinceCode": "KV3", "provinceName": "Khu vực 3", "test": 0, "areaID": 3 },
+  { "provinceID": 1045, "provinceCode": "KHA", "provinceName": "Khánh Hòa", "test": 0, "areaID": 3 },
   { "provinceID": 1046, "provinceCode": "KGG", "provinceName": "Kiên Giang", "test": 1, "areaID": 2 },
   { "provinceID": 1012, "provinceCode": "KTM", "provinceName": "Kon Tum", "test": 1, "areaID": 3 },
   { "provinceID": 1051, "provinceCode": "LCU", "provinceName": "Lai Châu", "test": 1, "areaID": 1 },

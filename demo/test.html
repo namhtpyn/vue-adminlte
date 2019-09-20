@@ -30,6 +30,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@2.4.17/dist/css/AdminLTE.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@2.4.17/dist/css/skins/_all-skins.min.css" />
+    <link rel="stylesheet" href="../dist/VueAdminLTE.css" />
   </head>
   <body>
     <div id="app">
@@ -44,6 +45,8 @@
         key-field="provinceCode"
         creatable
         excelable
+        selectable
+        multiple-select
       >
         <items>
           <text-item text="provinceName" value="provinceName" sortable filterable></text-item>
@@ -56,7 +59,7 @@
               <text-item text="provinceID" value="provinceID"></text-item>
               <text-item text="provinceCode" value="provinceCode"></text-item>
               <text-item text="provinceName" value="provinceName"></text-item>
-              <text-item text="areaID" value="areaID"></text-item>
+              <text-item text="test" value="test"></text-item>
             </items>
           </n-drop-down-table>
         </template>
