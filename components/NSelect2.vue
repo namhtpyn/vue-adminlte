@@ -11,6 +11,9 @@
         <div class="small">Đang tải dữ liệu</div>
       </div>
     </n-overlay>
+    <div id="template">
+      <span><slot name="result"></slot></span>
+    </div>
   </div>
 </template>
 
@@ -61,7 +64,7 @@ export default class NSelect2 extends Mixins(NDataSource) {
   }
   get select2Data() {
     const data = (this.vItems || []).map(item => {
-      return { id: item[this.itemValue], text: item[this.itemText] }
+      return { id: item[this.itemValue], text: item[this.itemText], ...item }
     })
     return data
   }
@@ -115,6 +118,17 @@ export default class NSelect2 extends Mixins(NDataSource) {
           noResults: function() {
             return 'Không có dữ liệu'
           }
+        },
+        templateResult: item => {
+          console.log($('#template').html())
+          if (item.disabled || _.isEmpty($('#template').html())) return item.text
+          return $(
+            $('#template')
+              .html()
+              .replace(/\#(\w+)\#/g, (n, $1) => {
+                return item[$1]
+              })
+          )
         }
       })
       .on('select2:select', e => this.input(this.tryParseNumber($(e.target).val())))
