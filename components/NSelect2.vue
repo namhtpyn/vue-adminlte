@@ -120,7 +120,7 @@ export default class NSelect2 extends Mixins(NDataSource) {
           }
         },
         templateResult: item => {
-          if (item.disabled || _.isEmpty($('#template').html())) return item.text
+          if (item.disabled || _.isEmpty($('#template span').html())) return item.text
           return $(
             $('#template')
               .html()
