@@ -1,6 +1,6 @@
 {
   "name": "vue-adminlte",
-  "version": "1.0.59",
+  "version": "1.0.62",
   "description": "",
   "main": "./dist/NDataTable.js",
   "scripts": {

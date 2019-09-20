@@ -1,6 +1,11 @@
 <template>
   <div>
-    <n-drop-down-time-picker v-model="timepicker"></n-drop-down-time-picker>
+    <n-select2 label="Trạng thái" :items="spuStatuses">
+      <template #result>
+        <n-icon>#icon#</n-icon> #text#
+      </template>
+    </n-select2>
+    <!-- <n-drop-down-time-picker v-model="timepicker"></n-drop-down-time-picker>
     <n-drop-down-date-picker v-model="date"></n-drop-down-date-picker>
     <n-time-picker v-model="timepicker" hide-second :step-hour="2" :step-minute="15"></n-time-picker>
     <n-drop-down-table
@@ -16,7 +21,7 @@
         <text-item text="provinceName" value="provinceName"></text-item>
         <number-item text="areaID" value="areaID"></number-item>
       </items>
-    </n-drop-down-table>
+    </n-drop-down-table> -->
     <!--
     <n-form ref="form2" lazy-validation>
       <div class="row">
@@ -72,7 +77,7 @@
       sticky-search
       searchable
     ></n-tree> -->
-    n-data-table component
+    <!-- n-data-table component
     {{ dataTableModel }}
     <n-data-table
       v-model="dataTableModel"
@@ -128,7 +133,7 @@
       <template #item.expand="{item}">
         <n-btn>a</n-btn>
       </template>
-    </n-data-table>
+    </n-data-table> -->
     <!-- n-modal component<br />
     <div class="row">
       <div class="col-xs-1">
@@ -215,6 +220,11 @@ import traffics from './data/traffics.json'
 import moment = require('moment')
 @Component({})
 export default class VApp extends Vue {
+  spuStatuses = [
+    { text: 'Khởi tạo', value: 0, icon: 'wrench' },
+    { text: 'Hoạt động', value: 1, icon: 'check-circle' },
+    { text: 'Tạm ngưng', value: 2, icon: 'times-circle' }
+  ]
   timepicker = '14:21:30'
   abc = ['PYN', 'HNI']
   date = moment().format('YYYY-MM-DD')
