@@ -11,7 +11,7 @@
         <div class="small">Đang tải dữ liệu</div>
       </div>
     </n-overlay>
-    <div id="template">
+    <div id="template" style="display:none">
       <span><slot name="result"></slot></span>
     </div>
   </div>
@@ -120,7 +120,6 @@ export default class NSelect2 extends Mixins(NDataSource) {
           }
         },
         templateResult: item => {
-          console.log($('#template').html())
           if (item.disabled || _.isEmpty($('#template').html())) return item.text
           return $(
             $('#template')
