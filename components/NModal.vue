@@ -72,10 +72,10 @@ export default class NModal extends Mixins(NBase) {
     return this.headerHeight + this.footerHeight + this.dialogMargin
   }
   get bodyStyle() {
-    let style = ''
-    style += this.scrollable ? `overflow: auto; ` : ''
-    style += this.scrollable ? `max-height: calc(100vh - ${this.offsetHeight}px); ` : ''
-    style += this.fullscreen ? `min-height: calc(100vh - ${this.offsetHeight}px); ` : ''
+    const style: any[] = [{ position: 'unset' }]
+    if (this.scrollable) style.push({ overflow: 'auto' })
+    if (this.scrollable) style.push({ 'max-height': `calc(100vh - ${this.offsetHeight}px)` })
+    if (this.fullscreen) style.push({ 'min-height': `calc(100vh - ${this.offsetHeight}px)` })
     return style
   }
 }

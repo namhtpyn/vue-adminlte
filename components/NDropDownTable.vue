@@ -1,5 +1,5 @@
 <template>
-  <div :class="{ 'form-group': form, 'has-error': !valid }" style="position:relative">
+  <div :class="{ 'form-group': form, 'has-error': !valid }" :style="componentStyle">
     <label v-if="hasLabel" class="control-label" :style="styleLabel">
       {{ label }}
     </label>
@@ -126,6 +126,11 @@ export default class NDropDownTable extends Mixins(NBase, NDataSource) {
   }
   created() {
     this.onValueChanged(this.value)
+  }
+  get componentStyle() {
+    const style = []
+    if (this.vLoading) style.push({ position: 'relative' })
+    return style
   }
 }
 </script>

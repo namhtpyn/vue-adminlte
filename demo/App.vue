@@ -1,5 +1,22 @@
 <template>
   <div>
+    <n-modal :value="true" scrollable>
+      <n-drop-down-table
+        v-model="dropDownTableModel"
+        read-url="/data/provinces.json"
+        item-text="provinceName"
+        item-value="provinceName"
+        searchable
+        multiple
+      >
+        <items>
+          <text-item text="provinceID" value="provinceID"></text-item>
+          <text-item text="provinceCode" value="provinceCode"></text-item>
+          <text-item text="provinceName" value="provinceName"></text-item>
+          <number-item text="areaID" value="areaID"></number-item>
+        </items>
+      </n-drop-down-table>
+    </n-modal>
     <n-select2 label="Trạng thái" :items="spuStatuses">
       <template #result>
         <n-icon>#icon#</n-icon> #text#

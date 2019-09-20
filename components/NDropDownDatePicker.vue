@@ -1,5 +1,5 @@
 <template>
-  <div :class="{ 'form-group': form, 'has-error': !valid }" style="position:relative">
+  <div :class="{ 'form-group': form, 'has-error': !valid }">
     <label v-if="hasLabel" class="control-label" :style="styleLabel">
       {{ label }}
     </label>
