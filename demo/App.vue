@@ -5,6 +5,20 @@
         <n-icon>#icon#</n-icon> #text#
       </template>
     </n-select2>
+    <n-select2 label="Trạng thái" :items="spuStatuses"> </n-select2>
+    <!-- <n-modal v-model="modal" scrollable>
+      <div class="col-xs-6">
+        <n-select2 label="Trạng thái" :items="spuStatuses">
+          <template #result>
+            <n-icon>#icon#</n-icon> #text#
+          </template>
+        </n-select2>
+      </div>
+    </n-modal> -->
+    <n-tab-collection>
+      <n-tab title="abc" active>abc</n-tab>
+      <n-tab title="def">def</n-tab>
+    </n-tab-collection>
     <!-- <n-drop-down-time-picker v-model="timepicker"></n-drop-down-time-picker>
     <n-drop-down-date-picker v-model="date"></n-drop-down-date-picker>
     <n-time-picker v-model="timepicker" hide-second :step-hour="2" :step-minute="15"></n-time-picker>
@@ -220,6 +234,7 @@ import traffics from './data/traffics.json'
 import moment = require('moment')
 @Component({})
 export default class VApp extends Vue {
+  modal = true
   spuStatuses = [
     { text: 'Khởi tạo', value: 0, icon: 'wrench' },
     { text: 'Hoạt động', value: 1, icon: 'check-circle' },
@@ -235,7 +250,6 @@ export default class VApp extends Vue {
   provinces = provinces
   traffics = traffics
   unitID = 0
-  modal = false
   dataTableModel: any = []
   dropDownTableModel: any | any[] = 'PYN'
   checkboxModel: any[] = [2]

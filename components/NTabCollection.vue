@@ -50,9 +50,10 @@ export default class NTabCollection extends Mixins(NBase) {
   }
 
   init() {
-    const nodes = this.vSlot.find((node: VueNode) => node.isComponent && node.componentInstance.$options.name === 'NTab')
+    const nodes = this.vSlot.find(
+      (node: VueNode) => node.isComponent && (node.componentInstance.$options as any)._componentTag === 'n-tab'
+    )
     this.tabComponents = nodes.map(o => o.componentInstance as NTab)
-
     this.setTabID()
     if (this.changeOnCreated && !_.isEmpty(this.headers)) this.valueTabActive = this.headers[this.tabActive].value
   }
