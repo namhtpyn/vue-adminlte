@@ -49,7 +49,7 @@ export default class NTableHeader extends Mixins(NBase, NData, NTableProp) {
         header.encodeHtml = false
         break
       case 'checkbox':
-        header.format = v => `<input type="checkbox" class="n-checkbox" disabled checked="${!!v}" /><label></label>`
+        header.format = v => `<input type="checkbox" class="n-checkbox" disabled ${v ? 'checked' : ''} /><label></label>`
         header.headerAlign = 'center'
         header.align = 'center'
         header.encodeHtml = false

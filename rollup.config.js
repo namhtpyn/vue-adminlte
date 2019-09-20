@@ -3,6 +3,7 @@ import typescript from 'rollup-plugin-typescript'
 import commonjs from 'rollup-plugin-commonjs'
 import resolve from 'rollup-plugin-node-resolve'
 import replace from 'rollup-plugin-replace'
+import css from 'rollup-plugin-css-only'
 import multiInput from 'rollup-plugin-multi-input'
 import strip from 'rollup-plugin-strip'
 import { terser } from 'rollup-plugin-terser'
@@ -45,7 +46,8 @@ const xxx = components.map(o => {
       typescript(),
       commonjs(),
       resolve(),
-      vue(),
+      css({ output: './dist/' + o.name + '.css' }),
+      vue({ css: false }),
       strip({
         debugger: true
       }),
