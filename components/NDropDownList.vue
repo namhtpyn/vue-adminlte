@@ -1,5 +1,5 @@
 <template>
-  <div style="position:relative" v-click-out="close">
+  <div v-click-out="close">
     <div class="has-feedback" @click="toggle">
       <div :class="containerCss" style="width: 100%">
         <input type="text" readonly class="input-flat text-overflow" :placeholder="hint" :value="text" />
@@ -115,7 +115,7 @@ export default class NDropDownList extends Mixins(NBase) {
 .drop-down-container {
   height: auto;
   width: fit-content;
-  position: fixed;
+  position: absolute;
   max-height: 300px;
   overflow: auto;
   padding: 0px 0px;
