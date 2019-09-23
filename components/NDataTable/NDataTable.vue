@@ -70,7 +70,7 @@
           >
             <template v-if="item.type === 'group'">
               <td v-for="i in item.group.level" :key="i"></td>
-              <td :colspan="tableColumnsLength - item.group.level - 1" @click.stop>
+              <td :colspan="tableColumnsLength - item.group.level" @click.stop>
                 {{ item.group.header.text }}:
                 <template v-if="item.group.header.encodeHtml">
                   {{ item.group.header.format(item.group.text) }}
