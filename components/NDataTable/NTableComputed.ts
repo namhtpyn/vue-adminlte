@@ -60,11 +60,8 @@ export default class NTableComputed extends Mixins(NDataSource, NTableProp) {
   private appendGroupHeaders(headers: TableHeader[]) {
     if (_.isEmpty(headers) || _.isEmpty(this.groupBy)) return headers
 
-    const groupHeaders = this.groupBy.map(g => {
-      const found = headers.find(header => header.value === g) || new TableHeader()
-      return { ...found, ...{ value: g }, children: undefined } as TableHeader
-    })
-    const result = headers.filter(header => !this.groupBy.includes(header.value))
+    const groupHeaders = this.groupBy.map(group => ({ ...group, children: undefined } as TableHeader))
+    const result = headers.filter(h => !this.groupBy.some(g => _.isEqual(h, g)))
     return groupHeaders.concat(result)
   }
   get headersFromTag(): TableHeader[] {
@@ -122,7 +119,13 @@ export default class NTableComputed extends Mixins(NDataSource, NTableProp) {
     headers = this.appendGroupHeaders(headers)
     return headers
   }
-  get groupBy() {
-    return this.headersFromTag.filter(h => h.grouped).map(h => h.value) || []
+  get groupBy(): TableHeader[] {
+    return this.headersFromTag.filter(h => h.grouped) || []
+  }
+  get groupByLength() {
+    return this.groupBy.length
+  }
+  isGrouped(name: string) {
+    return this.groupBy.some(g => g.value === name)
   }
 }

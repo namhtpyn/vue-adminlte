@@ -55,7 +55,7 @@ export default class NTableData extends Mixins(NTableComputed) {
     if (_.isEmpty(this.vSort) && _.isEmpty(this.groupBy)) return items
     const sortAsc = natsort({ insensitive: true })
     const sortDesc = natsort({ desc: true, insensitive: true })
-    const sortArray = this.groupBy.map(f => new TableSort(f)).concat(this.vSort)
+    const sortArray = this.groupBy.map(f => new TableSort(f.value)).concat(this.vSort)
     items.sort((a, b) => {
       for (const sort of sortArray) {
         const sortOrder = sort.desc
@@ -90,8 +90,8 @@ export default class NTableData extends Mixins(NTableComputed) {
       items = items.reduce(
         (ar, item) => {
           if (item.type === 'item') {
-            if (_.isEmpty(ar) || _.last(ar).data[group] !== item.data[group] || _.last(ar).type === 'group')
-              ar = ar.concat({ ...item, type: 'group', group: { text: item.data[group], value: group, level: index } })
+            if (_.isEmpty(ar) || _.last(ar).data[group.value] !== item.data[group.value] || _.last(ar).type === 'group')
+              ar = ar.concat({ ...item, type: 'group', group: { text: item.data[group.value], header: group, level: index } })
           }
           return ar.concat(item)
         },

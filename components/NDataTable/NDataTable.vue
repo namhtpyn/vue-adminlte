@@ -39,7 +39,7 @@
               :style="headerCellStyle(header)"
               @click="toggleSort(header)"
             >
-              <template v-if="!groupBy.includes(header.value)">
+              <template v-if="!isGrouped(header.value)">
                 <div v-if="header.value === '__selection'">
                   <n-checkbox v-if="multipleSelect" @input="selectAll"></n-checkbox>
                 </div>
@@ -71,14 +71,17 @@
             <template v-if="item.type === 'group'">
               <td v-for="i in item.group.level" :key="i"></td>
               <td :colspan="tableColumnsLength - item.group.level - 1" @click.stop>
-                {{ tableColumns.find(h => h.value === item.group.value).text }}:
-                {{ item.group.text }}
+                {{ item.group.header.text }}:
+                <template v-if="item.group.header.encodeHtml">
+                  {{ item.group.header.format(item.group.text) }}
+                </template>
+                <span v-else v-html="item.group.header.format(item.group.text)"></span>
               </td>
             </template>
 
             <template v-if="item.type === 'expand'">
-              <td v-for="i in groupBy" :key="i"></td>
-              <td v-if="item.type === 'expand'" :colspan="tableColumnsLength - groupBy.length" @click.stop>
+              <td v-for="i in groupByLength" :key="i"></td>
+              <td v-if="item.type === 'expand'" :colspan="tableColumnsLength - groupByLength" @click.stop>
                 <slot name="item.expand" :item="item.data"></slot>
               </td>
             </template>
@@ -129,7 +132,7 @@
                     </div>
                   </template>
                   <template v-else>
-                    <template v-if="!groupBy.includes(header.value)">
+                    <template v-if="!isGrouped(header.value)">
                       <template v-if="header.encodeHtml">
                         {{ header.format(item.data[header.value]) }}
                       </template>

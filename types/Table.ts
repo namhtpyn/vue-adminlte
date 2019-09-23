@@ -52,7 +52,7 @@ export class TableItem {
   data?: any[]
   type: 'item' | 'expand' | 'group' = 'item'
   visible: boolean = true
-  group: { text: string; value: string; level: number }
+  group: { text: string; header: TableHeader; level: number }
   constructor(index: number, data: any[]) {
     this.index = index
     this.data = data
