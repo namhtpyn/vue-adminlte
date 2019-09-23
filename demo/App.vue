@@ -1,6 +1,63 @@
 <template>
   <div>
-    <n-modal :value="true" scrollable>
+    n-data-table component
+    {{ dataTableModel }}
+    <n-data-table
+      v-model="dataTableModel"
+      read-url="/data/provinces.json"
+      updatable
+      update-url="/haha"
+      caption="hihi"
+      searchable
+      selectable
+      expandable
+      multiple-select
+      row-select
+      @row-click="console"
+      key-field="provinceCode"
+      creatable
+      excelable
+      multiple-sort
+    >
+      <n-test></n-test>
+      <items>
+        <text-item text="provinceName" value="provinceName" sortable filterable></text-item>
+        <text-item
+          text="provinceCode"
+          value="provinceCode"
+          sortable
+          filterable
+          :format="v => provinces.find(i => i.provinceCode === v).provinceName"
+        ></text-item>
+        <text-item text="Tui Test" value="test" grouped></text-item>
+        <text-item text="areaID" value="areaID" sortable filterable grouped></text-item>
+        <band-item text="on shit">
+          <items>
+            <text-item text="provinceCode" value="provinceCode"></text-item>
+            <text-item text="provinceName" value="provinceName"></text-item>
+            <text-item text="areaID" value="areaID"></text-item>
+            <band-item text="on shit">
+              <items>
+                <text-item text="provinceCode" value="provinceCode"></text-item>
+                <text-item text="provinceName" value="provinceName"></text-item>
+                <text-item text="areaID" value="areaID"></text-item
+                ><band-item text="on shit">
+                  <items>
+                    <text-item text="provinceCode" value="provinceCode"></text-item>
+                    <text-item text="provinceName" value="provinceName"></text-item>
+                    <text-item text="areaID" value="areaID"></text-item>
+                  </items>
+                </band-item>
+              </items>
+            </band-item>
+          </items>
+        </band-item>
+      </items>
+      <template #item.expand="{item}">
+        <n-btn>a</n-btn>
+      </template>
+    </n-data-table>
+    <!-- <n-modal :value="true" scrollable>
       <n-drop-down-table
         v-model="dropDownTableModel"
         read-url="/data/provinces.json"
@@ -22,7 +79,7 @@
         <n-icon>#icon#</n-icon> #text#
       </template>
     </n-select2>
-    <n-select2 label="Trạng thái" :items="spuStatuses"> </n-select2>
+    <n-select2 label="Trạng thái" :items="spuStatuses"> </n-select2> -->
     <!-- <n-modal v-model="modal" scrollable>
       <div class="col-xs-6">
         <n-select2 label="Trạng thái" :items="spuStatuses">
@@ -108,63 +165,7 @@
       sticky-search
       searchable
     ></n-tree> -->
-    <!-- n-data-table component
-    {{ dataTableModel }}
-    <n-data-table
-      v-model="dataTableModel"
-      read-url="/data/provinces.json"
-      updatable
-      update-url="/haha"
-      caption="hihi"
-      searchable
-      selectable
-      expandable
-      multiple-select
-      row-select
-      @row-click="console"
-      key-field="provinceCode"
-      creatable
-      excelable
-      multiple-sort
-      :group-by="['test', 'areaID']"
-    >
-      <items>
-        <text-item text="provinceName" value="provinceName" sortable filterable></text-item>
-        <text-item
-          text="provinceCode"
-          value="provinceCode"
-          sortable
-          filterable
-          :format="v => provinces.find(i => i.provinceCode === v).provinceName"
-        ></text-item>
-        <text-item text="areaID" value="areaID" sortable filterable></text-item>
-        <text-item text="Tui Test" value="test"></text-item>
-        <band-item text="on shit">
-          <items>
-            <text-item text="provinceCode" value="provinceCode"></text-item>
-            <text-item text="provinceName" value="provinceName"></text-item>
-            <text-item text="areaID" value="areaID"></text-item>
-            <band-item text="on shit">
-              <items>
-                <text-item text="provinceCode" value="provinceCode"></text-item>
-                <text-item text="provinceName" value="provinceName"></text-item>
-                <text-item text="areaID" value="areaID"></text-item
-                ><band-item text="on shit">
-                  <items>
-                    <text-item text="provinceCode" value="provinceCode"></text-item>
-                    <text-item text="provinceName" value="provinceName"></text-item>
-                    <text-item text="areaID" value="areaID"></text-item>
-                  </items>
-                </band-item>
-              </items>
-            </band-item>
-          </items>
-        </band-item>
-      </items>
-      <template #item.expand="{item}">
-        <n-btn>a</n-btn>
-      </template>
-    </n-data-table> -->
+
     <!-- n-modal component<br />
     <div class="row">
       <div class="col-xs-1">

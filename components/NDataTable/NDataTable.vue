@@ -233,6 +233,7 @@
 </template>
 
 <script lang="ts">
+import NTest from './NTest.vue'
 import { Component, Mixins, Watch } from 'vue-property-decorator'
 
 import _ from 'lodash'
@@ -240,7 +241,6 @@ import XLSX from 'xlsx'
 
 import NTableData from './NTableData'
 import NTableHeader from './NTableHeader'
-import NTableProp from './NTableProp'
 import NTableCRUD from './NTableCRUD'
 import NTableCssClass from './NTableCssClass'
 import NTableText from './NTableText'
@@ -250,12 +250,12 @@ import NCheckBox from '../NCheckbox.vue'
 import NRadio from '../NRadio.vue'
 
 //Mixins limit 5 instances
-class mixin1 extends Mixins(NTableProp, NTableData, NTableHeader, NTableCRUD, NTableCssClass) {}
-class mixin2 extends Mixins(NTableText) {}
+class mixin1 extends Mixins(NTableData, NTableHeader, NTableCRUD, NTableCssClass, NTableText) {}
+class mixin2 extends Mixins() {}
 
 @Component({
   inheritAttrs: false,
-  mixins: []
+  components: { NTest }
 })
 export default class NDataTable extends Mixins(mixin1, mixin2) {
   createClick(e) {

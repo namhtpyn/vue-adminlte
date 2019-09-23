@@ -42,6 +42,7 @@ export class TableHeader {
   format?: Function = v => v
   children?: TableHeader[]
   encodeHtml?: boolean = true
+  grouped?: boolean = false
   _colspan: number = 1
   _rowspan: number = 1
 }

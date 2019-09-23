@@ -1,13 +1,11 @@
 import { Component, Mixins, Watch } from 'vue-property-decorator'
 import _ from 'lodash'
-import NBase from '../Base/NBase'
-import NTableProp from './NTableProp'
 import { TableItem, TableSort, TableHeader, TableFilter } from '../../types/Table'
 import natsort from 'natsort'
 import diacritics from 'remove-all-diacritics'
-import NDataSource from './../Base/NDataSource'
+import NTableComputed from './NTableComputed'
 @Component({})
-export default class NTableData extends Mixins(NBase, NDataSource, NTableProp) {
+export default class NTableData extends Mixins(NTableComputed) {
   vSearch: string = ''
   vItemPerPage: number = 10
   vPage: number = 1

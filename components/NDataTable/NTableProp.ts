@@ -27,8 +27,6 @@ export default class NTableProp extends Mixins(NBase) {
 
   @Prop({ type: Boolean, default: false }) readonly excelable!: boolean
 
-  @Prop({ type: Array, default: () => [] }) readonly groupBy!: string[]
-
   /**Enable selection */
   @Prop({ type: Boolean, default: false }) readonly selectable!: boolean
   @Prop({ type: Boolean, default: false }) readonly multipleSelect!: boolean
