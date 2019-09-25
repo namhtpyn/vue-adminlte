@@ -1,7 +1,7 @@
 <template>
-  <a :class="cssClass" @click="click">
+  <component :is="tag" :class="cssClass" @click="click" :disabled="disabled" :href="href">
     <slot></slot>
-  </a>
+  </component>
 </template>
 
 <script lang="ts">
@@ -9,6 +9,7 @@ import { Component, Vue, Prop, Emit } from 'vue-property-decorator'
 @Component({})
 export default class NBtn extends Vue {
   @Prop({ type: String, default: 'default' }) readonly color!: string
+  @Prop({ type: String }) readonly href!: string
   @Prop(String) readonly textColor!: string
   @Prop(Boolean) readonly app!: boolean
   @Prop(Boolean) readonly block!: boolean
@@ -17,6 +18,10 @@ export default class NBtn extends Vue {
   @Prop(Boolean) readonly xSmall!: boolean
   @Prop(Boolean) readonly flat!: boolean
   @Prop(Boolean) readonly disabled!: boolean
+
+  get tag() {
+    return this.href ? 'a' : 'button'
+  }
 
   @Emit() click(e) {}
 

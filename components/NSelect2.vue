@@ -123,7 +123,7 @@ export default class NSelect2 extends Mixins(NDataSource) {
           const template = $(this.$el).find('#template-result')
           if (item.disabled || _.isEmpty(template.find('span').html())) return item.text
           return $(
-            template.html().replace(/\#(\w+)\#/g, (n, $1) => {
+            template.html().replace(/#(\w+)#/g, (n, $1) => {
               return item[$1]
             })
           )

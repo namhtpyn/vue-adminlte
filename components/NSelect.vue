@@ -1,7 +1,7 @@
 <template>
   <div :class="'form-group ' + (!valid ? 'has-error' : '')">
-    <label v-if="!hideDetails" class="control-label">{{ label }}</label>
-    <select :class="cCssClass" :value="value" @input="e => input(e.target.value)">
+    <label v-if="!!label" class="control-label">{{ label }}</label>
+    <select class="form-control" v-bind="$attrs" :value="value" @input="e => input(e.target.value)">
       <option v-for="(item, idx) in vItems" :key="idx" :value="item[itemValue]">{{ item[itemText] }}</option>
     </select>
     <span v-if="!valid && !hideErrorText" class="help-block">{{ errorText }}</span>
@@ -23,7 +23,6 @@ import NDataSource from './Base/NDataSource'
 export default class NSelect extends Mixins(NDataSource) {
   @Prop({ type: Boolean, default: false }) hideErrorText!: boolean
   @Prop(String) label!: string
-  @Prop(String) cssClass!: string
   @Prop(Array) rules!: any[]
   @Prop({ type: String, default: 'text' }) itemText!: string
   @Prop({ type: String, default: 'value' }) itemValue!: string
@@ -32,10 +31,7 @@ export default class NSelect extends Mixins(NDataSource) {
     this.validate(e)
   }
   valid: boolean = true
-  get cCssClass() {
-    const css = 'form-control ' + this.cssClass
-    return css
-  }
+
   get hasLabel() {
     return !_.isEmpty(this.label)
   }
