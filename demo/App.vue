@@ -1,5 +1,13 @@
 <template>
   <div>
+    <n-expandable-panel>
+      <template #header.1>
+        hihi
+      </template>
+      <template #body.1>
+        ok
+      </template>
+    </n-expandable-panel>
     n-data-table component
     {{ dataTableModel }}
     <n-data-table
