@@ -1,5 +1,5 @@
 <template>
-  <component :is="tag" :class="cssClass" @click="click" :disabled="disabled" :href="href">
+  <component :is="tag" :class="cssClass" @click="click" :disabled="disabled" :type="type" :href="href">
     <slot></slot>
   </component>
 </template>
@@ -10,6 +10,7 @@ import { Component, Vue, Prop, Emit } from 'vue-property-decorator'
 export default class NBtn extends Vue {
   @Prop({ type: String, default: 'default' }) readonly color!: string
   @Prop({ type: String }) readonly href!: string
+  @Prop({ type: String, default: 'button' }) readonly type!: string
   @Prop(String) readonly textColor!: string
   @Prop(Boolean) readonly app!: boolean
   @Prop(Boolean) readonly block!: boolean

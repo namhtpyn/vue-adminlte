@@ -2,7 +2,7 @@
   <div class="n-date-picker">
     <div></div>
     <div class="n-date-picker--toolbar">
-      <button @click="goToPreviousMonth" class="n-date-picker--button">
+      <button @click.stop="goToPreviousMonth" class="n-date-picker--button">
         <i class="fa fa-angle-left" aria-hidden="true"></i>
       </button>
       <div>{{ moment(vDate).format('MMMM YYYY') }}</div>
