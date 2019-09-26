@@ -1,5 +1,6 @@
 <template>
   <div>
+    <n-drop-down-date-picker v-model="today" modal modal-small></n-drop-down-date-picker>
     <n-expandable-panel>
       <template #header.1>
         hihi

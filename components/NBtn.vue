@@ -21,7 +21,7 @@ export default class NBtn extends Vue {
   @Prop(Boolean) readonly disabled!: boolean
 
   get tag() {
-    return this.href ? 'a' : 'button'
+    return this.href ? 'a' : 'a'
   }
 
   @Emit() click(e) {}

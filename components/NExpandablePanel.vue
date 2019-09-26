@@ -29,7 +29,7 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 
 @Component({})
 export default class NExpandablePanel extends Vue {
-  @Prop({ type: Number, default: 33 }) length!: number
+  @Prop({ type: Number, default: 1 }) length!: number
   @Prop({ type: Boolean, default: false }) multiple!: boolean
   @Prop({ type: Array, default: () => [] }) value!: number[]
   visible: number[] = [].concat(this.value)

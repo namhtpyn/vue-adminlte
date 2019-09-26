@@ -2,13 +2,13 @@
   <div class="n-date-picker">
     <div></div>
     <div class="n-date-picker--toolbar">
-      <button @click.stop="goToPreviousMonth" class="n-date-picker--button">
+      <n-btn @click.stop="goToPreviousMonth" class="n-date-picker--button">
         <i class="fa fa-angle-left" aria-hidden="true"></i>
-      </button>
+      </n-btn>
       <div>{{ moment(vDate).format('MMMM YYYY') }}</div>
-      <button @click.stop="goToNextMonth" class="n-date-picker--button">
+      <n-btn @click.stop="goToNextMonth" class="n-date-picker--button">
         <i class="fa fa-angle-right" aria-hidden="true"></i>
-      </button>
+      </n-btn>
     </div>
     <div>
       <table class="n-date-picker--data-table">
@@ -121,7 +121,7 @@ export default class NDatePicker extends mixins(NBase) {
   background-color: transparent;
 }
 .n-date-picker--toolbar .n-date-picker--button {
-  padding: 0px;
+  padding: 8px 0px 0px 0px;
 }
 .n-date-picker--data-table .n-date-picker--date-button:hover {
   background-color: #f4f4f4;
