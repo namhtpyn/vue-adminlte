@@ -57,7 +57,8 @@
         <n-btn>a</n-btn>
       </template>
     </n-data-table>
-    <!-- <n-modal :value="true" scrollable>
+    <n-btn @click="modal = !modal">AAA</n-btn>
+    <n-modal v-model="modal" scrollable>
       <n-drop-down-table
         v-model="dropDownTableModel"
         read-url="/data/provinces.json"
@@ -73,7 +74,54 @@
           <number-item text="areaID" value="areaID"></number-item>
         </items>
       </n-drop-down-table>
+      b<br />
+      b<br />
+      b<br />
+      b<br />
+      b<br />
+      b<br />
+      b<br />
+      b<br />
+      b<br />
+      b<br />
+      b<br />
+      b<br />
+      b<br />
+      b<br />
+      b<br />
+      b<br />
+      b<br />
+      b<br />
+      b<br />
+      b<br />
+      b<br />
+      b<br />
+      b<br />
+      b<br />
+      b<br />
+      b<br />
+      b<br />
+      b<br />
+      b<br />
+      b<br />
+      b<br />
+      b<br />
+      b<br />
+      b<br />
+      b<br />
+      b<br />
+      b<br />
+      b<br />
+      b<br />
+      b<br />
+      b<br />
+      b<br />
+      b<br />
+      b<br />
+      b<br />
+      b<br />
     </n-modal>
+    <!--
     <n-select2 label="Trạng thái" :items="spuStatuses">
       <template #result>
         <n-icon>#icon#</n-icon> #text#
