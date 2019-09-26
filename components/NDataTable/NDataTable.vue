@@ -12,11 +12,11 @@
         </div>
         <div v-if="!caption && !searchable" style="flex:auto"></div>
         <div class="btn-group" v-if="creatable || excelable || !isEmpty($slots['top.button-group'])">
-          <n-btn v-if="creatable" @click="createClick">
+          <n-btn v-if="creatable" @click.stop="createClick">
             <n-icon>plus</n-icon>
             <span class="hidden-xs">Thêm</span>
           </n-btn>
-          <n-btn v-if="excelable" @click="exportExcel">
+          <n-btn v-if="excelable" @click.stop="exportExcel">
             <n-icon>file-excel-o</n-icon>
             <span class="hidden-xs">Excel</span>
           </n-btn>
@@ -210,7 +210,7 @@
         <slot name="modal" :modal="vModal"></slot>
       </n-form>
       <template v-slot:footer>
-        <n-btn color="primary" @click="saveClick">Lưu</n-btn>
+        <n-btn color="primary" @click.stop="saveClick">Lưu</n-btn>
       </template>
     </n-modal>
 
