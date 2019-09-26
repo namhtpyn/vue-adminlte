@@ -9,7 +9,7 @@
         <n-icon>{{ prependIcon }}</n-icon>
       </span>
       <span v-if="prependBtn" class="input-group-btn">
-        <n-btn :color="prependBtnColor" :flat="prependBtnFlat" @click="prependBtnClick">{{ prependBtn }}</n-btn>
+        <n-btn :color="prependBtnColor" :flat="prependBtnFlat" @click.stop="prependBtnClick">{{ prependBtn }}</n-btn>
       </span>
       <input
         :type="type"
@@ -26,7 +26,7 @@
         <n-icon>{{ appendIcon }}</n-icon>
       </span>
       <span v-if="appendBtn" class="input-group-btn">
-        <n-btn :color="appendBtnColor" :flat="appendBtnFlat" @click="appendBtnClick">{{ appendBtn }}</n-btn>
+        <n-btn :color="appendBtnColor" :flat="appendBtnFlat" @click.stop="appendBtnClick">{{ appendBtn }}</n-btn>
       </span>
       <span v-if="innerIcon" :class="`form-control-feedback fa fa-${innerIcon}`" aria-hidden="true"></span>
     </div>

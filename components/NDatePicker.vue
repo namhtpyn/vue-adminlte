@@ -6,7 +6,9 @@
         <i class="fa fa-angle-left" aria-hidden="true"></i>
       </button>
       <div>{{ moment(vDate).format('MMMM YYYY') }}</div>
-      <button @click="goToNextMonth" class="n-date-picker--button"><i class="fa fa-angle-right" aria-hidden="true"></i></button>
+      <button @click.stop="goToNextMonth" class="n-date-picker--button">
+        <i class="fa fa-angle-right" aria-hidden="true"></i>
+      </button>
     </div>
     <div>
       <table class="n-date-picker--data-table">
@@ -27,7 +29,7 @@
               class="n-date-picker--date-button"
               :class="dateBtnClass(day)"
               v-if="!isEmpty(day)"
-              @click="input(day.format('YYYY-MM-DD'))"
+              @click.stop="input(day.format('YYYY-MM-DD'))"
               >{{ day.format('D') }}</n-btn
             >
           </td>
