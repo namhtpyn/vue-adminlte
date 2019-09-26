@@ -27,7 +27,7 @@
     </div>
 
     <div :class="{ 'table-responsive': responsive }">
-      <table class="n-data-table table no-margin" :class="cssClass.table">
+      <table ref="table" class="n-data-table table no-margin" :class="cssClass.table">
         <thead v-if="!hideHeader">
           <tr :class="cssClass.headerRow" v-for="(headers, rowIndex) in headersCollection" :key="rowIndex">
             <th
@@ -392,10 +392,11 @@ export default class NDataTable extends Mixins(mixin1, mixin2) {
 
   private exportExcel() {
     //todo: convert items into table like items, for now it only export raw
-    const wb = XLSX.utils.book_new()
-    wb.Props = { CreatedDate: new Date() }
-    wb.SheetNames.push('Sheet 1')
-    wb.Sheets['Sheet 1'] = XLSX.utils.json_to_sheet(this.vItems)
+    // const wb = XLSX.utils.book_new()
+    // wb.Props = { CreatedDate: new Date() }
+    // wb.SheetNames.push('Sheet 1')
+    // wb.Sheets['Sheet 1'] = XLSX.utils.json_to_sheet(this.vItems)
+    const wb = XLSX.utils.table_to_book(this.$refs.table)
     XLSX.writeFile(wb, 'export.xlsx', { bookType: 'xlsx' })
   }
 }

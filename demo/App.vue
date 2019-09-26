@@ -9,10 +9,6 @@
       update-url="/haha"
       caption="hihi"
       searchable
-      selectable
-      expandable
-      multiple-select
-      row-select
       @row-click="console"
       key-field="provinceCode"
       creatable
@@ -300,7 +296,7 @@ import traffics from './data/traffics.json'
 import moment = require('moment')
 @Component({})
 export default class VApp extends Vue {
-  modal = true
+  modal = false
   spuStatuses = [
     { text: 'Khởi tạo', value: 0, icon: 'wrench' },
     { text: 'Hoạt động', value: 1, icon: 'check-circle' },
