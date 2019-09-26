@@ -1,10 +1,10 @@
 <template>
-  <transition name="fade" @before-enter="beforeOpen" @after-enter="open" @after-leave="close">
-    <div v-if="value" :class="`modal modal-${color} ${fullscreen ? 'no-padding' : ''}`" style="display: block">
+  <transition name="n-modal" @before-enter="beforeOpen" @after-enter="open" @after-leave="close">
+    <div v-if="value" :class="`modal modal-${color} ${fullscreen ? 'no-padding' : ''} in`" style="display: block">
       <div :class="{ 'modal-dialog': true, 'modal-lg': large, 'modal-sm': small, 'modal-fullscreen': fullscreen }">
         <div class="modal-content" v-click-out="clickOut">
           <div v-if="!hideHeader" class="modal-header margin-right-1px" style="display:flex">
-            <h4 class="modal-title" style="flex:1">{{ caption }}</h4>
+            <h4 class="modal-title" style="flex:1">{{ caption }} {{ headerHeight }} {{ footerHeight }} {{ dialogMargin }}</h4>
             <n-icon style="cursor:pointer" @click="input(false)">times</n-icon>
           </div>
           <div class="modal-body margin-right-1px" :style="bodyStyle" v-if="value">
@@ -59,15 +59,23 @@ export default class NModal extends Mixins(NBase) {
     document.querySelector('body').classList.add('modal-open')
   }
   @Emit() open() {
-    this.headerHeight = (this.$el.querySelector('.modal-header') || {}).clientHeight || 0
-    this.footerHeight = (this.$el.querySelector('.modal-footer') || {}).clientHeight || 0
-    this.dialogMargin = window.innerHeight - (this.$el.querySelector('.modal-dialog') || {}).clientHeight || 0
+    this.getSize()
+  }
+  getSize() {
+    try {
+      this.headerHeight = (this.$el.querySelector('.modal-header') || {}).clientHeight || 0
+      this.footerHeight = (this.$el.querySelector('.modal-footer') || {}).clientHeight || 0
+      // eslint-disable-next-line no-empty
+    } catch (e) {}
   }
 
-  mounted() {}
+  mounted() {
+    this.getSize()
+    window.addEventListener('resize', this.getSize)
+  }
   headerHeight = 0
   footerHeight = 0
-  dialogMargin = 100
+  dialogMargin = 60
   get offsetHeight() {
     return this.headerHeight + this.footerHeight + this.dialogMargin
   }
@@ -96,11 +104,28 @@ export default class NModal extends Mixins(NBase) {
 .modal-fullscreen > .modal-content {
   min-height: 100%;
 }
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.3s;
+.n-modal-enter-active,
+.n-modal-leave-active {
+  transition: opacity 0.15s linear;
 }
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+.n-modal-enter-to,
+.n-modal-leave {
+  opacity: 1;
+}
+.n-modal-enter, .n-modal-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
+}
+
+.n-modal-enter-active .modal-dialog,
+.n-modal-leave-active .modal-dialog {
+  transition: transform 0.3s ease-out;
+}
+.n-modal-enter-to .modal-dialog,
+.n-modal-leave .modal-dialog {
+  transform: translate(0, 0);
+}
+.n-modal-enter .modal-dialog,
+.n-modal-leave-to .modal-dialog {
+  transform: translate(0, -25%);
 }
 </style>
