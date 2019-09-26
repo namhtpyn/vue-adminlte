@@ -4,7 +4,7 @@
       <div :class="{ 'modal-dialog': true, 'modal-lg': large, 'modal-sm': small, 'modal-fullscreen': fullscreen }">
         <div class="modal-content" v-click-out="clickOut">
           <div v-if="!hideHeader" class="modal-header margin-right-1px" style="display:flex">
-            <h4 class="modal-title" style="flex:1">{{ caption }} {{ headerHeight }} {{ footerHeight }} {{ dialogMargin }}</h4>
+            <h4 class="modal-title" style="flex:1">{{ caption }}</h4>
             <n-icon style="cursor:pointer" @click="input(false)">times</n-icon>
           </div>
           <div class="modal-body margin-right-1px" :style="bodyStyle" v-if="value">

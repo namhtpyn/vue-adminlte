@@ -391,13 +391,16 @@ export default class NDataTable extends Mixins(mixin1, mixin2) {
   mounted() {}
 
   private exportExcel() {
-    //todo: convert items into table like items, for now it only export raw
-    // const wb = XLSX.utils.book_new()
-    // wb.Props = { CreatedDate: new Date() }
-    // wb.SheetNames.push('Sheet 1')
-    // wb.Sheets['Sheet 1'] = XLSX.utils.json_to_sheet(this.vItems)
-    const wb = XLSX.utils.table_to_book(this.$refs.table)
-    XLSX.writeFile(wb, 'export.xlsx', { bookType: 'xlsx' })
+    //Show all to export then reverse back
+    this.vLoading = true
+    const itemPerPage = this.vItemPerPage
+    this.vItemPerPage = -1
+    this.$nextTick(() => {
+      const wb = XLSX.utils.table_to_book(this.$refs.table)
+      XLSX.writeFile(wb, 'export.xlsx', { bookType: 'xlsx' })
+      this.vItemPerPage = itemPerPage
+      this.vLoading = false
+    })
   }
 }
 </script>
