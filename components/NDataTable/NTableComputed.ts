@@ -4,11 +4,11 @@ import { TableHeader } from '../../types/Table'
 import moment from 'moment'
 import numeral from 'numeral'
 import _ from 'lodash'
-import NDataSource from './../Base/NDataSource'
+import NData from './../Base/NData'
 import NTableProp from './NTableProp'
 
 @Component({})
-export default class NTableComputed extends Mixins(NDataSource, NTableProp) {
+export default class NTableComputed extends Mixins(NData, NTableProp) {
   private getHeaders(nodes: VueNode[] = this.vSlot.data) {
     if (_.isEmpty(nodes)) return []
     const itemNode = ['text', 'number', 'date', 'time', 'datetime', 'band', 'image', 'checkbox']

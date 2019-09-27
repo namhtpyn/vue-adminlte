@@ -13,7 +13,7 @@ export default class NDataSource extends Mixins(NBase, NData) {
   }
   /**CRUD */
   @Watch('readUrl')
-  private onReadUrlChanged() {
+  private onReadUrlChanged(n, o) {
     if (this.autoRead) this.read()
   }
   async read() {

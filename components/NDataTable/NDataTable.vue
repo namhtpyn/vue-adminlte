@@ -251,10 +251,12 @@ import { TableHeader, TableItem } from '../../types/Table'
 
 import NCheckBox from '../NCheckbox.vue'
 import NRadio from '../NRadio.vue'
+import NTableProp from './NTableProp'
+import NTableComputed from './NTableComputed'
 
 //Mixins limit 5 instances
-class mixin1 extends Mixins(NTableData, NTableHeader, NTableCRUD, NTableCssClass, NTableText) {}
-class mixin2 extends Mixins() {}
+class mixin1 extends Mixins(NTableProp, NTableComputed, NTableCRUD, NTableData, NTableHeader) {}
+class mixin2 extends Mixins(NTableCssClass, NTableText) {}
 
 @Component({
   inheritAttrs: false,

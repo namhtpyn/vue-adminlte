@@ -1,6 +1,21 @@
 <template>
   <div>
-    <n-drop-down-date-picker v-model="today" modal modal-small></n-drop-down-date-picker>
+    <n-select2 v-model="abc" :items="provinces" item-text="provinceName" item-value="provinceCode"></n-select2>
+    <n-drop-down-table
+      v-model="dropDownTableModel"
+      read-url="/data/provinces.json"
+      item-text="provinceName"
+      item-value="provinceName"
+      searchable
+      multiple
+    >
+      <items>
+        <text-item text="provinceID" value="provinceID"></text-item>
+        <text-item text="provinceCode" value="provinceCode"></text-item>
+        <text-item text="provinceName" value="provinceName"></text-item>
+        <number-item text="areaID" value="areaID"></number-item>
+      </items>
+    </n-drop-down-table>
     <n-expandable-panel>
       <template #header.1>
         hihi
@@ -61,24 +76,32 @@
       <template #item.expand="{item}">
         <n-btn>a</n-btn>
       </template>
+      <template #modal="modal">
+        <div class="row">
+          <div class="col-xs-12">
+            <n-drop-down-date-picker v-model="today"></n-drop-down-date-picker>
+          </div>
+        </div>
+
+        <n-drop-down-table
+          v-model="dropDownTableModel"
+          read-url="/data/provinces.json"
+          item-text="provinceName"
+          item-value="provinceName"
+          searchable
+          multiple
+        >
+          <items>
+            <text-item text="provinceID" value="provinceID"></text-item>
+            <text-item text="provinceCode" value="provinceCode"></text-item>
+            <text-item text="provinceName" value="provinceName"></text-item>
+            <number-item text="areaID" value="areaID"></number-item>
+          </items>
+        </n-drop-down-table>
+      </template>
     </n-data-table>
     <n-btn @click="modal = !modal">AAA</n-btn>
     <n-modal v-model="modal" scrollable>
-      <n-drop-down-table
-        v-model="dropDownTableModel"
-        read-url="/data/provinces.json"
-        item-text="provinceName"
-        item-value="provinceName"
-        searchable
-        multiple
-      >
-        <items>
-          <text-item text="provinceID" value="provinceID"></text-item>
-          <text-item text="provinceCode" value="provinceCode"></text-item>
-          <text-item text="provinceName" value="provinceName"></text-item>
-          <number-item text="areaID" value="areaID"></number-item>
-        </items>
-      </n-drop-down-table>
       b<br />
       b<br />
       b<br />
