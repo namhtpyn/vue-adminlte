@@ -1,5 +1,6 @@
 <template>
   <div>
+    <n-text-area v-model="textarea" :form="false" hide-error-text auto-grow></n-text-area>
     <n-select2 v-model="abc" :items="provinces" item-text="provinceName" item-value="provinceCode"></n-select2>
     <n-drop-down-table
       v-model="dropDownTableModel"
@@ -328,12 +329,14 @@ import traffics from './data/traffics.json'
 import moment = require('moment')
 @Component({})
 export default class VApp extends Vue {
+  textarea = null
   modal = false
   spuStatuses = [
     { text: 'Khởi tạo', value: 0, icon: 'wrench' },
     { text: 'Hoạt động', value: 1, icon: 'check-circle' },
     { text: 'Tạm ngưng', value: 2, icon: 'times-circle' }
   ]
+  today = '2019-09-27'
   timepicker = '14:21:30'
   abc = ['PYN', 'HNI']
   date = moment().format('YYYY-MM-DD')

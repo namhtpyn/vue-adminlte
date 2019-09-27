@@ -122,7 +122,6 @@ export default class NTimePicker extends Mixins(NBase) {
     return _.padStart(h.toString(), 2, '0') + ':' + _.padStart(m.toString(), 2, '0') + ':' + _.padStart(s.toString(), 2, '0')
   }
   setHour(h) {
-    console.log(this.toTime(h, this.minute, this.second))
     this.input(this.toTime(h, this.minute, this.second))
   }
   setMinute(m) {

@@ -34,6 +34,7 @@
   </head>
   <body>
     <div id="app">
+      <n-text-area v-model="textarea" :form="false" hide-error-text auto-grow></n-text-area>
       <n-drop-down-date-picker v-model="dddp"></n-drop-down-date-picker>
       <n-data-table
         read-url="data/provinces.json"
@@ -72,6 +73,7 @@
       var app = new Vue({
         el: '#app',
         data: {
+          textarea: null,
           dddp: '2019-09-18'
         }
       })
