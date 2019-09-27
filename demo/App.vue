@@ -40,6 +40,8 @@
       excelable
       multiple-sort
     >
+      <css-class create-button="btn-primary"></css-class>
+
       <n-test></n-test>
       <items>
         <text-item text="provinceName" value="provinceName" sortable filterable></text-item>

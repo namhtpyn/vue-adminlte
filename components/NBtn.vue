@@ -1,12 +1,12 @@
 <template>
-  <component :is="tag" :class="cssClass" @click="click" :disabled="disabled" :type="type" :href="href">
+  <component :is="tag" :class="cssClass" @click="click" :disabled="disabled" :type="type" :href="href" v-bind="$attrs">
     <slot></slot>
   </component>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop, Emit } from 'vue-property-decorator'
-@Component({})
+@Component({ inheritAttrs: false })
 export default class NBtn extends Vue {
   @Prop({ type: String, default: 'default' }) readonly color!: string
   @Prop({ type: String }) readonly href!: string

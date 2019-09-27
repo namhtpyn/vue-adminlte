@@ -72,4 +72,7 @@ export default class NOverlay extends Vue {
 .n-overlay__content {
   position: relative;
 }
+.bg-black {
+  background-color: black;
+}
 </style>

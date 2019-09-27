@@ -6,7 +6,7 @@ import NTableProp from './NTableProp'
 @Component({})
 export default class NTableCssClass extends Mixins(NBase, NTableProp) {
   private get cssClass() {
-    const cssClass: any = this.vSlot.data.find(e => e.tag === 'css-class') || {}
+    const cssClass: any = (this.vSlot.data.find(e => e.tag === 'css-class') || {}).attrs || {}
     cssClass.top = [
       {
         'sticky-top': this.stickyTop
