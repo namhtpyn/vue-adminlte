@@ -12,7 +12,6 @@
         </div>
         <div v-if="!caption && !searchable" style="flex:auto"></div>
         <div class="btn-group" v-if="creatable || excelable || !isEmpty($slots['top.button-group'])">
-          {{ cssClass }}
           <n-btn v-if="creatable" @click.stop="createClick" :class="cssClass.createButton">
             <n-icon>plus</n-icon>
             <span class="hidden-xs">Thêm</span>
