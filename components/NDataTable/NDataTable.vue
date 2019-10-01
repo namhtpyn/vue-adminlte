@@ -236,7 +236,6 @@
 </template>
 
 <script lang="ts">
-import NTest from './NTest.vue'
 import { Component, Mixins, Watch } from 'vue-property-decorator'
 
 import _ from 'lodash'
@@ -259,8 +258,7 @@ class mixin1 extends Mixins(NTableProp, NTableComputed, NTableCRUD, NTableData, 
 class mixin2 extends Mixins(NTableCssClass, NTableText) {}
 
 @Component({
-  inheritAttrs: false,
-  components: { NTest }
+  inheritAttrs: false
 })
 export default class NDataTable extends Mixins(mixin1, mixin2) {
   createClick(e) {
@@ -346,25 +344,29 @@ export default class NDataTable extends Mixins(mixin1, mixin2) {
   /** headers */
 
   private headerCellStyle(header: TableHeader) {
-    let style = ''
-    style += header.width ? 'width: ' + header.width + '; ' : ''
-    style += header.width ? 'min-width: ' + header.width + '; ' : ''
-    style += header.width ? 'max-width: ' + header.width + '; ' : ''
-    style += header.headerBgcolor ? 'background-color: ' + header.headerBgcolor + '; ' : ''
-    style += header.headerColor ? 'color: ' + header.headerColor + '; ' : ''
-    style += header.headerAlign ? 'text-align: ' + header.headerAlign + '; ' : ''
-    style += header.headerValign ? 'vertical-align: ' + header.headerValign + '; ' : ''
+    const style = []
+    if (header.width) {
+      style.push({ width: header.width })
+      style.push({ 'min-width': header.width })
+      style.push({ 'max-width': header.width })
+    }
+    if (header.headerBgcolor) style.push({ 'background-color': header.headerBgcolor })
+    if (header.headerColor) style.push({ color: header.headerColor })
+    if (header.headerAlign) style.push({ 'text-align': header.headerAlign })
+    if (header.headerValign) style.push({ 'vertical-align': header.headerValign })
     return style
   }
   private cellStyle(header: TableHeader) {
-    let style = ''
-    style += header.width ? 'width: ' + header.width + '; ' : ''
-    style += header.width ? 'min-width: ' + header.width + '; ' : ''
-    style += header.width ? 'max-width: ' + header.width + '; ' : ''
-    style += header.align ? 'text-align: ' + header.align + '; ' : ''
-    style += header.valign ? 'vertical-align: ' + header.valign + '; ' : ''
-    style += header.bgcolor ? 'background-color: ' + header.bgcolor + '; ' : ''
-    style += header.color ? 'color: ' + header.color + '; ' : ''
+    const style = []
+    if (header.width) {
+      style.push({ width: header.width })
+      style.push({ 'min-width': header.width })
+      style.push({ 'max-width': header.width })
+    }
+    if (header.align) style.push({ 'text-align': header.align })
+    if (header.valign) style.push({ 'vertical-align': header.valign })
+    if (header.color) style.push({ color: header.color })
+    if (header.bgcolor) style.push({ 'background-color': header.bgcolor })
     return style
   }
   private footerSummary(items: any[], header: TableHeader) {

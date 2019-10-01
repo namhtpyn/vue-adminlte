@@ -55,7 +55,10 @@ export default class NTableData extends Mixins(NTableComputed) {
     if (_.isEmpty(this.vSort) && _.isEmpty(this.groupBy)) return items
     const sortAsc = natsort({ insensitive: true })
     const sortDesc = natsort({ desc: true, insensitive: true })
-    const sortArray = this.groupBy.map(f => new TableSort(f.value)).concat(this.vSort)
+    const sortArray = this.groupBy
+      .map(f => new TableSort(f.value))
+      .concat(this.mergeBy.map(f => new TableSort(f.value)))
+      .concat(this.vSort)
     items.sort((a, b) => {
       for (const sort of sortArray) {
         const sortOrder = sort.desc
@@ -100,6 +103,60 @@ export default class NTableData extends Mixins(NTableComputed) {
     })
     return items
   }
+  vMergedItems: { [key: string]: { index: number; value: any; rowspan: number }[] } = {}
+  getMergedRowSpan(field, rowIndex) {
+    try {
+      return this.vMergedItems[field].find(o => o.index === rowIndex).rowspan
+      // eslint-disable-next-line no-empty
+    } catch (e) {}
+    return 1
+  }
+  getMergedShow(field, rowIndex) {
+    try {
+      if (Object.keys(this.vMergedItems).includes(field) && !this.vMergedItems[field].find(o => o.index === rowIndex))
+        return false
+      // eslint-disable-next-line no-empty
+    } catch (e) {}
+    return true
+  }
+  itemsMerged(items: TableItem[]) {
+    if (_.isEmpty(this.mergeBy)) return items
+    this.vMergedItems = {}
+    items.forEach((item, itemIndex) => {
+      if (item.type === 'item')
+        this.mergeBy.forEach(merge => {
+          if (
+            !_.isNil(item.data[merge.value]) &&
+            !_.isEqual(
+              item.data[merge.value],
+              this.vMergedItems[merge.value] &&
+                _.last(this.vMergedItems[merge.value]) &&
+                _.last(this.vMergedItems[merge.value]).value
+            )
+          ) {
+            const last = _.last(this.vMergedItems[merge.value])
+            if (last) last.rowspan = itemIndex - last.index
+            if (_.isEmpty(this.vMergedItems[merge.value])) this.vMergedItems[merge.value] = []
+            this.vMergedItems[merge.value].push({ index: itemIndex, value: item.data[merge.value], rowspan: 1 })
+          }
+        })
+      else {
+        Object.keys(this.vMergedItems).forEach(k => {
+          const m = this.vMergedItems[k]
+          if (_.isEmpty(m)) return
+          const last = _.last(m)
+          if (last) last.rowspan = itemIndex - last.index
+        })
+      }
+    })
+    Object.keys(this.vMergedItems).forEach(k => {
+      const m = this.vMergedItems[k]
+      if (_.isEmpty(m)) return
+      const last = _.last(m)
+      if (last) last.rowspan = items.length - last.index
+    })
+    return items
+  }
   get tableItems(): TableItem[] {
     let items: TableItem[] = this.vItems.map((data, index) => {
       return new TableItem(index, data)
@@ -114,6 +171,7 @@ export default class NTableData extends Mixins(NTableComputed) {
     items = this.itemsPaginated(items)
     items = this.itemsExpanded(items)
     items = this.itemsGrouped(items)
+    items = this.itemsMerged(items)
     items = items.filter(item => item.visible)
     return items
   }

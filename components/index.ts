@@ -24,7 +24,6 @@ import NTabCollection from '././NTabCollection.vue'
 import NTextArea from '././NTextArea.vue'
 import NTextBox from '././NTextBox.vue'
 import NTimePicker from '././NTimePicker.vue'
-import NTimeSelector from '././NTimeSelector.vue'
 import NTree from '././NTree.vue'
 Vue.component('NBtn', NBtn)
 Vue.component('NCheckbox', NCheckbox)
@@ -51,5 +50,4 @@ Vue.component('NTabCollection', NTabCollection)
 Vue.component('NTextArea', NTextArea)
 Vue.component('NTextBox', NTextBox)
 Vue.component('NTimePicker', NTimePicker)
-Vue.component('NTimeSelector', NTimeSelector)
 Vue.component('NTree', NTree)

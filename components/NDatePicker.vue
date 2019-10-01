@@ -50,7 +50,7 @@ export default class NDatePicker extends mixins(NBase) {
   @Model('input', { type: String, required: true }) value!: string
 
   vCurrentDate = moment().toDate()
-  vDate = moment().toDate()
+  vDate = moment(this.value).toDate()
 
   get firstDateOfMonth() {
     return moment(this.vDate).startOf('month')

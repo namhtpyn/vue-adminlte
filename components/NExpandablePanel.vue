@@ -1,25 +1,23 @@
 <template>
-  <div>
-    <div class="panel-group">
-      <div class="panel panel-default" v-for="panelIndex in length" :key="panelIndex">
-        <div class="panel-heading" style="cursor:pointer" @click="expandPanel(panelIndex)">
-          <div class="panel-title" style="display: flex; align-items: center;">
-            <slot :name="`header`">
-              <slot :name="`header.${panelIndex}`" :index="panelIndex"> header {{ panelIndex }} </slot>
-            </slot>
-            <n-icon style="margin-left:auto" :class="`fa-chevron-${visible.includes(panelIndex) ? 'up' : 'down'}`"> </n-icon>
-          </div>
+  <div class="panel-group" style="margin-bottom:0px">
+    <div class="panel panel-default" v-for="panelIndex in length" :key="panelIndex">
+      <div class="panel-heading" style="cursor:pointer" @click="expandPanel(panelIndex)">
+        <div class="panel-title" style="display: flex; align-items: center;">
+          <slot :name="`header`">
+            <slot :name="`header.${panelIndex}`" :index="panelIndex"> header {{ panelIndex }} </slot>
+          </slot>
+          <n-icon style="margin-left:auto" :class="`fa-chevron-${visible.includes(panelIndex) ? 'up' : 'down'}`"> </n-icon>
         </div>
-        <!-- <transition name="n-expandable-panel"> -->
-        <div v-if="visible.includes(panelIndex)" class="panel-collapse collapse in">
-          <div class="panel-body">
-            <slot :name="`body`">
-              <slot :name="`body.${panelIndex}`" :index="panelIndex"> body {{ panelIndex }} </slot>
-            </slot>
-          </div>
-        </div>
-        <!-- </transition> -->
       </div>
+      <!-- <transition name="n-expandable-panel"> -->
+      <div v-if="byIf(panelIndex)" v-show="visible.includes(panelIndex)" class="panel-collapse collapse in">
+        <div class="panel-body">
+          <slot :name="`body`">
+            <slot :name="`body.${panelIndex}`" :index="panelIndex"> body {{ panelIndex }} </slot>
+          </slot>
+        </div>
+      </div>
+      <!-- </transition> -->
     </div>
   </div>
 </template>
@@ -31,8 +29,14 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 export default class NExpandablePanel extends Vue {
   @Prop({ type: Number, default: 1 }) length!: number
   @Prop({ type: Boolean, default: false }) multiple!: boolean
+  @Prop({ type: Boolean, default: true }) lazy!: boolean
   @Prop({ type: Array, default: () => [] }) value!: number[]
   visible: number[] = [].concat(this.value)
+
+  byIf(panelIndex: number) {
+    if (!this.lazy) return true
+    return this.visible.includes(panelIndex)
+  }
 
   expandPanel(panelIndex: number) {
     const index = this.visible.findIndex(v => v === panelIndex)

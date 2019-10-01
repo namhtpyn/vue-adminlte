@@ -42,7 +42,6 @@
     >
       <css-class create-button="btn-primary"></css-class>
 
-      <n-test></n-test>
       <items>
         <text-item text="provinceName" value="provinceName" sortable filterable></text-item>
         <text-item
@@ -52,23 +51,20 @@
           filterable
           :format="v => provinces.find(i => i.provinceCode === v).provinceName"
         ></text-item>
-        <text-item text="Tui Test" value="test" grouped></text-item>
-        <text-item text="areaID" value="areaID" sortable filterable grouped></text-item>
+        <text-item text="Tui Test" value="test" merged></text-item>
+        <text-item text="areaID" value="areaID" merged></text-item>
         <band-item text="on shit">
           <items>
             <text-item text="provinceCode" value="provinceCode"></text-item>
             <text-item text="provinceName" value="provinceName"></text-item>
-            <text-item text="areaID" value="areaID"></text-item>
             <band-item text="on shit">
               <items>
                 <text-item text="provinceCode" value="provinceCode"></text-item>
                 <text-item text="provinceName" value="provinceName"></text-item>
-                <text-item text="areaID" value="areaID"></text-item
                 ><band-item text="on shit">
                   <items>
                     <text-item text="provinceCode" value="provinceCode"></text-item>
                     <text-item text="provinceName" value="provinceName"></text-item>
-                    <text-item text="areaID" value="areaID"></text-item>
                   </items>
                 </band-item>
               </items>

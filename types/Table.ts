@@ -43,6 +43,7 @@ export class TableHeader {
   children?: TableHeader[]
   encodeHtml?: boolean = true
   grouped?: boolean = false
+  merged?: boolean = false
   _colspan: number = 1
   _rowspan: number = 1
 }
@@ -53,6 +54,7 @@ export class TableItem {
   type: 'item' | 'expand' | 'group' = 'item'
   visible: boolean = true
   group: { text: string; header: TableHeader; level: number }
+  _rowspan: number = 1
   constructor(index: number, data: any[]) {
     this.index = index
     this.data = data

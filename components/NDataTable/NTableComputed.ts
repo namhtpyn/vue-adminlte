@@ -128,4 +128,13 @@ export default class NTableComputed extends Mixins(NData, NTableProp) {
   isGrouped(name: string) {
     return this.groupBy.some(g => g.value === name)
   }
+  get mergeBy(): TableHeader[] {
+    return this.headersFromTag.filter(h => h.merged) || []
+  }
+  get mergeByLength() {
+    return this.mergeBy.length
+  }
+  isMergeBy(name: string) {
+    return this.mergeBy.some(g => g.value === name)
+  }
 }

@@ -1,6 +1,6 @@
 [
   { "provinceID": 1683, "provinceCode": "BTE", "provinceName": "Bến Tre", "test": 0, "areaID": 2 },
-  { "provinceID": 1067, "provinceCode": "CBG", "provinceName": "Cao Bằng", "test": 1, "areaID": 1 },
+  { "provinceID": 1067, "provinceCode": "CBG", "provinceName": "Cao Bằng", "test": 0, "areaID": 1 },
   { "provinceID": -1, "provinceCode": null, "provinceName": "Chưa xác định", "test": 1, "areaID": 0 },
   { "provinceID": 1043, "provinceCode": "CMU", "provinceName": "Cà Mau", "test": 1, "areaID": 2 },
   { "provinceID": 1052, "provinceCode": "CTO", "provinceName": "Cần Thơ", "test": 1, "areaID": 2 },
