@@ -90,7 +90,7 @@
               <td :class="cssClass.cell" :style="cellStyle(header)" v-for="(header, colIndex) in tableColumns" :key="colIndex">
                 <slot
                   :name="`item.${header.kebabValue()}`"
-                  :item="vItems[rowIndex]"
+                  :item="vItems[item.index]"
                   :value="item.data[header.value]"
                   :index="item.index"
                   :rowIndex="rowIndex"
