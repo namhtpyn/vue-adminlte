@@ -41,6 +41,7 @@ export default class NRadioGroup extends Mixins(NBase) {
   private setGroupModel(value) {
     this.radioComponents.forEach(r => (r.groupModel = _.cloneDeep(value)))
   }
+  validate(value) {}
 }
 </script>
 

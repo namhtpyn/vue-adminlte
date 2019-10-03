@@ -21,6 +21,7 @@ import _ from 'lodash'
 
 @Component({ inheritAttrs: false })
 export default class NRadio extends Vue {
+  @Prop({ type: Boolean, default: true }) readonly form!: boolean
   @Prop() label!: string
   @Prop({ type: String, default: 'blue' }) color!: string
   @Prop({ type: [String, Number, Boolean, Object], default: true }) value!: number | string | boolean | object
@@ -47,6 +48,7 @@ export default class NRadio extends Vue {
   get radioID() {
     return _.uniqueId('n_radio_')
   }
+  validate(value) {}
 }
 </script>
 
