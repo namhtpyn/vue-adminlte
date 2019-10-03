@@ -53,6 +53,8 @@ export default class NCheckbox extends Vue {
   get checkboxID() {
     return _.uniqueId('n_checkbox_')
   }
+
+  validate(value) {}
 }
 </script>
 
