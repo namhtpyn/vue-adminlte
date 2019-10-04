@@ -26,6 +26,7 @@
 <script lang="ts">
 import { Component, Model, Prop, Mixins } from 'vue-property-decorator'
 import _ from 'lodash'
+import moment from 'moment'
 import NBase from './Base/NBase'
 @Component({ inheritAttrs: false })
 export default class NDropDownTimePicker extends Mixins(NBase) {
@@ -43,7 +44,7 @@ export default class NDropDownTimePicker extends Mixins(NBase) {
   @Prop({ type: Boolean, default: false }) hideErrorText!: string
   @Prop(Array) rules!: any[]
 
-  @Model('input', { type: String, required: true }) value!: string
+  @Model('input', { type: Date, required: true }) value!: Date
 
   valid: boolean = true
   lazyValidation: boolean = false
@@ -60,7 +61,14 @@ export default class NDropDownTimePicker extends Mixins(NBase) {
   //search=
   get getText() {
     if (_.isNil(this.value)) return ''
-    else return this.value
+    else {
+      const date = moment(this.value)
+      const result: string[] = []
+      if (!this.hideHour) result.push(_.padStart(date.get('hour').toString(), 2, '0'))
+      if (!this.hideMinute) result.push(_.padStart(date.get('minute').toString(), 2, '0'))
+      if (!this.hideSecond) result.push(_.padStart(date.get('second').toString(), 2, '0'))
+      return result.join(':')
+    }
   }
   get errorText() {
     if (!this.valid && this.rules) {

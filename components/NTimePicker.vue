@@ -74,28 +74,27 @@
 
 <script lang="ts">
 import { Component, Model, Prop, Mixins } from 'vue-property-decorator'
+import moment from 'moment'
 import _ from 'lodash'
 import NBase from './Base/NBase'
 @Component({})
 export default class NTimePicker extends Mixins(NBase) {
-  @Model('input', { type: String, required: true }) value!: string
+  @Model('input', { type: Date, required: true }) value!: Date
   @Prop({ type: Number, default: 1 }) stepHour!: number
   @Prop({ type: Number, default: 1 }) stepMinute!: number
   @Prop({ type: Number, default: 1 }) stepSecond!: number
   @Prop({ type: Boolean, default: false }) hideSecond!: number
   @Prop({ type: Boolean, default: false }) hideMinute!: number
   @Prop({ type: Boolean, default: false }) hideHour!: number
-  get matchValue() {
-    return this.value.match(/\d+/g)
-  }
+
   get hour() {
-    return Number(this.matchValue.length > 0 ? this.matchValue[0] : 0)
+    return moment(this.value).get('hour')
   }
   get minute() {
-    return Number(this.matchValue.length > 1 ? this.matchValue[1] : 0)
+    return moment(this.value).get('minute')
   }
   get second() {
-    return Number(this.matchValue.length > 2 ? this.matchValue[2] : 0)
+    return moment(this.value).get('second')
   }
   hours = _.range(0, 24, this.stepHour)
   minutes = _.range(0, 60, this.stepMinute)
@@ -119,7 +118,11 @@ export default class NTimePicker extends Mixins(NBase) {
   }
 
   toTime(h: number, m: number, s: number) {
-    return _.padStart(h.toString(), 2, '0') + ':' + _.padStart(m.toString(), 2, '0') + ':' + _.padStart(s.toString(), 2, '0')
+    const result = moment().startOf('day')
+    if (!this.hideHour) result.add(h, 'hour')
+    if (!this.hideMinute) result.add(m, 'minute')
+    if (!this.hideSecond) result.add(s, 'second')
+    return result.toDate()
   }
   setHour(h) {
     this.input(this.toTime(h, this.minute, this.second))
