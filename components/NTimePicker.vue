@@ -79,7 +79,7 @@ import _ from 'lodash'
 import NBase from './Base/NBase'
 @Component({})
 export default class NTimePicker extends Mixins(NBase) {
-  @Model('input', { type: Date, required: true }) value!: Date
+  @Model('input', { type: [Date, String], required: true }) value!: Date | string
   @Prop({ type: Number, default: 1 }) stepHour!: number
   @Prop({ type: Number, default: 1 }) stepMinute!: number
   @Prop({ type: Number, default: 1 }) stepSecond!: number
@@ -88,13 +88,13 @@ export default class NTimePicker extends Mixins(NBase) {
   @Prop({ type: Boolean, default: false }) hideHour!: number
 
   get hour() {
-    return moment(this.value).get('hour')
+    return moment.utc(this.value).get('hour')
   }
   get minute() {
-    return moment(this.value).get('minute')
+    return moment.utc(this.value).get('minute')
   }
   get second() {
-    return moment(this.value).get('second')
+    return moment.utc(this.value).get('second')
   }
   hours = _.range(0, 24, this.stepHour)
   minutes = _.range(0, 60, this.stepMinute)
@@ -118,11 +118,11 @@ export default class NTimePicker extends Mixins(NBase) {
   }
 
   toTime(h: number, m: number, s: number) {
-    const result = moment().startOf('day')
+    const result = moment.utc().startOf('day')
     if (!this.hideHour) result.add(h, 'hour')
     if (!this.hideMinute) result.add(m, 'minute')
     if (!this.hideSecond) result.add(s, 'second')
-    return result.toDate()
+    return result.toDate().toISOString()
   }
   setHour(h) {
     this.input(this.toTime(h, this.minute, this.second))

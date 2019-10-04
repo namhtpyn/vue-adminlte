@@ -1,5 +1,9 @@
 <template>
   <div>
+    {{ timepicker }}<br />
+    {{ timepicker instanceof Date ? timepicker.toJSON() : '' }}<br />
+    {{ timepicker instanceof Date ? timepicker.toISOString() : '' }}
+    <n-drop-down-time-picker v-model="timepicker"></n-drop-down-time-picker>
     <n-text-area v-model="textarea" :form="false" hide-error-text auto-grow></n-text-area>
     <n-select2 v-model="abc" :items="provinces" item-text="provinceName" item-value="provinceCode"></n-select2>
     <n-drop-down-table
@@ -168,7 +172,7 @@
       <n-tab title="abc" active>abc</n-tab>
       <n-tab title="def">def</n-tab>
     </n-tab-collection>
-    <!-- <n-drop-down-time-picker v-model="timepicker"></n-drop-down-time-picker>
+    <!--
     <n-drop-down-date-picker v-model="date"></n-drop-down-date-picker>
     <n-time-picker v-model="timepicker" hide-second :step-hour="2" :step-minute="15"></n-time-picker>
     <n-drop-down-table
@@ -335,7 +339,7 @@ export default class VApp extends Vue {
     { text: 'Tạm ngưng', value: 2, icon: 'times-circle' }
   ]
   today = '2019-09-27'
-  timepicker = '14:21:30'
+  timepicker = '2019-09-05T10:00:00'
   abc = ['PYN', 'HNI']
   date = moment().format('YYYY-MM-DD')
   deviceIP = null

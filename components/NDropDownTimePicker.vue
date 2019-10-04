@@ -44,7 +44,7 @@ export default class NDropDownTimePicker extends Mixins(NBase) {
   @Prop({ type: Boolean, default: false }) hideErrorText!: string
   @Prop(Array) rules!: any[]
 
-  @Model('input', { type: Date, required: true }) value!: Date
+  @Model('input', { type: [Date, String], required: true }) value!: Date | string
 
   valid: boolean = true
   lazyValidation: boolean = false
@@ -62,7 +62,7 @@ export default class NDropDownTimePicker extends Mixins(NBase) {
   get getText() {
     if (_.isNil(this.value)) return ''
     else {
-      const date = moment(this.value)
+      const date = moment.utc(this.value)
       const result: string[] = []
       if (!this.hideHour) result.push(_.padStart(date.get('hour').toString(), 2, '0'))
       if (!this.hideMinute) result.push(_.padStart(date.get('minute').toString(), 2, '0'))
