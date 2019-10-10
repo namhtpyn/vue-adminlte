@@ -26,7 +26,10 @@
         hihi
       </template>
       <template #body.1>
-        ok
+        b<br />
+        b<br />
+        b<br />
+        b<br />
       </template>
     </n-expandable-panel>
     n-data-table component

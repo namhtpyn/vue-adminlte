@@ -9,15 +9,15 @@
           <n-icon style="margin-left:auto" :class="`fa-chevron-${visible.includes(panelIndex) ? 'up' : 'down'}`"> </n-icon>
         </div>
       </div>
-      <!-- <transition name="n-expandable-panel"> -->
-      <div v-if="byIf(panelIndex)" v-show="visible.includes(panelIndex)" class="panel-collapse collapse in">
-        <div class="panel-body">
-          <slot :name="`body`">
-            <slot :name="`body.${panelIndex}`" :index="panelIndex"> body {{ panelIndex }} </slot>
-          </slot>
+      <n-expand-transition>
+        <div v-show="visible.includes(panelIndex)" class="panel-collapse">
+          <div class="panel-body">
+            <slot :name="`body`">
+              <slot :name="`body.${panelIndex}`" :index="panelIndex"> body {{ panelIndex }} </slot>
+            </slot>
+          </div>
         </div>
-      </div>
-      <!-- </transition> -->
+      </n-expand-transition>
     </div>
   </div>
 </template>
@@ -29,14 +29,8 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 export default class NExpandablePanel extends Vue {
   @Prop({ type: Number, default: 1 }) length!: number
   @Prop({ type: Boolean, default: false }) multiple!: boolean
-  @Prop({ type: Boolean, default: true }) lazy!: boolean
   @Prop({ type: Array, default: () => [] }) value!: number[]
   visible: number[] = [].concat(this.value)
-
-  byIf(panelIndex: number) {
-    if (!this.lazy) return true
-    return this.visible.includes(panelIndex)
-  }
 
   expandPanel(panelIndex: number) {
     const index = this.visible.findIndex(v => v === panelIndex)
@@ -49,12 +43,15 @@ export default class NExpandablePanel extends Vue {
 </script>
 
 <style>
-.n-expandable-panel-enter-active,
+/* .n-expandable-panel-enter-active,
 .n-expandable-panel-leave-active {
-  transition: opacity 0.15s ease-out;
+  transition: all 0.5s;
+} */
+/* .n-expandable-panel-enter-to,
+.n-expandable-panel-leave {
+  margin-top: 0;
 }
-.n-expandable-panel-enter,
-.n-expandable-panel-leave-to {
-  opacity: 0;
-}
+.n-expandable-panel-enter, .n-expandable-panel-leave-to  {
+  margin-top: -100%;
+} */
 </style>
