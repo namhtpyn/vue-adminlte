@@ -1,6 +1,6 @@
 <template>
   <div style="position:relative">
-    <canvas ref="linechart" :id="chartID" width="400" height="400"></canvas>
+    <canvas ref="linechart" :id="chartID" :height="height"></canvas>
     <n-overlay absolute :value="vLoading">
       <div style="text-align:center; color:#fff">
         <n-icon class="fa-spin fa-2x fa-fw">circle-o-notch</n-icon>
@@ -20,6 +20,8 @@ import camelcaseKeys from './Base/camelcaseKeys'
 @Component({})
 export default class NLineChart extends Mixins(NItems) {
   @Prop({ type: String, default: '' }) caption!: string
+  @Prop({ type: Number, default: 100 }) height!: number
+  chart: any
   vDefaultColors = [
     'rgb(255, 99, 132)',
     'rgb(255, 159, 64)',
@@ -30,9 +32,9 @@ export default class NLineChart extends Mixins(NItems) {
     'rgb(201, 203, 207)'
   ]
   drawChart() {
-    console.log(this.options)
     const ctx = this.$refs.linechart
-    new Chart(ctx, {
+    if (this.chart) this.chart.destroy()
+    this.chart = new Chart(ctx, {
       type: 'line',
       data: {
         labels: this.common.data,
@@ -44,6 +46,8 @@ export default class NLineChart extends Mixins(NItems) {
   get chartOptions() {
     return {
       responsive: true,
+      maintainAspectRatio: false,
+      aspectRatio: 3,
       //hoverMode: 'index',
       tooltips: {
         mode: 'index',

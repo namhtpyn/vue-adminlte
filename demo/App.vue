@@ -1,6 +1,6 @@
 <template>
   <div>
-    <n-line-chart :items="traffics" caption="HAHAHA">
+    <!-- <n-line-chart :items="traffics" caption="HAHAHA">
       <common text="In" value="Statisticdate"></common>
       <series>
         <item text="In" value="trafficIN"></item>
@@ -57,7 +57,16 @@
         <n-btn>a</n-btn>
       </template>
       <template #modal="modal"> </template>
-    </n-data-table>
+    </n-data-table> -->
+
+    <n-drop-down-tree
+      :items="units"
+      item-value="UnitID"
+      item-text="UnitName"
+      parent-key="ParentID"
+      sticky-search
+      searchable
+    ></n-drop-down-tree>
     <!-- <n-btn>AAA</n-btn>
     {{ checkboxModel }}
     <n-checkbox v-model="checkboxModel" :value="1"></n-checkbox>
