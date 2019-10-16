@@ -1,5 +1,13 @@
 <template>
   <div>
+    <n-line-chart :items="traffics" caption="HAHAHA">
+      <common text="In" value="Statisticdate"></common>
+      <series>
+        <item text="In" value="trafficIN"></item>
+        <item text="Out" value="trafficOut"></item>
+      </series>
+    </n-line-chart>
+    <n-date-picker></n-date-picker>
     n-data-table component
     <n-data-table
       read-url="/data/provinces.json"
@@ -57,7 +65,7 @@
     <n-date-picker v-model="datepickerModel"></n-date-picker>
     <n-drop-down-list></n-drop-down-list>
     <n-drop-down-date-picker v-model="datepickerModel"></n-drop-down-date-picker>
-    <n-time-picker v-model="timepickerModel"></n-time-picker>
+
     <n-drop-down-time-picker v-model="timepickerModel"></n-drop-down-time-picker>
     <n-text-box></n-text-box>
     <n-text-area auto-grow @input="input"></n-text-area>
@@ -112,6 +120,7 @@ export default class VApp extends Vue {
   timepickerModel: Date = new Date()
   provinces = provinces
   units = units
+  traffics = traffics
   input(e) {
     console.log(e)
   }

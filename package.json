@@ -14,7 +14,7 @@
   "author": "Nam Hoang",
   "license": "ISC",
   "devDependencies": {
-    "@namhoang/vue-property-decorator": "^1.0.6",
+    "@namhoang/vue-property-decorator": "^1.0.8",
     "@types/jquery": "^3.3.31",
     "@types/lodash": "^4.14.144",
     "@types/select2": "^4.0.48",

@@ -30,6 +30,7 @@ export default class NLineChart extends Mixins(NItems) {
     'rgb(201, 203, 207)'
   ]
   drawChart() {
+    console.log(this.options)
     const ctx = this.$refs.linechart
     new Chart(ctx, {
       type: 'line',
@@ -130,8 +131,8 @@ export default class NLineChart extends Mixins(NItems) {
       legend: { ...{ position: 'bottom' }, ...((legendNode && legendNode.data && camelcaseKeys(legendNode.data.attrs)) || {}) },
       stacked: (optionsNode && optionsNode.data && optionsNode.data.attrs && optionsNode.data.attrs.stacked) || false,
       scales: {
-        xAxes: xAxises,
-        yAxes: yAxises
+        xAxes: xAxises || [],
+        yAxes: yAxises || []
       },
       title: {
         display: !_.isEmpty(this.caption),

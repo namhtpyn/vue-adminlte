@@ -102,17 +102,17 @@ export default class NDatePicker extends Vue {
 .n-date-picker--data-table .n-date-picker--date-button,
 .n-date-picker--toolbar .n-date-picker--button {
   border-radius: 40px;
-  font-size: 11px;
+  font-size: 11px !important;
+  font-weight: normal !important;
   width: 30px;
   height: 30px;
-  padding: 8px 0px 0px 0px;
-  text-align: center;
-  margin-top: 1px;
+  padding: 0px;
+  margin: 1px;
   border: unset;
   background-color: transparent;
-}
-.n-date-picker--toolbar .n-date-picker--button {
-  padding: 8px 0px 0px 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .n-date-picker--data-table .n-date-picker--date-button:hover {
   background-color: #f4f4f4;

@@ -31,13 +31,14 @@ export default class NTabCollection extends Vue {
     return this.tabComponents.map((tab, index) => ({ index, text: tab.title, value: tab.value }))
   }
 
-  @Watch('tabActive', { immediate: this.changeOnCreated })
+  @Watch('tabActive')
   private onTabActiveChanged(newVal) {
     this.$emit('tab-change', this.headers[newVal])
   }
 
   init() {
-    this.tabComponents = this.$children.filter(child => child.$options.name === 'NTab') as NTab[]
+    this.tabComponents = this.$children.filter(child => (child.$options as any)._componentTag === 'n-tab') as NTab[]
+    if (this.changeOnCreated) this.onTabActiveChanged(this.tabActive)
   }
 
   tabClicked(header) {

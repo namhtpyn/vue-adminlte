@@ -15,7 +15,7 @@ export default class NRadioGroup extends Vue {
   @ModelVar('input', 'value', { type: [String, Number, Boolean, Object] }) vValue!: number | string | boolean | object
   private radioComponents: NRadio[] = []
   mounted() {
-    this.radioComponents = this.$children.filter(child => child.$options.name === 'NRadio') as NRadio[]
+    this.radioComponents = this.$children.filter(child => (child.$options as any)._componentTag === 'n-radio') as NRadio[]
     this.radioComponents.forEach(radio => {
       radio.vModel = this.vValue
       radio.$on('input', e => {

@@ -9,6 +9,7 @@ import NDropDownTable from '././NDropDownTable.vue'
 import NDropDownTimePicker from '././NDropDownTimePicker.vue'
 import NDropDownTree from '././NDropDownTree.vue'
 import NExpandablePanel from '././NExpandablePanel.vue'
+import NExpandTransition from '././NExpandTransition.vue'
 import NForm from '././NForm.vue'
 import NIcon from '././NIcon.vue'
 import NLineChart from '././NLineChart.vue'
@@ -35,6 +36,7 @@ Vue.component('NDropDownTable', NDropDownTable)
 Vue.component('NDropDownTimePicker', NDropDownTimePicker)
 Vue.component('NDropDownTree', NDropDownTree)
 Vue.component('NExpandablePanel', NExpandablePanel)
+Vue.component('NExpandTransition', NExpandTransition)
 Vue.component('NForm', NForm)
 Vue.component('NIcon', NIcon)
 Vue.component('NLineChart', NLineChart)

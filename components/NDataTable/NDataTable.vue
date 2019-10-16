@@ -238,6 +238,7 @@
 import { Component, Mixins, Watch, ModelVar } from '@namhoang/vue-property-decorator'
 
 import _ from 'lodash'
+import numeral from 'numeral'
 import XLSX from 'xlsx'
 
 import NTableData from './NTableData'
@@ -379,9 +380,14 @@ export default class NDataTable extends Mixins(mixin1, mixin2) {
     if (header.summary instanceof Function) {
       return header.summary(items)
     } else {
-      if (header.summary === 'sum') return items.reduce((a, b) => a + (Number(b[header.value]) || 0), 0)
-      else if (header.summary === 'count') return items.length
-      else if (header.summary === 'average') return items.reduce((a, b) => a + (Number(b[header.value]) || 0), 0) / items.length
+      if (header.summary === 'sum')
+        return items.reduce((a, b) => a.add(Number(b[header.value]) || 0), numeral(0)).format('0,0[.]00000')
+      else if (header.summary === 'count') return numeral(items.length).format('0,0[.]00')
+      else if (header.summary === 'average')
+        return items
+          .reduce((a, b) => a.add(Number(b[header.value]) || 0), numeral(0))
+          .divide(items.length)
+          .format('0,0[.]00000')
       return ''
     }
   }
