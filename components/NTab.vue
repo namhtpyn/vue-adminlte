@@ -1,17 +1,16 @@
 <template>
-  <div :id="id" :class="{ 'tab-pane': true, active: active }">
+  <div :class="{ 'tab-pane': true, active: vActive }">
     <slot></slot>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import { Component, Vue, Prop, PropVar } from '@namhoang/vue-property-decorator'
 @Component({ inheritAttrs: false })
 export default class NTab extends Vue {
-  @Prop({ type: Boolean, default: false }) active!: boolean
+  @PropVar('active', { type: Boolean, default: false }) vActive!: boolean
   @Prop({ type: [String, Number, Object] }) value!: string | number | object
   @Prop(String) title!: string
-  id: string = ''
 }
 </script>
 

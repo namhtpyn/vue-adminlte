@@ -1,19 +1,19 @@
 <template>
   <div :class="overlayCss" :style="overlayStyle">
     <div :class="scrimCss" :style="scrimStyle"></div>
-    <div v-if="value" class="n-overlay__content"><slot></slot></div>
+    <div v-if="vValue" class="n-overlay__content"><slot></slot></div>
   </div>
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator'
+import { Component, Prop, Vue, ModelVar } from '@namhoang/vue-property-decorator'
 @Component({ inheritAttrs: false })
 export default class NOverlay extends Vue {
-  @Prop({ type: Boolean, default: false }) value!: boolean
   @Prop({ type: Boolean, default: false }) absolute!: boolean
   @Prop({ type: [String, Number], default: 9999 }) zIndex!: number | string
   @Prop({ type: [String, Number], default: 0.46 }) opacity!: number | string
   @Prop({ type: [String], default: 'black' }) color!: string
+  @ModelVar('input', 'value', { type: Boolean, default: false }) vValue!: boolean
 
   get overlayStyle() {
     let style = ''
@@ -23,12 +23,12 @@ export default class NOverlay extends Vue {
   }
   get scrimStyle() {
     let style = ''
-    style += this.opacity ? `opacity:${this.value ? this.opacity : 0}; ` : ''
+    style += this.opacity ? `opacity:${this.vValue ? this.opacity : 0}; ` : ''
     return style
   }
   get overlayCss() {
     let css = 'n-overlay '
-    css += this.value ? 'n-overlay--active ' : ''
+    css += this.vValue ? 'n-overlay--active ' : ''
     return css
   }
   get scrimCss() {

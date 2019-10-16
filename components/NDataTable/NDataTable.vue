@@ -99,17 +99,16 @@
                     <n-checkbox
                       :ref="`checkbox-${item.index}`"
                       v-if="multipleSelect"
-                      :model="value"
-                      @input="input"
-                      @click.stop=""
+                      v-model="vValue"
+                      @click.stop
                       :value="keyField ? item.data[keyField] : item.data"
                     ></n-checkbox>
                     <n-radio
                       v-else
                       :ref="`radio-${item.index}`"
+                      v-model="vValue"
                       @input="input"
-                      @click.stop=""
-                      :model="value"
+                      @click.stop
                       :value="keyField ? item.data[keyField] : item.data"
                     ></n-radio>
                   </template>
@@ -236,7 +235,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Mixins, Watch } from 'vue-property-decorator'
+import { Component, Mixins, Watch, ModelVar } from '@namhoang/vue-property-decorator'
 
 import _ from 'lodash'
 import XLSX from 'xlsx'
@@ -261,6 +260,7 @@ class mixin2 extends Mixins(NTableCssClass, NTableText) {}
   inheritAttrs: false
 })
 export default class NDataTable extends Mixins(mixin1, mixin2) {
+  @ModelVar('input', 'value', { type: [Array, String, Number, Boolean, Object] }) vValue!: any[] | any
   createClick(e) {
     this.vModal.visible = true
     this.vModal.data = _.cloneDeep(this.newItem)
@@ -306,7 +306,13 @@ export default class NDataTable extends Mixins(mixin1, mixin2) {
       this.multipleExpand ? this.vExpansion.push(itemIndex) : (this.vExpansion = [itemIndex])
     else this.vExpansion.splice(this.vExpansion.findIndex(i => i === itemIndex), 1)
   }
-  vFilterModal = {
+  vFilterModal: {
+    items: any[]
+    name: string
+    value: any[]
+    visible: boolean
+    encodeHtml: boolean
+  } = {
     items: [],
     name: '',
     value: [],
@@ -344,7 +350,7 @@ export default class NDataTable extends Mixins(mixin1, mixin2) {
   /** headers */
 
   private headerCellStyle(header: TableHeader) {
-    const style = []
+    const style: any[] = []
     if (header.width) {
       style.push({ width: header.width })
       style.push({ 'min-width': header.width })
@@ -357,7 +363,7 @@ export default class NDataTable extends Mixins(mixin1, mixin2) {
     return style
   }
   private cellStyle(header: TableHeader) {
-    const style = []
+    const style: any = []
     if (header.width) {
       style.push({ width: header.width })
       style.push({ 'min-width': header.width })
@@ -373,9 +379,9 @@ export default class NDataTable extends Mixins(mixin1, mixin2) {
     if (header.summary instanceof Function) {
       return header.summary(items)
     } else {
-      if (header.summary === 'sum') return items.reduce((a, b) => a + (b[header.value] || 0), 0)
+      if (header.summary === 'sum') return items.reduce((a, b) => a + (Number(b[header.value]) || 0), 0)
       else if (header.summary === 'count') return items.length
-      else if (header.summary === 'average') return items.reduce((a, b) => a + (b[header.value] || 0), 0) / items.length
+      else if (header.summary === 'average') return items.reduce((a, b) => a + (Number(b[header.value]) || 0), 0) / items.length
       return ''
     }
   }
@@ -383,9 +389,9 @@ export default class NDataTable extends Mixins(mixin1, mixin2) {
   async selectAll(e) {
     if (!this.selectable || !this.multipleSelect) return
     if (e) {
-      if (!this.keyField) this.input(this.vItems)
-      else this.input(this.vItems.map(i => i[this.keyField]))
-    } else this.input([])
+      if (!this.keyField) this.vValue = _.cloneDeep(this.vItems)
+      else this.vValue = this.vItems.map(i => i[this.keyField])
+    } else this.vValue = []
   }
   /**helper function */
 

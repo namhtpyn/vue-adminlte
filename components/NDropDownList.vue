@@ -7,7 +7,9 @@
       <span v-if="!useModal" :class="`fa fa-caret-${data.isOpen ? 'up' : 'down'} form-control-feedback`"></span>
     </div>
     <div v-if="!useModal" v-show="data.isOpen" class="form-control drop-down-container" :style="containerStyle">
-      <slot name="content" :data="data"></slot>
+      <slot name="content" :data="data">
+        Placeholder
+      </slot>
     </div>
     <n-modal
       :caption="hint"
@@ -27,7 +29,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Emit, Mixins, Watch } from 'vue-property-decorator'
+import { Component, Prop, Emit, Mixins, Watch } from '@namhoang/vue-property-decorator'
 import vClickOutside from 'v-click-outside'
 import NBase from './Base/NBase'
 @Component({
@@ -84,6 +86,11 @@ export default class NDropDownList extends Mixins(NBase) {
     if (n) this.componentWidth = this.$el.clientWidth
   }
   componentWidth: number = 0
+  mounted() {
+    window.addEventListener('resize', () => {
+      this.componentWidth = this.$el.clientWidth
+    })
+  }
   get containerStyle() {
     return {
       width: this.dropDownWidth ? `${this.dropDownWidth}px` : 'fit-content',

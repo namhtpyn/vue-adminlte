@@ -36,13 +36,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Model, Prop, Mixins, Watch } from 'vue-property-decorator'
+import { Component, Prop, Watch, ModelVar, Mixins } from '@namhoang/vue-property-decorator'
 import _ from 'lodash'
-import NDataSource from './Base/NDataSource'
-import NBase from './Base/NBase'
 import NDataTable from './NDataTable/index.vue'
+import NItems from './Base/NItems'
 @Component({ inheritAttrs: false })
-export default class NDropDownTable extends Mixins(NBase, NDataSource) {
+export default class NDropDownTable extends Mixins(NItems) {
   @Prop({ type: String, default: 'text' }) itemText!: string
   @Prop({ type: String, default: 'value' }) itemValue!: string
   @Prop({ type: Boolean, default: false }) searchable!: boolean
@@ -55,7 +54,7 @@ export default class NDropDownTable extends Mixins(NBase, NDataSource) {
   @Prop({ type: Boolean, default: false }) hideErrorText!: string
   @Prop(Array) rules!: any[]
 
-  @Model('input', [String, Number, Array]) value!: any | any[]
+  @ModelVar('input', 'value', [String, Number, Array]) vValue!: any | any[]
 
   valid: boolean = true
   lazyValidation: boolean = false
@@ -73,19 +72,19 @@ export default class NDropDownTable extends Mixins(NBase, NDataSource) {
   get getText() {
     if (this.multiple) {
       return this.vItems
-        .filter(item => (this.value as any[]).includes(item[this.itemValue]))
+        .filter(item => (this.vValue as any[]).includes(item[this.itemValue]))
         .map(item => (item[this.itemText] || '').toString())
         .join('; ')
     } else {
-      const item = this.vItems.find(item => item[this.itemValue] === this.value)
+      const item = this.vItems.find(item => item[this.itemValue] === this.vValue)
       if (item) return (item[this.itemText] || '').toString()
     }
     return ''
   }
   get errorText() {
     if (!this.valid && this.rules) {
-      const f = this.rules.find(r => r(this.value) !== true)
-      return f ? f(this.value) : ''
+      const f = this.rules.find(r => r(this.vValue) !== true)
+      return f ? f(this.vValue) : ''
     }
     return ''
   }
@@ -102,7 +101,7 @@ export default class NDropDownTable extends Mixins(NBase, NDataSource) {
     if (!this.multiple) this.$nextTick(() => (data.isOpen = false))
   }
 
-  @Watch('value')
+  @Watch('vValue', { immediate: true })
   onValueChanged(value) {
     this.$nextTick(() => {
       if (!this.valid || !this.lazyValidation) {
@@ -112,8 +111,8 @@ export default class NDropDownTable extends Mixins(NBase, NDataSource) {
   }
 
   get selectedValue() {
-    if (Array.isArray(this.value)) return this.vItems.filter(item => (this.value as any[]).includes(item[this.itemValue])) || []
-    else return this.vItems.find(item => item[this.itemValue] === this.value) || {}
+    if (Array.isArray(this.vValue)) return this.vItems.filter(item => (this.vValue as any[]).includes(item[this.itemValue])) || []
+    else return this.vItems.find(item => item[this.itemValue] === this.vValue) || {}
   }
   set selectedValue(values) {
     if (!_.isNil(values)) {
@@ -121,14 +120,11 @@ export default class NDropDownTable extends Mixins(NBase, NDataSource) {
       if (Array.isArray(values)) output = values.map(v => v[this.itemValue])
       else output = values[this.itemValue]
 
-      if (!_.isNil(output) && !_.isEqual(output, this.value)) this.input(output)
+      if (!_.isNil(output) && !_.isEqual(output, this.vValue)) this.vValue = output
     }
   }
-  created() {
-    this.onValueChanged(this.value)
-  }
   get componentStyle() {
-    const style = []
+    const style: object[] = []
     if (this.vLoading) style.push({ position: 'relative' })
     return style
   }

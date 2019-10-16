@@ -6,7 +6,7 @@
     <n-drop-down-list :text="getText" :small="small" :large="large" v-bind="$attrs">
       <template #content="{data}">
         <div style="display: flex; justify-content: center;">
-          <n-date-picker :value="value" @input="v => onDatePicked(v, data)"></n-date-picker>
+          <n-date-picker :value="vValue" @input="v => onDatePicked(v, data)"></n-date-picker>
         </div>
       </template>
     </n-drop-down-list>
@@ -15,12 +15,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Model, Prop, Mixins } from 'vue-property-decorator'
+import { Component, Prop, Vue, ModelVar } from '@namhoang/vue-property-decorator'
 import _ from 'lodash'
-import NBase from './Base/NBase'
 import moment from 'moment'
 @Component({ inheritAttrs: false })
-export default class NDropDownDatePicker extends Mixins(NBase) {
+export default class NDropDownDatePicker extends Vue {
+  @ModelVar('input', 'value', { type: String }) vValue!: string
   @Prop({ type: String, default: 'DD/MM/YYYY' }) format!: string
 
   @Prop(String) label!: string
@@ -29,8 +29,6 @@ export default class NDropDownDatePicker extends Mixins(NBase) {
   @Prop({ type: Boolean, default: true }) form!: boolean
   @Prop({ type: Boolean, default: false }) hideErrorText!: string
   @Prop(Array) rules!: any[]
-
-  @Model('input', { type: String, required: true }) value!: string
 
   valid: boolean = true
   lazyValidation: boolean = false
@@ -46,25 +44,25 @@ export default class NDropDownDatePicker extends Mixins(NBase) {
   }
   //search=
   get getText() {
-    if (_.isNil(this.value)) return ''
-    else return moment(this.value).format(this.format)
+    return moment(this.vValue).isValid() ? moment(this.vValue).format(this.format) : ''
   }
   get errorText() {
     if (!this.valid && this.rules) {
-      const f = this.rules.find(r => r(this.value) !== true)
-      return f ? f(this.value) : ''
+      const f = this.rules.find(r => r(this.vValue) !== true)
+      return f ? f(this.vValue) : ''
     }
     return ''
+  }
+
+  onDatePicked(v, data) {
+    this.$nextTick(() => (data.isOpen = false))
+    this.vValue = v
+    if (!this.lazyValidation || !this.valid) this.validate(v)
   }
   validate(value) {
     this.valid = true
     if (this.rules) this.valid = !this.rules.some(e => e(value) !== true)
     return this.valid
-  }
-  onDatePicked(v, data) {
-    this.$nextTick(() => (data.isOpen = false))
-    this.input(v)
-    if (!this.lazyValidation || !this.valid) this.validate(v)
   }
 }
 </script>

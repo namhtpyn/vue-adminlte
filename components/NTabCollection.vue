@@ -1,8 +1,8 @@
 <template>
   <div class="nav nav-tabs-custom">
     <ul class="nav nav-tabs">
-      <li v-for="(i, k) in headers" :key="k" :class="{ active: k === tabActive }">
-        <a :href="`#n-tab-${k}`" data-toggle="tab" @click="tabClicked(i)">{{ i.text }}</a>
+      <li v-for="header in headers" :key="header.index" :class="{ active: header.index === tabActive }">
+        <a href="#" @click.stop="tabClicked(header)">{{ header.text }}</a>
       </li>
     </ul>
     <div class="tab-content">
@@ -12,13 +12,10 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Watch, Mixins } from 'vue-property-decorator'
-import _ from 'lodash'
-import NBase from './Base/NBase'
+import { Component, Prop, Watch, Vue } from '@namhoang/vue-property-decorator'
 import NTab from './NTab.vue'
-import { VueNode } from '../extension/VueSlot'
 @Component({ inheritAttrs: false })
-export default class NTabCollection extends Mixins(NBase) {
+export default class NTabCollection extends Vue {
   @Prop({ type: Boolean, default: false }) changeOnCreated!: boolean
   private valueTabActive: any = null
   private tabComponents: NTab[] = []
@@ -27,45 +24,25 @@ export default class NTabCollection extends Mixins(NBase) {
   }
 
   get tabActive() {
-    if (!_.isEmpty(this.tabComponents)) {
-      const idx = this.tabComponents.findIndex(t => t.active)
-      if (idx < 0) return 0
-      return idx
-    }
-    return -1
+    return this.tabComponents.findIndex(t => t.vActive)
   }
 
   get headers() {
-    let result: { text: string; value: any }[] = []
-    if (!_.isEmpty(this.tabComponents))
-      result = this.tabComponents.map(t => {
-        return { text: t.title, value: t.value }
-      })
-    return result
+    return this.tabComponents.map((tab, index) => ({ index, text: tab.title, value: tab.value }))
   }
 
-  @Watch('valueTabActive')
-  private onValueTabActiveChange(n, o) {
-    this.$emit('tab-change', n)
+  @Watch('tabActive', { immediate: this.changeOnCreated })
+  private onTabActiveChanged(newVal) {
+    this.$emit('tab-change', this.headers[newVal])
   }
 
   init() {
-    const nodes = this.vSlot.find(
-      (node: VueNode) => node.isComponent && (node.componentInstance.$options as any)._componentTag === 'n-tab'
-    )
-    this.tabComponents = nodes.map(o => o.componentInstance as NTab)
-    this.setTabID()
-    if (this.changeOnCreated && !_.isEmpty(this.headers)) this.valueTabActive = this.headers[this.tabActive].value
+    this.tabComponents = this.$children.filter(child => child.$options.name === 'NTab') as NTab[]
   }
 
-  tabClicked(item) {
-    this.valueTabActive = item.value
-  }
-
-  private setTabID() {
-    this.tabComponents.forEach((component, index) => {
-      component.id = 'n-tab-' + index
-    })
+  tabClicked(header) {
+    this.tabComponents.forEach(tab => (tab.vActive = false))
+    this.tabComponents[header.index].vActive = true
   }
 }
 </script>

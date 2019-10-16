@@ -35,12 +35,13 @@
 </template>
 
 <script lang="ts">
-import { Component, Model, Prop, Mixins, Ref, Emit } from 'vue-property-decorator'
+import { Component, Prop, Mixins, Emit, Ref, ModelVar } from '@namhoang/vue-property-decorator'
 import _ from 'lodash'
 import NTree from './NTree.vue'
-import NDataSource from './Base/NDataSource'
+import NItems from './Base/NItems'
 @Component({})
-export default class NDropDownTree extends Mixins(NDataSource) {
+export default class NDropDownTree extends Mixins(NItems) {
+  @ModelVar('input', 'value', [String, Number]) vValue!: string | number
   @Prop({ type: String, default: 'none' }) treeNodeIcon!: string
   @Prop({ type: Boolean, default: false }) treeExpandAll!: boolean
   @Prop({ type: Boolean, default: false }) searchable!: boolean
@@ -57,7 +58,6 @@ export default class NDropDownTree extends Mixins(NDataSource) {
   @Prop({ type: Boolean, default: false }) hideErrorText!: string
   @Prop(Array) rules!: any[]
   @Ref('tree') tree!: NTree
-  @Model('input', [String, Number]) value!: string | number
   @Emit() select(e) {}
 
   //treeItems: any[] = []
@@ -65,7 +65,7 @@ export default class NDropDownTree extends Mixins(NDataSource) {
   lazyValidation: boolean = false
 
   get text() {
-    const item = this.vItems.find(item => item[this.itemValue] === this.value)
+    const item = this.vItems.find(item => item[this.itemValue] === this.vValue)
     if (item) return (item[this.itemText] || '').toString()
     return ''
   }
@@ -82,8 +82,8 @@ export default class NDropDownTree extends Mixins(NDataSource) {
   }
   get errorText() {
     if (!this.valid && this.rules) {
-      const f = this.rules.find(r => r(this.value) !== true)
-      return f ? f(this.value) : ''
+      const f = this.rules.find(r => r(this.vValue) !== true)
+      return f ? f(this.vValue) : ''
     }
     return ''
   }
@@ -93,7 +93,7 @@ export default class NDropDownTree extends Mixins(NDataSource) {
     return this.valid
   }
   private itemSelect(item, data) {
-    this.input(item[this.itemValue])
+    this.vValue = item[this.itemValue]
     this.select(item)
     if (!this.lazyValidation || !this.valid) this.validate(item[this.itemValue])
     data.isOpen = false
@@ -107,7 +107,7 @@ export default class NDropDownTree extends Mixins(NDataSource) {
   }
 
   get componentStyle() {
-    const style = []
+    const style: any[] = []
     if (this.vLoading) style.push({ position: 'relative' })
     return style
   }

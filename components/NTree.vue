@@ -21,12 +21,13 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Model, Emit, Watch, Mixins } from 'vue-property-decorator'
+//todo this render dom way to much => need to rewrite without jquery
+import { Component, Prop, Emit, Watch, Mixins, ModelVar } from '@namhoang/vue-property-decorator'
 import _ from 'lodash'
-import NDataSource from './Base/NDataSource'
 import diacritics from 'remove-all-diacritics'
+import NItems from './Base/NItems'
 @Component({ inheritAttrs: false })
-export default class NTree extends Mixins(NDataSource) {
+export default class NTree extends Mixins(NItems) {
   @Prop({ type: String, default: 'none' }) icon!: string
   @Prop({ type: Boolean, default: false }) multiple!: boolean
   @Prop({ type: Boolean, default: false }) expandAll!: boolean
@@ -37,8 +38,7 @@ export default class NTree extends Mixins(NDataSource) {
   @Prop({ type: String, default: 'value' }) itemValue!: string
   @Prop({ type: String, default: 'text' }) itemText!: string
   @Prop({ type: String, default: 'parentID' }) parentKey!: string
-
-  @Model('input', [String, Number]) value!: string | number
+  @ModelVar('input', 'value', [String, Number]) vValue!: string | number
 
   @Emit() select(e) {}
   @Emit() loaded(e) {
@@ -62,7 +62,7 @@ export default class NTree extends Mixins(NDataSource) {
         id: m[this.itemValue],
         text: m[this.itemText],
         parentID: m[this.parentKey],
-        state: { opened: false, showed: true, selected: m[this.itemValue] === this.value }
+        state: { opened: false, showed: true, selected: m[this.itemValue] === (this as any).value }
       }
     })
     const convertData = this.convertHereditaryToObject(itemsMap, root, 1)
@@ -106,14 +106,14 @@ export default class NTree extends Mixins(NDataSource) {
       })
       .on('loaded.jstree', this.loaded)
       .on('select_node.jstree', (e, data) => {
-        this.input(data.selected[0])
+        this.vValue = data.selected[0]
         const node = this.vItems.find(o => _.isEqual(String(o[this.itemValue]), data.selected[0]))
         this.select(node)
       })
   }
   focusSelectedNode() {
-    if (!this.value) return
-    const node = this.theTree.jstree().get_node(this.value)
+    if (!this.vValue) return
+    const node = this.theTree.jstree().get_node(this.vValue)
     if (node && !_.isEmpty(node.a_attr)) {
       $(this.$el)
         .find(`#${node.a_attr.id}`)

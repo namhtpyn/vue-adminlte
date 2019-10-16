@@ -18,11 +18,11 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Model, Watch, Mixins, Emit } from 'vue-property-decorator'
+import { Component, Prop, Watch, Mixins, ModelVar } from '@namhoang/vue-property-decorator'
 import _ from 'lodash'
-import NDataSource from './Base/NDataSource'
+import NItems from './Base/NItems'
 @Component({ inheritAttrs: false })
-export default class NSelect2 extends Mixins(NDataSource) {
+export default class NSelect2 extends Mixins(NItems) {
   @Prop({ type: String, default: '' }) cssClass!: string
   @Prop({ type: Boolean, default: false }) clearable!: boolean
   @Prop({ type: Boolean, default: false }) disabled!: boolean
@@ -38,8 +38,8 @@ export default class NSelect2 extends Mixins(NDataSource) {
   @Prop(String) hint!: string
   @Prop(String) label!: string
   @Prop(Array) rules!: any[]
-  @Model('input', [String, Number, Array, Object]) value!: any[] | any
-  @Emit() async input(e) {
+  @ModelVar('input', 'value', [String, Number, Array, Object]) vValue!: any[] | any
+  input(e) {
     if (!this.lazyValidation || !this.valid) this.validate(e)
   }
 
@@ -57,8 +57,8 @@ export default class NSelect2 extends Mixins(NDataSource) {
   }
   get errorText() {
     if (this.rules) {
-      const f = this.rules.find(r => r(this.value) !== true)
-      return f ? f(this.value) : ''
+      const f = this.rules.find(r => r(this.vValue) !== true)
+      return f ? f(this.vValue) : ''
     }
     return ''
   }
@@ -89,7 +89,7 @@ export default class NSelect2 extends Mixins(NDataSource) {
       ;($(this.$el).find('span.select2-selection') as any).css('border-color', '#dd4b39')
     }
   }
-  @Watch('value')
+  @Watch('vValue')
   private onValueChange(n, o) {
     this.theSelect.val(this.tryParseNumber(n)).trigger('change')
   }
@@ -129,8 +129,8 @@ export default class NSelect2 extends Mixins(NDataSource) {
           )
         }
       })
-      .on('select2:select', e => this.input(this.tryParseNumber($(e.target).val())))
-      .val(this.value)
+      .on('select2:select', e => (this.vValue = this.tryParseNumber($(e.target).val())))
+      .val(this.vValue)
       .trigger('change')
     this.setSize()
   }

@@ -1,10 +1,10 @@
-import { Component, Mixins } from 'vue-property-decorator'
+import { Component, Mixins } from '@namhoang/vue-property-decorator'
 import _ from 'lodash'
 import axios from 'axios'
 import NTableProp from './NTableProp'
-import NData from './../Base/NDataSource'
+import NItems from '../Base/NItems'
 @Component({})
-export default class NTableCRUD extends Mixins(NData, NTableProp) {
+export default class NTableCRUD extends Mixins(NItems, NTableProp) {
   vModal = {
     visible: false,
     data: {},

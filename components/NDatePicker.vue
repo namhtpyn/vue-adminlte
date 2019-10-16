@@ -5,7 +5,7 @@
       <n-btn @click.stop="goToPreviousMonth" class="n-date-picker--button">
         <i class="fa fa-angle-left" aria-hidden="true"></i>
       </n-btn>
-      <div>{{ moment(vDate).format('MMMM YYYY') }}</div>
+      <div>{{ monthText }}</div>
       <n-btn @click.stop="goToNextMonth" class="n-date-picker--button">
         <i class="fa fa-angle-right" aria-hidden="true"></i>
       </n-btn>
@@ -25,13 +25,9 @@
         </thead>
         <tr v-for="(week, weekIndex) in datesInMonth" :key="weekIndex">
           <td v-for="(day, dayIndex) in week" :key="dayIndex">
-            <n-btn
-              class="n-date-picker--date-button"
-              :class="dateBtnClass(day)"
-              v-if="!isEmpty(day)"
-              @click.stop="input(day.format('YYYY-MM-DD'))"
-              >{{ day.format('D') }}</n-btn
-            >
+            <n-btn class="n-date-picker--date-button" :class="dateBtnClass(day)" v-if="!!day" @click.stop="dateSelected(day)">{{
+              day.format('D')
+            }}</n-btn>
           </td>
         </tr>
       </table>
@@ -39,19 +35,19 @@
   </div>
 </template>
 <script lang="ts">
-import { Component, Model } from 'vue-property-decorator'
+import { Component, Vue, ModelVar } from '@namhoang/vue-property-decorator'
 import moment, { Moment } from 'moment'
 import _ from 'lodash'
-import { mixins } from 'vue-class-component'
-import NBase from './Base/NBase'
 //import _ from 'lodash'
 @Component({})
-export default class NDatePicker extends mixins(NBase) {
-  @Model('input', { type: String, required: true }) value!: string
-
+export default class NDatePicker extends Vue {
+  @ModelVar('input', 'value', { type: String }) vValue!: string
   vCurrentDate = moment().toDate()
-  vDate = moment(this.value).toDate()
+  vDate = moment(this.vValue).toDate()
 
+  get monthText() {
+    return moment(this.vDate).format('MMMM YYYY')
+  }
   get firstDateOfMonth() {
     return moment(this.vDate).startOf('month')
   }
@@ -78,19 +74,14 @@ export default class NDatePicker extends mixins(NBase) {
       .add(1, 'month')
       .toDate()
   }
-  created() {}
-  mounted() {}
-  isEmpty(e) {
-    return _.isEmpty(e)
-  }
   dateBtnClass(date: Moment) {
     return {
       current: date.isSame(moment(this.vCurrentDate), 'day'),
-      active: date.isSame(moment(this.value), 'day')
+      active: date.isSame(moment(this.vValue), 'day')
     }
   }
-  moment(e) {
-    return moment(e)
+  dateSelected(date: Moment) {
+    this.vValue = date.format('YYYY-MM-DD')
   }
 }
 </script>

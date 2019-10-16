@@ -17,17 +17,18 @@
 
 <script lang="ts">
 import _ from 'lodash'
-import { Component, Prop, Emit, Model, Mixins } from 'vue-property-decorator'
-import NDataSource from './Base/NDataSource'
+import { Component, Prop, Mixins, ModelVar } from '@namhoang/vue-property-decorator'
+import NItems from './Base/NItems'
 @Component({ inheritAttrs: false })
-export default class NSelect extends Mixins(NDataSource) {
+export default class NSelect extends Mixins(NItems) {
+  @ModelVar('input', 'value', { type: [String, Number] }) vValue!: string | number
   @Prop({ type: Boolean, default: false }) hideErrorText!: boolean
   @Prop(String) label!: string
   @Prop(Array) rules!: any[]
   @Prop({ type: String, default: 'text' }) itemText!: string
   @Prop({ type: String, default: 'value' }) itemValue!: string
-  @Model('input') value!: any
-  @Emit() async input(e) {
+  input(e) {
+    this.vValue = e
     this.validate(e)
   }
   valid: boolean = true
@@ -37,8 +38,8 @@ export default class NSelect extends Mixins(NDataSource) {
   }
   get errorText() {
     if (this.rules) {
-      const f = this.rules.find(r => r(this.value) !== true)
-      return f ? f(this.value) : ''
+      const f = this.rules.find(r => r(this.vValue) !== true)
+      return f ? f(this.vValue) : ''
     }
     return ''
   }

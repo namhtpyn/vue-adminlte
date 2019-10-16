@@ -3,11 +3,12 @@
     <label v-if="hasLabel" class="control-label" :style="styleLabel">
       {{ label }}
     </label>
-    <n-drop-down-list :text="getText" :small="small" :large="large" v-bind="$attrs">
+    <n-drop-down-list :text="getText" :small="small" :large="large" v-bind="$attrs" @open="onOpen">
       <template #content="{data}">
         <div style="display: flex; justify-content: center;">
           <n-time-picker
-            :value="value"
+            ref="timePicker"
+            :value="vValue"
             @input="v => onTimePicked(v, data)"
             :step-hour="stepHour"
             :step-minute="stepMinute"
@@ -24,12 +25,14 @@
 </template>
 
 <script lang="ts">
-import { Component, Model, Prop, Mixins } from 'vue-property-decorator'
+import { Component, Prop, Vue, Ref, ModelVar } from '@namhoang/vue-property-decorator'
 import _ from 'lodash'
 import moment from 'moment'
-import NBase from './Base/NBase'
+import NTimePicker from './NTimePicker.vue'
 @Component({ inheritAttrs: false })
-export default class NDropDownTimePicker extends Mixins(NBase) {
+export default class NDropDownTimePicker extends Vue {
+  @ModelVar('input', 'value', { type: [Date, String] }) vValue!: Date | string
+
   @Prop({ type: Number, default: 1 }) stepHour!: number
   @Prop({ type: Number, default: 1 }) stepMinute!: number
   @Prop({ type: Number, default: 1 }) stepSecond!: number
@@ -43,8 +46,7 @@ export default class NDropDownTimePicker extends Mixins(NBase) {
   @Prop({ type: Boolean, default: true }) form!: boolean
   @Prop({ type: Boolean, default: false }) hideErrorText!: string
   @Prop(Array) rules!: any[]
-
-  @Model('input', { type: [Date, String], required: true }) value!: Date | string
+  @Ref('timePicker') timePicker!: NTimePicker
 
   valid: boolean = true
   lazyValidation: boolean = false
@@ -60,20 +62,18 @@ export default class NDropDownTimePicker extends Mixins(NBase) {
   }
   //search=
   get getText() {
-    if (_.isNil(this.value)) return ''
-    else {
-      const date = moment.utc(this.value)
-      const result: string[] = []
-      if (!this.hideHour) result.push(_.padStart(date.get('hour').toString(), 2, '0'))
-      if (!this.hideMinute) result.push(_.padStart(date.get('minute').toString(), 2, '0'))
-      if (!this.hideSecond) result.push(_.padStart(date.get('second').toString(), 2, '0'))
-      return result.join(':')
-    }
+    const date = moment.utc(this.vValue)
+    if (!date.isValid()) return ''
+    const result: string[] = []
+    if (!this.hideHour) result.push(_.padStart(date.get('hour').toString(), 2, '0'))
+    if (!this.hideMinute) result.push(_.padStart(date.get('minute').toString(), 2, '0'))
+    if (!this.hideSecond) result.push(_.padStart(date.get('second').toString(), 2, '0'))
+    return result.join(':')
   }
   get errorText() {
     if (!this.valid && this.rules) {
-      const f = this.rules.find(r => r(this.value) !== true)
-      return f ? f(this.value) : ''
+      const f = this.rules.find(r => r(this.vValue) !== true)
+      return f ? f(this.vValue) : ''
     }
     return ''
   }
@@ -84,8 +84,11 @@ export default class NDropDownTimePicker extends Mixins(NBase) {
   }
   onTimePicked(v, data) {
     //this.$nextTick(() => (data.isOpen = false))
-    this.input(v)
+    this.vValue = v
     if (!this.lazyValidation || !this.valid) this.validate(v)
+  }
+  onOpen() {
+    this.$nextTick(() => this.timePicker.scrollIntoViewIfNeeded())
   }
 }
 </script>

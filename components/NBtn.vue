@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, Emit } from 'vue-property-decorator'
+import { Component, Vue, Prop, Emit } from '@namhoang/vue-property-decorator'
 @Component({ inheritAttrs: false })
 export default class NBtn extends Vue {
   @Prop({ type: String, default: 'default' }) readonly color!: string

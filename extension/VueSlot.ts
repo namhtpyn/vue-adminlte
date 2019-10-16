@@ -2,12 +2,12 @@
 import _ from 'lodash'
 import Vue, { VNode } from 'vue'
 export class VueNode {
-  tag: string
-  isComponent: boolean
-  componentInstance: Vue
+  tag?: string
+  isComponent?: boolean
+  componentInstance?: Vue
   attrs: any = {}
   children: VueNode[] = []
-  text: string
+  text?: string
 }
 export default class VueSlot {
   constructor(slot: VNode[]) {

@@ -2,13 +2,13 @@ import _ from 'lodash'
 export class TableHeader {
   text: string = ''
   value: string = ''
-  kebabValue: Function = function() {
+  kebabValue: Function = () => {
     return _.kebabCase(this.value)
   }
-  type?: 'text' | 'number' | 'date' | 'time' | 'datetime' | 'band' | 'image' | 'checkbox' = 'text'
+  type: string = 'text'
   width?: string
-  align?: 'left' | 'right' | 'center' | 'justify' | 'initial' | 'inherit' = 'left'
-  valign?:
+  align: 'left' | 'right' | 'center' | 'justify' | 'initial' | 'inherit' = 'left'
+  valign:
     | 'baseline'
     | 'length'
     | 'sub'
@@ -22,9 +22,9 @@ export class TableHeader {
     | 'inherit' = 'middle'
   bgcolor?: string
   color?: string
-  sortable?: boolean = false
-  headerAlign?: 'left' | 'right' | 'center' | 'justify' | 'initial' | 'inherit' = 'left'
-  headerValign?:
+  sortable: boolean = false
+  headerAlign: 'left' | 'right' | 'center' | 'justify' | 'initial' | 'inherit' = 'left'
+  headerValign:
     | 'baseline'
     | 'length'
     | 'sub'
@@ -36,24 +36,24 @@ export class TableHeader {
     | 'text-bottom'
     | 'initial'
     | 'inherit' = 'middle'
-  headerBgcolor?: string = '#3c8dbc'
-  headerColor?: string = '#ffffff'
+  headerBgcolor: string = '#3c8dbc'
+  headerColor: string = '#ffffff'
   summary?: string | Function
-  format?: Function = v => v
+  format: Function = v => v
   children?: TableHeader[]
-  encodeHtml?: boolean = true
-  grouped?: boolean = false
-  merged?: boolean = false
+  encodeHtml: boolean = true
+  grouped: boolean = false
+  merged: boolean = false
   _colspan: number = 1
   _rowspan: number = 1
 }
 
 export class TableItem {
-  index?: number
-  data?: any[]
+  index: number = 0
+  data: any = {}
   type: 'item' | 'expand' | 'group' = 'item'
   visible: boolean = true
-  group: { text: string; header: TableHeader; level: number }
+  group?: { text: string; header: TableHeader; level: number }
   _rowspan: number = 1
   constructor(index: number, data: any[]) {
     this.index = index
@@ -62,16 +62,16 @@ export class TableItem {
 }
 
 export class TableSort {
-  name?: string = ''
-  desc?: boolean = false
+  name: string = ''
+  desc: boolean = false
   constructor(name: string, desc: boolean = false) {
     this.name = name
     this.desc = desc
   }
 }
 export class TableFilter {
-  name?: string = ''
-  value?: any[] = []
+  name: string = ''
+  value: any[] = []
   constructor(name: string) {
     this.name = name
   }

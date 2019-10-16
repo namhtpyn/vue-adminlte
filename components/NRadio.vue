@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, Model, Emit } from 'vue-property-decorator'
+import { Component, Vue, Prop, Emit, ModelVar } from '@namhoang/vue-property-decorator'
 import _ from 'lodash'
 
 @Component({ inheritAttrs: false })
@@ -25,13 +25,11 @@ export default class NRadio extends Vue {
   @Prop() label!: string
   @Prop({ type: String, default: 'blue' }) color!: string
   @Prop({ type: [String, Number, Boolean, Object], default: true }) value!: number | string | boolean | object
-  @Model('input', { type: [String, Number, Boolean, Object] }) model: number | string | boolean | object
+  @ModelVar('input', 'model', { type: [String, Number, Boolean, Object] }) vModel!: number | string | boolean | object
 
-  groupModel: any = null
   @Emit() click(e) {}
   get isChecked() {
-    if (!this.model) return _.isEqual(this.groupModel, this.value)
-    return _.isEqual(this.model, this.value)
+    return _.isEqual(this.vModel, this.value)
   }
 
   toggle() {
@@ -40,8 +38,7 @@ export default class NRadio extends Vue {
 
   input(e) {
     if (e.target.checked) {
-      if (!this.model) this.groupModel = _.cloneDeep(this.value)
-      else this.$emit('input', this.value)
+      this.vModel = this.value
     }
   }
 

@@ -16,34 +16,33 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, Model, Emit } from 'vue-property-decorator'
+import { Component, Vue, Prop, Emit, ModelVar } from '@namhoang/vue-property-decorator'
 import _ from 'lodash'
 @Component({ inheritAttrs: false })
 export default class NCheckbox extends Vue {
   @Prop({ type: Boolean, default: true }) readonly form!: boolean
-  @Prop() label!: string
+  @Prop(String) label!: string
   @Prop({ type: [String, Number, Boolean, Object], default: true }) readonly value!: string | number | boolean | object
-  @Model('input', { type: [Array, String, Number, Boolean, Object] }) readonly model: any[] | any
+  @ModelVar('input', 'model', { type: [Array, String, Number, Boolean, Object] }) vModel: any[] | any
+
   @Emit() click(e) {}
   get isChecked() {
-    if (Array.isArray(this.model)) return this.model.some(m => _.isEqual(m, this.value))
-    else return _.isEqual(this.model, this.value)
+    if (Array.isArray(this.vModel)) return this.vModel.some(m => _.isEqual(m, this.value))
+    else return _.isEqual(this.vModel, this.value)
   }
 
   input(e) {
-    let model = _.cloneDeep(this.model)
-    if (Array.isArray(this.model)) {
+    if (Array.isArray(this.vModel)) {
       if (e.target.checked) {
-        if (!model.some(m => _.isEqual(m, this.value))) model.push(this.value)
+        if (!this.vModel.some(m => _.isEqual(m, this.value))) this.vModel.push(this.value)
       } else {
-        const idx = model.findIndex(m => _.isEqual(m, this.value))
-        if (idx >= 0) model.splice(idx, 1)
+        const idx = this.vModel.findIndex(m => _.isEqual(m, this.value))
+        if (idx >= 0) this.vModel.splice(idx, 1)
       }
     } else {
-      if (e.target.checked) model = this.value
-      else model = null
+      if (e.target.checked) this.vModel = this.value
+      else this.vModel = null
     }
-    this.$emit('input', model)
   }
 
   toggle() {

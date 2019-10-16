@@ -15,7 +15,7 @@
         :type="type"
         :class="cClass"
         :placeholder="hint"
-        :value="value"
+        :value="vValue"
         @input="e => input(e.target.value)"
         @blur="e => blur(e.target.value)"
         v-bind="$attrs"
@@ -36,10 +36,11 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, Emit, Model } from 'vue-property-decorator'
+import { Component, Prop, Emit, ModelVar, Vue } from '@namhoang/vue-property-decorator'
 import _ from 'lodash'
 @Component({ inheritAttrs: false })
 export default class NTextBox extends Vue {
+  @ModelVar('input', 'value', { type: [String, Number] }) vValue!: string | number
   @Prop({ type: String, default: 'text' }) type!: string
   @Prop(String) label!: string
   @Prop(String) hint!: string
@@ -61,8 +62,9 @@ export default class NTextBox extends Vue {
   @Prop({ type: Boolean, default: false }) large!: boolean
   @Prop({ type: Boolean, default: false }) small!: boolean
   @Prop({ type: String, default: '' }) cssClass!: string
-  @Model('input', { type: [String, Number] }) value!: string | number
-  @Emit() input(e) {
+
+  input(e) {
+    this.vValue = e
     if (!this.lazyValidation || !this.valid) this.validate(e)
   }
   @Emit('append-btn-click') appendBtnClick(e) {}
@@ -70,7 +72,8 @@ export default class NTextBox extends Vue {
   @Emit() keypress(e) {}
   @Emit() change(e) {}
   @Emit() blur(e) {
-    this.input(this.value)
+    this.vValue = e
+    if (!this.lazyValidation || !this.valid) this.validate(e)
   }
   valid: boolean = true
   lazyValidation: boolean = false
@@ -93,8 +96,8 @@ export default class NTextBox extends Vue {
   }
   get errorText() {
     if (!this.valid && this.rules) {
-      const f = this.rules.find(r => r(this.value) !== true)
-      return f ? f(this.value) : ''
+      const f = this.rules.find(r => r(this.vValue) !== true)
+      return f ? f(this.vValue) : ''
     }
     return ''
   }

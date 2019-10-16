@@ -1,4 +1,4 @@
-import { Component, Mixins, Watch } from 'vue-property-decorator'
+import { Component, Watch, Mixins } from '@namhoang/vue-property-decorator'
 import _ from 'lodash'
 import { TableItem, TableSort, TableHeader, TableFilter } from '../../types/Table'
 import natsort from 'natsort'
@@ -44,7 +44,7 @@ export default class NTableData extends Mixins(NTableComputed) {
   itemsSearched(items: TableItem[]) {
     if (_.isEmpty(this.vSearch)) return items
     return items.filter(item =>
-      Object.values(item.data).some(field =>
+      Object.values(item.data).some((field: any) =>
         _.isNil(field)
           ? false
           : diacritics.remove(field.toString().toUpperCase()).includes(diacritics.remove(this.vSearch.toUpperCase()))
@@ -55,10 +55,7 @@ export default class NTableData extends Mixins(NTableComputed) {
     if (_.isEmpty(this.vSort) && _.isEmpty(this.groupBy)) return items
     const sortAsc = natsort({ insensitive: true })
     const sortDesc = natsort({ desc: true, insensitive: true })
-    const sortArray = this.groupBy
-      .map(f => new TableSort(f.value))
-      .concat(this.mergeBy.map(f => new TableSort(f.value)))
-      .concat(this.vSort)
+    const sortArray = this.groupBy.map(f => new TableSort(f.value)).concat(this.vSort)
     items.sort((a, b) => {
       for (const sort of sortArray) {
         const sortOrder = sort.desc
@@ -91,69 +88,16 @@ export default class NTableData extends Mixins(NTableComputed) {
     if (_.isEmpty(this.groupBy)) return items
     this.groupBy.forEach((group, index) => {
       items = items.reduce(
-        (ar, item) => {
+        (ar: TableItem[] = [], item) => {
           if (item.type === 'item') {
-            if (_.isEmpty(ar) || _.last(ar).data[group.value] !== item.data[group.value] || _.last(ar).type === 'group')
+            const last = _.last(ar)
+            if (_.isEmpty(ar) || (last && (last.data[group.value] !== item.data[group.value] || last.type === 'group')))
               ar = ar.concat({ ...item, type: 'group', group: { text: item.data[group.value], header: group, level: index } })
           }
           return ar.concat(item)
         },
         [] as TableItem[]
       )
-    })
-    return items
-  }
-  vMergedItems: { [key: string]: { index: number; value: any; rowspan: number }[] } = {}
-  getMergedRowSpan(field, rowIndex) {
-    try {
-      return this.vMergedItems[field].find(o => o.index === rowIndex).rowspan
-      // eslint-disable-next-line no-empty
-    } catch (e) {}
-    return 1
-  }
-  getMergedShow(field, rowIndex) {
-    try {
-      if (Object.keys(this.vMergedItems).includes(field) && !this.vMergedItems[field].find(o => o.index === rowIndex))
-        return false
-      // eslint-disable-next-line no-empty
-    } catch (e) {}
-    return true
-  }
-  itemsMerged(items: TableItem[]) {
-    if (_.isEmpty(this.mergeBy)) return items
-    this.vMergedItems = {}
-    items.forEach((item, itemIndex) => {
-      if (item.type === 'item')
-        this.mergeBy.forEach(merge => {
-          if (
-            !_.isNil(item.data[merge.value]) &&
-            !_.isEqual(
-              item.data[merge.value],
-              this.vMergedItems[merge.value] &&
-                _.last(this.vMergedItems[merge.value]) &&
-                _.last(this.vMergedItems[merge.value]).value
-            )
-          ) {
-            const last = _.last(this.vMergedItems[merge.value])
-            if (last) last.rowspan = itemIndex - last.index
-            if (_.isEmpty(this.vMergedItems[merge.value])) this.vMergedItems[merge.value] = []
-            this.vMergedItems[merge.value].push({ index: itemIndex, value: item.data[merge.value], rowspan: 1 })
-          }
-        })
-      else {
-        Object.keys(this.vMergedItems).forEach(k => {
-          const m = this.vMergedItems[k]
-          if (_.isEmpty(m)) return
-          const last = _.last(m)
-          if (last) last.rowspan = itemIndex - last.index
-        })
-      }
-    })
-    Object.keys(this.vMergedItems).forEach(k => {
-      const m = this.vMergedItems[k]
-      if (_.isEmpty(m)) return
-      const last = _.last(m)
-      if (last) last.rowspan = items.length - last.index
     })
     return items
   }
@@ -171,7 +115,6 @@ export default class NTableData extends Mixins(NTableComputed) {
     items = this.itemsPaginated(items)
     items = this.itemsExpanded(items)
     items = this.itemsGrouped(items)
-    items = this.itemsMerged(items)
     items = items.filter(item => item.visible)
     return items
   }

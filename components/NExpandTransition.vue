@@ -14,10 +14,10 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Emit, Prop } from 'vue-property-decorator'
+import { Vue, Component, Emit, Prop } from '@namhoang/vue-property-decorator'
 
 @Component({})
-export default class NExpandablePanel extends Vue {
+export default class NTransitionExpand extends Vue {
   @Prop({ type: [Number, Object], default: 500 }) readonly duration!: number | { enter: number; leave: number }
   style: { [key: string]: string } = {}
   @Emit() beforeEnter(el: HTMLElement) {
@@ -75,16 +75,4 @@ export default class NExpandablePanel extends Vue {
 }
 </script>
 
-<style>
-/* .n-expandable-panel-enter-active,
-.n-expandable-panel-leave-active {
-  transition: all 0.5s;
-} */
-/* .n-expandable-panel-enter-to,
-.n-expandable-panel-leave {
-  margin-top: 0;
-}
-.n-expandable-panel-enter, .n-expandable-panel-leave-to  {
-  margin-top: -100%;
-} */
-</style>
+<style></style>

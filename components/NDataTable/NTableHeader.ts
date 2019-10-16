@@ -1,4 +1,4 @@
-import { Component, Mixins } from 'vue-property-decorator'
+import { Component, Mixins } from '@namhoang/vue-property-decorator'
 import _ from 'lodash'
 import { TableHeader } from './../../types/Table'
 import NTableComputed from './NTableComputed'

@@ -1,13 +1,14 @@
-import { Component, Mixins } from 'vue-property-decorator'
-import NBase from '../Base/NBase'
+import { Component, Vue } from '@namhoang/vue-property-decorator'
+import camelcaseKeys from '../Base/camelcaseKeys'
 
 @Component({})
-export default class NTableText extends Mixins(NBase) {
+export default class NTableText extends Vue {
   private get tableText() {
-    const tableText: any = (this.vSlot.data.find(e => e.tag === 'table-text') || {}).attrs || {}
+    const textNode = this.$slots && this.$slots.default && this.$slots.default.find(e => e.tag === 'table-text')
+    const text = (textNode && textNode.data && camelcaseKeys(textNode.data.attrs)) || {}
     return {
-      ...tableText,
-      noData: 'Không có dữ liệu'
+      noData: 'Không có dữ liệu',
+      ...text
     }
   }
 }

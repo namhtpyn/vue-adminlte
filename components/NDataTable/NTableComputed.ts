@@ -1,24 +1,26 @@
-import { Component, Mixins } from 'vue-property-decorator'
-import { VueNode } from '../../extension/VueSlot'
+import { Component, Mixins } from '@namhoang/vue-property-decorator'
 import { TableHeader } from '../../types/Table'
 import moment from 'moment'
 import numeral from 'numeral'
 import _ from 'lodash'
-import NData from './../Base/NData'
 import NTableProp from './NTableProp'
+import { VNode } from 'vue'
+import NItems from '../Base/NItems'
+import camelcaseKeys from '../Base/camelcaseKeys'
 
 @Component({})
-export default class NTableComputed extends Mixins(NData, NTableProp) {
-  private getHeaders(nodes: VueNode[] = this.vSlot.data) {
+export default class NTableComputed extends Mixins(NItems, NTableProp) {
+  private getHeaders(nodes: VNode[] | undefined = this.$slots && this.$slots.default) {
     if (_.isEmpty(nodes)) return []
-    const itemNode = ['text', 'number', 'date', 'time', 'datetime', 'band', 'image', 'checkbox']
-    const items: VueNode = nodes.find(node => node.tag === 'items') || new VueNode()
-    const children = (items.children || []).filter(node => itemNode.includes(node.tag.slice(0, -5)))
+
+    const items = nodes && nodes.find(node => node.tag === 'items')
+
+    const children = ((items && items.children) || []).filter(node => node.tag && node.tag.endsWith('-item'))
     return children.map(child => {
       let header = new TableHeader()
-      header.type = child.tag.slice(0, -5) as any
+      header.type = (child.tag && child.tag.slice(0, -5)) || 'text'
       header = this.setDefaultHeaderProps(header)
-      header = { ...header, ...child.attrs }
+      header = { ...header, ...((child.data && camelcaseKeys(child.data.attrs)) || {}) }
       if (header.type === 'band') header.children = this.getHeaders(child.children)
       return header
     })
@@ -64,7 +66,7 @@ export default class NTableComputed extends Mixins(NData, NTableProp) {
     const result = headers.filter(h => !this.groupBy.some(g => _.isEqual(h, g)))
     return groupHeaders.concat(result)
   }
-  get headersFromTag(): TableHeader[] {
+  get headersFromNode(): TableHeader[] {
     return this.getHeaders()
   }
   get headersFromItem(): TableHeader[] {
@@ -76,7 +78,7 @@ export default class NTableComputed extends Mixins(NData, NTableProp) {
 
   get headers() {
     //Headers from slot
-    let headers: TableHeader[] = this.headersFromTag
+    let headers: TableHeader[] = this.headersFromNode
     //Headers from items
     if (_.isEmpty(headers)) headers = this.headersFromItem
 
@@ -120,21 +122,12 @@ export default class NTableComputed extends Mixins(NData, NTableProp) {
     return headers
   }
   get groupBy(): TableHeader[] {
-    return this.headersFromTag.filter(h => h.grouped) || []
+    return this.headersFromNode.filter(h => h.grouped) || []
   }
   get groupByLength() {
     return this.groupBy.length
   }
   isGrouped(name: string) {
     return this.groupBy.some(g => g.value === name)
-  }
-  get mergeBy(): TableHeader[] {
-    return this.headersFromTag.filter(h => h.merged) || []
-  }
-  get mergeByLength() {
-    return this.mergeBy.length
-  }
-  isMergeBy(name: string) {
-    return this.mergeBy.some(g => g.value === name)
   }
 }

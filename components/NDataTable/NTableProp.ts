@@ -1,8 +1,7 @@
-import { Mixins, Component, Prop, Model } from 'vue-property-decorator'
-import NBase from '../Base/NBase'
+import { Vue, Component, Prop } from '@namhoang/vue-property-decorator'
 
 @Component({})
-export default class NTableProp extends Mixins(NBase) {
+export default class NTableProp extends Vue {
   @Prop({ type: Boolean, default: true }) readonly bordered!: boolean
   @Prop({ type: Boolean, default: true }) readonly hovered!: boolean
   @Prop({ type: Boolean, default: false }) readonly densed!: boolean
@@ -50,6 +49,4 @@ export default class NTableProp extends Mixins(NBase) {
   @Prop(String) readonly createUrl!: string
   @Prop(String) readonly updateUrl!: string
   @Prop(String) readonly deleteUrl!: string
-
-  @Model('input', { type: [Array, String, Number, Boolean, Object] }) value!: any[] | any
 }

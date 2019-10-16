@@ -1,11 +1,11 @@
 <template>
   <transition name="n-modal" @before-enter="beforeOpen" @after-enter="open" @after-leave="close">
-    <div v-if="value" :class="`modal modal-${color} ${fullscreen ? 'no-padding' : ''} in`" style="display: block">
+    <div v-if="vValue" :class="`modal modal-${color} ${fullscreen ? 'no-padding' : ''} in`" style="display: block">
       <div :class="{ 'modal-dialog': true, 'modal-lg': large, 'modal-sm': small, 'modal-fullscreen': fullscreen }">
         <div class="modal-content" v-click-out="clickOut">
           <div v-if="!hideHeader" class="modal-header margin-right-1px" style="display:flex">
             <h4 class="modal-title" style="flex:1">{{ caption }}</h4>
-            <n-icon style="cursor:pointer" @click="input(false)">times</n-icon>
+            <n-icon style="cursor:pointer" @click="vValue = false">times</n-icon>
           </div>
           <div class="modal-body margin-right-1px" :style="bodyStyle" v-if="value">
             <slot></slot>
@@ -25,16 +25,17 @@
 </template>
 
 <script lang="ts">
-import { Component, Model, Prop, Mixins, Emit } from 'vue-property-decorator'
 import vClickOutside from 'v-click-outside'
-import NBase from './Base/NBase'
+import { PropVar, Component, Prop, ModelVar, Vue, Emit } from '@namhoang/vue-property-decorator'
 @Component({
   inheritAttrs: false,
   directives: {
     clickOut: vClickOutside.directive
   }
 })
-export default class NModal extends Mixins(NBase) {
+export default class NModal extends Vue {
+  @ModelVar('input', 'value', { type: Boolean, default: false }) vValue!: boolean
+  @PropVar('loading', { type: Boolean, default: false }) vLoading!: boolean
   @Prop({ type: String, default: 'default' }) color!: string
   @Prop({ type: String, default: '' }) caption!: string
   @Prop({ type: Boolean, default: false }) persistent!: boolean
@@ -45,18 +46,19 @@ export default class NModal extends Mixins(NBase) {
   @Prop({ type: Boolean, default: false }) scrollable!: boolean
   @Prop({ type: Boolean, default: false }) fullscreen!: boolean
 
-  @Model('input', { type: Boolean, default: false }) value!: boolean
-
   clickOut(e) {
-    if (!this.persistent) this.input(false)
+    if (!this.persistent) this.vValue = false
   }
 
   @Emit() close() {
-    if (!Array.from(document.querySelectorAll('.modal')).some(el => (el as HTMLElement).style.display === 'block'))
-      document.querySelector('body').classList.remove('modal-open')
+    if (!Array.from(document.querySelectorAll('.modal')).some(el => (el as HTMLElement).style.display === 'block')) {
+      const body = document.querySelector('body')
+      if (body) body.classList.remove('modal-open')
+    }
   }
   beforeOpen() {
-    document.querySelector('body').classList.add('modal-open')
+    const body = document.querySelector('body')
+    if (body) body.classList.add('modal-open')
   }
   @Emit() open() {
     this.getSize()

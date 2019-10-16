@@ -45,41 +45,16 @@
         </div>
       </div>
     </div>
-    <!-- <div class="v-time-picker-clock__container">
-      <div class="v-time-picker-clock__ampm primary--text">
-        <div class="v-picker__title__btn v-picker__title__btn--active">AM</div>
-        <div class="v-picker__title__btn">PM</div>
-      </div>
-      <div class="v-time-picker-clock theme--light">
-        <div class="v-time-picker-clock__inner">
-          <div class="v-time-picker-clock__hand accent" style="transform: rotate(90deg) scaleY(1);"></div>
-          <span class="v-time-picker-clock__item" style="left: 50%; top: 0%;"><span>12</span></span
-          ><span class="v-time-picker-clock__item" style="left: 75%; top: 6.69873%;"><span>1</span></span
-          ><span class="v-time-picker-clock__item" style="left: 93.3013%; top: 25%;"><span>2</span></span
-          ><span class="v-time-picker-clock__item v-time-picker-clock__item--active accent" style="left: 100%; top: 50%;"
-            ><span>3</span></span
-          ><span class="v-time-picker-clock__item" style="left: 93.3013%; top: 75%;"><span>4</span></span
-          ><span class="v-time-picker-clock__item" style="left: 75%; top: 93.3013%;"><span>5</span></span
-          ><span class="v-time-picker-clock__item" style="left: 50%; top: 100%;"><span>6</span></span
-          ><span class="v-time-picker-clock__item" style="left: 25%; top: 93.3013%;"><span>7</span></span
-          ><span class="v-time-picker-clock__item" style="left: 6.69873%; top: 75%;"><span>8</span></span
-          ><span class="v-time-picker-clock__item" style="left: 0%; top: 50%;"><span>9</span></span
-          ><span class="v-time-picker-clock__item" style="left: 6.69873%; top: 25%;"><span>10</span></span
-          ><span class="v-time-picker-clock__item" style="left: 25%; top: 6.69873%;"><span>11</span></span>
-        </div>
-      </div>
-    </div> -->
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Model, Prop, Mixins } from 'vue-property-decorator'
+import { Component, Prop, ModelVar, Vue } from '@namhoang/vue-property-decorator'
 import moment from 'moment'
 import _ from 'lodash'
-import NBase from './Base/NBase'
 @Component({})
-export default class NTimePicker extends Mixins(NBase) {
-  @Model('input', { type: [Date, String], required: true }) value!: Date | string
+export default class NTimePicker extends Vue {
+  @ModelVar('input', 'value', { type: [Date, String] }) vValue!: Date | string
   @Prop({ type: Number, default: 1 }) stepHour!: number
   @Prop({ type: Number, default: 1 }) stepMinute!: number
   @Prop({ type: Number, default: 1 }) stepSecond!: number
@@ -88,31 +63,34 @@ export default class NTimePicker extends Mixins(NBase) {
   @Prop({ type: Boolean, default: false }) hideHour!: number
 
   get hour() {
-    return moment.utc(this.value).get('hour')
+    return moment.utc(this.vValue).get('hour')
   }
   get minute() {
-    return moment.utc(this.value).get('minute')
+    return moment.utc(this.vValue).get('minute')
   }
   get second() {
-    return moment.utc(this.value).get('second')
+    return moment.utc(this.vValue).get('second')
   }
   hours = _.range(0, 24, this.stepHour)
   minutes = _.range(0, 60, this.stepMinute)
   seconds = _.range(0, 60, this.stepSecond)
   mounted() {
+    this.scrollIntoViewIfNeeded()
+  }
+  scrollIntoViewIfNeeded() {
     try {
-      this.$el
+      ;(this.$el as any)
         .querySelector('.n-time-picker--hour')
         .querySelector(`.n-time-picker--item[data-id="${this.hour}"]`)
-        .scrollIntoView()
-      this.$el
+        .scrollIntoViewIfNeeded()
+      ;(this.$el as any)
         .querySelector('.n-time-picker--minute')
         .querySelector(`.n-time-picker--item[data-id="${this.minute}"]`)
-        .scrollIntoView()
-      this.$el
+        .scrollIntoViewIfNeeded()
+      ;(this.$el as any)
         .querySelector('.n-time-picker--second')
         .querySelector(`.n-time-picker--item[data-id="${this.second}"]`)
-        .scrollIntoView()
+        .scrollIntoViewIfNeeded()
       // eslint-disable-next-line no-empty
     } catch {}
   }
@@ -125,13 +103,13 @@ export default class NTimePicker extends Mixins(NBase) {
     return result.toDate().toISOString()
   }
   setHour(h) {
-    this.input(this.toTime(h, this.minute, this.second))
+    this.vValue = this.toTime(h, this.minute, this.second)
   }
   setMinute(m) {
-    this.input(this.toTime(this.hour, m, this.second))
+    this.vValue = this.toTime(this.hour, m, this.second)
   }
   setSecond(s) {
-    this.input(this.toTime(this.hour, this.minute, s))
+    this.vValue = this.toTime(this.hour, this.minute, s)
   }
 }
 </script>

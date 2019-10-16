@@ -11,14 +11,14 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Mixins, Watch } from 'vue-property-decorator'
+import { Component, Prop, Mixins, Watch } from '@namhoang/vue-property-decorator'
 import _ from 'lodash'
 import Chart from 'chart.js'
-import NDataSource from './Base/NDataSource'
-import { VueNode } from '../extension/VueSlot'
 import { ChartSeries, ChartCommon } from '../types/Chart'
+import NItems from './Base/NItems'
+import camelcaseKeys from './Base/camelcaseKeys'
 @Component({})
-export default class NLineChart extends Mixins(NDataSource) {
+export default class NLineChart extends Mixins(NItems) {
   @Prop({ type: String, default: '' }) caption!: string
   vDefaultColors = [
     'rgb(255, 99, 132)',
@@ -61,64 +61,74 @@ export default class NLineChart extends Mixins(NDataSource) {
   }
 
   get common(): ChartCommon {
-    if (_.isEmpty(this.vSlot.data)) return new ChartCommon()
-    const commonNode = this.vSlot.data.find(node => node.tag === 'common') || new VueNode()
-    const common: ChartCommon = { ...new ChartCommon(), ...commonNode.attrs }
+    const commonNode = this.$slots && this.$slots.default && this.$slots.default.find(node => node.tag === 'common')
+    const common: ChartCommon = {
+      ...new ChartCommon(),
+      ...((commonNode && commonNode.data && camelcaseKeys(commonNode.data.attrs)) || {})
+    }
     if (!_.isEmpty(common.value)) common.data = this.vItems.map(i => common.format(i[common.value]))
     return common
   }
   get series(): any[] {
-    if (_.isEmpty(this.vSlot.data)) return []
-    const seriesNode = this.vSlot.data.find(node => node.tag === 'series') || new VueNode()
-    const children = (seriesNode.children || []).filter(node => node.tag === 'item')
+    const seriesNode = this.$slots && this.$slots.default && this.$slots.default.find(node => node.tag === 'series')
+    const children = ((seriesNode && seriesNode.children) || []).filter(node => node.tag === 'item')
     return children.map((child, index) => {
       const item: ChartSeries = {
         ...new ChartSeries(),
         ...{ backgroundColor: this.vDefaultColors[index], borderColor: this.vDefaultColors[index] },
-        ...child.attrs
+        ...((child && child.data && camelcaseKeys(child.data.attrs)) || {})
       }
       if (!_.isEmpty(item.value)) item.data = this.vItems.map(i => i[item.value])
       return this.mapSeriesToDataset(item)
     })
   }
   get options() {
-    const optionsNode = this.vSlot.data.find(node => node.tag === 'options') || new VueNode()
-    const legendNode = optionsNode.children.find(node => node.tag === 'legend') || new VueNode()
-    const tooltipNode = optionsNode.children.find(node => node.tag === 'tooltip') || new VueNode()
-    const axisesNode = optionsNode.children.find(node => node.tag === 'axises') || new VueNode()
-    const xAxises = axisesNode.children
-      .filter(node => node.tag === 'x-axis')
-      .map(node => {
-        return {
-          ...{
-            display: 'auto',
-            scaleLabel: {
-              display: !_.isEmpty(node.attrs.text),
-              labelString: node.attrs.text
-            }
-          },
-          ...node.attrs
-        }
-      })
-    const yAxises = axisesNode.children
-      .filter(node => node.tag === 'y-axis')
-      .map(node => {
-        return {
-          ...{
-            display: 'auto',
-            scaleLabel: {
-              display: !_.isEmpty(node.attrs.text),
-              labelString: node.attrs.text
-            }
-          },
-          ...node.attrs
-        }
-      })
+    const optionsNode = this.$slots && this.$slots.default && this.$slots.default.find(node => node.tag === 'options')
+    const legendNode = optionsNode && optionsNode.children && optionsNode.children.find(node => node.tag === 'legend')
+    const tooltipNode = optionsNode && optionsNode.children && optionsNode.children.find(node => node.tag === 'tooltip')
+    const axisesNode = optionsNode && optionsNode.children && optionsNode.children.find(node => node.tag === 'axises')
+    const xAxises =
+      axisesNode &&
+      axisesNode.children &&
+      axisesNode.children
+        .filter(node => node.tag === 'x-axis')
+        .map(node => {
+          return {
+            ...{
+              display: 'auto',
+              scaleLabel: {
+                display: !_.isEmpty(node.data && node.data.attrs && node.data.attrs.text),
+                labelString: node.data && node.data.attrs && node.data.attrs.text
+              }
+            },
+            ...((node.data && camelcaseKeys(node.data.attrs)) || {})
+          }
+        })
+    const yAxises =
+      axisesNode &&
+      axisesNode.children &&
+      axisesNode.children
+        .filter(node => node.tag === 'y-axis')
+        .map(node => {
+          return {
+            ...{
+              display: 'auto',
+              scaleLabel: {
+                display: !_.isEmpty(node.data && node.data.attrs && node.data.attrs.text),
+                labelString: node.data && node.data.attrs && node.data.attrs.text
+              }
+            },
+            ...((node.data && camelcaseKeys(node.data.attrs)) || {})
+          }
+        })
     return {
-      responsive: optionsNode.attrs.responsive || true,
-      tooltips: { ...{ mode: 'index', intersect: false }, ...tooltipNode.attrs },
-      legend: { ...{ position: 'bottom' }, ...legendNode.attrs },
-      stacked: optionsNode.attrs.stacked || false,
+      responsive: (optionsNode && optionsNode.data && optionsNode.data.attrs && optionsNode.data.attrs.responsive) || true,
+      tooltips: {
+        ...{ mode: 'index', intersect: false },
+        ...((tooltipNode && tooltipNode.data && camelcaseKeys(tooltipNode.data.attrs)) || {})
+      },
+      legend: { ...{ position: 'bottom' }, ...((legendNode && legendNode.data && camelcaseKeys(legendNode.data.attrs)) || {}) },
+      stacked: (optionsNode && optionsNode.data && optionsNode.data.attrs && optionsNode.data.attrs.stacked) || false,
       scales: {
         xAxes: xAxises,
         yAxes: yAxises

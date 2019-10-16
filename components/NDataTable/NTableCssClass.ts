@@ -1,12 +1,12 @@
-import { Component, Mixins } from 'vue-property-decorator'
-import NBase from '../Base/NBase'
+import { Component, Mixins } from '@namhoang/vue-property-decorator'
 import NTableProp from './NTableProp'
-//import _ from 'lodash'
+import camelcaseKeys from '../Base/camelcaseKeys'
 
 @Component({})
-export default class NTableCssClass extends Mixins(NBase, NTableProp) {
+export default class NTableCssClass extends Mixins(NTableProp) {
   private get cssClass() {
-    const cssClass: any = (this.vSlot.data.find(e => e.tag === 'css-class') || {}).attrs || {}
+    const cssNode = this.$slots && this.$slots.default && this.$slots.default.find(e => e.tag === 'css-class')
+    const cssClass = (cssNode && cssNode.data && camelcaseKeys(cssNode.data.attrs)) || {}
     cssClass.top = [
       {
         'sticky-top': this.stickyTop

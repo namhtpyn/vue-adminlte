@@ -6,11 +6,11 @@
           <slot :name="`header`">
             <slot :name="`header.${panelIndex}`" :index="panelIndex"> header {{ panelIndex }} </slot>
           </slot>
-          <n-icon style="margin-left:auto" :class="`fa-chevron-${visible.includes(panelIndex) ? 'up' : 'down'}`"> </n-icon>
+          <n-icon style="margin-left:auto" :class="`fa-chevron-${vValue.includes(panelIndex) ? 'up' : 'down'}`"> </n-icon>
         </div>
       </div>
       <n-expand-transition>
-        <div v-show="visible.includes(panelIndex)" class="panel-collapse">
+        <div v-show="vValue.includes(panelIndex)" class="panel-collapse">
           <div class="panel-body">
             <slot :name="`body`">
               <slot :name="`body.${panelIndex}`" :index="panelIndex"> body {{ panelIndex }} </slot>
@@ -23,35 +23,25 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator'
+import { Component, Prop, Vue, ModelVar } from '@namhoang/vue-property-decorator'
 
 @Component({})
 export default class NExpandablePanel extends Vue {
   @Prop({ type: Number, default: 1 }) length!: number
   @Prop({ type: Boolean, default: false }) multiple!: boolean
-  @Prop({ type: Array, default: () => [] }) value!: number[]
-  visible: number[] = [].concat(this.value)
+  @ModelVar('input', 'value', { type: Array, default: () => [] }) vValue!: number[]
 
   expandPanel(panelIndex: number) {
-    const index = this.visible.findIndex(v => v === panelIndex)
+    const index = this.vValue.findIndex(v => v === panelIndex)
     if (index < 0) {
-      if (!this.multiple) this.visible = [panelIndex]
-      else this.visible.push(panelIndex)
-    } else this.visible.splice(index, 1)
+      if (!this.multiple) this.vValue = [panelIndex]
+      else this.vValue.push(panelIndex)
+    } else this.vValue.splice(index, 1)
+  }
+  created() {
+    if (!this.vValue) this.vValue = []
   }
 }
 </script>
 
-<style>
-/* .n-expandable-panel-enter-active,
-.n-expandable-panel-leave-active {
-  transition: all 0.5s;
-} */
-/* .n-expandable-panel-enter-to,
-.n-expandable-panel-leave {
-  margin-top: 0;
-}
-.n-expandable-panel-enter, .n-expandable-panel-leave-to  {
-  margin-top: -100%;
-} */
-</style>
+<style></style>
