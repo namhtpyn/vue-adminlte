@@ -151,8 +151,8 @@
         <tfoot v-if="!hideFooter">
           <tr :class="cssClass.footerRow">
             <td :class="cssClass.footerCell" v-for="(header, colIndex) in tableColumns" :key="colIndex">
-              <slot :name="`footer.${header.kebabValue()}`" :items="items">
-                {{ footerSummary(items, header) }}
+              <slot :name="`footer.${header.kebabValue()}`" :items="vItems">
+                {{ footerSummary(vItems, header) }}
               </slot>
             </td>
           </tr>
@@ -381,13 +381,13 @@ export default class NDataTable extends Mixins(mixin1, mixin2) {
       return header.summary(items)
     } else {
       if (header.summary === 'sum')
-        return items.reduce((a, b) => a.add(Number(b[header.value]) || 0), numeral(0)).format('0,0[.]00000')
+        return items.reduce((a, b) => a.add(Number(b[header.value]) || 0), numeral(0)).format('0,0[.]00[0][0][0]')
       else if (header.summary === 'count') return numeral(items.length).format('0,0[.]00')
       else if (header.summary === 'average')
         return items
           .reduce((a, b) => a.add(Number(b[header.value]) || 0), numeral(0))
           .divide(items.length)
-          .format('0,0[.]00000')
+          .format('0,0[.]00[0][0][0]')
       return ''
     }
   }
