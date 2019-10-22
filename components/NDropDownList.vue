@@ -122,6 +122,7 @@ export default class NDropDownList extends Mixins(NBase) {
 .drop-down-container {
   height: auto;
   width: fit-content;
+  width: -moz-fit-content;
   position: absolute;
   max-height: 300px;
   overflow: auto;
