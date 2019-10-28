@@ -34,6 +34,7 @@ export default class NTableCRUD extends Mixins(NItems, NTableProp) {
     if (!this.updatable) return
     if (_.isEmpty(this.updateUrl)) return
     this.vModal.loading = true
+    console.log('wtf')
     try {
       if ((this.$refs.form as any).validate()) {
         await axios.post(this.updateUrl, this.vModal.data)

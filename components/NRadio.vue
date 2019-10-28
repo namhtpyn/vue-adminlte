@@ -45,7 +45,9 @@ export default class NRadio extends Vue {
   get radioID() {
     return _.uniqueId('n_radio_')
   }
-  validate(value) {}
+  validate(value) {
+    return true
+  }
 }
 </script>
 

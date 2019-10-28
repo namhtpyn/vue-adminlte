@@ -45,6 +45,7 @@ export default class NSelect extends Mixins(NItems) {
   }
   validate(value) {
     if (this.rules) this.valid = !this.rules.some(e => e(value) !== true)
+    return this.valid
   }
 }
 </script>
