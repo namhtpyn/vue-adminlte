@@ -27,7 +27,7 @@ export default class NBtn extends Vue {
   @Emit() click(e) {}
 
   private get cssClass() {
-    let css = 'btn '
+    let css = 'text-ellipsis btn '
     css += this.cssColor + ' '
     css += this.textColor ? 'text-' + this.textColor + ' ' : ''
     css += this.block ? 'btn-block ' : ''
@@ -46,4 +46,9 @@ export default class NBtn extends Vue {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.text-ellipsis {
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+</style>
