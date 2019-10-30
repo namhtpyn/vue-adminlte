@@ -1,5 +1,59 @@
 <template>
   <div>
+    <n-data-table
+      ref="table"
+      read-url="/data/provinces.json"
+      updatable
+      update-url="/haha"
+      caption="hihi"
+      searchable
+      key-field="provinceCode"
+      creatable
+      excelable
+      multiple-sort
+      @readed="input"
+      expandable
+    >
+      <css-class create-button="btn-primary"></css-class>
+
+      <items>
+        <text-item text="provinceName" value="provinceName" sortable filterable></text-item>
+        <text-item
+          text="provinceCode"
+          value="provinceCode"
+          sortable
+          filterable
+          :format="v => provinces.find(i => i.provinceCode === v).provinceName"
+        ></text-item>
+        <text-item text="Tui Test" value="test" merged></text-item>
+        <text-item text="areaID" value="areaID" merged></text-item>
+        <band-item text="on shit">
+          <items>
+            <text-item text="provinceCode" value="provinceCode"></text-item>
+            <text-item text="provinceName" value="provinceName"></text-item>
+            <band-item text="on shit">
+              <items>
+                <text-item text="provinceCode" value="provinceCode"></text-item>
+                <text-item text="provinceName" value="provinceName"></text-item>
+                ><band-item text="on shit">
+                  <items>
+                    <text-item text="provinceCode" value="provinceCode"></text-item>
+                    <text-item text="provinceName" value="provinceName"></text-item>
+                  </items>
+                </band-item>
+              </items>
+            </band-item>
+          </items>
+        </band-item>
+      </items>
+      <template #item.expand="{item}">
+        <n-btn>a</n-btn>
+      </template>
+      <template #item.province-name="{item}">
+        aaaaaa
+      </template>
+      <template #modal="modal"> </template>
+    </n-data-table>
     <!-- <n-line-chart :items="traffics" caption="HAHAHA">
       <common text="In" value="Statisticdate"></common>
       <series>

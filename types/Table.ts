@@ -1,10 +1,6 @@
-import _ from 'lodash'
 export class TableHeader {
   text: string = ''
   value: string = ''
-  kebabValue: Function = () => {
-    return _.kebabCase(this.value)
-  }
   type: string = 'text'
   width?: string
   align: 'left' | 'right' | 'center' | 'justify' | 'initial' | 'inherit' = 'left'

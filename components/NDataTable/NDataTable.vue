@@ -43,7 +43,7 @@
                 <div v-if="header.value === '__selection'">
                   <n-checkbox v-if="multipleSelect" @input="selectAll"></n-checkbox>
                 </div>
-                <slot v-else :name="`header.${header.kebabValue()}`" :item="header">{{ header.text }}</slot>
+                <slot v-else :name="`header.${kebabCase(header.value)}`" :item="header">{{ header.text }}</slot>
                 <i
                   v-if="header.sortable"
                   class="sortable fa fa-sort"
@@ -89,7 +89,7 @@
             <template v-else-if="item.type === 'item'">
               <td :class="cssClass.cell" :style="cellStyle(header)" v-for="(header, colIndex) in tableColumns" :key="colIndex">
                 <slot
-                  :name="`item.${header.kebabValue()}`"
+                  :name="`item.${kebabCase(header.value)}`"
                   :item="vItems[item.index]"
                   :value="item.data[header.value]"
                   :index="item.index"
@@ -151,7 +151,7 @@
         <tfoot v-if="!hideFooter">
           <tr :class="cssClass.footerRow">
             <td :class="cssClass.footerCell" v-for="(header, colIndex) in tableColumns" :key="colIndex">
-              <slot :name="`footer.${header.kebabValue()}`" :items="vItems">
+              <slot :name="`footer.${kebabCase(header.value)}`" :items="vItems">
                 {{ footerSummary(vItems, header) }}
               </slot>
             </td>
@@ -417,6 +417,9 @@ export default class NDataTable extends Mixins(mixin1, mixin2) {
       this.vItemPerPage = itemPerPage
       this.vLoading = false
     })
+  }
+  kebabCase(v) {
+    return _.kebabCase(v)
   }
 }
 </script>
