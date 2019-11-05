@@ -9,7 +9,7 @@
           <n-icon style="margin-left:auto" :class="`fa-chevron-${vValue.includes(panelIndex) ? 'up' : 'down'}`"> </n-icon>
         </div>
       </div>
-      <n-expand-transition>
+      <n-transition-expand>
         <div v-show="vValue.includes(panelIndex)" class="panel-collapse">
           <div class="panel-body">
             <slot :name="`body`">
@@ -17,7 +17,7 @@
             </slot>
           </div>
         </div>
-      </n-expand-transition>
+      </n-transition-expand>
     </div>
   </div>
 </template>

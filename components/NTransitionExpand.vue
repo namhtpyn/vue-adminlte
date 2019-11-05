@@ -28,13 +28,28 @@ export default class NTransitionExpand extends Vue {
   }
 
   @Emit() enter(el: HTMLElement, done) {
+    const computedStyle = window.getComputedStyle(el)
+    const paddingTop = computedStyle.paddingTop
+    const paddingBottom = computedStyle.paddingBottom
+    const marginTop = computedStyle.marginTop
+    const marginBottom = computedStyle.marginBottom
     const offsetHeight = el.offsetHeight
     const duration = typeof this.duration === 'number' ? this.duration : this.duration.enter || 500
-    el.style.setProperty('transition', `height ${duration}ms`, 'important')
+
     el.style.overflow = 'hidden'
     el.style.height = '0'
+    el.style.paddingTop = '0'
+    el.style.paddingBottom = '0'
+    el.style.marginTop = '0'
+    el.style.marginBottom = '0'
+
     requestAnimationFrame(() => {
+      el.style.setProperty('transition', `all ${duration}ms`, 'important')
       el.style.height = `${offsetHeight}px`
+      el.style.paddingTop = paddingTop
+      el.style.paddingBottom = paddingBottom
+      el.style.marginTop = marginTop
+      el.style.marginBottom = marginBottom
     })
   }
 
@@ -51,13 +66,27 @@ export default class NTransitionExpand extends Vue {
     })
   }
   @Emit() leave(el: HTMLElement, done) {
+    const computedStyle = window.getComputedStyle(el)
+    const paddingTop = computedStyle.paddingTop
+    const paddingBottom = computedStyle.paddingBottom
+    const marginTop = computedStyle.marginTop
+    const marginBottom = computedStyle.marginBottom
     const offsetHeight = el.offsetHeight
     const duration = typeof this.duration === 'number' ? this.duration : this.duration.leave || 500
-    el.style.setProperty('transition', `height ${duration}ms`, 'important')
+
     el.style.overflow = 'hidden'
     el.style.height = `${offsetHeight}px`
+    el.style.paddingTop = paddingTop
+    el.style.paddingBottom = paddingBottom
+    el.style.marginTop = marginTop
+    el.style.marginBottom = marginBottom
     requestAnimationFrame(() => {
+      el.style.setProperty('transition', `all ${duration}ms`, 'important')
       el.style.height = '0'
+      el.style.paddingTop = '0'
+      el.style.paddingBottom = '0'
+      el.style.marginTop = '0'
+      el.style.marginBottom = '0'
     })
   }
   @Emit() afterLeave(el: HTMLElement) {
@@ -74,5 +103,3 @@ export default class NTransitionExpand extends Vue {
   }
 }
 </script>
-
-<style></style>
