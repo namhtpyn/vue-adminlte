@@ -9,7 +9,6 @@ import NDropDownTable from '././NDropDownTable.vue'
 import NDropDownTimePicker from '././NDropDownTimePicker.vue'
 import NDropDownTree from '././NDropDownTree.vue'
 import NExpandablePanel from '././NExpandablePanel.vue'
-import NExpandTransition from '././NExpandTransition.vue'
 import NForm from '././NForm.vue'
 import NIcon from '././NIcon.vue'
 import NLineChart from '././NLineChart.vue'
@@ -25,6 +24,7 @@ import NTabCollection from '././NTabCollection.vue'
 import NTextArea from '././NTextArea.vue'
 import NTextBox from '././NTextBox.vue'
 import NTimePicker from '././NTimePicker.vue'
+import NTransitionExpand from '././NTransitionExpand.vue'
 import NTree from '././NTree.vue'
 Vue.component('NBtn', NBtn)
 Vue.component('NCheckbox', NCheckbox)
@@ -36,7 +36,6 @@ Vue.component('NDropDownTable', NDropDownTable)
 Vue.component('NDropDownTimePicker', NDropDownTimePicker)
 Vue.component('NDropDownTree', NDropDownTree)
 Vue.component('NExpandablePanel', NExpandablePanel)
-Vue.component('NExpandTransition', NExpandTransition)
 Vue.component('NForm', NForm)
 Vue.component('NIcon', NIcon)
 Vue.component('NLineChart', NLineChart)
@@ -52,4 +51,5 @@ Vue.component('NTabCollection', NTabCollection)
 Vue.component('NTextArea', NTextArea)
 Vue.component('NTextBox', NTextBox)
 Vue.component('NTimePicker', NTimePicker)
+Vue.component('NTransitionExpand', NTransitionExpand)
 Vue.component('NTree', NTree)
