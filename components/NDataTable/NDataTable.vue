@@ -68,79 +68,81 @@
             @dblclick="e => rowDblclick(e, item.data, rowIndex)"
             @click="e => rowClick(e, item, rowIndex)"
           >
-            <template v-if="item.type === 'group'">
-              <td v-for="i in item.group.level" :key="i"></td>
-              <td :colspan="tableColumnsLength - item.group.level" @click.stop>
-                {{ item.group.header.text }}:
-                <template v-if="item.group.header.encodeHtml">
-                  {{ item.group.header.format(item.group.text) }}
-                </template>
-                <span v-else v-html="item.group.header.format(item.group.text)"></span>
-              </td>
-            </template>
+            <slot :name="row" :item="vItems[item.index]" :rowIndex="rowIndex">
+              <template v-if="item.type === 'group'">
+                <td v-for="i in item.group.level" :key="i"></td>
+                <td :colspan="tableColumnsLength - item.group.level" @click.stop>
+                  {{ item.group.header.text }}:
+                  <template v-if="item.group.header.encodeHtml">
+                    {{ item.group.header.format(item.group.text) }}
+                  </template>
+                  <span v-else v-html="item.group.header.format(item.group.text)"></span>
+                </td>
+              </template>
 
-            <template v-if="item.type === 'expand'">
-              <td v-for="i in groupByLength" :key="i"></td>
-              <td v-if="item.type === 'expand'" :colspan="tableColumnsLength - groupByLength" @click.stop>
-                <slot name="item.expand" :item="item.data"></slot>
-              </td>
-            </template>
+              <template v-if="item.type === 'expand'">
+                <td v-for="i in groupByLength" :key="i"></td>
+                <td v-if="item.type === 'expand'" :colspan="tableColumnsLength - groupByLength" @click.stop>
+                  <slot name="item.expand" :item="item.data"></slot>
+                </td>
+              </template>
 
-            <template v-else-if="item.type === 'item'">
-              <td :class="cssClass.cell" :style="cellStyle(header)" v-for="(header, colIndex) in tableColumns" :key="colIndex">
-                <slot
-                  :name="`item.${kebabCase(header.value)}`"
-                  :item="vItems[item.index]"
-                  :value="item.data[header.value]"
-                  :index="item.index"
-                  :rowIndex="rowIndex"
-                >
-                  <template v-if="header.value === '__selection'">
-                    <n-checkbox
-                      :ref="`checkbox-${item.index}`"
-                      v-if="multipleSelect"
-                      v-model="vValue"
-                      @click.stop
-                      :value="keyField ? item.data[keyField] : item.data"
-                    ></n-checkbox>
-                    <n-radio
-                      v-else
-                      :ref="`radio-${item.index}`"
-                      v-model="vValue"
-                      @input="input"
-                      @click.stop
-                      :value="keyField ? item.data[keyField] : item.data"
-                    ></n-radio>
-                  </template>
-                  <template v-else-if="header.value === '__expansion'">
-                    <n-icon
-                      style="cursor:pointer"
-                      @click.stop="expandRow(item.index)"
-                      :class="`fa-chevron-${isExpanded(item.index) ? 'up' : 'down'}`"
-                    >
-                    </n-icon>
-                  </template>
-                  <template v-else-if="header.value === '__action'">
-                    <div class="btn-group">
-                      <n-btn v-if="updatable" @click.stop="updateClick(item.data)">
-                        <n-icon>pencil</n-icon>
-                      </n-btn>
-                      <n-btn v-if="deletable" @click.stop="removeClick(item.data)">
-                        <n-icon>trash</n-icon>
-                      </n-btn>
-                    </div>
-                  </template>
-                  <template v-else>
-                    <template v-if="!isGrouped(header.value)">
-                      <template v-if="header.encodeHtml">
-                        {{ header.format(item.data[header.value]) }}
-                      </template>
-                      <span v-else v-html="header.format(item.data[header.value])"></span>
+              <template v-else-if="item.type === 'item'">
+                <td :class="cssClass.cell" :style="cellStyle(header)" v-for="(header, colIndex) in tableColumns" :key="colIndex">
+                  <slot
+                    :name="`item.${kebabCase(header.value)}`"
+                    :item="vItems[item.index]"
+                    :value="item.data[header.value]"
+                    :index="item.index"
+                    :rowIndex="rowIndex"
+                  >
+                    <template v-if="header.value === '__selection'">
+                      <n-checkbox
+                        :ref="`checkbox-${item.index}`"
+                        v-if="multipleSelect"
+                        v-model="vValue"
+                        @click.stop
+                        :value="keyField ? item.data[keyField] : item.data"
+                      ></n-checkbox>
+                      <n-radio
+                        v-else
+                        :ref="`radio-${item.index}`"
+                        v-model="vValue"
+                        @input="input"
+                        @click.stop
+                        :value="keyField ? item.data[keyField] : item.data"
+                      ></n-radio>
                     </template>
-                  </template>
-                </slot>
-              </td>
-            </template>
+                    <template v-else-if="header.value === '__expansion'">
+                      <n-icon
+                        style="cursor:pointer"
+                        @click.stop="expandRow(item.index)"
+                        :class="`fa-chevron-${isExpanded(item.index) ? 'up' : 'down'}`"
+                      >
+                      </n-icon>
+                    </template>
+                    <template v-else-if="header.value === '__action'">
+                      <div class="btn-group">
+                        <n-btn v-if="updatable" @click.stop="updateClick(item.data)">
+                          <n-icon>pencil</n-icon>
+                        </n-btn>
+                        <n-btn v-if="deletable" @click.stop="removeClick(item.data)">
+                          <n-icon>trash</n-icon>
+                        </n-btn>
+                      </div>
+                    </template>
+                    <template v-else>
+                      <template v-if="!isGrouped(header.value)">
+                        <template v-if="header.encodeHtml">
+                          {{ header.format(item.data[header.value]) }}
+                        </template>
+                        <span v-else v-html="header.format(item.data[header.value])"></span>
+                      </template>
+                    </template>
+                  </slot>
+                </td>
+              </template>
+            </slot>
           </tr>
         </tbody>
         <tbody v-else>
@@ -305,7 +307,11 @@ export default class NDataTable extends Mixins(mixin1, mixin2) {
     if (!this.expandable) return
     if (!this.vExpansion.includes(itemIndex))
       this.multipleExpand ? this.vExpansion.push(itemIndex) : (this.vExpansion = [itemIndex])
-    else this.vExpansion.splice(this.vExpansion.findIndex(i => i === itemIndex), 1)
+    else
+      this.vExpansion.splice(
+        this.vExpansion.findIndex(i => i === itemIndex),
+        1
+      )
   }
   vFilterModal: {
     items: any[]
