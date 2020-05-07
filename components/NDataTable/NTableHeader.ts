@@ -20,8 +20,8 @@ export default class NTableHeader extends Mixins(NTableComputed) {
       const level = index + 1
       return this.getheadersAtLevel(level).map(h => ({
         ...h,
-        rowspan: h.children ? 1 : rows - index,
-        colspan: h.children ? this.getHeadersChildren(h.children).length : 1
+        _rowspan: h.children ? 1 : rows - index,
+        _colspan: h.children ? this.getHeadersChildren(h.children).length : 1
       }))
     })
     return result
