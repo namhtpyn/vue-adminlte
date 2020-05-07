@@ -29,35 +29,37 @@
     <div :class="{ 'table-responsive': responsive }">
       <table ref="table" class="n-data-table table no-margin" :class="cssClass.table">
         <thead v-if="!hideHeader">
-          <tr :class="cssClass.headerRow" v-for="(headers, rowIndex) in headersCollection" :key="rowIndex">
-            <th
-              v-for="(header, colIndex) in headers"
-              :key="colIndex"
-              :colspan="header._colspan"
-              :rowspan="header._rowspan"
-              :class="cssClass.headerCell"
-              :style="headerCellStyle(header)"
-              @click="toggleSort(header)"
-            >
-              <template v-if="!isGrouped(header.value)">
-                <div v-if="header.value === '__selection'">
-                  <n-checkbox v-if="multipleSelect" @input="selectAll"></n-checkbox>
-                </div>
-                <slot v-else :name="`header.${kebabCase(header.value)}`" :item="header">{{ header.text }}</slot>
-                <i
-                  v-if="header.sortable"
-                  class="sortable fa fa-sort"
-                  :class="`${getSort(header) ? (getSort(header).desc ? 'desc' : 'asc') : ''}`"
-                ></i>
-                <i
-                  v-if="header.filterable"
-                  class="filterable fa fa-filter"
-                  :class="`${isFiltered(header) ? 'active' : ''}`"
-                  @click.stop="openFilter(header)"
-                ></i>
-              </template>
-            </th>
-          </tr>
+          <slot name="header" :headers="headersCollection">
+            <tr :class="cssClass.headerRow" v-for="(headers, rowIndex) in headersCollection" :key="rowIndex">
+              <th
+                v-for="(header, colIndex) in headers"
+                :key="colIndex"
+                :colspan="header._colspan"
+                :rowspan="header._rowspan"
+                :class="cssClass.headerCell"
+                :style="headerCellStyle(header)"
+                @click="toggleSort(header)"
+              >
+                <template v-if="!isGrouped(header.value)">
+                  <div v-if="header.value === '__selection'">
+                    <n-checkbox v-if="multipleSelect" @input="selectAll"></n-checkbox>
+                  </div>
+                  <slot v-else :name="`header.${kebabCase(header.value)}`" :item="header">{{ header.text }}</slot>
+                  <i
+                    v-if="header.sortable"
+                    class="sortable fa fa-sort"
+                    :class="`${getSort(header) ? (getSort(header).desc ? 'desc' : 'asc') : ''}`"
+                  ></i>
+                  <i
+                    v-if="header.filterable"
+                    class="filterable fa fa-filter"
+                    :class="`${isFiltered(header) ? 'active' : ''}`"
+                    @click.stop="openFilter(header)"
+                  ></i>
+                </template>
+              </th>
+            </tr>
+          </slot>
         </thead>
         <tbody v-if="hasItems">
           <tr
@@ -68,7 +70,7 @@
             @dblclick="e => rowDblclick(e, item.data, rowIndex)"
             @click="e => rowClick(e, item, rowIndex)"
           >
-            <slot :name="row" :item="vItems[item.index]" :rowIndex="rowIndex">
+            <slot name="item" :item="vItems[item.index]" :rowIndex="rowIndex">
               <template v-if="item.type === 'group'">
                 <td v-for="i in item.group.level" :key="i"></td>
                 <td :colspan="tableColumnsLength - item.group.level" @click.stop>
@@ -151,13 +153,15 @@
           </tr>
         </tbody>
         <tfoot v-if="!hideFooter">
-          <tr :class="cssClass.footerRow">
-            <td :class="cssClass.footerCell" v-for="(header, colIndex) in tableColumns" :key="colIndex">
-              <slot :name="`footer.${kebabCase(header.value)}`" :items="vItems">
-                {{ footerSummary(vItems, header) }}
-              </slot>
-            </td>
-          </tr>
+          <slot name="footer" :items="vItems" :headers="headersCollection">
+            <tr :class="cssClass.footerRow">
+              <td :class="cssClass.footerCell" v-for="(header, colIndex) in tableColumns" :key="colIndex">
+                <slot :name="`footer.${kebabCase(header.value)}`" :items="vItems">
+                  {{ footerSummary(vItems, header) }}
+                </slot>
+              </td>
+            </tr>
+          </slot>
         </tfoot>
       </table>
     </div>
