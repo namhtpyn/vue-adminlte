@@ -33,8 +33,8 @@
             <th
               v-for="(header, colIndex) in headers"
               :key="colIndex"
-              :colspan="header._colspan"
-              :rowspan="header._rowspan"
+              :colspan="header.colspan"
+              :rowspan="header.rowspan"
               :class="cssClass.headerCell"
               :style="headerCellStyle(header)"
               @click="toggleSort(header)"

@@ -40,8 +40,8 @@ export class TableHeader {
   encodeHtml: boolean = true
   grouped: boolean = false
   merged: boolean = false
-  _colspan: number = 1
-  _rowspan: number = 1
+  colspan: number = 1
+  rowspan: number = 1
 }
 
 export class TableItem {
