@@ -1,6 +1,24 @@
 <template>
   <div>
-    <n-data-table
+    <n-data-table>
+      <items>
+        <band-item text="wtf">
+          <items>
+            <text-item text="OK"></text-item>
+          </items>
+        </band-item>
+        <band-item text="wtf">
+          <items>
+            <band-item text="wtf">
+              <items>
+                <text-item text="OK"></text-item>
+              </items>
+            </band-item>
+          </items>
+        </band-item>
+      </items>
+    </n-data-table>
+    <!-- <n-data-table
       ref="table"
       read-url="/data/provinces.json"
       updatable
@@ -53,7 +71,7 @@
         aaaaaa
       </template>
       <template #modal="modal"> </template>
-    </n-data-table>
+    </n-data-table> -->
     <!-- <n-line-chart :items="traffics" caption="HAHAHA">
       <common text="In" value="Statisticdate"></common>
       <series>
@@ -174,7 +192,6 @@ import { Component, Vue } from '@namhoang/vue-property-decorator'
 import units from './data/units.json'
 import provinces from './data/provinces.json'
 import traffics from './data/traffics.json'
-import moment = require('moment')
 @Component({})
 export default class VApp extends Vue {
   checkboxModel: number[] = [1]
