@@ -26,6 +26,7 @@ import NTextBox from '././NTextBox.vue'
 import NTimePicker from '././NTimePicker.vue'
 import NTransitionExpand from '././NTransitionExpand.vue'
 import NTree from '././NTree.vue'
+import NVietnamMap from '././NVietnamMap/NVietnamMap.vue'
 Vue.component('NBtn', NBtn)
 Vue.component('NCheckbox', NCheckbox)
 Vue.component('NDataTable', NDataTable)
@@ -53,3 +54,4 @@ Vue.component('NTextBox', NTextBox)
 Vue.component('NTimePicker', NTimePicker)
 Vue.component('NTransitionExpand', NTransitionExpand)
 Vue.component('NTree', NTree)
+Vue.component('NVietnamMap', NVietnamMap)
