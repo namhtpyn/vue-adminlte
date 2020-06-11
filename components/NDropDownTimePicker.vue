@@ -62,7 +62,7 @@ export default class NDropDownTimePicker extends Vue {
   }
   //search=
   get getText() {
-    const date = moment.utc(this.vValue)
+    const date = moment(this.vValue)
     if (!date.isValid()) return ''
     const result: string[] = []
     if (!this.hideHour) result.push(_.padStart(date.get('hour').toString(), 2, '0'))

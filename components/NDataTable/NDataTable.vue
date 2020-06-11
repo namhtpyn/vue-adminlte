@@ -29,7 +29,7 @@
     <div :class="{ 'table-responsive': responsive }">
       <table ref="table" class="n-data-table table no-margin" :class="cssClass.table">
         <thead v-if="!hideHeader">
-          <slot name="header" :headers="headersCollection">
+          <slot name="header" :headers="headersCollection" :sort="toggleSort">
             <tr :class="cssClass.headerRow" v-for="(headers, rowIndex) in headersCollection" :key="rowIndex">
               <th
                 v-for="(header, colIndex) in headers"
@@ -149,7 +149,9 @@
         </tbody>
         <tbody v-else>
           <tr>
-            <td :colspan="tableColumnsLength" class="text-center">{{ tableText.noData }}</td>
+            <td :colspan="tableColumnsLength" class="text-center">
+              {{ tableText.noData }}
+            </td>
           </tr>
         </tbody>
         <tfoot v-if="!hideFooter">
@@ -267,7 +269,13 @@ class mixin2 extends Mixins(NTableCssClass, NTableText) {}
   inheritAttrs: false
 })
 export default class NDataTable extends Mixins(mixin1, mixin2) {
-  @ModelVar('input', 'value', { type: [Array, String, Number, Boolean, Object] }) vValue!: any[] | any
+  @ModelVar('input', 'value', {
+    type: [Array, String, Number, Boolean, Object]
+  })
+  vValue!: any[] | any
+  consolelog(e) {
+    console.log(e)
+  }
   createClick(e) {
     this.vModal.visible = true
     this.vModal.data = _.cloneDeep(this.newItem)
@@ -348,10 +356,18 @@ export default class NDataTable extends Mixins(mixin1, mixin2) {
   onFilterModalChanged() {
     const index = this.vFilter.findIndex(f => f.name === this.vFilterModal.name)
     if (index < 0) {
-      if (!_.isEmpty(this.vFilterModal.value)) this.vFilter.push({ name: this.vFilterModal.name, value: this.vFilterModal.value })
+      if (!_.isEmpty(this.vFilterModal.value))
+        this.vFilter.push({
+          name: this.vFilterModal.name,
+          value: this.vFilterModal.value
+        })
     } else {
       if (_.isEmpty(this.vFilterModal.value)) this.vFilter.splice(index, 1)
-      else this.vFilter.splice(index, 1, { name: this.vFilterModal.name, value: this.vFilterModal.value })
+      else
+        this.vFilter.splice(index, 1, {
+          name: this.vFilterModal.name,
+          value: this.vFilterModal.value
+        })
     }
   }
   /**pagination */

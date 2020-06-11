@@ -1,19 +1,15 @@
 <template>
   <div>
-    <n-vietnam-map
-      style="height:500px"
-      zoom-control
-      :zoom="10"
-      @province-init="provinceInit"
-      @province-click="provinceClick"
-    ></n-vietnam-map>
+    <n-vietnam-map></n-vietnam-map>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from '@namhoang/vue-property-decorator'
+import provinces from './data/provinces.json'
 @Component({})
 export default class VApp extends Vue {
+  provinces: any[] = provinces
   provinceInit(props, layer) {
     layer.setTooltipContent(props.Name + 'abcdef')
     //layer.setStyle({ fillColor: '#cc0000' })

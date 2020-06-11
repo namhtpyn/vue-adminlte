@@ -16,7 +16,7 @@ export default class NTableData extends Mixins(NTableComputed) {
   isExpanded(itemIndex: number) {
     return this.vExpansion.includes(itemIndex)
   }
-  private toggleSort(header: TableHeader) {
+  toggleSort(header: TableHeader) {
     if (!header.sortable) return
     const index = this.vSort.findIndex(sort => sort.name === header.value)
     if (index < 0) this.multipleSort ? this.vSort.push(new TableSort(header.value)) : (this.vSort = [new TableSort(header.value)])
@@ -87,17 +87,14 @@ export default class NTableData extends Mixins(NTableComputed) {
   itemsGrouped(items: TableItem[]) {
     if (_.isEmpty(this.groupBy)) return items
     this.groupBy.forEach((group, index) => {
-      items = items.reduce(
-        (ar: TableItem[] = [], item) => {
-          if (item.type === 'item') {
-            const last = _.last(ar)
-            if (_.isEmpty(ar) || (last && (last.data[group.value] !== item.data[group.value] || last.type === 'group')))
-              ar = ar.concat({ ...item, type: 'group', group: { text: item.data[group.value], header: group, level: index } })
-          }
-          return ar.concat(item)
-        },
-        [] as TableItem[]
-      )
+      items = items.reduce((ar: TableItem[] = [], item) => {
+        if (item.type === 'item') {
+          const last = _.last(ar)
+          if (_.isEmpty(ar) || (last && (last.data[group.value] !== item.data[group.value] || last.type === 'group')))
+            ar = ar.concat({ ...item, type: 'group', group: { text: item.data[group.value], header: group, level: index } })
+        }
+        return ar.concat(item)
+      }, [] as TableItem[])
     })
     return items
   }

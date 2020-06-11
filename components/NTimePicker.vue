@@ -63,13 +63,13 @@ export default class NTimePicker extends Vue {
   @Prop({ type: Boolean, default: false }) hideHour!: number
 
   get hour() {
-    return moment.utc(this.vValue).get('hour')
+    return moment(this.vValue).get('hour')
   }
   get minute() {
-    return moment.utc(this.vValue).get('minute')
+    return moment(this.vValue).get('minute')
   }
   get second() {
-    return moment.utc(this.vValue).get('second')
+    return moment(this.vValue).get('second')
   }
   hours = _.range(0, 24, this.stepHour)
   minutes = _.range(0, 60, this.stepMinute)
@@ -96,7 +96,7 @@ export default class NTimePicker extends Vue {
   }
 
   toTime(h: number, m: number, s: number) {
-    const result = moment.utc().startOf('day')
+    const result = moment().startOf('day')
     if (!this.hideHour) result.add(h, 'hour')
     if (!this.hideMinute) result.add(m, 'minute')
     if (!this.hideSecond) result.add(s, 'second')
