@@ -38,7 +38,7 @@ export default class NTree extends Mixins(NItems) {
   @Prop({ type: String, default: 'value' }) itemValue!: string
   @Prop({ type: String, default: 'text' }) itemText!: string
   @Prop({ type: String, default: 'parentID' }) parentKey!: string
-  @ModelVar('input', 'value', [String, Number]) vValue!: string | number
+  @ModelVar('selectNode', 'value', [String, Number]) vValue!: string | number
 
   @Emit() select(e) {}
   @Emit() loaded(e) {
@@ -62,7 +62,7 @@ export default class NTree extends Mixins(NItems) {
         id: m[this.itemValue],
         text: m[this.itemText],
         parentID: m[this.parentKey],
-        state: { opened: false, showed: true, selected: m[this.itemValue] === (this as any).value }
+        state: { opened: false, showed: true } //, selected: m[this.itemValue] === (this as any).value }
       }
     })
     const convertData = this.convertHereditaryToObject(itemsMap, root, 1)
