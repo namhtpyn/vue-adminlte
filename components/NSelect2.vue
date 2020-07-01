@@ -130,6 +130,7 @@ export default class NSelect2 extends Mixins(NItems) {
         }
       })
       .on('select2:select', e => (this.vValue = this.tryParseNumber($(e.target).val())))
+      .on('select2:clear', e => (this.vValue = null))
       .val(this.vValue)
       .trigger('change')
     this.setSize()

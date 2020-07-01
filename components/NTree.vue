@@ -44,7 +44,8 @@ export default class NTree extends Mixins(NItems) {
   @Emit() loaded(e) {
     if (this.expandAll || !_.isEmpty(this.searchText)) this.theTree.jstree().open_all()
     if (!this.noFocusOnLoaded) {
-      this.focusSelectedNode()
+      // this.focusSelectedNode()
+      this.theTree.jstree().select_node([this.vValue], true)
       if (this.searchable) this.focusSearch()
     }
   }
@@ -60,7 +61,11 @@ export default class NTree extends Mixins(NItems) {
     const itemsMap = items.map(m => {
       return {
         id: m[this.itemValue],
-        text: m[this.itemText],
+        text: m[this.itemText]
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;'),
         parentID: m[this.parentKey],
         state: { opened: false, showed: true } //, selected: m[this.itemValue] === (this as any).value }
       }
@@ -105,7 +110,7 @@ export default class NTree extends Mixins(NItems) {
         plugins: ['types']
       })
       .on('loaded.jstree', this.loaded)
-      .on('select_node.jstree', (e, data) => {
+      .on('changed.jstree', (e, data) => {
         this.vValue = data.selected[0]
         const node = this.vItems.find(o => _.isEqual(String(o[this.itemValue]), data.selected[0]))
         this.select(node)
