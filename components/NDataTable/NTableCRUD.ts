@@ -49,6 +49,7 @@ export default class NTableCRUD extends Mixins(NItems, NTableProp) {
   }
   async delete(item) {
     if (!this.deletable) return
+    this.$emit('click:delete', item)
     if (_.isEmpty(this.deleteUrl)) return
     this.vLoading = true
     try {
