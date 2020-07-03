@@ -102,5 +102,8 @@ export default class NTextArea extends Vue {
   mounted() {
     this.setScrollHeight()
   }
+  focus() {
+    $(this.$refs.textarea).focus()
+  }
 }
 </script>

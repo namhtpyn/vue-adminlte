@@ -49,4 +49,6 @@ export default class NTableProp extends Vue {
   @Prop(String) readonly createUrl!: string
   @Prop(String) readonly updateUrl!: string
   @Prop(String) readonly deleteUrl!: string
+
+  @Prop({ type: String, default: '' }) readonly appendModalCaption!: string
 }

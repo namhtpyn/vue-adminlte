@@ -34,6 +34,15 @@ export default class NForm extends Vue {
     this.formComponents.forEach(v => (v.valid = true))
     this.vValue = false
   }
+
+  focusFirstComponent() {
+    if (this.formComponents.length === 0) return
+    try {
+      this.formComponents[0].focus()
+    } catch (e) {
+      console.log(e)
+    }
+  }
 }
 </script>
 

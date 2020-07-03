@@ -3,7 +3,7 @@
     <label v-if="hasLabel" class="control-label" :style="styleLabel">
       {{ label }}
     </label>
-    <select :class="cCssClass"> </select>
+    <select ref="theSelect" :class="cCssClass"> </select>
     <span v-if="!valid && !hideErrorText" class="help-block">{{ errorText }}</span>
     <n-overlay absolute :value="vLoading">
       <div style="text-align:center; color:#fff">

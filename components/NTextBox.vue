@@ -12,6 +12,7 @@
         <n-btn :color="prependBtnColor" :flat="prependBtnFlat" @click.stop="prependBtnClick">{{ prependBtn }}</n-btn>
       </span>
       <input
+        ref="theInput"
         :type="type"
         :class="cClass"
         :placeholder="hint"
@@ -125,6 +126,10 @@ export default class NTextBox extends Vue {
     this.valid = true
     if (this.rules) this.valid = !this.rules.some(e => e(value) !== true)
     return this.valid
+  }
+
+  focus() {
+    $(this.$refs.theInput).focus()
   }
 }
 </script>

@@ -210,7 +210,7 @@
       persistent
       large
       :loading="vModal.loading"
-      :caption="vModal.new ? 'Thêm' : 'Sửa'"
+      :caption="(vModal.new ? 'Thêm ' : 'Sửa ') + appendModalCaption"
       v-model="vModal.visible"
     >
       <n-form ref="form" v-model="vModal.valid">
@@ -282,6 +282,9 @@ export default class NDataTable extends Mixins(mixin1, mixin2) {
     this.vModal.new = true
     this.vModal.loading = false
     this.vModal.valid = true
+    this.$nextTick(() => {
+      ;(this.$refs.form as any).focusFirstComponent()
+    })
   }
   updateClick(e) {
     this.vModal.visible = true
@@ -289,6 +292,9 @@ export default class NDataTable extends Mixins(mixin1, mixin2) {
     this.vModal.new = false
     this.vModal.loading = false
     this.vModal.valid = true
+    this.$nextTick(() => {
+      ;(this.$refs.form as any).focusFirstComponent()
+    })
   }
   private rowClick(event, item: TableItem, rowIndex: number) {
     //Row select

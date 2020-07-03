@@ -31,7 +31,7 @@ export default class NTableComputed extends Mixins(NItems, NTableProp) {
         header.headerAlign = 'center'
         break
       case 'number':
-        header.headerAlign = 'right'
+        header.headerAlign = 'center'
         header.align = 'right'
         header.format = v => numeral(v).format('0,0[.]00')
         break
