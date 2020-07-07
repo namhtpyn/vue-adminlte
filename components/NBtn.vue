@@ -10,6 +10,7 @@ import { Component, Vue, Prop, Emit } from '@namhoang/vue-property-decorator'
 export default class NBtn extends Vue {
   @Prop({ type: String, default: 'default' }) readonly color!: string
   @Prop({ type: String }) readonly href!: string
+  @Prop({ type: String, default: 'a' }) readonly tag!: string
   @Prop({ type: String, default: 'button' }) readonly type!: string
   @Prop(String) readonly textColor!: string
   @Prop(Boolean) readonly app!: boolean
@@ -19,10 +20,6 @@ export default class NBtn extends Vue {
   @Prop(Boolean) readonly xSmall!: boolean
   @Prop(Boolean) readonly flat!: boolean
   @Prop(Boolean) readonly disabled!: boolean
-
-  get tag() {
-    return this.href ? 'a' : 'a'
-  }
 
   @Emit() click(e) {}
 

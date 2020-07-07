@@ -217,7 +217,7 @@
         <slot name="modal" :modal="vModal"></slot>
       </n-form>
       <template v-slot:footer>
-        <n-btn color="primary" @click.stop="saveClick">Lưu</n-btn>
+        <n-btn color="primary" @click.stop="saveClick" tag="button">Lưu</n-btn>
       </template>
     </n-modal>
 

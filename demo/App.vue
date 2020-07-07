@@ -1,6 +1,13 @@
 <template>
   <div>
-    <n-vietnam-map></n-vietnam-map>
+    <n-data-table read-url="./data/provinces.json" creatable updatable>
+      <template #modal="{data}">
+        <n-text-box></n-text-box>
+        <n-text-box></n-text-box>
+        <n-text-box></n-text-box>
+        <n-text-box></n-text-box>
+      </template>
+    </n-data-table>
   </div>
 </template>
 
