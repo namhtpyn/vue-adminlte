@@ -3,9 +3,9 @@ import _ from 'lodash'
 import { TableItem, TableSort, TableHeader, TableFilter } from '../../types/Table'
 import natsort from 'natsort'
 import diacritics from 'remove-all-diacritics'
-import NTableComputed from './NTableComputed'
+import NTableHeader from './NTableHeader'
 @Component({})
-export default class NTableData extends Mixins(NTableComputed) {
+export default class NTableData extends Mixins(NTableHeader) {
   vSearch: string = ''
   vItemPerPage: number = 10
   vPage: number = 1
@@ -43,8 +43,9 @@ export default class NTableData extends Mixins(NTableComputed) {
   }
   itemsSearched(items: TableItem[]) {
     if (_.isEmpty(this.vSearch)) return items
+    const visibleFields = this.tableColumns.map(h => h.value)
     return items.filter(item =>
-      Object.values(item.data).some((field: any) =>
+      Object.values(_.pick(item.data, visibleFields)).some((field: any) =>
         _.isNil(field)
           ? false
           : diacritics.remove(field.toString().toUpperCase()).includes(diacritics.remove(this.vSearch.toUpperCase()))
