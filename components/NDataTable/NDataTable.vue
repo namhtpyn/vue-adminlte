@@ -493,4 +493,8 @@ export default class NDataTable extends Mixins(mixin1, mixin2) {
   top: 0px;
   z-index: 99;
 }
+.btn {
+  background-color: #408aec;
+  color: #fff;
+}
 </style>
