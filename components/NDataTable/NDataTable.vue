@@ -24,13 +24,14 @@
         >
           <n-btn
             v-if="creatable"
+            color="primary"
             @click.stop="createClick"
             :class="cssClass.createButton"
           >
             <n-icon>plus</n-icon>
             <span class="hidden-xs">Thêm</span>
           </n-btn>
-          <n-btn v-if="excelable" @click.stop="exportExcel">
+          <n-btn v-if="excelable" color="primary" @click.stop="exportExcel">
             <n-icon>file-excel-o</n-icon>
             <span class="hidden-xs">Excel</span>
           </n-btn>
@@ -181,12 +182,14 @@
                     <template v-else-if="header.value === '__action'">
                       <div class="btn-group">
                         <n-btn
+                          color="primary"
                           v-if="updatable"
                           @click.stop="updateClick(item.data)"
                         >
                           <n-icon>pencil</n-icon>
                         </n-btn>
                         <n-btn
+                          color="danger"
                           v-if="deletable"
                           @click.stop="removeClick(item.data)"
                         >
@@ -603,9 +606,5 @@ export default class NDataTable extends Mixins(mixin1, mixin2) {
   position: sticky;
   top: 0px;
   z-index: 99;
-}
-.btn {
-  background-color: #408aec;
-  color: #fff;
 }
 </style>
