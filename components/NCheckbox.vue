@@ -34,10 +34,9 @@ export default class NCheckbox extends Vue {
   input(e) {
     if (Array.isArray(this.vModel)) {
       if (e.target.checked) {
-        if (!this.vModel.some(m => _.isEqual(m, this.value))) this.vModel.push(this.value)
+        if (!this.vModel.some(m => _.isEqual(m, this.value))) this.vModel = this.vModel.concat(this.value)
       } else {
-        const idx = this.vModel.findIndex(m => _.isEqual(m, this.value))
-        if (idx >= 0) this.vModel.splice(idx, 1)
+        this.vModel = this.vModel.filter(m => !_.isEqual(m, this.value))
       }
     } else {
       if (e.target.checked) this.vModel = this.value

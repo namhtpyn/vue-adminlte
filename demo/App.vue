@@ -1,21 +1,13 @@
 <template>
   <div>
-    <n-data-table
+    <n-drop-down-table
+      multiple
       read-url="./data/provinces.json"
-      creatable
-      updatable
-      searchable
+      v-model="a"
+      item-text="provinceName"
+      item-value="provinceCode"
     >
-      <items>
-        <text-item text="abc" value="provinceName"></text-item>
-      </items>
-      <template #modal="{data}">
-        <n-text-box></n-text-box>
-        <n-text-box></n-text-box>
-        <n-text-box></n-text-box>
-        <n-text-box></n-text-box>
-      </template>
-    </n-data-table>
+    </n-drop-down-table>
   </div>
 </template>
 
@@ -24,6 +16,7 @@ import { Component, Vue } from "@namhoang/vue-property-decorator";
 import provinces from "./data/provinces.json";
 @Component({})
 export default class VApp extends Vue {
+  a: any[] = [];
   provinces: any[] = provinces;
   provinceInit(props, layer) {
     layer.setTooltipContent(props.Name + "abcdef");

@@ -6,28 +6,13 @@
         <div class="title" v-if="caption" style="flex:auto">{{ caption }}</div>
         <div v-if="searchable" class="has-feedback" style="flex:auto">
           <div class="has-feedback">
-            <input
-              ref="search"
-              type="text"
-              class="form-control"
-              v-model="vSearch"
-            />
-            <span
-              class="glyphicon glyphicon-search form-control-feedback"
-            ></span>
+            <input ref="search" type="text" class="form-control" v-model="vSearch" />
+            <span class="glyphicon glyphicon-search form-control-feedback"></span>
           </div>
         </div>
         <div v-if="!caption && !searchable" style="flex:auto"></div>
-        <div
-          class="btn-group"
-          v-if="creatable || excelable || !isEmpty($slots['top.button-group'])"
-        >
-          <n-btn
-            v-if="creatable"
-            color="primary"
-            @click.stop="createClick"
-            :class="cssClass.createButton"
-          >
+        <div class="btn-group" v-if="creatable || excelable || !isEmpty($slots['top.button-group'])">
+          <n-btn v-if="creatable" color="primary" @click.stop="createClick" :class="cssClass.createButton">
             <n-icon>plus</n-icon>
             <span class="hidden-xs">Thêm</span>
           </n-btn>
@@ -42,18 +27,10 @@
     </div>
 
     <div :class="{ 'table-responsive': responsive }">
-      <table
-        ref="table"
-        class="n-data-table table no-margin"
-        :class="cssClass.table"
-      >
+      <table ref="table" class="n-data-table table no-margin" :class="cssClass.table">
         <thead v-if="!hideHeader">
           <slot name="header" :headers="headersCollection" :sort="toggleSort">
-            <tr
-              :class="cssClass.headerRow"
-              v-for="(headers, rowIndex) in headersCollection"
-              :key="rowIndex"
-            >
+            <tr :class="cssClass.headerRow" v-for="(headers, rowIndex) in headersCollection" :key="rowIndex">
               <th
                 v-for="(header, colIndex) in headers"
                 :key="colIndex"
@@ -65,29 +42,13 @@
               >
                 <template v-if="!isGrouped(header.value)">
                   <div v-if="header.value === '__selection'">
-                    <n-checkbox
-                      v-if="multipleSelect"
-                      @input="selectAll"
-                    ></n-checkbox>
+                    <n-checkbox v-if="multipleSelect" @input="selectAll" v-model="vSelectAll"></n-checkbox>
                   </div>
-                  <slot
-                    v-else
-                    :name="`header.${kebabCase(header.value)}`"
-                    :item="header"
-                    >{{ header.text }}</slot
-                  >
+                  <slot v-else :name="`header.${kebabCase(header.value)}`" :item="header">{{ header.text }}</slot>
                   <i
                     v-if="header.sortable"
                     class="sortable fa fa-sort"
-                    :class="
-                      `${
-                        getSort(header)
-                          ? getSort(header).desc
-                            ? 'desc'
-                            : 'asc'
-                          : ''
-                      }`
-                    "
+                    :class="`${getSort(header) ? (getSort(header).desc ? 'desc' : 'asc') : ''}`"
                   ></i>
                   <i
                     v-if="header.filterable"
@@ -112,39 +73,24 @@
             <slot name="item" :item="vItems[item.index]" :rowIndex="rowIndex">
               <template v-if="item.type === 'group'">
                 <td v-for="i in item.group.level" :key="i"></td>
-                <td
-                  :colspan="tableColumnsLength - item.group.level"
-                  @click.stop
-                >
+                <td :colspan="tableColumnsLength - item.group.level" @click.stop>
                   {{ item.group.header.text }}:
                   <template v-if="item.group.header.encodeHtml">
                     {{ item.group.header.format(item.group.text) }}
                   </template>
-                  <span
-                    v-else
-                    v-html="item.group.header.format(item.group.text)"
-                  ></span>
+                  <span v-else v-html="item.group.header.format(item.group.text)"></span>
                 </td>
               </template>
 
               <template v-if="item.type === 'expand'">
                 <td v-for="i in groupByLength" :key="i"></td>
-                <td
-                  v-if="item.type === 'expand'"
-                  :colspan="tableColumnsLength - groupByLength"
-                  @click.stop
-                >
+                <td v-if="item.type === 'expand'" :colspan="tableColumnsLength - groupByLength" @click.stop>
                   <slot name="item.expand" :item="item.data"></slot>
                 </td>
               </template>
 
               <template v-else-if="item.type === 'item'">
-                <td
-                  :class="cssClass.cell"
-                  :style="cellStyle(header)"
-                  v-for="(header, colIndex) in tableColumns"
-                  :key="colIndex"
-                >
+                <td :class="cssClass.cell" :style="cellStyle(header)" v-for="(header, colIndex) in tableColumns" :key="colIndex">
                   <slot
                     :name="`item.${kebabCase(header.value)}`"
                     :item="vItems[item.index]"
@@ -173,26 +119,16 @@
                       <n-icon
                         style="cursor:pointer"
                         @click.stop="expandRow(item.index)"
-                        :class="
-                          `fa-chevron-${isExpanded(item.index) ? 'up' : 'down'}`
-                        "
+                        :class="`fa-chevron-${isExpanded(item.index) ? 'up' : 'down'}`"
                       >
                       </n-icon>
                     </template>
                     <template v-else-if="header.value === '__action'">
                       <div class="btn-group">
-                        <n-btn
-                          color="primary"
-                          v-if="updatable"
-                          @click.stop="updateClick(item.data)"
-                        >
+                        <n-btn color="primary" v-if="updatable" @click.stop="updateClick(item.data)">
                           <n-icon>pencil</n-icon>
                         </n-btn>
-                        <n-btn
-                          color="danger"
-                          v-if="deletable"
-                          @click.stop="removeClick(item.data)"
-                        >
+                        <n-btn color="danger" v-if="deletable" @click.stop="removeClick(item.data)">
                           <n-icon>trash</n-icon>
                         </n-btn>
                       </div>
@@ -202,10 +138,7 @@
                         <template v-if="header.encodeHtml">
                           {{ header.format(item.data[header.value]) }}
                         </template>
-                        <span
-                          v-else
-                          v-html="header.format(item.data[header.value])"
-                        ></span>
+                        <span v-else v-html="header.format(item.data[header.value])"></span>
                       </template>
                     </template>
                   </slot>
@@ -224,15 +157,8 @@
         <tfoot v-if="!hideFooter">
           <slot name="footer" :items="vItems" :headers="headersCollection">
             <tr :class="cssClass.footerRow">
-              <td
-                :class="cssClass.footerCell"
-                v-for="(header, colIndex) in tableColumns"
-                :key="colIndex"
-              >
-                <slot
-                  :name="`footer.${kebabCase(header.value)}`"
-                  :items="vItems"
-                >
+              <td :class="cssClass.footerCell" v-for="(header, colIndex) in tableColumns" :key="colIndex">
+                <slot :name="`footer.${kebabCase(header.value)}`" :items="vItems">
                   {{ footerSummary(vItems, header) }}
                 </slot>
               </td>
@@ -242,26 +168,15 @@
       </table>
     </div>
 
-    <div
-      v-if="!hideBottom"
-      style="display:flex; padding:10px 5px; align-items: center;"
-    >
+    <div v-if="!hideBottom" style="display:flex; padding:10px 5px; align-items: center;">
       <slot name="bottom.prepend"></slot>
       <slot name="bottom">
-        <div
-          class="hidden-xs"
-          style="height: 30px;min-height: 32px;padding: 6px 10px 6px 0px;font-size: 12px; line-height: 1.5;"
-        >
+        <div class="hidden-xs" style="height: 30px;min-height: 32px;padding: 6px 10px 6px 0px;font-size: 12px; line-height: 1.5;">
           Trang {{ vPage }}/{{ pageLength }} ({{ tableItems.length }} mục)
         </div>
 
         <div>
-          <n-pagination
-            :length="pageLength"
-            v-model="vPage"
-            small
-            class="no-margin"
-          ></n-pagination>
+          <n-pagination :length="pageLength" v-model="vPage" small class="no-margin"></n-pagination>
         </div>
 
         <div style="margin-left:auto">
@@ -306,13 +221,7 @@
       </template>
     </n-modal>
 
-    <n-modal
-      caption="Lọc"
-      v-model="vFilterModal.visible"
-      hide-footer
-      scrollable
-      small
-    >
+    <n-modal caption="Lọc" v-model="vFilterModal.visible" hide-footer scrollable small>
       <n-data-table
         v-model="vFilterModal.value"
         :items="vFilterModal.items"
@@ -326,11 +235,7 @@
         row-select
       >
         <items>
-          <text-item
-            :encode-html="vFilterModal.encodeHtml"
-            text="Giá trị"
-            value="text"
-          ></text-item>
+          <text-item :encode-html="vFilterModal.encodeHtml" text="Giá trị" value="text"></text-item>
         </items>
       </n-data-table>
     </n-modal>
@@ -338,234 +243,239 @@
 </template>
 
 <script lang="ts">
-import {
-  Component,
-  Mixins,
-  Watch,
-  ModelVar
-} from "@namhoang/vue-property-decorator";
+import { Component, Mixins, Watch, ModelVar } from '@namhoang/vue-property-decorator'
 
-import _ from "lodash";
-import numeral from "numeral";
-import XLSX from "xlsx";
+import _ from 'lodash'
+import numeral from 'numeral'
+import XLSX from 'xlsx'
 
-import NTableData from "./NTableData";
-import NTableCRUD from "./NTableCRUD";
-import NTableCssClass from "./NTableCssClass";
-import NTableText from "./NTableText";
-import { TableHeader, TableItem } from "../../types/Table";
+import NTableData from './NTableData'
+import NTableCRUD from './NTableCRUD'
+import NTableCssClass from './NTableCssClass'
+import NTableText from './NTableText'
+import { TableHeader, TableItem } from '../../types/Table'
 
-import NCheckBox from "../NCheckbox.vue";
-import NRadio from "../NRadio.vue";
-import NTableProp from "./NTableProp";
-import NTableComputed from "./NTableComputed";
+import NCheckBox from '../NCheckbox.vue'
+import NRadio from '../NRadio.vue'
+import NTableProp from './NTableProp'
+import NTableComputed from './NTableComputed'
 
 //Mixins limit 5 instances
-class mixin1 extends Mixins(
-  NTableProp,
-  NTableComputed,
-  NTableCRUD,
-  NTableData
-) {}
+class mixin1 extends Mixins(NTableProp, NTableComputed, NTableCRUD, NTableData) {}
 class mixin2 extends Mixins(NTableCssClass, NTableText) {}
 
 @Component({
   inheritAttrs: false
 })
 export default class NDataTable extends Mixins(mixin1, mixin2) {
-  @ModelVar("input", "value", {
+  @ModelVar('input', 'value', {
     type: [Array, String, Number, Boolean, Object]
   })
-  vValue!: any[] | any;
+  vValue!: any[] | any
   consolelog(e) {
-    console.log(e);
+    console.log(e)
   }
   createClick(e) {
-    this.vModal.visible = true;
-    this.vModal.data = _.cloneDeep(this.newItem);
-    this.vModal.new = true;
-    this.vModal.loading = false;
-    this.vModal.valid = true;
+    this.vModal.visible = true
+    this.vModal.data = _.cloneDeep(this.newItem)
+    this.vModal.new = true
+    this.vModal.loading = false
+    this.vModal.valid = true
     this.$nextTick(() => {
-      (this.$refs.form as any).focusFirstComponent();
-    });
+      ;(this.$refs.form as any).focusFirstComponent()
+    })
   }
   updateClick(e) {
-    this.vModal.visible = true;
-    this.vModal.data = _.cloneDeep(e);
-    this.vModal.new = false;
-    this.vModal.loading = false;
-    this.vModal.valid = true;
+    this.vModal.visible = true
+    this.vModal.data = _.cloneDeep(e)
+    this.vModal.new = false
+    this.vModal.loading = false
+    this.vModal.valid = true
     this.$nextTick(() => {
-      (this.$refs.form as any).focusFirstComponent();
-    });
+      ;(this.$refs.form as any).focusFirstComponent()
+    })
   }
   private rowClick(event, item: TableItem, rowIndex: number) {
     //Row select
     if (this.selectable && this.rowSelect) {
-      if (this.multipleSelect)
-        (this.$refs[`checkbox-${item.index}`][0] as NCheckBox).toggle();
-      else (this.$refs[`radio-${item.index}`][0] as NRadio).toggle();
+      if (this.multipleSelect) (this.$refs[`checkbox-${item.index}`][0] as NCheckBox).toggle()
+      else (this.$refs[`radio-${item.index}`][0] as NRadio).toggle()
     }
-    this.$emit("row-click", { event, item: item.data, rowIndex });
+    this.$emit('row-click', { event, item: item.data, rowIndex })
   }
   private rowDblclick(event, item, rowIndex) {
-    this.$emit("row-dblclick", { event, item, rowIndex });
+    this.$emit('row-dblclick', { event, item, rowIndex })
   }
   private rowContextmenu(event, item, rowIndex) {
-    this.$emit("row-contextmenu", { event, item, rowIndex });
+    this.$emit('row-contextmenu', { event, item, rowIndex })
   }
   async removeClick(e) {
-    await this.delete(e);
+    await this.delete(e)
   }
   async saveClick() {
     if (this.vModal.new) {
-      await this.create();
+      await this.create()
     } else {
-      await this.update();
+      await this.update()
     }
   }
 
   private expandRow(itemIndex: number) {
-    if (!this.expandable) return;
+    if (!this.expandable) return
     if (!this.vExpansion.includes(itemIndex))
-      this.multipleExpand
-        ? this.vExpansion.push(itemIndex)
-        : (this.vExpansion = [itemIndex]);
+      this.multipleExpand ? this.vExpansion.push(itemIndex) : (this.vExpansion = [itemIndex])
     else
       this.vExpansion.splice(
         this.vExpansion.findIndex(i => i === itemIndex),
         1
-      );
+      )
   }
   vFilterModal: {
-    items: any[];
-    name: string;
-    value: any[];
-    visible: boolean;
-    encodeHtml: boolean;
+    items: any[]
+    name: string
+    value: any[]
+    visible: boolean
+    encodeHtml: boolean
   } = {
     items: [],
-    name: "",
+    name: '',
     value: [],
     visible: false,
     encodeHtml: true
-  };
+  }
   openFilter(header: TableHeader) {
-    this.vFilterModal.name = header.value;
+    this.vFilterModal.name = header.value
 
-    this.vFilterModal.value = this.getFilterValue(header) || [];
-    this.vFilterModal.encodeHtml = header.encodeHtml;
-    this.vFilterModal.visible = true;
+    this.vFilterModal.value = this.getFilterValue(header) || []
+    this.vFilterModal.encodeHtml = header.encodeHtml
+    this.vFilterModal.visible = true
     this.vFilterModal.items = _.uniqBy(
       this.vItems.map(i => {
-        return { text: header.format(i[header.value]), value: i[header.value] };
+        return { text: header.format(i[header.value]), value: i[header.value] }
       }),
-      "value"
-    );
+      'value'
+    )
   }
 
-  @Watch("vFilterModal.value")
+  @Watch('vFilterModal.value')
   onFilterModalChanged() {
-    const index = this.vFilter.findIndex(
-      f => f.name === this.vFilterModal.name
-    );
+    const index = this.vFilter.findIndex(f => f.name === this.vFilterModal.name)
     if (index < 0) {
       if (!_.isEmpty(this.vFilterModal.value))
         this.vFilter.push({
           name: this.vFilterModal.name,
           value: this.vFilterModal.value
-        });
+        })
     } else {
-      if (_.isEmpty(this.vFilterModal.value)) this.vFilter.splice(index, 1);
+      if (_.isEmpty(this.vFilterModal.value)) this.vFilter.splice(index, 1)
       else
         this.vFilter.splice(index, 1, {
           name: this.vFilterModal.name,
           value: this.vFilterModal.value
-        });
+        })
     }
   }
   /**pagination */
   private changeItemPerPage(e) {
-    this.vItemPerPage = e.target.value;
+    this.vItemPerPage = e.target.value
   }
   /** headers */
 
   private headerCellStyle(header: TableHeader) {
-    const style: any[] = [];
+    const style: any[] = []
     if (header.width) {
-      style.push({ width: header.width });
-      style.push({ "min-width": header.width });
-      style.push({ "max-width": header.width });
+      style.push({ width: header.width })
+      style.push({ 'min-width': header.width })
+      style.push({ 'max-width': header.width })
     }
-    if (header.headerBgcolor)
-      style.push({ "background-color": header.headerBgcolor });
-    if (header.headerColor) style.push({ color: header.headerColor });
-    if (header.headerAlign) style.push({ "text-align": header.headerAlign });
-    if (header.headerValign)
-      style.push({ "vertical-align": header.headerValign });
-    return style;
+    if (header.headerBgcolor) style.push({ 'background-color': header.headerBgcolor })
+    if (header.headerColor) style.push({ color: header.headerColor })
+    if (header.headerAlign) style.push({ 'text-align': header.headerAlign })
+    if (header.headerValign) style.push({ 'vertical-align': header.headerValign })
+    return style
   }
   private cellStyle(header: TableHeader) {
-    const style: any = [];
+    const style: any = []
     if (header.width) {
-      style.push({ width: header.width });
-      style.push({ "min-width": header.width });
-      style.push({ "max-width": header.width });
+      style.push({ width: header.width })
+      style.push({ 'min-width': header.width })
+      style.push({ 'max-width': header.width })
     }
-    if (header.align) style.push({ "text-align": header.align });
-    if (header.valign) style.push({ "vertical-align": header.valign });
-    if (header.color) style.push({ color: header.color });
-    if (header.bgcolor) style.push({ "background-color": header.bgcolor });
-    return style;
+    if (header.align) style.push({ 'text-align': header.align })
+    if (header.valign) style.push({ 'vertical-align': header.valign })
+    if (header.color) style.push({ color: header.color })
+    if (header.bgcolor) style.push({ 'background-color': header.bgcolor })
+    return style
   }
   private footerSummary(items: any[], header: TableHeader) {
     if (header.summary instanceof Function) {
-      return header.summary(items);
+      return header.summary(items)
     } else {
-      if (header.summary === "sum")
-        return items
-          .reduce((a, b) => a.add(Number(b[header.value]) || 0), numeral(0))
-          .format("0,0[.]00[0][0][0]");
-      else if (header.summary === "count")
-        return numeral(items.length).format("0,0[.]00");
-      else if (header.summary === "average")
+      if (header.summary === 'sum')
+        return items.reduce((a, b) => a.add(Number(b[header.value]) || 0), numeral(0)).format('0,0[.]00[0][0][0]')
+      else if (header.summary === 'count') return numeral(items.length).format('0,0[.]00')
+      else if (header.summary === 'average')
         return items
           .reduce((a, b) => a.add(Number(b[header.value]) || 0), numeral(0))
           .divide(items.length)
-          .format("0,0[.]00[0][0][0]");
-      return "";
+          .format('0,0[.]00[0][0][0]')
+      return ''
     }
   }
   /** selectable */
+  vSelectAll: boolean = false
+  @Watch('vValue')
+  setSelectAllCheckBox(v) {
+    if (!this.selectable || !this.multipleSelect) return
+    if (!_.isEmpty(v)) {
+      if (!this.keyField) {
+        if (_.isEqual(this.vValue.concat().sort(), this.vItems.concat().sort())) this.vSelectAll = true
+        else this.vSelectAll = false
+      } else {
+        if (
+          _.isEqual(
+            this.vValue.concat().sort(),
+            this.vItems
+              .map(i => i[this.keyField])
+              .concat()
+              .sort()
+          )
+        )
+          this.vSelectAll = true
+        else this.vSelectAll = false
+      }
+    } else this.vSelectAll = false
+  }
+
   async selectAll(e) {
-    if (!this.selectable || !this.multipleSelect) return;
+    if (!this.selectable || !this.multipleSelect) return
     if (e) {
-      if (!this.keyField) this.vValue = _.cloneDeep(this.vItems);
-      else this.vValue = this.vItems.map(i => i[this.keyField]);
-    } else this.vValue = [];
+      if (!this.keyField) this.vValue = _.cloneDeep(this.vItems)
+      else this.vValue = this.vItems.map(i => i[this.keyField])
+    } else this.vValue = []
   }
   /**helper function */
 
   private isEmpty(o) {
-    return _.isEmpty(o);
+    return _.isEmpty(o)
   }
+
   mounted() {}
 
   private exportExcel() {
     //Show all to export then reverse back
-    this.vLoading = true;
-    const itemPerPage = this.vItemPerPage;
-    this.vItemPerPage = -1;
+    this.vLoading = true
+    const itemPerPage = this.vItemPerPage
+    this.vItemPerPage = -1
     this.$nextTick(() => {
-      const wb = XLSX.utils.table_to_book(this.$refs.table);
-      XLSX.writeFile(wb, "export.xlsx", { bookType: "xlsx" });
-      this.vItemPerPage = itemPerPage;
-      this.vLoading = false;
-    });
+      const wb = XLSX.utils.table_to_book(this.$refs.table)
+      XLSX.writeFile(wb, 'export.xlsx', { bookType: 'xlsx' })
+      this.vItemPerPage = itemPerPage
+      this.vLoading = false
+    })
   }
   kebabCase(v) {
-    return _.kebabCase(v);
+    return _.kebabCase(v)
   }
 }
 </script>
@@ -586,10 +496,10 @@ export default class NDataTable extends Mixins(mixin1, mixin2) {
   opacity: 1;
 }
 .n-data-table thead .sortable.asc::before {
-  content: "\f0de";
+  content: '\f0de';
 }
 .n-data-table thead .sortable.desc::before {
-  content: "\f0dd";
+  content: '\f0dd';
 }
 
 .n-data-table-top {
