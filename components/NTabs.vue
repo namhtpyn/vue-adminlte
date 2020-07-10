@@ -2,7 +2,7 @@
   <div class="nav-tabs-custom">
     <ul class="nav nav-tabs">
       <li :class="{ active: vValue === index }" v-for="index in length" :key="index" @click="vValue = index">
-        <a href="#">
+        <a style="cursor:pointer">
           <slot :name="`header.${index}`">header.{{ index }}</slot>
         </a>
       </li>
