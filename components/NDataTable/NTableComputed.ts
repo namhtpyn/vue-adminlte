@@ -72,7 +72,7 @@ export default class NTableComputed extends Mixins(NItems, NTableProp) {
   get headersFromItem(): TableHeader[] {
     if (_.isEmpty(this.vItems)) return []
     return Object.keys(this.vItems[0]).map(key => {
-      return { ...new TableHeader(), ...{ text: _.startCase(key), value: key } }
+      return { ...new TableHeader(), ...{ text: key, value: key } }
     })
   }
 
