@@ -1,12 +1,13 @@
 <template>
   <div>
-    <n-tabs :length="3">
-      <template #header.1>hello</template>
-      <template #body.1>hello</template>
-      <template #header.2 v-if="false">hello1</template>
-      <template #body.2 v-if="false">hello1</template>
-    </n-tabs>
-    <n-data-table ref="table" multiple read-url="./data/provinces.json" v-model="a">
+    <n-select
+      v-model="type"
+      :items="[
+        { text: '1', value: 1 },
+        { text: '2', value: 2 }
+      ]"
+    ></n-select>
+    <n-data-table :selectable="type == 1" multiple-select ref="table" multiple :read-url="readUrl">
       <items>
         <text-item value="provinceIDx" text="provinceIDx" editable></text-item>
         <text-item value="provinceID" text="provinceID" :validate="[v => v > 1050 || 'Error']" editable></text-item>
@@ -19,17 +20,11 @@
 
 <script lang="ts">
 import { Component, Vue } from '@namhoang/vue-property-decorator'
-import provinces from './data/provinces.json'
 @Component({})
 export default class VApp extends Vue {
-  a: any[] = []
-  provinces: any[] = provinces
-  provinceInit(props, layer) {
-    layer.setTooltipContent(props.Name + 'abcdef')
-    //layer.setStyle({ fillColor: '#cc0000' })
-  }
-  provinceClick(e) {
-    alert(e.target.feature.properties.Id)
+  type = 1
+  get readUrl() {
+    return './data/provinces.json?type' + this.type
   }
   mounted() {}
 }

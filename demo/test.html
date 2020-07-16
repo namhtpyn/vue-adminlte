@@ -19,64 +19,86 @@
     <script src="../dist/VueAdminLTE.js"></script>
     <script src="./JSONbig.js"></script>
     <script>
-      JSON = JSONbig
+      JSON = JSONbig;
     </script>
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/css/select2.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/icheck@1.0.2/skins/all.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/css/select2.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/icheck@1.0.2/skins/all.css"
+    />
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@2.4.17/dist/css/AdminLTE.min.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@2.4.17/dist/css/skins/_all-skins.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/admin-lte@2.4.17/dist/css/AdminLTE.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/admin-lte@2.4.17/dist/css/skins/_all-skins.min.css"
+    />
     <link rel="stylesheet" href="../dist/VueAdminLTE.css" />
   </head>
   <body>
     <div id="app">
-      <n-text-area v-model="textarea" :form="false" hide-error-text auto-grow></n-text-area>
-      <n-drop-down-date-picker v-model="dddp"></n-drop-down-date-picker>
+      <n-select
+        v-model="type"
+        :items="[
+        { text: '1', value: 1 },
+        { text: '2', value: 2 }
+      ]"
+      ></n-select>
       <n-data-table
-        read-url="data/provinces.json"
-        updatable
-        update-url="/haha"
-        caption="hihi"
-        searchable
-        expandable
-        key-field="provinceCode"
-        creatable
-        excelable
-        selectable
+        :selectable="type==1"
         multiple-select
+        ref="table"
+        multiple
+        :read-url="readUrl"
       >
         <items>
-          <text-item text="provinceName" value="provinceName" sortable filterable></text-item>
-          <text-item text="provinceCode" value="provinceCode" sortable filterable></text-item>
-          <checkbox-item text="areaID" value="areaID" sortable filterable></checkbox-item>
+          <text-item
+            value="provinceIDx"
+            text="provinceIDx"
+            editable
+          ></text-item>
+          <text-item
+            value="provinceID"
+            text="provinceID"
+            :validate="[v => v > 1050 || 'Error']"
+            editable
+          ></text-item>
+          <text-item value="provinceCode" text="provinceCode"></text-item>
+          <text-item value="provinceName" text="provinceName"></text-item>
         </items>
-        <template #modal="{modal}">
-          <n-drop-down-table read-url="data/provinces.json" item-text="provinceName" item-value="provinceName" searchable modal>
-            <items>
-              <text-item text="provinceID" value="provinceID"></text-item>
-              <text-item text="provinceCode" value="provinceCode"></text-item>
-              <text-item text="provinceName" value="provinceName"></text-item>
-              <text-item text="test" value="test"></text-item>
-            </items>
-          </n-drop-down-table>
-        </template>
-        <template #item.expand="{item}">
-          <n-btn>a</n-btn>
-        </template>
       </n-data-table>
     </div>
     <script>
       var app = new Vue({
-        el: '#app',
+        el: "#app",
         data: {
-          textarea: null,
-          dddp: '2019-09-18'
+          type: 1,
+          dddp: "2019-09-18"
+        },
+        computed: {
+          readUrl() {
+            return "./data/provinces.json?type" + this.type;
+          }
         }
-      })
+      });
     </script>
   </body>
 </html>

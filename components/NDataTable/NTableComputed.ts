@@ -81,34 +81,37 @@ export default class NTableComputed extends Mixins(NItems, NTableProp) {
     let headers: TableHeader[] = this.headersFromNode
     //Headers from items
     if (_.isEmpty(headers)) headers = this.headersFromItem
-
     //expansion
     if (this.expandable)
-      headers.unshift({
-        ...new TableHeader(),
-        ...{
-          text: '',
-          value: '__expansion',
-          width: '36px',
-          headerAlign: 'center',
-          align: 'center'
-        }
-      })
+      headers = [
+        {
+          ...new TableHeader(),
+          ...{
+            text: '',
+            value: '__expansion',
+            width: '36px',
+            headerAlign: 'center',
+            align: 'center'
+          }
+        } as TableHeader
+      ].concat(headers)
     //selection
     if (this.selectable)
-      headers.unshift({
-        ...new TableHeader(),
-        ...{
-          text: '',
-          value: '__selection',
-          width: '36px',
-          headerAlign: 'center',
-          align: 'center'
-        }
-      })
+      headers = [
+        {
+          ...new TableHeader(),
+          ...{
+            text: '',
+            value: '__selection',
+            width: '36px',
+            headerAlign: 'center',
+            align: 'center'
+          }
+        } as TableHeader
+      ].concat(headers)
     //action
     if (this.updatable || this.deletable)
-      headers.push({
+      headers = headers.concat({
         ...new TableHeader(),
         ...{
           text: 'Tác vụ',
