@@ -1,29 +1,35 @@
 <template>
   <div>
-    <n-drop-down-table
-      multiple
-      read-url="./data/provinces.json"
-      v-model="a"
-      item-text="provinceName"
-      item-value="provinceCode"
-    >
-    </n-drop-down-table>
+    <n-tabs :length="3">
+      <template #header.1>hello</template>
+      <template #body.1>hello</template>
+      <template #header.2 v-if="false">hello1</template>
+      <template #body.2 v-if="false">hello1</template>
+    </n-tabs>
+    <n-data-table ref="table" multiple read-url="./data/provinces.json" v-model="a">
+      <items>
+        <text-item value="provinceIDx" text="provinceIDx" editable></text-item>
+        <text-item value="provinceID" text="provinceID" :validate="[v => v > 1050 || 'Error']" editable></text-item>
+        <text-item value="provinceCode" text="provinceCode"></text-item>
+        <text-item value="provinceName" text="provinceName"></text-item>
+      </items>
+    </n-data-table>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "@namhoang/vue-property-decorator";
-import provinces from "./data/provinces.json";
+import { Component, Vue } from '@namhoang/vue-property-decorator'
+import provinces from './data/provinces.json'
 @Component({})
 export default class VApp extends Vue {
-  a: any[] = [];
-  provinces: any[] = provinces;
+  a: any[] = []
+  provinces: any[] = provinces
   provinceInit(props, layer) {
-    layer.setTooltipContent(props.Name + "abcdef");
+    layer.setTooltipContent(props.Name + 'abcdef')
     //layer.setStyle({ fillColor: '#cc0000' })
   }
   provinceClick(e) {
-    alert(e.target.feature.properties.Id);
+    alert(e.target.feature.properties.Id)
   }
   mounted() {}
 }

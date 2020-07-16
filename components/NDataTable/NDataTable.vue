@@ -90,7 +90,15 @@
               </template>
 
               <template v-else-if="item.type === 'item'">
-                <td :class="cssClass.cell" :style="cellStyle(header)" v-for="(header, colIndex) in tableColumns" :key="colIndex">
+                <td
+                  :class="[cssClass.cell, [validateCellErrorText(header, item) ? 'bg-red' : '']]"
+                  :title="validateCellErrorText(header, item)"
+                  :style="cellStyle(header)"
+                  v-for="(header, colIndex) in tableColumns"
+                  :key="colIndex"
+                  @dblclick.capture="e => onCellDbClick(e, header)"
+                  @blur="e => onEditCell(e, header, item.index)"
+                >
                   <slot
                     :name="`item.${kebabCase(header.value)}`"
                     :item="vItems[item.index]"
@@ -243,7 +251,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Mixins, Watch, ModelVar } from '@namhoang/vue-property-decorator'
+import { Vue, Component, Mixins, Watch, ModelVar } from '@namhoang/vue-property-decorator'
 
 import _ from 'lodash'
 import numeral from 'numeral'
@@ -259,6 +267,7 @@ import NCheckBox from '../NCheckbox.vue'
 import NRadio from '../NRadio.vue'
 import NTableProp from './NTableProp'
 import NTableComputed from './NTableComputed'
+import moment from 'moment'
 
 //Mixins limit 5 instances
 class mixin1 extends Mixins(NTableProp, NTableComputed, NTableCRUD, NTableData) {}
@@ -461,6 +470,44 @@ export default class NDataTable extends Mixins(mixin1, mixin2) {
   }
 
   mounted() {}
+
+  validateCellErrorText(header: TableHeader, item: TableItem) {
+    const f = header.validate.find(v => v(item.data[header.value]) !== true)
+    return f ? f(item.data[header.value]) : ''
+  }
+  validate() {
+    return this.tableItems
+      .map(item => ({
+        index: item.index,
+        error: this.tableColumns
+          .map(header => ({ field: header.text, text: this.validateCellErrorText(header, item) }))
+          .filter(v => v.text !== '')
+      }))
+      .filter(v => !_.isEmpty(v.error))
+  }
+  onCellDbClick(e: Event, header: TableHeader) {
+    if (!this.isGrouped(header.value) && header.encodeHtml && header.editable && e.target) {
+      ;(e.target as HTMLElement).contentEditable = 'true'
+      ;(e.target as HTMLElement).focus()
+    }
+  }
+  onEditCell(e: Event, header: TableHeader, index) {
+    ;(e.target as HTMLElement).contentEditable = 'false'
+    let value: any = (e.target as HTMLElement).innerText.trim()
+    switch (header.type) {
+      case 'number':
+        value = value === null || value === undefined || value === '' ? value : Number(value)
+        break
+      case 'date':
+        value =
+          value === null || value === undefined || value === '' || !moment(value, ['DD-MM-YYYY']).isValid()
+            ? value
+            : moment(value, ['DD-MM-YYYY']).toDate()
+    }
+    console.log(value)
+    Vue.set(this.vItems[index], header.value, value)
+    ;(e.target as HTMLElement).innerText = header.format(this.vItems[index][header.value])
+  }
 
   private exportExcel() {
     //Show all to export then reverse back

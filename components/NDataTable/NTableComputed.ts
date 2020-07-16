@@ -36,13 +36,13 @@ export default class NTableComputed extends Mixins(NItems, NTableProp) {
         header.format = v => numeral(v).format('0,0[.]00')
         break
       case 'date':
-        header.format = v => (moment(v).isValid() ? moment(v).format('DD/MM/YYYY') : '')
+        header.format = v => (v && moment(v).isValid() ? moment(v).format('DD/MM/YYYY') : v)
         break
       case 'time':
-        header.format = v => (moment(v).isValid() ? moment(v).format('HH:mm:ss') : '')
+        header.format = v => (v && moment(v).isValid() ? moment(v).format('HH:mm:ss') : v)
         break
       case 'datetime':
-        header.format = v => (moment(v).isValid() ? moment(v).format('DD/MM/YYYY HH:mm:ss') : '')
+        header.format = v => (v && moment(v).isValid() ? moment(v).format('DD/MM/YYYY HH:mm:ss') : v)
         break
       case 'image':
         header.format = v => `<img src="${v}" />`

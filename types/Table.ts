@@ -1,7 +1,7 @@
 export class TableHeader {
   text: string = ''
   value: string = ''
-  type: string = 'text'
+  type: 'band' | 'number' | 'date' | 'time' | 'datetime' | 'image' | 'checkbox' | 'text' | string = 'text'
   width?: string
   align: 'left' | 'right' | 'center' | 'justify' | 'initial' | 'inherit' = 'left'
   valign:
@@ -35,7 +35,9 @@ export class TableHeader {
   headerBgcolor: string = '#3c8dbc'
   headerColor: string = '#ffffff'
   summary?: string | Function
-  format: Function = v => v
+  format = v => v
+  validate = [v => true]
+  editable: boolean = false
   children?: TableHeader[]
   encodeHtml: boolean = true
   grouped: boolean = false
