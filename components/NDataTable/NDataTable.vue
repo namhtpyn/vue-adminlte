@@ -480,7 +480,10 @@ export default class NDataTable extends Mixins(mixin1, mixin2) {
       .map(item => ({
         index: item.index,
         error: this.tableColumns
-          .map(header => ({ field: header.text, text: this.validateCellErrorText(header, item) }))
+          .map(header => ({
+            field: header.text,
+            text: this.validateCellErrorText(header, item)
+          }))
           .filter(v => v.text !== '')
       }))
       .filter(v => !_.isEmpty(v.error))

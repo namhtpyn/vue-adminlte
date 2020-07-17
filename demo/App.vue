@@ -7,7 +7,7 @@
         { text: '2', value: 2 }
       ]"
     ></n-select>
-    <n-data-table :selectable="type == 1" multiple-select ref="table" multiple :read-url="readUrl">
+    <n-data-table :selectable="type == 1" multiple-select ref="table" multiple :read-url="readUrl" v-model="a">
       <items>
         <text-item value="provinceIDx" text="provinceIDx" editable></text-item>
         <text-item value="provinceID" text="provinceID" :validate="[v => v > 1050 || 'Error']" editable></text-item>
@@ -20,8 +20,10 @@
 
 <script lang="ts">
 import { Component, Vue } from '@namhoang/vue-property-decorator'
+import provinces from './data/provinces.json'
 @Component({})
 export default class VApp extends Vue {
+  a = provinces
   type = 1
   get readUrl() {
     return './data/provinces.json?type' + this.type
