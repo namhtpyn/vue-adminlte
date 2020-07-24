@@ -29,6 +29,14 @@ export default class NTabs extends Vue {
   hasSlot(slotName: string) {
     return !_.isEmpty(this.$slots[slotName])
   }
+  mounted() {
+    for (let i = 1; i <= this.length; i++) {
+      if (this.hasSlot(`body.${i}`) && i != this.vValue) {
+        this.vValue = i
+        break
+      }
+    }
+  }
 }
 </script>
 

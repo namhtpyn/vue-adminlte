@@ -1,6 +1,10 @@
 <template>
   <div>
-    <n-select
+    <n-tabs :length="10">
+      <template #header.2>header</template>
+      <template #body.2>body</template>
+    </n-tabs>
+    <!-- <n-select
       v-model="type"
       :items="[
         { text: '1', value: 1 },
@@ -14,7 +18,7 @@
         <text-item value="provinceCode" text="provinceCode"></text-item>
         <text-item value="provinceName" text="provinceName"></text-item>
       </items>
-    </n-data-table>
+    </n-data-table> -->
   </div>
 </template>
 
