@@ -1,8 +1,12 @@
 <template>
   <div>
-    <n-tabs :length="10">
-      <template #header.2>header</template>
-      <template #body.2>body</template>
+    <n-tabs :length="10" :lazy="false">
+      <template #header.1>header</template>
+      <template #body.1>body</template>
+      <template #header.2>header2</template>
+      <template #body.2>body2</template>
+      <template #header.3>header3</template>
+      <template #body.3>body3</template>
     </n-tabs>
     <!-- <n-select
       v-model="type"
@@ -23,14 +27,14 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from '@namhoang/vue-property-decorator'
-import provinces from './data/provinces.json'
+import { Component, Vue } from "@namhoang/vue-property-decorator";
+import provinces from "./data/provinces.json";
 @Component({})
 export default class VApp extends Vue {
-  a = provinces
-  type = 1
+  a = provinces;
+  type = 1;
   get readUrl() {
-    return './data/provinces.json?type' + this.type
+    return "./data/provinces.json?type" + this.type;
   }
   mounted() {}
 }
