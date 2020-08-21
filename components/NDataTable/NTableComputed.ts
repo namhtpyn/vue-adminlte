@@ -36,10 +36,13 @@ export default class NTableComputed extends Mixins(NItems, NTableProp) {
         header.format = v => numeral(v).format('0,0[.]00')
         break
       case 'date':
-        header.format = v =>
-          v && moment(v, ['DD-MM-YYYY', 'MM-DD-YYYY', 'YYYY-MM-DD']).isValid()
-            ? moment(v, ['DD-MM-YYYY', 'MM-DD-YYYY', 'YYYY-MM-DD']).format('DD/MM/YYYY')
-            : v
+        header.format = v => {
+          if (!v) return v
+          else if (v instanceof Date) return moment(v).format('DD/MM/YYYY')
+          else if (typeof v === 'string' && moment(v, ['DD-MM-YYYY', 'MM-DD-YYYY', 'YYYY-MM-DD']).isValid())
+            return moment(v, ['DD-MM-YYYY', 'MM-DD-YYYY', 'YYYY-MM-DD']).format('DD/MM/YYYY')
+          else return v
+        }
         break
       case 'time':
         header.format = v => (v && moment(v).isValid() ? moment(v).format('HH:mm:ss') : v)
@@ -94,9 +97,9 @@ export default class NTableComputed extends Mixins(NItems, NTableProp) {
             value: '__expansion',
             width: '36px',
             headerAlign: 'center',
-            align: 'center'
-          }
-        } as TableHeader
+            align: 'center',
+          },
+        } as TableHeader,
       ].concat(headers)
     //selection
     if (this.selectable)
@@ -108,9 +111,9 @@ export default class NTableComputed extends Mixins(NItems, NTableProp) {
             value: '__selection',
             width: '36px',
             headerAlign: 'center',
-            align: 'center'
-          }
-        } as TableHeader
+            align: 'center',
+          },
+        } as TableHeader,
       ].concat(headers)
     //action
     if (this.updatable || this.deletable)
@@ -121,8 +124,8 @@ export default class NTableComputed extends Mixins(NItems, NTableProp) {
           value: '__action',
           width: '96px',
           headerAlign: 'center',
-          align: 'center'
-        }
+          align: 'center',
+        },
       })
     headers = this.appendGroupHeaders(headers)
     return headers

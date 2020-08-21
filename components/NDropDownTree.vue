@@ -35,83 +35,83 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Mixins, Emit, Ref, ModelVar } from '@namhoang/vue-property-decorator'
-import _ from 'lodash'
-import NTree from './NTree.vue'
-import NItems from './Base/NItems'
-@Component({})
-export default class NDropDownTree extends Mixins(NItems) {
-  @ModelVar('input', 'value', [String, Number]) vValue!: string | number
-  @Prop({ type: String, default: 'none' }) treeNodeIcon!: string
-  @Prop({ type: Boolean, default: false }) treeExpandAll!: boolean
-  @Prop({ type: Boolean, default: false }) searchable!: boolean
-  @Prop({ type: Number, default: 0 }) treeExpandToLevel!: number
-  @Prop({ type: [String, Number], default: 'parentID' }) treeParentKey!: string | number
-  @Prop({ type: String, default: 'value' }) itemValue!: string
-  @Prop({ type: String, default: 'text' }) itemText!: string
-  @Prop([String, Number]) dropDownWidth!: string | number
-  @Prop(String) label!: string
-  @Prop(String) hint!: string
-  @Prop({ type: Boolean, default: false }) small!: boolean
-  @Prop({ type: Boolean, default: false }) large!: boolean
-  @Prop({ type: Boolean, default: true }) form!: boolean
-  @Prop({ type: Boolean, default: false }) hideErrorText!: string
-  @Prop(Array) rules!: any[]
-  @Ref('tree') tree!: NTree
-  @Emit() select(e) {}
+  import { Component, Prop, Mixins, Emit, Ref, ModelVar } from '@namhoang/vue-property-decorator'
+  import _ from 'lodash'
+  import NTree from './NTree.vue'
+  import NItems from './Base/NItems'
+  @Component({})
+  export default class NDropDownTree extends Mixins(NItems) {
+    @ModelVar('input', 'value', [String, Number]) vValue!: string | number
+    @Prop({ type: String, default: 'none' }) treeNodeIcon!: string
+    @Prop({ type: Boolean, default: false }) treeExpandAll!: boolean
+    @Prop({ type: Boolean, default: false }) searchable!: boolean
+    @Prop({ type: Number, default: 0 }) treeExpandToLevel!: number
+    @Prop({ type: [String, Number], default: 'parentID' }) treeParentKey!: string | number
+    @Prop({ type: String, default: 'value' }) itemValue!: string
+    @Prop({ type: String, default: 'text' }) itemText!: string
+    @Prop([String, Number]) dropDownWidth!: string | number
+    @Prop(String) label!: string
+    @Prop(String) hint!: string
+    @Prop({ type: Boolean, default: false }) small!: boolean
+    @Prop({ type: Boolean, default: false }) large!: boolean
+    @Prop({ type: Boolean, default: true }) form!: boolean
+    @Prop({ type: Boolean, default: false }) hideErrorText!: string
+    @Prop(Array) rules!: any[]
+    @Ref('tree') tree!: NTree
+    @Emit() select(e) {}
 
-  //treeItems: any[] = []
-  valid: boolean = true
-  lazyValidation: boolean = false
+    //treeItems: any[] = []
+    valid: boolean = true
+    lazyValidation: boolean = false
 
-  get text() {
-    const item = this.vItems.find(item => item[this.itemValue] === this.vValue)
-    if (item) return (item[this.itemText] || '').toString()
-    return ''
-  }
+    get text() {
+      const item = this.vItems.find(item => item[this.itemValue] === this.vValue)
+      if (item) return (item[this.itemText] || '').toString()
+      return ''
+    }
 
-  get styleLabel() {
-    return {
-      'control-label': true,
-      'font-size': `${this.small ? '11px' : this.large ? '15px' : '13px'} !important`
+    get styleLabel() {
+      return {
+        'control-label': true,
+        'font-size': `${this.small ? '11px' : this.large ? '15px' : '13px'} !important`,
+      }
+    }
+
+    get hasLabel() {
+      return !_.isEmpty(this.label)
+    }
+    get errorText() {
+      if (!this.valid && this.rules) {
+        const f = this.rules.find(r => r(this.vValue) !== true)
+        return f ? f(this.vValue) : ''
+      }
+      return ''
+    }
+    validate(value) {
+      this.valid = true
+      if (this.rules) this.valid = !this.rules.some(e => e(value) !== true)
+      return this.valid
+    }
+    private itemSelect(item, data) {
+      this.vValue = item[this.itemValue]
+      this.select(item)
+      if (!this.lazyValidation || !this.valid) this.validate(item[this.itemValue])
+      data.isOpen = false
+    }
+    mounted() {}
+    private onOpen() {
+      this.$nextTick(() => {
+        this.tree.focusSelectedNode()
+        this.tree.focusSearch()
+      })
+    }
+
+    get componentStyle() {
+      const style: any[] = []
+      if (this.vLoading) style.push({ position: 'relative' })
+      return style
     }
   }
-
-  get hasLabel() {
-    return !_.isEmpty(this.label)
-  }
-  get errorText() {
-    if (!this.valid && this.rules) {
-      const f = this.rules.find(r => r(this.vValue) !== true)
-      return f ? f(this.vValue) : ''
-    }
-    return ''
-  }
-  validate(value) {
-    this.valid = true
-    if (this.rules) this.valid = !this.rules.some(e => e(value) !== true)
-    return this.valid
-  }
-  private itemSelect(item, data) {
-    this.vValue = item[this.itemValue]
-    this.select(item)
-    if (!this.lazyValidation || !this.valid) this.validate(item[this.itemValue])
-    data.isOpen = false
-  }
-  mounted() {}
-  private onOpen() {
-    this.$nextTick(() => {
-      this.tree.focusSelectedNode()
-      this.tree.focusSearch()
-    })
-  }
-
-  get componentStyle() {
-    const style: any[] = []
-    if (this.vLoading) style.push({ position: 'relative' })
-    return style
-  }
-}
 </script>
 
 <style scoped></style>

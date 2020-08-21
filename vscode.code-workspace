@@ -1,0 +1,52 @@
+{
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    "workbench.tree.indent": 20,
+    "workbench.colorTheme": "Night Owl",
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2,
+    "editor.wordWrap": "on",
+    "explorer.compactFolders": false,
+    "files.autoSave": "onFocusChange",
+    "files.eol": "\n",
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "javascript.preferences.quoteStyle": "single",
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "typescript.preferences.quoteStyle": "single",
+    "prettier.semi": false,
+    "prettier.printWidth": 130,
+    "prettier.arrowParens": "avoid",
+    "prettier.singleQuote": true,
+    "prettier.trailingComma": "es5",
+    "prettier.vueIndentScriptAndStyle": true,
+    "eslint.validate": ["javascript", "javascriptreact", "vue"],
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true
+    },
+    "vetur.format.enable": false,
+    "vetur.validation.template": false
+  },
+  "extensions": {
+    "recommendations": [
+      "VisualStudioExptTeam.vscodeintellicode",
+      "aaron-bond.better-comments",
+      "coenraads.bracket-pair-colorizer-2",
+      "editorconfig.editorconfig",
+      "dbaeumer.vscode-eslint",
+      "eamodio.gitlens",
+      "formulahendry.auto-close-tag",
+      "formulahendry.auto-rename-tag",
+      "xabikos.javascriptsnippets",
+      "quicktype.quicktype",
+      "esbenp.prettier-vscode",
+      "octref.vetur",
+      "ryanlaws.toggle-case",
+      "ms-vscode-remote.remote-containers",
+      "sdras.night-owl"
+    ]
+  }
+}

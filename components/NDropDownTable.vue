@@ -36,99 +36,100 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Watch, ModelVar, Mixins } from '@namhoang/vue-property-decorator'
-import _ from 'lodash'
-import NDataTable from './NDataTable/index.vue'
-import NItems from './Base/NItems'
-@Component({ inheritAttrs: false })
-export default class NDropDownTable extends Mixins(NItems) {
-  @Prop({ type: String, default: 'text' }) itemText!: string
-  @Prop({ type: String, default: 'value' }) itemValue!: string
-  @Prop({ type: Boolean, default: false }) searchable!: boolean
-  @Prop({ type: Boolean, default: false }) multiple!: boolean
+  import { Component, Prop, Watch, ModelVar, Mixins } from '@namhoang/vue-property-decorator'
+  import _ from 'lodash'
+  import NDataTable from './NDataTable/index.vue'
+  import NItems from './Base/NItems'
+  @Component({ inheritAttrs: false })
+  export default class NDropDownTable extends Mixins(NItems) {
+    @Prop({ type: String, default: 'text' }) itemText!: string
+    @Prop({ type: String, default: 'value' }) itemValue!: string
+    @Prop({ type: Boolean, default: false }) searchable!: boolean
+    @Prop({ type: Boolean, default: false }) multiple!: boolean
 
-  @Prop(String) label!: string
-  @Prop({ type: Boolean, default: false }) small!: boolean
-  @Prop({ type: Boolean, default: false }) large!: boolean
-  @Prop({ type: Boolean, default: true }) form!: boolean
-  @Prop({ type: Boolean, default: false }) hideErrorText!: string
-  @Prop(Array) rules!: any[]
+    @Prop(String) label!: string
+    @Prop({ type: Boolean, default: false }) small!: boolean
+    @Prop({ type: Boolean, default: false }) large!: boolean
+    @Prop({ type: Boolean, default: true }) form!: boolean
+    @Prop({ type: Boolean, default: false }) hideErrorText!: string
+    @Prop(Array) rules!: any[]
 
-  @ModelVar('input', 'value', [String, Number, Array]) vValue!: any | any[]
+    @ModelVar('input', 'value', [String, Number, Array]) vValue!: any | any[]
 
-  valid: boolean = true
-  lazyValidation: boolean = false
+    valid: boolean = true
+    lazyValidation: boolean = false
 
-  get hasLabel() {
-    return !_.isEmpty(this.label)
-  }
-  get styleLabel() {
-    return {
-      'control-label': true,
-      'font-size': `${this.small ? '11px' : this.large ? '15px' : '13px'} !important`
+    get hasLabel() {
+      return !_.isEmpty(this.label)
     }
-  }
-  //search=
-  get getText() {
-    if (this.multiple) {
-      return this.vItems
-        .filter(item => (this.vValue as any[]).includes(item[this.itemValue]))
-        .map(item => (item[this.itemText] || '').toString())
-        .join('; ')
-    } else {
-      const item = this.vItems.find(item => item[this.itemValue] === this.vValue)
-      if (item) return (item[this.itemText] || '').toString()
-    }
-    return ''
-  }
-  get errorText() {
-    if (!this.valid && this.rules) {
-      const f = this.rules.find(r => r(this.vValue) !== true)
-      return f ? f(this.vValue) : ''
-    }
-    return ''
-  }
-  validate(value) {
-    this.valid = true
-    if (this.rules) this.valid = !this.rules.some(e => e(value) !== true)
-    return this.valid
-  }
-
-  onOpen() {
-    if (this.searchable) this.$nextTick(() => ((this.$refs.table as NDataTable).$refs.search as HTMLInputElement).focus())
-  }
-  rowClick({ item }, data) {
-    if (!this.multiple) this.$nextTick(() => (data.isOpen = false))
-  }
-
-  @Watch('vValue', { immediate: true })
-  onValueChanged(value) {
-    this.$nextTick(() => {
-      if (!this.valid || !this.lazyValidation) {
-        this.validate(value)
+    get styleLabel() {
+      return {
+        'control-label': true,
+        'font-size': `${this.small ? '11px' : this.large ? '15px' : '13px'} !important`,
       }
-    })
-  }
+    }
+    //search=
+    get getText() {
+      if (this.multiple) {
+        return this.vItems
+          .filter(item => (this.vValue as any[]).includes(item[this.itemValue]))
+          .map(item => (item[this.itemText] || '').toString())
+          .join('; ')
+      } else {
+        const item = this.vItems.find(item => item[this.itemValue] === this.vValue)
+        if (item) return (item[this.itemText] || '').toString()
+      }
+      return ''
+    }
+    get errorText() {
+      if (!this.valid && this.rules) {
+        const f = this.rules.find(r => r(this.vValue) !== true)
+        return f ? f(this.vValue) : ''
+      }
+      return ''
+    }
+    validate(value) {
+      this.valid = true
+      if (this.rules) this.valid = !this.rules.some(e => e(value) !== true)
+      return this.valid
+    }
 
-  get selectedValue() {
-    if (Array.isArray(this.vValue)) return this.vItems.filter(item => (this.vValue as any[]).includes(item[this.itemValue])) || []
-    else return this.vItems.find(item => item[this.itemValue] === this.vValue) || {}
-  }
-  set selectedValue(values) {
-    if (!_.isNil(values)) {
-      let output: any
-      if (Array.isArray(values)) output = values.map(v => v[this.itemValue])
-      else output = values[this.itemValue]
+    onOpen() {
+      if (this.searchable) this.$nextTick(() => ((this.$refs.table as NDataTable).$refs.search as HTMLInputElement).focus())
+    }
+    rowClick({ item }, data) {
+      if (!this.multiple) this.$nextTick(() => (data.isOpen = false))
+    }
 
-      if (!_.isNil(output) && !_.isEqual(output, this.vValue)) this.vValue = output
+    @Watch('vValue', { immediate: true })
+    onValueChanged(value) {
+      this.$nextTick(() => {
+        if (!this.valid || !this.lazyValidation) {
+          this.validate(value)
+        }
+      })
+    }
+
+    get selectedValue() {
+      if (Array.isArray(this.vValue))
+        return this.vItems.filter(item => (this.vValue as any[]).includes(item[this.itemValue])) || []
+      else return this.vItems.find(item => item[this.itemValue] === this.vValue) || {}
+    }
+    set selectedValue(values) {
+      if (!_.isNil(values)) {
+        let output: any
+        if (Array.isArray(values)) output = values.map(v => v[this.itemValue])
+        else output = values[this.itemValue]
+
+        if (!_.isNil(output) && !_.isEqual(output, this.vValue)) this.vValue = output
+      }
+    }
+    get componentStyle() {
+      const style: object[] = []
+      if (this.vLoading) style.push({ position: 'relative' })
+      return style
     }
   }
-  get componentStyle() {
-    const style: object[] = []
-    if (this.vLoading) style.push({ position: 'relative' })
-    return style
-  }
-}
 </script>
 
 <style scoped></style>
