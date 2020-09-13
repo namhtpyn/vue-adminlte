@@ -1,4 +1,5 @@
 import { Vue, Component, Prop } from '@namhoang/vue-property-decorator'
+import { ExportCellData } from '../../types/Table'
 
 @Component({})
 export default class NTableProp extends Vue {
@@ -43,7 +44,7 @@ export default class NTableProp extends Vue {
     type: Object,
     default: () => {
       return {}
-    }
+    },
   })
   newItem!: string
   @Prop(String) readonly createUrl!: string
@@ -51,4 +52,6 @@ export default class NTableProp extends Vue {
   @Prop(String) readonly deleteUrl!: string
 
   @Prop({ type: String, default: '' }) readonly appendModalCaption!: string
+  @Prop({ type: String, default: '' }) readonly exportTitle!: string
+  @Prop({ type: Array, default: () => [[{ value: '', colspan: -1 }]] }) readonly exportAfterTitle!: ExportCellData[][]
 }

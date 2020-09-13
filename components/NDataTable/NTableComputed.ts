@@ -10,8 +10,10 @@ import camelcaseKeys from '../Base/camelcaseKeys'
 
 @Component({})
 export default class NTableComputed extends Mixins(NItems, NTableProp) {
+  vToggleReloadHeaders = 1
   private getHeaders(nodes: VNode[] | undefined = this.$slots && this.$slots.default) {
     if (_.isEmpty(nodes)) return []
+    if (!this.vToggleReloadHeaders) return []
 
     const items = nodes && nodes.find(node => node.tag === 'items')
 
@@ -29,6 +31,11 @@ export default class NTableComputed extends Mixins(NItems, NTableProp) {
     switch (header.type) {
       case 'band':
         header.headerAlign = 'center'
+        break
+      case 'percent':
+        header.headerAlign = 'center'
+        header.align = 'right'
+        header.format = v => numeral(v).format('0[.]00%')
         break
       case 'number':
         header.headerAlign = 'center'
@@ -48,7 +55,18 @@ export default class NTableComputed extends Mixins(NItems, NTableProp) {
         header.format = v => (v && moment(v).isValid() ? moment(v).format('HH:mm:ss') : v)
         break
       case 'datetime':
-        header.format = v => (v && moment(v).isValid() ? moment(v).format('DD/MM/YYYY HH:mm:ss') : v)
+        header.format = v => {
+          if (!v) return v
+          else if (v instanceof Date) return moment(v).format('DD/MM/YYYY HH:mm:ss')
+          else if (
+            typeof v === 'string' &&
+            moment(v, ['DD-MM-YYYY HH:mm:ss', 'MM-DD-YYYY HH:mm:ss', 'YYYY-MM-DDTHH:mm:ss.sss']).isValid()
+          )
+            return moment(v, ['DD-MM-YYYY HH:mm:ss', 'MM-DD-YYYY HH:mm:ss', 'YYYY-MM-DDTHH:mm:ss.sss']).format(
+              'DD/MM/YYYY HH:mm:ss'
+            )
+          else return v
+        }
         break
       case 'image':
         header.format = v => `<img src="${v}" />`
@@ -127,6 +145,7 @@ export default class NTableComputed extends Mixins(NItems, NTableProp) {
           align: 'center',
         },
       })
+    headers = headers.filter(h => h.visible)
     headers = this.appendGroupHeaders(headers)
     return headers
   }

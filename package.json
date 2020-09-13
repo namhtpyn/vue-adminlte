@@ -65,5 +65,9 @@
     "webpack-dev-server": "^3.11.0",
     "webpack-node-externals": "^1.7.2",
     "xlsx": "^0.15.6"
+  },
+  "dependencies": {
+    "exceljs": "^4.1.1",
+    "file-saver": "^2.0.2"
   }
 }

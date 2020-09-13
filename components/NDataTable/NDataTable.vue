@@ -38,24 +38,33 @@
                 :rowspan="header._rowspan"
                 :class="cssClass.headerCell"
                 :style="headerCellStyle(header)"
-                @click="toggleSort(header)"
               >
                 <template v-if="!isGrouped(header.value)">
                   <div v-if="header.value === '__selection'">
-                    <n-checkbox v-if="multipleSelect" @input="selectAll" v-model="vSelectAll"></n-checkbox>
+                    <n-checkbox v-if="multipleSelect" @click="selectAll" v-model="vSelectAll"></n-checkbox>
                   </div>
-                  <slot v-else :name="`header.${kebabCase(header.value)}`" :item="header">{{ header.text }}</slot>
-                  <i
-                    v-if="header.sortable"
-                    class="sortable fa fa-sort"
-                    :class="`${getSort(header) ? (getSort(header).desc ? 'desc' : 'asc') : ''}`"
-                  ></i>
-                  <i
-                    v-if="header.filterable"
-                    class="filterable fa fa-filter"
-                    :class="`${isFiltered(header) ? 'active' : ''}`"
-                    @click.stop="openFilter(header)"
-                  ></i>
+                  <template v-else>
+                    <div style="display:flex; align-items: center">
+                      <span style="flex-grow:1">
+                        <slot :name="`header.${kebabCase(header.value)}`" :item="header">{{ header.text }}</slot>
+                      </span>
+
+                      <i
+                        v-if="header.sortable"
+                        style="flex:none; width: 14px; cursor:pointer"
+                        class="sortable fa fa-sort"
+                        @click.stop="toggleSort(header)"
+                        :class="`${getSort(header) ? (getSort(header).desc ? 'desc' : 'asc') : ''}`"
+                      ></i>
+                      <i
+                        v-if="header.filterable"
+                        style="flex:none; width: 14px; cursor:pointer"
+                        class="filterable fa fa-filter"
+                        :class="`${isFiltered(header) ? 'active' : ''}`"
+                        @click.stop="openFilter(header)"
+                      ></i>
+                    </div>
+                  </template>
                 </template>
               </th>
             </tr>
@@ -118,7 +127,6 @@
                         v-else
                         :ref="`radio-${item.index}`"
                         v-model="vValue"
-                        @input="input"
                         @click.stop
                         :value="keyField ? item.data[keyField] : item.data"
                       ></n-radio>
@@ -245,326 +253,505 @@
         <items>
           <text-item :encode-html="vFilterModal.encodeHtml" text="Giá trị" value="text"></text-item>
         </items>
+        <template #top.button-group>
+          <n-btn color="primary" @click="vFilterModal.value = []">Clear</n-btn>
+        </template>
       </n-data-table>
     </n-modal>
   </div>
 </template>
 
 <script lang="ts">
-import { Vue, Component, Mixins, Watch, ModelVar } from '@namhoang/vue-property-decorator'
+  import { Vue, Component, Mixins, Watch, ModelVar } from '@namhoang/vue-property-decorator'
 
-import _ from 'lodash'
-import numeral from 'numeral'
-import XLSX from 'xlsx'
+  import _ from 'lodash'
+  import numeral from 'numeral'
+  import XLSX from 'xlsx'
 
-import NTableData from './NTableData'
-import NTableCRUD from './NTableCRUD'
-import NTableCssClass from './NTableCssClass'
-import NTableText from './NTableText'
-import { TableHeader, TableItem } from '../../types/Table'
+  import NTableData from './NTableData'
+  import NTableCRUD from './NTableCRUD'
+  import NTableCssClass from './NTableCssClass'
+  import NTableText from './NTableText'
+  import { TableHeader, TableItem } from '../../types/Table'
 
-import NCheckBox from '../NCheckbox.vue'
-import NRadio from '../NRadio.vue'
-import NTableProp from './NTableProp'
-import NTableComputed from './NTableComputed'
-import moment from 'moment'
+  import NCheckBox from '../NCheckbox.vue'
+  import NRadio from '../NRadio.vue'
+  import NTableProp from './NTableProp'
+  import NTableComputed from './NTableComputed'
+  import moment from 'moment'
+  import { observe } from '../../extension/SlotObservable'
+  import exceljs from 'exceljs'
+  import { saveAs } from 'file-saver'
+  import diacritics from 'remove-all-diacritics'
 
-//Mixins limit 5 instances
-class mixin1 extends Mixins(NTableProp, NTableComputed, NTableCRUD, NTableData) {}
-class mixin2 extends Mixins(NTableCssClass, NTableText) {}
+  //Mixins limit 5 instances
+  class mixin1 extends Mixins(NTableProp, NTableComputed, NTableCRUD, NTableData) {}
+  class mixin2 extends Mixins(NTableCssClass, NTableText) {}
 
-@Component({
-  inheritAttrs: false
-})
-export default class NDataTable extends Mixins(mixin1, mixin2) {
-  @ModelVar('input', 'value', {
-    type: [Array, String, Number, Boolean, Object]
+  @Component({
+    inheritAttrs: false,
   })
-  vValue!: any[] | any
-  consolelog(e) {
-    console.log(e)
-  }
-  createClick(e) {
-    this.vModal.visible = true
-    this.vModal.data = _.cloneDeep(this.newItem)
-    this.vModal.new = true
-    this.vModal.loading = false
-    this.vModal.valid = true
-    this.$nextTick(() => {
-      ;(this.$refs.form as any).focusFirstComponent()
+  export default class NDataTable extends Mixins(mixin1, mixin2) {
+    @ModelVar('input', 'value', {
+      type: [Array, String, Number, Boolean, Object],
     })
-  }
-  updateClick(e) {
-    this.vModal.visible = true
-    this.vModal.data = _.cloneDeep(e)
-    this.vModal.new = false
-    this.vModal.loading = false
-    this.vModal.valid = true
-    this.$nextTick(() => {
-      ;(this.$refs.form as any).focusFirstComponent()
-    })
-  }
-  private rowClick(event, item: TableItem, rowIndex: number) {
-    //Row select
-    if (this.selectable && this.rowSelect) {
-      if (this.multipleSelect) (this.$refs[`checkbox-${item.index}`][0] as NCheckBox).toggle()
-      else (this.$refs[`radio-${item.index}`][0] as NRadio).toggle()
+    vValue: any[] | any
+    consolelog(e) {
+      console.log(e)
     }
-    this.$emit('row-click', { event, item: item.data, rowIndex })
-  }
-  private rowDblclick(event, item, rowIndex) {
-    this.$emit('row-dblclick', { event, item, rowIndex })
-  }
-  private rowContextmenu(event, item, rowIndex) {
-    this.$emit('row-contextmenu', { event, item, rowIndex })
-  }
-  async removeClick(e) {
-    await this.delete(e)
-  }
-  async saveClick() {
-    if (this.vModal.new) {
-      await this.create()
-    } else {
-      await this.update()
+    createClick(e) {
+      this.vModal.visible = true
+      this.vModal.data = _.cloneDeep(this.newItem)
+      this.vModal.new = true
+      this.vModal.loading = false
+      this.vModal.valid = true
+      this.$nextTick(() => {
+        ;(this.$refs.form as any).focusFirstComponent()
+      })
     }
-  }
-
-  private expandRow(itemIndex: number) {
-    if (!this.expandable) return
-    if (!this.vExpansion.includes(itemIndex))
-      this.multipleExpand ? this.vExpansion.push(itemIndex) : (this.vExpansion = [itemIndex])
-    else
-      this.vExpansion.splice(
-        this.vExpansion.findIndex(i => i === itemIndex),
-        1
-      )
-  }
-  vFilterModal: {
-    items: any[]
-    name: string
-    value: any[]
-    visible: boolean
-    encodeHtml: boolean
-  } = {
-    items: [],
-    name: '',
-    value: [],
-    visible: false,
-    encodeHtml: true
-  }
-  openFilter(header: TableHeader) {
-    this.vFilterModal.name = header.value
-
-    this.vFilterModal.value = this.getFilterValue(header) || []
-    this.vFilterModal.encodeHtml = header.encodeHtml
-    this.vFilterModal.visible = true
-    this.vFilterModal.items = _.uniqBy(
-      this.vItems.map(i => {
-        return { text: header.format(i[header.value]), value: i[header.value] }
-      }),
-      'value'
-    )
-  }
-
-  @Watch('vFilterModal.value')
-  onFilterModalChanged() {
-    const index = this.vFilter.findIndex(f => f.name === this.vFilterModal.name)
-    if (index < 0) {
-      if (!_.isEmpty(this.vFilterModal.value))
-        this.vFilter.push({
-          name: this.vFilterModal.name,
-          value: this.vFilterModal.value
-        })
-    } else {
-      if (_.isEmpty(this.vFilterModal.value)) this.vFilter.splice(index, 1)
-      else
-        this.vFilter.splice(index, 1, {
-          name: this.vFilterModal.name,
-          value: this.vFilterModal.value
-        })
+    updateClick(e) {
+      this.vModal.visible = true
+      this.vModal.data = _.cloneDeep(e)
+      this.vModal.new = false
+      this.vModal.loading = false
+      this.vModal.valid = true
+      this.$nextTick(() => {
+        ;(this.$refs.form as any).focusFirstComponent()
+      })
     }
-  }
-  /**pagination */
-  private changeItemPerPage(e) {
-    this.vItemPerPage = e.target.value
-  }
-  /** headers */
-
-  private headerCellStyle(header: TableHeader) {
-    const style: any[] = []
-    if (header.width) {
-      style.push({ width: header.width })
-      style.push({ 'min-width': header.width })
-      style.push({ 'max-width': header.width })
-    }
-    if (header.headerBgcolor) style.push({ 'background-color': header.headerBgcolor })
-    if (header.headerColor) style.push({ color: header.headerColor })
-    if (header.headerAlign) style.push({ 'text-align': header.headerAlign })
-    if (header.headerValign) style.push({ 'vertical-align': header.headerValign })
-    return style
-  }
-  private cellStyle(header: TableHeader) {
-    const style: any = []
-    if (header.width) {
-      style.push({ width: header.width })
-      style.push({ 'min-width': header.width })
-      style.push({ 'max-width': header.width })
-    }
-    if (header.align) style.push({ 'text-align': header.align })
-    if (header.valign) style.push({ 'vertical-align': header.valign })
-    if (header.color) style.push({ color: header.color })
-    if (header.bgcolor) style.push({ 'background-color': header.bgcolor })
-    return style
-  }
-  private footerSummary(items: any[], header: TableHeader) {
-    if (header.summary instanceof Function) {
-      return header.summary(items)
-    } else {
-      if (header.summary === 'sum')
-        return items.reduce((a, b) => a.add(Number(b[header.value]) || 0), numeral(0)).format('0,0[.]00[0][0][0]')
-      else if (header.summary === 'count') return numeral(items.length).format('0,0[.]00')
-      else if (header.summary === 'average')
-        return items
-          .reduce((a, b) => a.add(Number(b[header.value]) || 0), numeral(0))
-          .divide(items.length)
-          .format('0,0[.]00[0][0][0]')
-      return ''
-    }
-  }
-  /** selectable */
-  vSelectAll: boolean = false
-  @Watch('vValue')
-  setSelectAllCheckBox(v) {
-    if (!this.selectable || !this.multipleSelect) return
-    if (!_.isEmpty(v)) {
-      if (!this.keyField) {
-        if (_.isEqual(this.vValue.concat().sort(), this.vItems.concat().sort())) this.vSelectAll = true
-        else this.vSelectAll = false
-      } else {
-        if (
-          _.isEqual(
-            this.vValue.concat().sort(),
-            this.vItems
-              .map(i => i[this.keyField])
-              .concat()
-              .sort()
-          )
-        )
-          this.vSelectAll = true
-        else this.vSelectAll = false
+    private rowClick(event, item: TableItem, rowIndex: number) {
+      //Row select
+      if (this.selectable && this.rowSelect) {
+        if (this.multipleSelect) (this.$refs[`checkbox-${item.index}`][0] as NCheckBox).toggle()
+        else (this.$refs[`radio-${item.index}`][0] as NRadio).toggle()
       }
-    } else this.vSelectAll = false
-  }
+      this.$emit('row-click', { event, item: item.data, rowIndex })
+    }
+    private rowDblclick(event, item, rowIndex) {
+      this.$emit('row-dblclick', { event, item, rowIndex })
+    }
+    private rowContextmenu(event, item, rowIndex) {
+      this.$emit('row-contextmenu', { event, item, rowIndex })
+    }
+    async removeClick(e) {
+      await this.delete(e)
+    }
+    async saveClick() {
+      if (this.vModal.new) {
+        await this.create()
+      } else {
+        await this.update()
+      }
+    }
 
-  async selectAll(e) {
-    if (!this.selectable || !this.multipleSelect) return
-    if (e) {
-      if (!this.keyField) this.vValue = _.cloneDeep(this.vItems)
-      else this.vValue = this.vItems.map(i => i[this.keyField])
-    } else this.vValue = []
-  }
-  /**helper function */
+    private expandRow(itemIndex: number) {
+      if (!this.expandable) return
+      if (!this.vExpansion.includes(itemIndex))
+        this.multipleExpand ? this.vExpansion.push(itemIndex) : (this.vExpansion = [itemIndex])
+      else
+        this.vExpansion.splice(
+          this.vExpansion.findIndex(i => i === itemIndex),
+          1
+        )
+    }
+    vFilterModal: {
+      items: any[]
+      name: string
+      value: any[]
+      visible: boolean
+      encodeHtml: boolean
+    } = {
+      items: [],
+      name: '',
+      value: [],
+      visible: false,
+      encodeHtml: true,
+    }
+    openFilter(header: TableHeader) {
+      this.vFilterModal.name = header.value
 
-  private isEmpty(o) {
-    return _.isEmpty(o)
-  }
+      this.vFilterModal.value = this.getFilterValue(header) || []
+      this.vFilterModal.encodeHtml = header.encodeHtml
+      this.vFilterModal.visible = true
+      this.vFilterModal.items = _.uniqBy(
+        this.vItems.map(i => {
+          return { text: header.format(i[header.value]), value: i[header.value] }
+        }),
+        'value'
+      )
+    }
 
-  mounted() {}
+    @Watch('vFilterModal.value')
+    onFilterModalChanged() {
+      const index = this.vFilter.findIndex(f => f.name === this.vFilterModal.name)
+      if (index < 0) {
+        if (!_.isEmpty(this.vFilterModal.value))
+          this.vFilter.push({
+            name: this.vFilterModal.name,
+            value: this.vFilterModal.value,
+          })
+      } else {
+        if (_.isEmpty(this.vFilterModal.value)) this.vFilter.splice(index, 1)
+        else
+          this.vFilter.splice(index, 1, {
+            name: this.vFilterModal.name,
+            value: this.vFilterModal.value,
+          })
+      }
+    }
+    /**pagination */
+    private changeItemPerPage(e) {
+      this.vItemPerPage = e.target.value
+    }
+    /** headers */
 
-  validateCellErrorText(header: TableHeader, item: TableItem) {
-    const f = header.validate.find(v => v(item.data[header.value]) !== true)
-    return f ? f(item.data[header.value]) : ''
-  }
-  validate() {
-    return this.tableItems
-      .map(item => ({
-        index: item.index,
-        error: this.tableColumns
-          .map(header => ({
-            field: header.text,
-            text: this.validateCellErrorText(header, item)
-          }))
-          .filter(v => v.text !== '')
-      }))
-      .filter(v => !_.isEmpty(v.error))
-  }
-  onCellDbClick(e: Event, header: TableHeader) {
-    if (!this.isGrouped(header.value) && header.encodeHtml && header.editable && e.target) {
-      ;(e.target as HTMLElement).contentEditable = 'true'
-      ;(e.target as HTMLElement).focus()
+    private headerCellStyle(header: TableHeader) {
+      const style: any[] = []
+      if (header.width) {
+        style.push({ width: header.width })
+        style.push({ 'min-width': header.width })
+        style.push({ 'max-width': header.width })
+      }
+      if (header.headerBgcolor) style.push({ 'background-color': header.headerBgcolor })
+      if (header.headerColor) style.push({ color: header.headerColor })
+      if (header.headerAlign) style.push({ 'text-align': header.headerAlign })
+      if (header.headerValign) style.push({ 'vertical-align': header.headerValign })
+      return style
+    }
+    private cellStyle(header: TableHeader) {
+      const style: any = []
+      if (header.width) {
+        style.push({ width: header.width })
+        style.push({ 'min-width': header.width })
+        style.push({ 'max-width': header.width })
+      }
+      if (header.align) style.push({ 'text-align': header.align })
+      if (header.valign) style.push({ 'vertical-align': header.valign })
+      if (header.color) style.push({ color: header.color })
+      if (header.bgcolor) style.push({ 'background-color': header.bgcolor })
+      return style
+    }
+    private footerSummary(items: any[], header: TableHeader) {
+      if (header.summary instanceof Function) {
+        return header.summary(items)
+      } else {
+        if (header.summary === 'sum')
+          return items.reduce((a, b) => a.add(Number(b[header.value]) || 0), numeral(0)).format('0,0[.]00[0][0][0]')
+        else if (header.summary === 'count') return numeral(items.length).format('0,0[.]00')
+        else if (header.summary === 'average')
+          return items
+            .reduce((a, b) => a.add(Number(b[header.value]) || 0), numeral(0))
+            .divide(items.length)
+            .format('0,0[.]00[0][0][0]')
+        return ''
+      }
+    }
+    /** selectable */
+    vSelectAll: boolean = false
+    @Watch('vValue')
+    onvValueChanged() {
+      this.setSelectAllCheckBox()
+    }
+    @Watch('tableItems')
+    onTableItemsChanged() {
+      this.setSelectAllCheckBox()
+    }
+    isArrayEqual(x, y) {
+      return _(x)
+        .differenceWith(y, _.isEqual)
+        .isEmpty()
+    }
+    setSelectAllCheckBox() {
+      if (!this.selectable || !this.multipleSelect) return
+      if (!_.isEmpty(this.vValue)) {
+        if (!this.keyField) {
+          if (this.isArrayEqual(_.cloneDeep(this.tableItems.map(o => o.data)), _.cloneDeep(this.vValue))) this.vSelectAll = true
+          else {
+            this.vSelectAll = false
+          }
+        } else {
+          if (
+            _.isEqual(
+              this.vValue.concat().sort(),
+              this.tableItems
+                .map(i => i.data[this.keyField])
+                .concat()
+                .sort()
+            )
+          )
+            this.vSelectAll = true
+          else this.vSelectAll = false
+        }
+      } else this.vSelectAll = false
+    }
+
+    async selectAll(e) {
+      if (!this.selectable || !this.multipleSelect) return
+      if (e.target.checked) {
+        if (!this.keyField) this.vValue = _.uniqWith(this.vValue.concat(_.cloneDeep(this.tableItems.map(i => i.data))), _.isEqual)
+        else this.vValue = _.uniqWith(this.vValue.concat(_.cloneDeep(this.tableItems.map(i => i.data[this.keyField]))))
+      } else this.vValue = []
+    }
+    /**helper function */
+
+    private isEmpty(o) {
+      return _.isEmpty(o)
+    }
+
+    mounted() {
+      observe(this, () => this.vToggleReloadHeaders++)
+    }
+    destroyed() {
+      console.log('destroyed')
+    }
+
+    validateCellErrorText(header: TableHeader, item: TableItem) {
+      const f = header.validate.find(v => v(item.data[header.value]) !== true)
+      return f ? f(item.data[header.value]) : ''
+    }
+    validate() {
+      return this.tableItems
+        .map(item => ({
+          index: item.index,
+          error: this.tableColumns
+            .map(header => ({
+              field: header.text,
+              text: this.validateCellErrorText(header, item),
+            }))
+            .filter(v => v.text !== ''),
+        }))
+        .filter(v => !_.isEmpty(v.error))
+    }
+    onCellDbClick(e: Event, header: TableHeader) {
+      if (!this.isGrouped(header.value) && header.encodeHtml && header.editable && e.target) {
+        ;(e.target as HTMLElement).contentEditable = 'true'
+        ;(e.target as HTMLElement).focus()
+      }
+    }
+    onEditCell(e: Event, header: TableHeader, index) {
+      ;(e.target as HTMLElement).contentEditable = 'false'
+      let value: any = (e.target as HTMLElement).innerText.trim()
+      switch (header.type) {
+        case 'number':
+          value = value === null || value === undefined || value === '' ? value : Number(value)
+          break
+        case 'date':
+          value =
+            value === null || value === undefined || value === '' || !moment(value, ['DD-MM-YYYY']).isValid()
+              ? value
+              : moment(value, ['DD-MM-YYYY']).toDate()
+      }
+      console.log(value)
+      Vue.set(this.vItems[index], header.value, value)
+      ;(e.target as HTMLElement).innerText = header.format(this.vItems[index][header.value])
+    }
+
+    private async exportExcel() {
+      const wb = new exceljs.Workbook()
+      const ws = wb.addWorksheet('Sheet 1')
+
+      if (this.exportTitle) {
+        const titleRow = ws.addRow([this.exportTitle])
+        titleRow.alignment = { vertical: 'middle', horizontal: 'center' }
+        titleRow.font = { bold: true, size: 16 }
+        titleRow.getCell(1).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'c5bd98' } }
+        ws.mergeCells(
+          titleRow.number,
+          1,
+          titleRow.number,
+          1 + this.tableColumns.filter(h => !h.value.startsWith('__')).length - 1
+        )
+      }
+
+      let rowNumber = ws.rowCount + 1
+      if (!_.isEmpty(this.exportAfterTitle)) {
+        this.exportAfterTitle.forEach(r => {
+          const row = ws.getRow(rowNumber)
+          let colNumber = 1
+          r.forEach(c => {
+            const cell = row.getCell(colNumber)
+            cell.value = c.text
+            if ((c.colspan != undefined && c.colspan > 1) || (c.rowspan != undefined && c.rowspan > 1)) {
+              ws.mergeCells(
+                rowNumber,
+                colNumber,
+                c.rowspan && c.rowspan > 1 ? rowNumber - 1 + c.rowspan : rowNumber,
+                c.colspan && c.colspan > 1 ? colNumber - 1 + c.colspan : colNumber
+              )
+            }
+
+            if (c.colspan != undefined && c.colspan === -1) {
+              ws.mergeCells(
+                rowNumber,
+                colNumber,
+                rowNumber,
+                colNumber + this.tableColumns.filter(h => !h.value.startsWith('__')).length - 1
+              )
+            }
+            colNumber++
+          })
+          rowNumber++
+        })
+      }
+
+      //Header
+      if (!this.hideHeader) {
+        this.headersCollection.forEach(r => {
+          const row = ws.getRow(rowNumber)
+          row.font = { bold: true }
+          row.alignment = { vertical: 'middle', horizontal: 'center' }
+
+          let colNumber = 1
+          r.filter(h => !h.value.startsWith('__')).forEach(c => {
+            while (!_.isEqual(row.getCell(colNumber).master, row.getCell(colNumber))) {
+              colNumber++
+            }
+
+            const cell = row.getCell(colNumber)
+            if (!this.isGrouped(c.value)) cell.value = c.text
+            cell.border = {
+              top: { style: 'thin' },
+              left: { style: 'thin' },
+              bottom: { style: 'thin' },
+              right: { style: 'thin' },
+            }
+
+            if (c._rowspan > 1 || c._colspan > 1) {
+              ws.mergeCells(rowNumber, colNumber, rowNumber + c._rowspan - 1, colNumber + c._colspan - 1)
+            }
+            colNumber++
+          })
+          rowNumber++
+        })
+      }
+
+      //Body
+      //items)
+      const tableItems = this.itemsGrouped(this.itemsExpanded(this.tableItems))
+      tableItems.forEach(r => {
+        const row = ws.getRow(rowNumber)
+        let colNumber = 1
+        if (r.type === 'group') {
+          if (r.group) {
+            for (let i = 0; i <= r.group.level; i++) {
+              const cell = row.getCell(colNumber + i)
+              cell.border = {
+                top: { style: 'thin' },
+                left: { style: 'thin' },
+                bottom: { style: 'thin' },
+                right: { style: 'thin' },
+              }
+              if (i == r.group.level) {
+                cell.value = (r.group.header.text ? r.group.header.text + ': ' : '') + r.group.header.format(r.group.text)
+                ws.mergeCells(
+                  rowNumber,
+                  colNumber + r.group.level,
+                  rowNumber,
+                  colNumber + this.tableColumns.filter(h => !h.value.startsWith('__')).length - 1
+                )
+              }
+            }
+          }
+        } else if (r.type === 'expand') {
+        } else if (r.type === 'item')
+          this.tableColumns
+            .filter(h => !h.value.startsWith('__'))
+            .forEach(c => {
+              const cell = row.getCell(colNumber)
+              if (!this.isGrouped(c.value)) cell.value = c.format(r.data[c.value])
+              cell.border = {
+                top: { style: 'thin' },
+                left: { style: 'thin' },
+                bottom: { style: 'thin' },
+                right: { style: 'thin' },
+              }
+
+              colNumber++
+            })
+        rowNumber++
+      })
+
+      //Footer
+      if (!this.hideFooter)
+        ws.addRow(this.tableColumns.filter(h => !h.value.startsWith('__')).map(c => this.footerSummary(this.vItems, c)))
+
+      for (let i = 1; i <= ws.rowCount; i++) {
+        ws.getRow(i).font = { name: 'Times New Roman', size: 13, ...(ws.getRow(i).font || {}) }
+      }
+
+      ws.columns.forEach(c => (c.width = c.width || 12))
+      saveAs(
+        new Blob([await wb.xlsx.writeBuffer()]),
+        moment().format('DD-MM-YYYY') +
+          '_' +
+          (this.exportTitle ? _.snakeCase(diacritics.remove(this.exportTitle)) : 'export') +
+          '.xlsx'
+      )
+      // let wb = XLSX.utils.book_new()
+      // var ws_name = 'SheetJS'
+      // var ws_data = this.tableItems.map(r =>
+      //   this.tableColumns.filter(h => !h.value.startsWith('__')).map(c => c.format(r.data[c.value]))
+      // )
+      // var ws = XLSX.utils.aoa_to_sheet(ws_data)
+      // var range = XLSX.utils.decode_range(ws['!ref'] || '')
+      // for (var r = range.s.r; r <= range.e.r; r++) {
+      //   for (var c = range.s.c; c <= range.e.c; c++) {
+      //     var cellName = XLSX.utils.encode_cell({ c: c, r: r })
+      //     ws[cellName].z = '@'
+      //   }
+      // }
+      // //ws['!merges'] = [{ s: { r: 0, c: 0 }, e: { r: 1, c: 0 } }]
+      // XLSX.utils.book_append_sheet(wb, ws, ws_name)
+      // XLSX.writeFile(wb, 'export.xlsx', { bookType: 'xlsx' })
+      //Show all to export then reverse back
+      // this.vLoading = true
+      // const itemPerPage = this.vItemPerPage
+      // this.vItemPerPage = -1
+      // this.$nextTick(() => {
+      //   const wb = XLSX.utils.table_to_book(this.$refs.table)
+      //   XLSX.writeFile(wb, 'export.xlsx', { bookType: 'xlsx' })
+      //   this.vItemPerPage = itemPerPage
+      //   this.vLoading = false
+      // })
+    }
+    kebabCase(v) {
+      return _.kebabCase(v)
     }
   }
-  onEditCell(e: Event, header: TableHeader, index) {
-    ;(e.target as HTMLElement).contentEditable = 'false'
-    let value: any = (e.target as HTMLElement).innerText.trim()
-    switch (header.type) {
-      case 'number':
-        value = value === null || value === undefined || value === '' ? value : Number(value)
-        break
-      case 'date':
-        value =
-          value === null || value === undefined || value === '' || !moment(value, ['DD-MM-YYYY']).isValid()
-            ? value
-            : moment(value, ['DD-MM-YYYY']).toDate()
-    }
-    console.log(value)
-    Vue.set(this.vItems[index], header.value, value)
-    ;(e.target as HTMLElement).innerText = header.format(this.vItems[index][header.value])
-  }
-
-  private exportExcel() {
-    //Show all to export then reverse back
-    this.vLoading = true
-    const itemPerPage = this.vItemPerPage
-    this.vItemPerPage = -1
-    this.$nextTick(() => {
-      const wb = XLSX.utils.table_to_book(this.$refs.table)
-      XLSX.writeFile(wb, 'export.xlsx', { bookType: 'xlsx' })
-      this.vItemPerPage = itemPerPage
-      this.vLoading = false
-    })
-  }
-  kebabCase(v) {
-    return _.kebabCase(v)
-  }
-}
 </script>
 
 <style scoped>
-.table thead th {
-  cursor: pointer;
-}
-.n-data-table thead th .sortable,
-.n-data-table thead th .filterable {
-  opacity: 0.3;
-}
-.n-data-table thead th:hover .sortable,
-.n-data-table thead .sortable.asc,
-.n-data-table thead .sortable.desc,
-.n-data-table thead th:hover .filterable,
-.n-data-table thead th .filterable.active {
-  opacity: 1;
-}
-.n-data-table thead .sortable.asc::before {
-  content: '\f0de';
-}
-.n-data-table thead .sortable.desc::before {
-  content: '\f0dd';
-}
+  .n-data-table thead th .sortable,
+  .n-data-table thead th .filterable {
+    opacity: 0.3;
+  }
+  .n-data-table thead th .sortable:hover,
+  .n-data-table thead .sortable.asc,
+  .n-data-table thead .sortable.desc,
+  .n-data-table thead th .filterable:hover,
+  .n-data-table thead th .filterable.active {
+    opacity: 1;
+  }
+  .n-data-table thead .sortable.asc::before {
+    content: '\f0de';
+  }
+  .n-data-table thead .sortable.desc::before {
+    content: '\f0dd';
+  }
 
-.n-data-table-top {
-  display: flex;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  align-items: center;
-  background-color: white;
-}
-.n-data-table-top > * + * {
-  padding-left: 5px;
-}
-.n-data-table-top.sticky-top {
-  position: sticky;
-  top: 0px;
-  z-index: 99;
-}
+  .n-data-table-top {
+    display: flex;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    align-items: center;
+    background-color: white;
+  }
+  .n-data-table-top > * + * {
+    padding-left: 5px;
+  }
+  .n-data-table-top.sticky-top {
+    position: sticky;
+    top: 0px;
+    z-index: 99;
+  }
 </style>

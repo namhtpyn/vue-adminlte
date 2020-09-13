@@ -37,99 +37,105 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Emit, ModelVar, Vue } from '@namhoang/vue-property-decorator'
-import _ from 'lodash'
-@Component({ inheritAttrs: false })
-export default class NTextBox extends Vue {
-  @ModelVar('input', 'value', { type: [String, Number] }) vValue!: string | number
-  @Prop({ type: String, default: 'text' }) type!: string
-  @Prop(String) label!: string
-  @Prop(String) hint!: string
-  @Prop(Array) rules!: any[]
-  @Prop({ type: String, default: 'default' }) color!: string
-  @Prop({ type: Boolean, default: true }) form!: string
-  @Prop({ type: Boolean, default: false }) hideErrorText!: string
-  @Prop(String) prefix!: string
-  @Prop(String) suffix!: string
-  @Prop(String) prependIcon!: string
-  @Prop(String) appendIcon!: string
-  @Prop(String) prependBtn!: string
-  @Prop(Boolean) prependBtnFlat!: boolean
-  @Prop({ type: String, default: 'default' }) prependBtnColor!: string
-  @Prop(String) appendBtn!: string
-  @Prop(Boolean) appendBtnFlat!: boolean
-  @Prop({ type: String, default: 'default' }) appendBtnColor!: string
-  @Prop(String) innerIcon!: string
-  @Prop({ type: Boolean, default: false }) large!: boolean
-  @Prop({ type: Boolean, default: false }) small!: boolean
-  @Prop({ type: String, default: '' }) cssClass!: string
+  import { Component, Prop, Emit, ModelVar, Vue } from '@namhoang/vue-property-decorator'
+  import _ from 'lodash'
+  @Component({ inheritAttrs: false })
+  export default class NTextBox extends Vue {
+    @ModelVar('input', 'value', { type: [String, Number] }) vValue!: string | number
+    @Prop({ type: String, default: 'text' }) type!: string
+    @Prop(String) label!: string
+    @Prop(String) hint!: string
+    @Prop(Array) rules!: any[]
+    @Prop({ type: String, default: 'default' }) color!: string
+    @Prop({ type: Boolean, default: true }) form!: string
+    @Prop({ type: Boolean, default: false }) hideErrorText!: string
+    @Prop(String) prefix!: string
+    @Prop(String) suffix!: string
+    @Prop(String) prependIcon!: string
+    @Prop(String) appendIcon!: string
+    @Prop(String) prependBtn!: string
+    @Prop(Boolean) prependBtnFlat!: boolean
+    @Prop({ type: String, default: 'default' }) prependBtnColor!: string
+    @Prop(String) appendBtn!: string
+    @Prop(Boolean) appendBtnFlat!: boolean
+    @Prop({ type: String, default: 'default' }) appendBtnColor!: string
+    @Prop(String) innerIcon!: string
+    @Prop({ type: Boolean, default: false }) large!: boolean
+    @Prop({ type: Boolean, default: false }) small!: boolean
+    @Prop({ type: String, default: '' }) cssClass!: string
 
-  input(e) {
-    this.vValue = e
-    if (!this.lazyValidation || !this.valid) this.validate(e)
-  }
-  @Emit('append-btn-click') appendBtnClick(e) {}
-  @Emit('prepend-btn-click') prependBtnClick(e) {}
-  @Emit() keypress(e) {}
-  @Emit() change(e) {}
-  @Emit() blur(e) {
-    this.vValue = e
-    if (!this.lazyValidation || !this.valid) this.validate(e)
-  }
-  valid: boolean = true
-  lazyValidation: boolean = false
-  get hasLabel() {
-    return !_.isEmpty(this.label)
-  }
-  get appendButton() {
-    return this.prependBtn || this.appendBtn
-  }
-  get inputGroup() {
-    return (
-      this.prefix || this.prependIcon || this.suffix || this.appendIcon || this.appendButton || this.prependBtn || this.appendBtn
-    )
-  }
-  get cClass() {
-    let css = 'form-control '
-    css += this.large ? ' input-lg' : ''
-    css += this.small ? ' input-sm' : ''
-    return css
-  }
-  get errorText() {
-    if (!this.valid && this.rules) {
-      const f = this.rules.find(r => r(this.vValue) !== true)
-      return f ? f(this.vValue) : ''
+    input(e) {
+      this.vValue = e
+      if (!this.lazyValidation || !this.valid) this.validate(e)
     }
-    return ''
-  }
-  get classComponent() {
-    let css = this.form ? 'form-group ' : ''
-    css += !this.valid ? 'has-error ' : ''
-    css += this.innerIcon ? 'has-feedback ' : ''
-    css += this.cssClass ? this.cssClass : ''
-    return css
-  }
-  get styleLabel() {
-    return {
-      'control-label': true,
-      'font-size': `${this.small ? '11px' : this.large ? '15px' : '13px'} !important`
+    @Emit('append-btn-click') appendBtnClick(e) {}
+    @Emit('prepend-btn-click') prependBtnClick(e) {}
+    @Emit() keypress(e) {}
+    @Emit() change(e) {}
+    @Emit() blur(e) {
+      this.vValue = e
+      if (!this.lazyValidation || !this.valid) this.validate(e)
     }
-  }
-  get divClass() {
-    return {
-      'input-group': this.inputGroup,
-      'input-group-sm': this.inputGroup && this.small,
-      'input-group-lg': this.inputGroup && this.large
+    valid: boolean = true
+    lazyValidation: boolean = false
+    get hasLabel() {
+      return !_.isEmpty(this.label)
     }
-  }
-  validate(value) {
-    this.valid = true
-    if (this.rules) this.valid = !this.rules.some(e => e(value) !== true)
-    return this.valid
-  }
+    get appendButton() {
+      return this.prependBtn || this.appendBtn
+    }
+    get inputGroup() {
+      return (
+        this.prefix ||
+        this.prependIcon ||
+        this.suffix ||
+        this.appendIcon ||
+        this.appendButton ||
+        this.prependBtn ||
+        this.appendBtn
+      )
+    }
+    get cClass() {
+      let css = 'form-control '
+      css += this.large ? ' input-lg' : ''
+      css += this.small ? ' input-sm' : ''
+      return css
+    }
+    get errorText() {
+      if (!this.valid && this.rules) {
+        const f = this.rules.find(r => r(this.vValue) !== true)
+        return f ? f(this.vValue) : ''
+      }
+      return ''
+    }
+    get classComponent() {
+      let css = this.form ? 'form-group ' : ''
+      css += !this.valid ? 'has-error ' : ''
+      css += this.innerIcon ? 'has-feedback ' : ''
+      css += this.cssClass ? this.cssClass : ''
+      return css
+    }
+    get styleLabel() {
+      return {
+        'control-label': true,
+        'font-size': `${this.small ? '11px' : this.large ? '15px' : '13px'} !important`,
+      }
+    }
+    get divClass() {
+      return {
+        'input-group': this.inputGroup,
+        'input-group-sm': this.inputGroup && this.small,
+        'input-group-lg': this.inputGroup && this.large,
+      }
+    }
+    validate(value) {
+      this.valid = true
+      if (this.rules) this.valid = !this.rules.some(e => e(value) !== true)
+      return this.valid
+    }
 
-  focus() {
-    $(this.$refs.theInput).focus()
+    focus() {
+      $(this.$refs.theInput).focus()
+    }
   }
-}
 </script>

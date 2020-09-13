@@ -42,6 +42,7 @@ export class TableHeader {
   encodeHtml: boolean = true
   grouped: boolean = false
   merged: boolean = false
+  visible: boolean = true
   _colspan: number = 1
   _rowspan: number = 1
 }
@@ -73,6 +74,12 @@ export class TableFilter {
   constructor(name: string) {
     this.name = name
   }
+}
+
+export class ExportCellData {
+  text: string = ''
+  colspan?: number = undefined
+  rowspan?: number = undefined
 }
 
 declare global {

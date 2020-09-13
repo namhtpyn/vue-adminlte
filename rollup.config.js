@@ -17,7 +17,7 @@ let components = fs
   .map(p => {
     return {
       name: path.parse(p).name,
-      path: p + (fs.lstatSync(p).isDirectory() ? '/' + path.parse(p).name + '.vue' : '')
+      path: p + (fs.lstatSync(p).isDirectory() ? '/' + path.parse(p).name + '.vue' : ''),
     }
   })
   .filter(o => fs.existsSync(o.path))
@@ -38,9 +38,9 @@ const xxx = components.map(o => {
       format: 'umd',
       name: o.name,
       dir: './dist/',
-      entryFileNames: o.name + '.js'
+      entryFileNames: o.name + '.js',
     },
-    external: ['vue', 'lodash', 'axios', 'moment', 'chart.js', 'numeral', 'xlsx'],
+    external: ['vue', 'lodash', 'axios', 'moment', 'chart.js', 'numeral', 'xlsx', 'exceljs'],
     plugins: [
       multiInput(),
       typescript(),
@@ -49,13 +49,13 @@ const xxx = components.map(o => {
       css({ output: './dist/' + o.name + '.css' }),
       vue({ css: false }),
       strip({
-        debugger: true
+        debugger: true,
       }),
       replace({
-        'process.env.NODE_ENV': JSON.stringify('production')
+        'process.env.NODE_ENV': JSON.stringify('production'),
       }),
-      terser()
-    ]
+      terser(),
+    ],
   }
 })
 export default xxx

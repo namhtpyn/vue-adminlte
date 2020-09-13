@@ -1,49 +1,41 @@
 <template>
   <div>
-    <n-tree :items="data" parent-key="CONTAINEDIN" item-value="ENTINDEX" item-text="NAME"></n-tree>
-    <!-- <n-select
-      v-model="type"
-      :items="[
-        { text: '1', value: 1 },
-        { text: '2', value: 2 }
-      ]"
-    ></n-select>
-    <n-data-table :selectable="type == 1" multiple-select ref="table" multiple :read-url="readUrl" v-model="a">
+    <n-data-table v-model="OKOK" ref="table" :items="items" selectable multiple-select excelable export-title="Báo cáo thống kê">
       <items>
-        <text-item value="provinceIDx" text="provinceIDx" editable></text-item>
-        <text-item value="provinceID" text="provinceID" :validate="[v => v > 1050 || 'Error']" editable></text-item>
-        <text-item value="provinceCode" text="provinceCode"></text-item>
-        <text-item value="provinceName" text="provinceName"></text-item>
+        <percent-item value="provinceID" text="provinceID" sortable filterable summary="count"></percent-item>
+        <text-item value="provinceCode" text="provinceCode" grouped></text-item>
+        <datetime-item value="provinceName" text="provinceName" grouped></datetime-item>
       </items>
-    </n-data-table> -->
+      <template #item.province-id="prop">
+        <img src="haha.jpg" />
+        <img src="haha.jpg" />
+        <img src="haha.jpg" />
+        <img src="haha.jpg" />
+      </template>
+    </n-data-table>
+    <n-btn @click="toggleVisibility"></n-btn>
   </div>
 </template>
 
 <script lang="ts">
   import { Component, Vue } from '@namhoang/vue-property-decorator'
   import provinces from './data/provinces.json'
-  import records from './data/entityphysical.json'
+
   @Component({})
   export default class VApp extends Vue {
-    a = provinces
-    type = 1
-    classType = {
-      1: 'other',
-      2: 'unknown',
-      3: 'chassis',
-      4: 'backplane',
-      5: 'container',
-      6: 'powerSupply',
-      7: 'fan',
-      8: 'sensor',
-      9: 'module',
-      10: 'port',
-      11: 'stack',
-      12: 'cpu',
+    OKOK = provinces
+    visible = true
+    items = [
+      { provinceID: 0.123, provinceCode: 'Code', provinceName: new Date() },
+      { provinceID: 0.123, provinceCode: 'Code', provinceName: new Date() },
+      { provinceID: 0.123, provinceCode: 'Code', provinceName: new Date() },
+      { provinceID: 0.123, provinceCode: 'Nam', provinceName: new Date() },
+    ]
+    toggleVisibility() {
+      this.visible = !this.visible
     }
-    data = records.recordset.map(o => ({ ...o, NAME: `${o.NAME} - ENTINDEX: ${o.ENTINDEX} - type: ${this.classType[o.CLASS]}` }))
     get readUrl() {
-      return './data/provinces.json?type' + this.type
+      return './data/provinces.json'
     }
     mounted() {}
   }
