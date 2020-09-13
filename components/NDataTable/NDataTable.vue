@@ -281,7 +281,7 @@
   import moment from 'moment'
   import { observe } from '../../extension/SlotObservable'
   import exceljs from 'exceljs'
-  import { saveAs } from 'file-saver'
+  import FileSaver from 'file-saver'
   import diacritics from 'remove-all-diacritics'
 
   //Mixins limit 5 instances
@@ -679,8 +679,12 @@
         ws.getRow(i).font = { name: 'Times New Roman', size: 13, ...(ws.getRow(i).font || {}) }
       }
 
-      ws.columns.forEach(c => (c.width = c.width || 12))
-      saveAs(
+      ws.columns.forEach(c => {
+        c.width = c.width || 12
+        c.numFmt = '@'
+      })
+
+      FileSaver.saveAs(
         new Blob([await wb.xlsx.writeBuffer()]),
         moment().format('DD-MM-YYYY') +
           '_' +
