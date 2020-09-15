@@ -297,9 +297,7 @@
       type: [Array, String, Number, Boolean, Object],
     })
     vValue: any[] | any
-    consolelog(e) {
-      console.log(e)
-    }
+
     createClick(e) {
       this.vModal.visible = true
       this.vModal.data = _.cloneDeep(this.newItem)
@@ -502,9 +500,7 @@
     mounted() {
       observe(this, () => this.vToggleReloadHeaders++)
     }
-    destroyed() {
-      console.log('destroyed')
-    }
+    destroyed() {}
 
     validateCellErrorText(header: TableHeader, item: TableItem) {
       const f = header.validate.find(v => v(item.data[header.value]) !== true)
@@ -661,14 +657,16 @@
 
               if (!this.isGrouped(c.value)) {
                 if (this.$scopedSlots[`item.${_.kebabCase(c.value)}`] != undefined)
-                  cell.value = vnodeToString(
-                    (this.$scopedSlots[`item.${_.kebabCase(c.value)}`] as any)({
-                      item: this.vItems[r.index],
-                      value: r.data[c.value],
-                      index: r.index,
-                      rowIndex: r.index,
-                    })
-                  ).textContent
+                  cell.value = (
+                    vnodeToString(
+                      (this.$scopedSlots[`item.${_.kebabCase(c.value)}`] as any)({
+                        item: this.vItems[r.index],
+                        value: r.data[c.value],
+                        index: r.index,
+                        rowIndex: r.index,
+                      })
+                    ).textContent || ''
+                  ).trim()
                 else cell.value = c.format(r.data[c.value])
               }
               cell.border = {
@@ -700,11 +698,13 @@
               }
               if (!this.isGrouped(c.value)) {
                 if (this.$scopedSlots[`footer.${_.kebabCase(c.value)}`] != undefined)
-                  cell.value = vnodeToString(
-                    (this.$scopedSlots[`footer.${_.kebabCase(c.value)}`] as any)({
-                      items: this.vItems,
-                    })
-                  ).textContent
+                  cell.value = (
+                    vnodeToString(
+                      (this.$scopedSlots[`footer.${_.kebabCase(c.value)}`] as any)({
+                        items: this.vItems,
+                      })
+                    ).textContent || ''
+                  ).trim()
                 else cell.value = this.footerSummary(this.vItems, c)
               }
 
@@ -715,9 +715,9 @@
             (this.$scopedSlots[`footer`] as any)({
               items: this.vItems,
               headers: this.headersCollection,
-            })
+            }),
+            'table'
           )
-          //console.log(footerEl)
           footerEl.querySelectorAll('tr').forEach(r => {
             const row = ws.getRow(rowNumber)
             let colNumber = 1
@@ -732,15 +732,16 @@
                 bottom: { style: 'thin' },
                 right: { style: 'thin' },
               }
-
-              cell.value = c.textContent
-              let colOffset = 0
-              if (i == 0 && this.tableColumns.some(h => h.value === '__selection')) colOffset = 1
-              const colspan = Number(c.getAttribute('colspan')) || 1
-              const rowspan = Number(c.getAttribute('rowspan')) || 1
-              console.log(rowNumber, colNumber, rowNumber + rowspan - 1, colNumber + colspan - 1 - colOffset)
-              ws.mergeCells(rowNumber, colNumber, rowNumber + rowspan - 1, colNumber + colspan - 1 - colOffset)
-
+              if (c) {
+                cell.value = (c.textContent || '').trim()
+                let colOffset = 0
+                const colspan = Number(c.getAttribute('colspan')) || 1
+                const rowspan = Number(c.getAttribute('rowspan')) || 1
+                const selectionIndex = this.tableColumns.findIndex(h => h.value === '__selection')
+                if (selectionIndex >= 0 && colNumber - 1 <= selectionIndex && colNumber - 1 + colspan - 1 >= selectionIndex)
+                  colOffset = 1
+                ws.mergeCells(rowNumber, colNumber, rowNumber + rowspan - 1, colNumber + colspan - 1 - colOffset)
+              }
               colNumber++
             })
             rowNumber++

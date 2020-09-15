@@ -2,13 +2,17 @@ import XLSX from 'xlsx'
 import { TableItem } from '../../types/Table'
 import { VNode } from 'vue'
 import _ from 'lodash'
-export function vnodeToString(nodes: VNode[]) {
+export function vnodeToString(nodes: VNode[], tag: string = 'div') {
   const strs: string[] = nodes.map(node => getFullTag(node))
 
-  var div = document.createElement('table')
-  div.insertAdjacentHTML('beforeend', strs.join('').trim())
-  console.log(div.firstElementChild)
-  return div.firstElementChild as Element
+  var el = document.createElement(tag)
+  el.innerHTML = strs.join('').trim()
+  //console.log(el.innerHTML)
+  // if (!el.firstElementChild) {
+  //   el = document.createElement('table')
+  //   el.innerHTML = strs.join('').trim()
+  // }
+  return el
 }
 const unaryTags = [
   'area',
