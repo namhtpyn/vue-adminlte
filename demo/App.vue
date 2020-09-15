@@ -1,16 +1,25 @@
 <template>
   <div>
-    <n-data-table v-model="OKOK" ref="table" :items="items" selectable multiple-select excelable export-title="Báo cáo thống kê">
+    <n-data-table v-model="OKOK" ref="table" :items="items" selectable multiple-select excelable editable>
       <items>
+        <text-item value="stt" text="stt"></text-item>
         <percent-item value="provinceID" text="provinceID" sortable filterable summary="count"></percent-item>
         <text-item value="provinceCode" text="provinceCode" grouped></text-item>
-        <datetime-item value="provinceName" text="provinceName" grouped></datetime-item>
+        <datetime-item value="provinceName" text="provinceName"></datetime-item>
       </items>
-      <template #item.province-id="prop">
-        <img src="haha.jpg" />
-        <img src="haha.jpg" />
-        <img src="haha.jpg" />
-        <img src="haha.jpg" />
+      <template #item.stt="{index}">
+        {{ index + 1 }}
+        <div>
+          cung dc
+          <div>khong hay lam</div>
+        </div>
+        <div>a</div>
+      </template>
+      <template #footer="{items,headers}">
+        <tr>
+          <td colspan="4"></td>
+          <td>44</td>
+        </tr>
       </template>
     </n-data-table>
     <n-btn @click="toggleVisibility"></n-btn>

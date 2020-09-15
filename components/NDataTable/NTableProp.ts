@@ -26,6 +26,7 @@ export default class NTableProp extends Vue {
   @Prop({ type: Boolean, default: false }) readonly stickyTop!: boolean
 
   @Prop({ type: Boolean, default: false }) readonly excelable!: boolean
+  @Prop({ type: Boolean, default: false }) readonly ordinal!: boolean
 
   /**Enable selection */
   @Prop({ type: Boolean, default: false }) readonly selectable!: boolean
@@ -53,5 +54,5 @@ export default class NTableProp extends Vue {
 
   @Prop({ type: String, default: '' }) readonly appendModalCaption!: string
   @Prop({ type: String, default: '' }) readonly exportTitle!: string
-  @Prop({ type: Array, default: () => [[{ value: '', colspan: -1 }]] }) readonly exportAfterTitle!: ExportCellData[][]
+  @Prop({ type: Array, default: () => [] }) readonly exportAfterTitle!: ExportCellData[][]
 }

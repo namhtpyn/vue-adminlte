@@ -280,9 +280,10 @@
   import NTableComputed from './NTableComputed'
   import moment from 'moment'
   import { observe } from '../../extension/SlotObservable'
-  import exceljs from 'exceljs'
+  import ExcelJS from 'exceljs'
   import FileSaver from 'file-saver'
   import diacritics from 'remove-all-diacritics'
+  import { vnodeToString } from './ExportExcel'
 
   //Mixins limit 5 instances
   class mixin1 extends Mixins(NTableProp, NTableComputed, NTableCRUD, NTableData) {}
@@ -541,13 +542,12 @@
               ? value
               : moment(value, ['DD-MM-YYYY']).toDate()
       }
-      console.log(value)
       Vue.set(this.vItems[index], header.value, value)
       ;(e.target as HTMLElement).innerText = header.format(this.vItems[index][header.value])
     }
 
     private async exportExcel() {
-      const wb = new exceljs.Workbook()
+      const wb = new ExcelJS.Workbook()
       const ws = wb.addWorksheet('Sheet 1')
 
       if (this.exportTitle) {
@@ -561,6 +561,7 @@
           titleRow.number,
           1 + this.tableColumns.filter(h => !h.value.startsWith('__')).length - 1
         )
+        if (_.isEmpty(this.exportAfterTitle)) ws.addRow([])
       }
 
       let rowNumber = ws.rowCount + 1
@@ -626,7 +627,6 @@
       }
 
       //Body
-      //items)
       const tableItems = this.itemsGrouped(this.itemsExpanded(this.tableItems))
       tableItems.forEach(r => {
         const row = ws.getRow(rowNumber)
@@ -658,7 +658,19 @@
             .filter(h => !h.value.startsWith('__'))
             .forEach(c => {
               const cell = row.getCell(colNumber)
-              if (!this.isGrouped(c.value)) cell.value = c.format(r.data[c.value])
+
+              if (!this.isGrouped(c.value)) {
+                if (this.$scopedSlots[`item.${_.kebabCase(c.value)}`] != undefined)
+                  cell.value = vnodeToString(
+                    (this.$scopedSlots[`item.${_.kebabCase(c.value)}`] as any)({
+                      item: this.vItems[r.index],
+                      value: r.data[c.value],
+                      index: r.index,
+                      rowIndex: r.index,
+                    })
+                  ).textContent
+                else cell.value = c.format(r.data[c.value])
+              }
               cell.border = {
                 top: { style: 'thin' },
                 left: { style: 'thin' },
@@ -672,8 +684,83 @@
       })
 
       //Footer
-      if (!this.hideFooter)
-        ws.addRow(this.tableColumns.filter(h => !h.value.startsWith('__')).map(c => this.footerSummary(this.vItems, c)))
+      if (!this.hideFooter) {
+        if (this.$scopedSlots[`footer`] == undefined) {
+          const row = ws.addRow([])
+          let colNumber = 1
+          this.tableColumns
+            .filter(h => !h.value.startsWith('__'))
+            .forEach(c => {
+              const cell = row.getCell(colNumber)
+              cell.border = {
+                top: { style: 'thin' },
+                left: { style: 'thin' },
+                bottom: { style: 'thin' },
+                right: { style: 'thin' },
+              }
+              if (!this.isGrouped(c.value)) {
+                if (this.$scopedSlots[`footer.${_.kebabCase(c.value)}`] != undefined)
+                  cell.value = vnodeToString(
+                    (this.$scopedSlots[`footer.${_.kebabCase(c.value)}`] as any)({
+                      items: this.vItems,
+                    })
+                  ).textContent
+                else cell.value = this.footerSummary(this.vItems, c)
+              }
+
+              colNumber++
+            })
+        } else {
+          let footerEl = vnodeToString(
+            (this.$scopedSlots[`footer`] as any)({
+              items: this.vItems,
+              headers: this.headersCollection,
+            })
+          )
+          //console.log(footerEl)
+          footerEl.querySelectorAll('tr').forEach(r => {
+            const row = ws.getRow(rowNumber)
+            let colNumber = 1
+            r.querySelectorAll('td').forEach((c, i) => {
+              while (!_.isEqual(row.getCell(colNumber).master, row.getCell(colNumber))) {
+                colNumber++
+              }
+              const cell = row.getCell(colNumber)
+              cell.border = {
+                top: { style: 'thin' },
+                left: { style: 'thin' },
+                bottom: { style: 'thin' },
+                right: { style: 'thin' },
+              }
+
+              cell.value = c.textContent
+              let colOffset = 0
+              if (i == 0 && this.tableColumns.some(h => h.value === '__selection')) colOffset = 1
+              const colspan = Number(c.getAttribute('colspan')) || 1
+              const rowspan = Number(c.getAttribute('rowspan')) || 1
+              console.log(rowNumber, colNumber, rowNumber + rowspan - 1, colNumber + colspan - 1 - colOffset)
+              ws.mergeCells(rowNumber, colNumber, rowNumber + rowspan - 1, colNumber + colspan - 1 - colOffset)
+
+              colNumber++
+            })
+            rowNumber++
+          })
+        }
+      }
+      /**
+         *
+         * <tfoot v-if="!hideFooter">
+          <slot name="footer" :items="vItems" :headers="headersCollection">
+            <tr :class="cssClass.footerRow">
+              <td :class="cssClass.footerCell" v-for="(header, colIndex) in tableColumns" :key="colIndex">
+                <slot :name="`footer.${kebabCase(header.value)}`" :items="vItems">
+                  {{ footerSummary(vItems, header) }}
+                </slot>
+              </td>
+            </tr>
+          </slot>
+        </tfoot>
+         */
 
       for (let i = 1; i <= ws.rowCount; i++) {
         ws.getRow(i).font = { name: 'Times New Roman', size: 13, ...(ws.getRow(i).font || {}) }

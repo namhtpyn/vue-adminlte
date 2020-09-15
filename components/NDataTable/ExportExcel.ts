@@ -1,14 +1,75 @@
 import XLSX from 'xlsx'
 import { TableItem } from '../../types/Table'
-export function exportToExcel(items: TableItem[], sheetName: string = 'export.xlsx') {
-  // let wb = XLSX.utils.book_new()
-  // var ws_name = 'SheetJS'
-  // var ws_data = [['oh lala'], [1, 2, 3, 4, 5]]
-  // items.forEach(i => {
-  //   let row = []
-  // })
-  // var ws = XLSX.utils.aoa_to_sheet(ws_data)
-  // ws['!merges'] = [{ s: { r: 0, c: 0 }, e: { r: 1, c: 0 } }]
-  // XLSX.utils.book_append_sheet(wb, ws, ws_name)
-  // XLSX.writeFile(wb, sheetName, { bookType: 'xlsx' })
+import { VNode } from 'vue'
+import _ from 'lodash'
+export function vnodeToString(nodes: VNode[]) {
+  const strs: string[] = nodes.map(node => getFullTag(node))
+
+  var div = document.createElement('table')
+  div.insertAdjacentHTML('beforeend', strs.join('').trim())
+  console.log(div.firstElementChild)
+  return div.firstElementChild as Element
+}
+const unaryTags = [
+  'area',
+  'base',
+  'br',
+  'col',
+  'embed',
+  'hr',
+  'img',
+  'input',
+  'keygen',
+  'link',
+  'meta',
+  'param',
+  'source',
+  'track',
+  'wbr',
+]
+
+function renderStartTag(VNode) {
+  let html = `<${VNode.tag}`
+
+  if (VNode.data) {
+    if (VNode.data.attrs) {
+      let attr = VNode.data.attrs
+      for (let name in attr) {
+        if (attr[name] === '') {
+          html += ` ${name}`
+        } else {
+          html += ` ${name}="${attr[name]}"`
+        }
+      }
+    }
+  }
+
+  return html + '>'
+}
+
+function isUnaryTag(VNode) {
+  return unaryTags.indexOf(VNode.tag) > -1
+}
+
+function getFullTag(VNode) {
+  if (!VNode.tag) return VNode.text
+
+  let html = renderStartTag(VNode)
+
+  if (VNode.children) {
+    html += getChildren(VNode)
+  }
+  if (!isUnaryTag(VNode)) {
+    html += `</${VNode.tag}>`
+  }
+  return html
+}
+
+function getChildren(VNode) {
+  let html = ''
+  for (let i in VNode.children) {
+    let child = VNode.children[i]
+    html += getFullTag(child)
+  }
+  return html
 }
