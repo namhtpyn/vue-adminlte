@@ -283,7 +283,7 @@
   import ExcelJS from 'exceljs'
   import FileSaver from 'file-saver'
   import diacritics from 'remove-all-diacritics'
-  import { vnodeToString } from './ExportExcel'
+  import { vnodeToElement } from './ExportExcel'
 
   //Mixins limit 5 instances
   class mixin1 extends Mixins(NTableProp, NTableComputed, NTableCRUD, NTableData) {}
@@ -658,7 +658,7 @@
               if (!this.isGrouped(c.value)) {
                 if (this.$scopedSlots[`item.${_.kebabCase(c.value)}`] != undefined)
                   cell.value = (
-                    vnodeToString(
+                    vnodeToElement(
                       (this.$scopedSlots[`item.${_.kebabCase(c.value)}`] as any)({
                         item: this.vItems[r.index],
                         value: r.data[c.value],
@@ -699,7 +699,7 @@
               if (!this.isGrouped(c.value)) {
                 if (this.$scopedSlots[`footer.${_.kebabCase(c.value)}`] != undefined)
                   cell.value = (
-                    vnodeToString(
+                    vnodeToElement(
                       (this.$scopedSlots[`footer.${_.kebabCase(c.value)}`] as any)({
                         items: this.vItems,
                       })
@@ -711,7 +711,7 @@
               colNumber++
             })
         } else {
-          let footerEl = vnodeToString(
+          let footerEl = vnodeToElement(
             (this.$scopedSlots[`footer`] as any)({
               items: this.vItems,
               headers: this.headersCollection,
