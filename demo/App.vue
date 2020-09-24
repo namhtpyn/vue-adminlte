@@ -7,11 +7,12 @@
         <text-item value="provinceCode" text="provinceCode" grouped></text-item>
         <datetime-item value="provinceName" text="provinceName"></datetime-item>
       </items>
-      <template #item.stt="{index}">
+      <template v-slot:[`item.stt`]="{index}">
         {{ index + 1 }}
         <div>
           cung dc
           <div>khong hay lam</div>
+
         </div>
         <div>a</div>
       </template>

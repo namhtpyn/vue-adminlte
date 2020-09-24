@@ -111,6 +111,7 @@
                   <slot
                     :name="`item.${kebabCase(header.value)}`"
                     :item="vItems[item.index]"
+                    :header="header"
                     :value="item.data[header.value]"
                     :index="item.index"
                     :rowIndex="rowIndex"
