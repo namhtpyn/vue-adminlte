@@ -1,7 +1,7 @@
 <template>
   <div :class="classComponent">
     <label v-if="hasLabel" class="control-label" :style="styleLabel">
-      {{ label }}
+      <slot name="label" :text="label">{{ label }}</slot>
     </label>
     <div :class="divClass">
       <span v-if="prefix" class="input-group-addon">{{ prefix }}</span>
@@ -17,11 +17,11 @@
         :class="cClass"
         :placeholder="hint"
         :value="vValue"
-        @input="e => input(e.target.value)"
-        @blur="e => blur(e.target.value)"
+        @input="(e) => input(e.target.value)"
+        @blur="(e) => blur(e.target.value)"
         v-bind="$attrs"
         @keypress="keypress"
-        @change="e => change(e.target.value)"
+        @change="(e) => change(e.target.value)"
       />
       <span v-if="suffix" class="input-group-addon">{{ suffix }}</span>
       <span v-if="appendIcon" class="input-group-addon">
@@ -103,7 +103,7 @@
     }
     get errorText() {
       if (!this.valid && this.rules) {
-        const f = this.rules.find(r => r(this.vValue) !== true)
+        const f = this.rules.find((r) => r(this.vValue) !== true)
         return f ? f(this.vValue) : ''
       }
       return ''
@@ -130,7 +130,7 @@
     }
     validate(value) {
       this.valid = true
-      if (this.rules) this.valid = !this.rules.some(e => e(value) !== true)
+      if (this.rules) this.valid = !this.rules.some((e) => e(value) !== true)
       return this.valid
     }
 

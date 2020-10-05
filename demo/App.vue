@@ -1,5 +1,8 @@
 <template>
   <div>
+    <n-text-box label="OK">
+      <template #label="{text}">{{ text }} <span class="text-red">*</span></template>
+    </n-text-box>
     <!-- <n-data-table v-model="OKOK" ref="table" :items="items" selectable multiple-select excelable editable>
       <items>
         <text-item value="stt" text="stt"></text-item>
@@ -25,7 +28,7 @@
     </n-data-table>
     <n-btn @click="toggleVisibility"></n-btn> -->
 
-    <n-line-chart read-url="./data/traffics.json">
+    <!-- <n-line-chart read-url="./data/traffics.json">
       <common value="Statisticdate" :format="(v) => 'xxx' + v"></common>
       <series>
         <item
@@ -49,7 +52,7 @@
           <x-axis text="Thoi gian" :format="(v) => '###' + v"></x-axis>
         </axises>
       </options>
-    </n-line-chart>
+    </n-line-chart> -->
   </div>
 </template>
 
