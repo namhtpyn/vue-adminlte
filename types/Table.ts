@@ -19,6 +19,7 @@ export class TableHeader {
   bgcolor?: string
   color?: string
   sortable: boolean = false
+  filterable: boolean = false
   headerAlign: 'left' | 'right' | 'center' | 'justify' | 'initial' | 'inherit' = 'center'
   headerValign:
     | 'baseline'

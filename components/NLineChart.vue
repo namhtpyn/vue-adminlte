@@ -91,6 +91,7 @@ export default class NLineChart extends Mixins(NItems) {
     const optionsNode = this.$slots && this.$slots.default && this.$slots.default.find(node => node.tag === 'options')
     const legendNode = optionsNode && optionsNode.children && optionsNode.children.find(node => node.tag === 'legend')
     const tooltipNode = optionsNode && optionsNode.children && optionsNode.children.find(node => node.tag === 'tooltip')
+    console.log(tooltipNode)
     const axisesNode = optionsNode && optionsNode.children && optionsNode.children.find(node => node.tag === 'axises')
     const xAxises =
       axisesNode &&
@@ -104,7 +105,8 @@ export default class NLineChart extends Mixins(NItems) {
               scaleLabel: {
                 display: !_.isEmpty(node.data && node.data.attrs && node.data.attrs.text),
                 labelString: node.data && node.data.attrs && node.data.attrs.text
-              }
+              },
+              ticks: { callback:  node.data && node.data.attrs && node.data.attrs.format || ((v) => v) }
             },
             ...((node.data && camelcaseKeys(node.data.attrs)) || {})
           }
@@ -121,7 +123,8 @@ export default class NLineChart extends Mixins(NItems) {
               scaleLabel: {
                 display: !_.isEmpty(node.data && node.data.attrs && node.data.attrs.text),
                 labelString: node.data && node.data.attrs && node.data.attrs.text
-              }
+              },
+              ticks: { callback:  node.data && node.data.attrs && node.data.attrs.format || ((v) => v) }
             },
             ...((node.data && camelcaseKeys(node.data.attrs)) || {})
           }
@@ -129,7 +132,7 @@ export default class NLineChart extends Mixins(NItems) {
     return {
       responsive: (optionsNode && optionsNode.data && optionsNode.data.attrs && optionsNode.data.attrs.responsive) || true,
       tooltips: {
-        ...{ mode: 'index', intersect: false },
+        ...{ mode: 'index', intersect: false, callbacks: { label: (item, data) => data.datasets[item.datasetIndex].format(item.value)} },
         ...((tooltipNode && tooltipNode.data && camelcaseKeys(tooltipNode.data.attrs)) || {})
       },
       legend: { ...{ position: 'bottom' }, ...((legendNode && legendNode.data && camelcaseKeys(legendNode.data.attrs)) || {}) },

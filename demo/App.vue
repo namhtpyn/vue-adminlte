@@ -1,6 +1,6 @@
 <template>
   <div>
-    <n-data-table v-model="OKOK" ref="table" :items="items" selectable multiple-select excelable editable>
+    <!-- <n-data-table v-model="OKOK" ref="table" :items="items" selectable multiple-select excelable editable>
       <items>
         <text-item value="stt" text="stt"></text-item>
         <percent-item value="provinceID" text="provinceID" sortable filterable summary="count"></percent-item>
@@ -23,29 +23,43 @@
         </tr>
       </template>
     </n-data-table>
-    <n-btn @click="toggleVisibility"></n-btn>
+    <n-btn @click="toggleVisibility"></n-btn> -->
+
+    <n-line-chart read-url="./data/traffics.json">
+      <common value="Statisticdate" :format="(v) => 'xxx' + v"></common>
+      <series>
+        <item
+          text="TrafficIn"
+          value="trafficIN"
+          background-color="rgb(0, 36, 93)"
+          border-color="rgb(0, 36, 93)"
+          :format="(v) => 123"
+        ></item>
+        <item
+          text="TrafficOut"
+          value="trafficOut"
+          background-color="rgb(241, 115, 172)"
+          border-color="rgb(241, 115, 172)"
+          :format="(v) => 321"
+        ></item>
+      </series>
+      <options>
+        <axises>
+          <y-axis text="Luu luong" :format="(v) => '$$$' + v"></y-axis>
+          <x-axis text="Thoi gian" :format="(v) => '###' + v"></x-axis>
+        </axises>
+      </options>
+    </n-line-chart>
   </div>
 </template>
 
 <script lang="ts">
   import { Component, Vue } from '@namhoang/vue-property-decorator'
-  import provinces from './data/provinces.json'
 
   @Component({})
   export default class VApp extends Vue {
-    OKOK = provinces
-    visible = true
-    items = [
-      { provinceID: 0.123, provinceCode: 'Code', provinceName: new Date() },
-      { provinceID: 0.123, provinceCode: 'Code', provinceName: new Date() },
-      { provinceID: 0.123, provinceCode: 'Code', provinceName: new Date() },
-      { provinceID: 0.123, provinceCode: 'Nam', provinceName: new Date() },
-    ]
-    toggleVisibility() {
-      this.visible = !this.visible
-    }
-    get readUrl() {
-      return './data/provinces.json'
+    consolelog(x, ...y) {
+      console.log(x, ...y)
     }
     mounted() {}
   }
