@@ -129,7 +129,8 @@ export default class NSelect2 extends Mixins(NItems) {
           )
         }
       })
-      .on('select2:select', e => (this.vValue = this.tryParseNumber($(e.target).val())))
+      .on('select2:select', this.selectData)
+      .on('select2:unselect', this.unSelectData)
       .on('select2:clear', e => (this.vValue = null))
       .val(this.vValue)
       .trigger('change')
@@ -145,7 +146,12 @@ export default class NSelect2 extends Mixins(NItems) {
       ;($(this.$el).find('span.select2-selection__arrow') as any).addClass(`input-${this.small ? 'sm' : 'lg'}-arrow`)
     })
   }
-
+  selectData(e: any) {
+    this.vValue = this.multiple ? ($(e.target).val() as string[]).map(o => this.tryParseNumber(o)) : this.tryParseNumber($(e.target).val())
+  }
+  unSelectData(e: any) {
+    this.vValue = this.multiple ? ($(e.target).val() as string[]).map(o => this.tryParseNumber(o)) : this.tryParseNumber($(e.target).val())
+  }
   validate(value) {
     this.valid = true
     if (this.rules) this.valid = !this.rules.some(e => e(value) !== true)
