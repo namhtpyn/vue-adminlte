@@ -90,8 +90,8 @@ export default class NLineChart extends Mixins(NItems) {
   get options() {
     const optionsNode = this.$slots && this.$slots.default && this.$slots.default.find(node => node.tag === 'options')
     const legendNode = optionsNode && optionsNode.children && optionsNode.children.find(node => node.tag === 'legend')
+    const elementNode = optionsNode && optionsNode.children && optionsNode.children.find(node => node.tag === 'elements')
     const tooltipNode = optionsNode && optionsNode.children && optionsNode.children.find(node => node.tag === 'tooltip')
-    console.log(tooltipNode)
     const axisesNode = optionsNode && optionsNode.children && optionsNode.children.find(node => node.tag === 'axises')
     const xAxises =
       axisesNode &&
@@ -137,6 +137,9 @@ export default class NLineChart extends Mixins(NItems) {
       },
       legend: { ...{ position: 'bottom' }, ...((legendNode && legendNode.data && camelcaseKeys(legendNode.data.attrs)) || {}) },
       stacked: (optionsNode && optionsNode.data && optionsNode.data.attrs && optionsNode.data.attrs.stacked) || false,
+      elements: {
+        ...((elementNode && elementNode.data && camelcaseKeys(elementNode.data.attrs)) || {})
+      },
       scales: {
         xAxes: xAxises || [],
         yAxes: yAxises || []

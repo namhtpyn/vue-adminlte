@@ -69,7 +69,7 @@ export default class NTableComputed extends Mixins(NItems, NTableProp) {
         }
         break
       case 'image':
-        header.format = v => `<img src="${v}" />`
+        header.format = v => v ? `<img src="${v}" />`:''
         header.headerAlign = 'center'
         header.align = 'center'
         header.encodeHtml = false
