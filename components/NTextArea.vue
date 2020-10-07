@@ -1,7 +1,7 @@
 <template>
   <div :class="classComponent">
     <label v-if="hasLabel" class="control-label" :style="styleLabel">
-      {{ label }}
+      <slot name="label" :text="label">{{ label }}</slot>
     </label>
     <textarea
       ref="textarea"

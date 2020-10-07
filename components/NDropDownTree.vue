@@ -1,7 +1,7 @@
 <template>
   <div :class="{ 'form-group': form, 'has-error': !valid }" :style="componentStyle">
     <label v-if="hasLabel" class="control-label" :style="styleLabel">
-      {{ label }}
+      <slot name="label" :text="label">{{ label }}</slot>
     </label>
     <n-drop-down-list :text="text" :drop-down-width="dropDownWidth" :hint="hint" :small="small" :large="large" @open="onOpen">
       <template #content="{data}">

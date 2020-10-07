@@ -1,9 +1,9 @@
 <template>
   <div :class="{ 'form-group': form, 'has-error': !valid }">
     <label v-if="hasLabel" class="control-label" :style="styleLabel">
-      {{ label }}
+      <slot name="label" :text="label">{{ label }}</slot>
     </label>
-    <n-drop-down-list :text="getText" :small="small" :large="large" v-bind="$attrs">
+    <n-drop-down-list :text="getText" :small="small" :large="large" v-bind="$attrs" @clear="vValue = null">
       <template #content="{data}">
         <div style="display: flex; justify-content: center;">
           <n-date-picker :value="vValue" @input="v => onDatePicked(v, data)"></n-date-picker>

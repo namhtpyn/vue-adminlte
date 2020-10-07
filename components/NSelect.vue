@@ -1,6 +1,8 @@
 <template>
   <div :class="'form-group ' + (!valid ? 'has-error' : '')">
-    <label v-if="!!label" class="control-label">{{ label }}</label>
+    <label v-if="!!label" class="control-label">
+      <slot name="label" :text="label">{{ label }}</slot>
+    </label>
     <select class="form-control" v-bind="$attrs" :value="value" @input="e => input(e.target.value)">
       <option v-for="(item, idx) in vItems" :key="idx" :value="item[itemValue]">{{ item[itemText] }}</option>
     </select>

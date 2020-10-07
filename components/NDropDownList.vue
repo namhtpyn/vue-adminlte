@@ -1,10 +1,40 @@
 <template>
-  <div v-click-out="close">
+  <!-- <div v-click-out="close">
     <div class="has-feedback" @click="toggle">
       <div :class="containerCss" style="width: 100%">
         <input type="text" readonly class="input-flat text-overflow" :placeholder="hint" :value="text" />
       </div>
       <span v-if="!useModal" :class="`fa fa-caret-${data.isOpen ? 'up' : 'down'} form-control-feedback`"></span>
+    </div>
+    <div v-if="!useModal" v-show="data.isOpen" class="form-control drop-down-container" :style="containerStyle">
+      <slot name="content" :data="data">
+        Placeholder
+      </slot>
+    </div>
+    <n-modal
+      :caption="hint"
+      v-else
+      v-model="data.isOpen"
+      hide-footer
+      scrollable
+      :large="modalLarge"
+      :small="modalSmall"
+      :fullscreen="modalFullscreen"
+      @open="open"
+      @close="close"
+    >
+      <slot name="content" :data="data"></slot>
+    </n-modal>
+  </div> -->
+  <div v-click-out="close">
+    <div :class="containerCss" style="display: flex">
+      <div style="width: 100%" @click="toggle">
+        <input type="text" readonly class="input-flat text-overflow" :placeholder="hint" :value="text" />
+      </div>
+      <div>
+        <span v-if="!useModal && clearable" class="fa fa-close" @click="clear"></span>
+        <span v-if="!useModal" :class="`fa fa-caret-${data.isOpen ? 'up' : 'down'}`" @click="toggle"></span>
+      </div>
     </div>
     <div v-if="!useModal" v-show="data.isOpen" class="form-control drop-down-container" :style="containerStyle">
       <slot name="content" :data="data">
@@ -46,6 +76,7 @@ export default class NDropDownList extends Mixins(NBase) {
   @Prop({ type: Boolean, default: false }) modalLarge!: boolean
   @Prop({ type: Boolean, default: false }) modalSmall!: boolean
   @Prop({ type: Boolean, default: false }) modalFullscreen!: boolean
+  @Prop({ type: Boolean, default: false }) clearable!: boolean
   @Prop([String, Number]) dropDownWidth!: string | number
 
   data = {
@@ -65,6 +96,9 @@ export default class NDropDownList extends Mixins(NBase) {
   }
   @Emit() close(e) {
     this.data.isOpen = false
+  }
+  @Emit() clear(e) {
+    console.log('clear')
   }
   get searchWidth() {
     return 8 * this.text.length + 15

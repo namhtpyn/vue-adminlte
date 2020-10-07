@@ -1,7 +1,7 @@
 <template>
   <div :class="classComponent">
     <label v-if="hasLabel" class="control-label" :style="styleLabel">
-      {{ label }}
+      <slot name="label" :text="label">{{ label }}</slot>
     </label>
     <select ref="theSelect" :class="cCssClass"> </select>
     <span v-if="!valid && !hideErrorText" class="help-block">{{ errorText }}</span>
@@ -92,6 +92,7 @@ export default class NSelect2 extends Mixins(NItems) {
   @Watch('vValue')
   private onValueChange(n, o) {
     this.theSelect.val(this.tryParseNumber(n)).trigger('change')
+    if (!this.lazyValidation || !this.valid) this.validate(n)
   }
 
   mounted() {
@@ -150,7 +151,7 @@ export default class NSelect2 extends Mixins(NItems) {
     this.vValue = this.multiple ? ($(e.target).val() as string[]).map(o => this.tryParseNumber(o)) : this.tryParseNumber($(e.target).val())
   }
   unSelectData(e: any) {
-    this.vValue = this.multiple ? ($(e.target).val() as string[]).map(o => this.tryParseNumber(o)) : this.tryParseNumber($(e.target).val())
+    this.vValue = !this.multiple ? this.tryParseNumber($(e.target).val()) : !_.isEmpty(($(e.target).val() as string[])) ? ($(e.target).val() as string[]).map(o => this.tryParseNumber(o)) : null
   }
   validate(value) {
     this.valid = true
