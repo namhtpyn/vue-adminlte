@@ -1,5 +1,5 @@
 <template>
-  <component :is="tag" :class="cssClass" @click="click" :disabled="disabled" :type="type" :href="href" v-bind="$attrs">
+  <component :is="tag" :class="cssClass" @click="click" :disabled="disabled" :type="type" v-bind="$attrs">
     <slot></slot>
   </component>
 </template>
@@ -10,7 +10,7 @@
   export default class NBtn extends Vue {
     @Prop({ type: String, default: 'default' }) readonly color!: string
     @Prop({ type: String }) readonly href!: string
-    @Prop({ type: String, default: 'a' }) readonly tag!: string
+    @Prop({ type: String, default: 'button' }) readonly tag!: string
     @Prop({ type: String, default: 'button' }) readonly type!: string
     @Prop(String) readonly textColor!: string
     @Prop(Boolean) readonly app!: boolean
@@ -21,7 +21,9 @@
     @Prop(Boolean) readonly flat!: boolean
     @Prop(Boolean) readonly disabled!: boolean
 
-    @Emit() click(e) {}
+    @Emit() click(e) {
+      if(this.href) window.location.href = this.href
+    }
 
     private get cssClass() {
       let css = 'text-ellipsis btn '
