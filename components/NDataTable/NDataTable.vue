@@ -569,6 +569,7 @@
           r.forEach(c => {
             const cell = row.getCell(colNumber)
             cell.value = c.text
+            cell.alignment = { vertical: 'middle', horizontal: 'center', ...(c.alignment? {}: c.alignment) }
             if ((c.colspan != undefined && c.colspan > 1) || (c.rowspan != undefined && c.rowspan > 1)) {
               ws.mergeCells(
                 rowNumber,

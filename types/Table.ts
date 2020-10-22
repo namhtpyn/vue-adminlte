@@ -81,6 +81,7 @@ export class ExportCellData {
   text: string = ''
   colspan?: number = undefined
   rowspan?: number = undefined
+  alignment?: object = {}
 }
 
 declare global {

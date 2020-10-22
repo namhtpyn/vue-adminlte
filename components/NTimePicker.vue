@@ -49,7 +49,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, ModelVar, Vue } from '@namhoang/vue-property-decorator'
+import { Component, Prop, ModelVar, Vue, Watch } from '@namhoang/vue-property-decorator'
 import moment from 'moment'
 import _ from 'lodash'
 @Component({})
@@ -61,6 +61,11 @@ export default class NTimePicker extends Vue {
   @Prop({ type: Boolean, default: false }) hideSecond!: number
   @Prop({ type: Boolean, default: false }) hideMinute!: number
   @Prop({ type: Boolean, default: false }) hideHour!: number
+
+  @Watch('vValue', {immediate: true})
+  convertValueToDate(v){
+    if(typeof(v) === 'string') this.vValue = moment(v).toDate()
+  }
 
   get hour() {
     return moment(this.vValue).get('hour')

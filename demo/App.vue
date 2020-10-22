@@ -1,9 +1,14 @@
 <template>
   <div>
-    <n-text-box label="OK">
-      <template #label="{text}">{{ text }} <span class="text-red">*</span></template>
-    </n-text-box>
-    <!-- <n-data-table v-model="OKOK" ref="table" :items="items" selectable multiple-select excelable editable>
+    {{timeDate}} <br>{{ JSON.stringify(timeDate) }}
+    <n-drop-down-time-picker v-model="timeDate"></n-drop-down-time-picker>
+    {{timeText}}<br> {{ JSON.stringify(timeText) }}
+    <n-drop-down-time-picker v-model="timeText" hide-second></n-drop-down-time-picker>
+
+
+    <n-data-table ref="table" read-url="./data/provinces.json" selectable multiple-select excelable editable
+    export-title="Đây là report xxx"
+    :export-after-title="[[{text:'Từ ngày xxx đến ngày yyy', colspan:-1}],[{value:''}]]">
       <items>
         <text-item value="stt" text="stt"></text-item>
         <percent-item value="provinceID" text="provinceID" sortable filterable summary="count"></percent-item>
@@ -26,6 +31,8 @@
         </tr>
       </template>
     </n-data-table>
+
+    <!-- 
     <n-btn @click="toggleVisibility"></n-btn> -->
 
     <!-- <n-line-chart read-url="./data/traffics.json">
@@ -61,10 +68,8 @@
 
   @Component({})
   export default class VApp extends Vue {
-    consolelog(x, ...y) {
-      console.log(x, ...y)
-    }
-    mounted() {}
+    timeText: string = '2020-10-16T07:00:00.000'
+    timeDate: Date = new Date()
   }
 </script>
 
