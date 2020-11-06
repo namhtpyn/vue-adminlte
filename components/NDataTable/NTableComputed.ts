@@ -15,10 +15,10 @@ export default class NTableComputed extends Mixins(NItems, NTableProp) {
     if (_.isEmpty(nodes)) return []
     if (!this.vToggleReloadHeaders) return []
 
-    const items = nodes && nodes.find(node => node.tag === 'items')
+    const items = nodes && nodes.find((node) => node.tag === 'items')
 
-    const children = ((items && items.children) || []).filter(node => node.tag && node.tag.endsWith('-item'))
-    return children.map(child => {
+    const children = ((items && items.children) || []).filter((node) => node.tag && node.tag.endsWith('-item'))
+    return children.map((child) => {
       let header = new TableHeader()
       header.type = (child.tag && child.tag.slice(0, -5)) || 'text'
       header = this.setDefaultHeaderProps(header)
@@ -35,15 +35,15 @@ export default class NTableComputed extends Mixins(NItems, NTableProp) {
       case 'percent':
         header.headerAlign = 'center'
         header.align = 'right'
-        header.format = v => numeral(v).format('0[.]00%')
+        header.format = (v) => numeral(v).format('0[.]00%')
         break
       case 'number':
         header.headerAlign = 'center'
         header.align = 'right'
-        header.format = v => numeral(v).format('0,0[.]00')
+        header.format = (v) => numeral(v).format('0,0[.]00')
         break
       case 'date':
-        header.format = v => {
+        header.format = (v) => {
           if (!v) return v
           else if (v instanceof Date) return moment(v).format('DD/MM/YYYY')
           else if (typeof v === 'string' && moment(v, ['DD-MM-YYYY', 'MM-DD-YYYY', 'YYYY-MM-DD']).isValid())
@@ -52,10 +52,10 @@ export default class NTableComputed extends Mixins(NItems, NTableProp) {
         }
         break
       case 'time':
-        header.format = v => (v && moment(v).isValid() ? moment(v).format('HH:mm:ss') : v)
+        header.format = (v) => (v && moment(v).isValid() ? moment(v).format('HH:mm:ss') : v)
         break
       case 'datetime':
-        header.format = v => {
+        header.format = (v) => {
           if (!v) return v
           else if (v instanceof Date) return moment(v).format('DD/MM/YYYY HH:mm:ss')
           else if (
@@ -69,13 +69,13 @@ export default class NTableComputed extends Mixins(NItems, NTableProp) {
         }
         break
       case 'image':
-        header.format = v => v ? `<img src="${v}" />`:''
+        header.format = (v) => (v ? `<img src="${v}" />` : '')
         header.headerAlign = 'center'
         header.align = 'center'
         header.encodeHtml = false
         break
       case 'checkbox':
-        header.format = v => `<input type="checkbox" class="n-checkbox" disabled ${v ? 'checked' : ''} /><label></label>`
+        header.format = (v) => `<input type="checkbox" class="n-checkbox" disabled ${v ? 'checked' : ''} /><label></label>`
         header.headerAlign = 'center'
         header.align = 'center'
         header.encodeHtml = false
@@ -86,8 +86,8 @@ export default class NTableComputed extends Mixins(NItems, NTableProp) {
   private appendGroupHeaders(headers: TableHeader[]) {
     if (_.isEmpty(headers) || _.isEmpty(this.groupBy)) return headers
 
-    const groupHeaders = this.groupBy.map(group => ({ ...group, children: undefined } as TableHeader))
-    const result = headers.filter(h => !this.groupBy.some(g => _.isEqual(h, g)))
+    const groupHeaders = this.groupBy.map((group) => ({ ...group, children: undefined } as TableHeader))
+    const result = headers.filter((h) => !this.groupBy.some((g) => _.isEqual(h, g)))
     return groupHeaders.concat(result)
   }
   get headersFromNode(): TableHeader[] {
@@ -95,7 +95,7 @@ export default class NTableComputed extends Mixins(NItems, NTableProp) {
   }
   get headersFromItem(): TableHeader[] {
     if (_.isEmpty(this.vItems)) return []
-    return Object.keys(this.vItems[0]).map(key => {
+    return Object.keys(this.vItems[0]).map((key) => {
       return { ...new TableHeader(), ...{ text: key, value: key } }
     })
   }
@@ -145,17 +145,17 @@ export default class NTableComputed extends Mixins(NItems, NTableProp) {
           align: 'center',
         },
       })
-    headers = headers.filter(h => h.visible)
+    headers = headers.filter((h) => h.visible)
     headers = this.appendGroupHeaders(headers)
     return headers
   }
   get groupBy(): TableHeader[] {
-    return this.headersFromNode.filter(h => h.grouped) || []
+    return this.headersFromNode.filter((h) => h.grouped) || []
   }
   get groupByLength() {
     return this.groupBy.length
   }
   isGrouped(name: string) {
-    return this.groupBy.some(g => g.value === name)
+    return this.groupBy.some((g) => g.value === name)
   }
 }

@@ -31,42 +31,44 @@
         <thead v-if="!hideHeader">
           <slot name="header" :headers="headersCollection" :sort="toggleSort">
             <tr :class="cssClass.headerRow" v-for="(headers, rowIndex) in headersCollection" :key="rowIndex">
-              <th
-                v-for="(header, colIndex) in headers"
-                :key="colIndex"
-                :colspan="header._colspan"
-                :rowspan="header._rowspan"
-                :class="cssClass.headerCell"
-                :style="headerCellStyle(header)"
-              >
-                <template v-if="!isGrouped(header.value)">
-                  <div v-if="header.value === '__selection'">
-                    <n-checkbox v-if="multipleSelect" @click="selectAll" v-model="vSelectAll"></n-checkbox>
-                  </div>
-                  <template v-else>
-                    <div style="display:flex; align-items: center">
-                      <span style="flex-grow:1">
-                        <slot :name="`header.${kebabCase(header.value)}`" :item="header">{{ header.text }}</slot>
-                      </span>
-
-                      <i
-                        v-if="header.sortable"
-                        style="flex:none; width: 14px; cursor:pointer"
-                        class="sortable fa fa-sort"
-                        @click.stop="toggleSort(header)"
-                        :class="`${getSort(header) ? (getSort(header).desc ? 'desc' : 'asc') : ''}`"
-                      ></i>
-                      <i
-                        v-if="header.filterable"
-                        style="flex:none; width: 14px; cursor:pointer"
-                        class="filterable fa fa-filter"
-                        :class="`${isFiltered(header) ? 'active' : ''}`"
-                        @click.stop="openFilter(header)"
-                      ></i>
+              <template v-for="(header, colIndex) in headers">
+                <th
+                  :key="colIndex"
+                  :colspan="header._colspan - getGridHiddenColspan(header)"
+                  :rowspan="header._rowspan"
+                  :class="cssClass.headerCell"
+                  :style="headerCellStyle(header)"
+                  v-if="!header.hide"
+                >
+                  <template v-if="!isGrouped(header.value)">
+                    <div v-if="header.value === '__selection'">
+                      <n-checkbox v-if="multipleSelect" @click="selectAll" v-model="vSelectAll"></n-checkbox>
                     </div>
+                    <template v-else>
+                      <div style="display:flex; align-items: center">
+                        <span style="flex-grow:1">
+                          <slot :name="`header.${kebabCase(header.value)}`" :item="header">{{ header.text }}</slot>
+                        </span>
+
+                        <i
+                          v-if="header.sortable"
+                          style="flex:none; width: 14px; cursor:pointer"
+                          class="sortable fa fa-sort"
+                          @click.stop="toggleSort(header)"
+                          :class="`${getSort(header) ? (getSort(header).desc ? 'desc' : 'asc') : ''}`"
+                        ></i>
+                        <i
+                          v-if="header.filterable"
+                          style="flex:none; width: 14px; cursor:pointer"
+                          class="filterable fa fa-filter"
+                          :class="`${isFiltered(header) ? 'active' : ''}`"
+                          @click.stop="openFilter(header)"
+                        ></i>
+                      </div>
+                    </template>
                   </template>
-                </template>
-              </th>
+                </th>
+              </template>
             </tr>
           </slot>
         </thead>
@@ -75,9 +77,9 @@
             :class="cssClass.row"
             v-for="(item, rowIndex) in pageItems"
             :key="rowIndex"
-            @contextmenu="e => rowContextmenu(e, item.data, rowIndex)"
-            @dblclick="e => rowDblclick(e, item.data, rowIndex)"
-            @click="e => rowClick(e, item, rowIndex)"
+            @contextmenu="(e) => rowContextmenu(e, item.data, rowIndex)"
+            @dblclick="(e) => rowDblclick(e, item.data, rowIndex)"
+            @click="(e) => rowClick(e, item, rowIndex)"
           >
             <slot name="item" :item="vItems[item.index]" :rowIndex="rowIndex">
               <template v-if="item.type === 'group'">
@@ -99,67 +101,69 @@
               </template>
 
               <template v-else-if="item.type === 'item'">
-                <td
-                  :class="[cssClass.cell, [validateCellErrorText(header, item) ? 'bg-red' : '']]"
-                  :title="validateCellErrorText(header, item)"
-                  :style="cellStyle(header)"
-                  v-for="(header, colIndex) in tableColumns"
-                  :key="colIndex"
-                  @dblclick.capture="e => onCellDbClick(e, header)"
-                  @blur="e => onEditCell(e, header, item.index)"
-                >
-                  <slot
-                    :name="`item.${kebabCase(header.value)}`"
-                    :item="vItems[item.index]"
-                    :header="header"
-                    :value="item.data[header.value]"
-                    :index="item.index"
-                    :rowIndex="rowIndex"
+                <template v-for="(header, colIndex) in tableColumns">
+                  <td
+                    :class="[cssClass.cell, [validateCellErrorText(header, item) ? 'bg-red' : '']]"
+                    :title="validateCellErrorText(header, item)"
+                    :style="cellStyle(header)"
+                    :key="colIndex"
+                    @dblclick.capture="(e) => onCellDbClick(e, header)"
+                    @blur="(e) => onEditCell(e, header, item.index)"
+                    v-if="!header.hide"
                   >
-                    <template v-if="header.value === '__selection'">
-                      <n-checkbox
-                        :ref="`checkbox-${item.index}`"
-                        v-if="multipleSelect"
-                        v-model="vValue"
-                        @click.stop
-                        :value="keyField ? item.data[keyField] : item.data"
-                      ></n-checkbox>
-                      <n-radio
-                        v-else
-                        :ref="`radio-${item.index}`"
-                        v-model="vValue"
-                        @click.stop
-                        :value="keyField ? item.data[keyField] : item.data"
-                      ></n-radio>
-                    </template>
-                    <template v-else-if="header.value === '__expansion'">
-                      <n-icon
-                        style="cursor:pointer"
-                        @click.stop="expandRow(item.index)"
-                        :class="`fa-chevron-${isExpanded(item.index) ? 'up' : 'down'}`"
-                      >
-                      </n-icon>
-                    </template>
-                    <template v-else-if="header.value === '__action'">
-                      <div class="btn-group">
-                        <n-btn color="primary" v-if="updatable" @click.stop="updateClick(item.data)">
-                          <n-icon>pencil</n-icon>
-                        </n-btn>
-                        <n-btn color="danger" v-if="deletable" @click.stop="removeClick(item.data)">
-                          <n-icon>trash</n-icon>
-                        </n-btn>
-                      </div>
-                    </template>
-                    <template v-else>
-                      <template v-if="!isGrouped(header.value)">
-                        <template v-if="header.encodeHtml">
-                          {{ header.format(item.data[header.value]) }}
-                        </template>
-                        <span v-else v-html="header.format(item.data[header.value])"></span>
+                    <slot
+                      :name="`item.${kebabCase(header.value)}`"
+                      :item="vItems[item.index]"
+                      :header="header"
+                      :value="item.data[header.value]"
+                      :index="item.index"
+                      :rowIndex="rowIndex"
+                    >
+                      <template v-if="header.value === '__selection'">
+                        <n-checkbox
+                          :ref="`checkbox-${item.index}`"
+                          v-if="multipleSelect"
+                          v-model="vValue"
+                          @click.stop
+                          :value="keyField ? item.data[keyField] : item.data"
+                        ></n-checkbox>
+                        <n-radio
+                          v-else
+                          :ref="`radio-${item.index}`"
+                          v-model="vValue"
+                          @click.stop
+                          :value="keyField ? item.data[keyField] : item.data"
+                        ></n-radio>
                       </template>
-                    </template>
-                  </slot>
-                </td>
+                      <template v-else-if="header.value === '__expansion'">
+                        <n-icon
+                          style="cursor:pointer"
+                          @click.stop="expandRow(item.index)"
+                          :class="`fa-chevron-${isExpanded(item.index) ? 'up' : 'down'}`"
+                        >
+                        </n-icon>
+                      </template>
+                      <template v-else-if="header.value === '__action'">
+                        <div class="btn-group">
+                          <n-btn color="primary" v-if="updatable" @click.stop="updateClick(item.data)">
+                            <n-icon>pencil</n-icon>
+                          </n-btn>
+                          <n-btn color="danger" v-if="deletable" @click.stop="removeClick(item.data)">
+                            <n-icon>trash</n-icon>
+                          </n-btn>
+                        </div>
+                      </template>
+                      <template v-else>
+                        <template v-if="!isGrouped(header.value)">
+                          <template v-if="header.encodeHtml">
+                            {{ header.format(item.data[header.value]) }}
+                          </template>
+                          <span v-else v-html="header.format(item.data[header.value])"></span>
+                        </template>
+                      </template>
+                    </slot>
+                  </td>
+                </template>
               </template>
             </slot>
           </tr>
@@ -174,11 +178,13 @@
         <tfoot v-if="!hideFooter">
           <slot name="footer" :items="vItems" :headers="headersCollection">
             <tr :class="cssClass.footerRow">
-              <td :class="cssClass.footerCell" v-for="(header, colIndex) in tableColumns" :key="colIndex">
-                <slot :name="`footer.${kebabCase(header.value)}`" :items="vItems">
-                  {{ footerSummary(vItems, header) }}
-                </slot>
-              </td>
+              <template v-for="(header, colIndex) in tableColumns">
+                <td :class="cssClass.footerCell" v-if="!header.hide" :key="colIndex">
+                  <slot :name="`footer.${kebabCase(header.value)}`" :items="vItems">
+                    {{ footerSummary(vItems, header) }}
+                  </slot>
+                </td>
+              </template>
             </tr>
           </slot>
         </tfoot>
@@ -255,7 +261,7 @@
           <text-item :encode-html="vFilterModal.encodeHtml" text="Giá trị" value="text"></text-item>
         </items>
         <template #top.button-group>
-          <n-btn color="primary" @click="vFilterModal.value = []">Clear</n-btn>
+          <n-btn color="primary" @click="vFilterModal.value = []">Xóa</n-btn>
         </template>
       </n-data-table>
     </n-modal>
@@ -350,7 +356,7 @@
         this.multipleExpand ? this.vExpansion.push(itemIndex) : (this.vExpansion = [itemIndex])
       else
         this.vExpansion.splice(
-          this.vExpansion.findIndex(i => i === itemIndex),
+          this.vExpansion.findIndex((i) => i === itemIndex),
           1
         )
     }
@@ -374,7 +380,7 @@
       this.vFilterModal.encodeHtml = header.encodeHtml
       this.vFilterModal.visible = true
       this.vFilterModal.items = _.uniqBy(
-        this.vItems.map(i => {
+        this.vItems.map((i) => {
           return { text: header.format(i[header.value]), value: i[header.value] }
         }),
         'value'
@@ -383,7 +389,7 @@
 
     @Watch('vFilterModal.value')
     onFilterModalChanged() {
-      const index = this.vFilter.findIndex(f => f.name === this.vFilterModal.name)
+      const index = this.vFilter.findIndex((f) => f.name === this.vFilterModal.name)
       if (index < 0) {
         if (!_.isEmpty(this.vFilterModal.value))
           this.vFilter.push({
@@ -428,7 +434,7 @@
       if (header.align) style.push({ 'text-align': header.align })
       if (header.valign) style.push({ 'vertical-align': header.valign })
       if (header.color) style.push({ color: header.color })
-      if (header.bgcolor) style.push({ 'background-color': header.bgcolor })
+
       return style
     }
     private footerSummary(items: any[], header: TableHeader) {
@@ -465,7 +471,7 @@
       if (!this.selectable || !this.multipleSelect) return
       if (!_.isEmpty(this.vValue)) {
         if (!this.keyField) {
-          if (this.isArrayEqual(_.cloneDeep(this.tableItems.map(o => o.data)), _.cloneDeep(this.vValue))) this.vSelectAll = true
+          if (this.isArrayEqual(_.cloneDeep(this.tableItems.map((o) => o.data)), _.cloneDeep(this.vValue))) this.vSelectAll = true
           else {
             this.vSelectAll = false
           }
@@ -474,7 +480,7 @@
             _.isEqual(
               this.vValue.concat().sort(),
               this.tableItems
-                .map(i => i.data[this.keyField])
+                .map((i) => i.data[this.keyField])
                 .concat()
                 .sort()
             )
@@ -488,8 +494,9 @@
     async selectAll(e) {
       if (!this.selectable || !this.multipleSelect) return
       if (e.target.checked) {
-        if (!this.keyField) this.vValue = _.uniqWith(this.vValue.concat(_.cloneDeep(this.tableItems.map(i => i.data))), _.isEqual)
-        else this.vValue = _.uniqWith(this.vValue.concat(_.cloneDeep(this.tableItems.map(i => i.data[this.keyField]))))
+        if (!this.keyField)
+          this.vValue = _.uniqWith(this.vValue.concat(_.cloneDeep(this.tableItems.map((i) => i.data))), _.isEqual)
+        else this.vValue = _.uniqWith(this.vValue.concat(_.cloneDeep(this.tableItems.map((i) => i.data[this.keyField]))))
       } else this.vValue = []
     }
     /**helper function */
@@ -504,21 +511,21 @@
     destroyed() {}
 
     validateCellErrorText(header: TableHeader, item: TableItem) {
-      const f = header.validate.find(v => v(item.data[header.value]) !== true)
+      const f = header.validate.find((v) => v(item.data[header.value]) !== true)
       return f ? f(item.data[header.value]) : ''
     }
     validate() {
       return this.tableItems
-        .map(item => ({
+        .map((item) => ({
           index: item.index,
           error: this.tableColumns
-            .map(header => ({
+            .map((header) => ({
               field: header.text,
               text: this.validateCellErrorText(header, item),
             }))
-            .filter(v => v.text !== ''),
+            .filter((v) => v.text !== ''),
         }))
-        .filter(v => !_.isEmpty(v.error))
+        .filter((v) => !_.isEmpty(v.error))
     }
     onCellDbClick(e: Event, header: TableHeader) {
       if (!this.isGrouped(header.value) && header.encodeHtml && header.editable && e.target) {
@@ -542,10 +549,26 @@
       Vue.set(this.vItems[index], header.value, value)
       ;(e.target as HTMLElement).innerText = header.format(this.vItems[index][header.value])
     }
-
+    private getGridHiddenColspan(header: TableHeader) {
+      //if(header.children){
+      return header.children
+        ? header.children.reduce((p, c) => p + (!c.hide ? 0 : c._colspan) + this.getGridHiddenColspan(c), 0)
+        : 0
+      //}else return 0;
+      //c.children ? c.children.filter(c => !c.exportable).reduce((p,c)=> p + c._colspan,0) : 0
+    }
+    private getExportHiddenColspan(header: TableHeader) {
+      //if(header.children){
+      return header.children
+        ? header.children.reduce((p, c) => p + (c.exportable ? 0 : c._colspan) + this.getExportHiddenColspan(c), 0)
+        : 0
+      //}else return 0;
+      //c.children ? c.children.filter(c => !c.exportable).reduce((p,c)=> p + c._colspan,0) : 0
+    }
     private async exportExcel() {
+      this.vLoading = true
       const wb = new ExcelJS.Workbook()
-      const ws = wb.addWorksheet('Sheet 1')
+      const ws = wb.addWorksheet(this.exportSheetName ? this.exportSheetName : 'Sheet 1')
 
       if (this.exportTitle) {
         const titleRow = ws.addRow([this.exportTitle])
@@ -556,20 +579,20 @@
           titleRow.number,
           1,
           titleRow.number,
-          1 + this.tableColumns.filter(h => !h.value.startsWith('__')).length - 1
+          1 + this.tableColumns.filter((h) => !h.value.startsWith('__')).filter((h) => h.exportable).length - 1
         )
         if (_.isEmpty(this.exportAfterTitle)) ws.addRow([])
       }
 
       let rowNumber = ws.rowCount + 1
       if (!_.isEmpty(this.exportAfterTitle)) {
-        this.exportAfterTitle.forEach(r => {
+        this.exportAfterTitle.forEach((r) => {
           const row = ws.getRow(rowNumber)
           let colNumber = 1
-          r.forEach(c => {
+          r.forEach((c) => {
             const cell = row.getCell(colNumber)
-            cell.value = c.text
-            cell.alignment = { vertical: 'middle', horizontal: 'center', ...(c.alignment? {}: c.alignment) }
+            cell.value = c && c.text
+            cell.alignment = { vertical: 'middle', horizontal: 'center', ...(c.alignment ? {} : c.alignment) }
             if ((c.colspan != undefined && c.colspan > 1) || (c.rowspan != undefined && c.rowspan > 1)) {
               ws.mergeCells(
                 rowNumber,
@@ -584,7 +607,7 @@
                 rowNumber,
                 colNumber,
                 rowNumber,
-                colNumber + this.tableColumns.filter(h => !h.value.startsWith('__')).length - 1
+                colNumber + this.tableColumns.filter((h) => !h.value.startsWith('__')).filter((h) => h.exportable).length - 1
               )
             }
             colNumber++
@@ -595,38 +618,61 @@
 
       //Header
       if (!this.hideHeader) {
-        this.headersCollection.forEach(r => {
+        this.headersCollection.forEach((r) => {
           const row = ws.getRow(rowNumber)
-          row.font = { bold: true }
+          row.font = { bold: true, color: { argb: this.exportHeaderColor } }
           row.alignment = { vertical: 'middle', horizontal: 'center' }
 
           let colNumber = 1
-          r.filter(h => !h.value.startsWith('__')).forEach(c => {
-            while (!_.isEqual(row.getCell(colNumber).master, row.getCell(colNumber))) {
+          r.filter((h) => !h.value.startsWith('__'))
+            .filter((h) => h.exportable)
+            .forEach((c) => {
+              while (!_.isEqual(row.getCell(colNumber).master, row.getCell(colNumber))) {
+                colNumber++
+              }
+
+              const cell = row.getCell(colNumber)
+              if (!this.isGrouped(c.value)) {
+                cell.value = c && c.text
+                const currentColumn = ws.getColumn(colNumber)
+                if (currentColumn) {
+                  const countUpper = cell.value ? Array.from(cell.value).filter((a) => a === a.toUpperCase()).length : 0
+                  const countLower = cell.value ? Array.from(cell.value).filter((a) => a === a.toLowerCase()).length : 0
+                  const countOther = cell.value ? cell.value.length - countUpper - countLower : 0
+                  currentColumn.width = countUpper * 2 + countLower * 1.5 + countOther * 1.5
+                  if (currentColumn.width < 12) ws.getColumn(colNumber).width = 12
+                }
+              }
+
+              cell.border = {
+                top: { style: 'thin' },
+                left: { style: 'thin' },
+                bottom: { style: 'thin' },
+                right: { style: 'thin' },
+              }
+
+              cell.fill = {
+                type: 'pattern',
+                pattern: 'solid',
+                fgColor: {
+                  argb: this.exportHeaderBgColor,
+                },
+              }
+
+              if (c._rowspan > 1 || c._colspan > 1) {
+                const hiddenColspan = this.getExportHiddenColspan(c)
+                console.log(hiddenColspan)
+                ws.mergeCells(rowNumber, colNumber, rowNumber + c._rowspan - 1, colNumber + c._colspan - hiddenColspan - 1)
+              }
               colNumber++
-            }
-
-            const cell = row.getCell(colNumber)
-            if (!this.isGrouped(c.value)) cell.value = c.text
-            cell.border = {
-              top: { style: 'thin' },
-              left: { style: 'thin' },
-              bottom: { style: 'thin' },
-              right: { style: 'thin' },
-            }
-
-            if (c._rowspan > 1 || c._colspan > 1) {
-              ws.mergeCells(rowNumber, colNumber, rowNumber + c._rowspan - 1, colNumber + c._colspan - 1)
-            }
-            colNumber++
-          })
+            })
           rowNumber++
         })
       }
 
       //Body
       const tableItems = this.itemsGrouped(this.itemsExpanded(this.tableItems))
-      tableItems.forEach(r => {
+      tableItems.forEach((r) => {
         const row = ws.getRow(rowNumber)
         let colNumber = 1
         if (r.type === 'group') {
@@ -645,7 +691,7 @@
                   rowNumber,
                   colNumber + r.group.level,
                   rowNumber,
-                  colNumber + this.tableColumns.filter(h => !h.value.startsWith('__')).length - 1
+                  colNumber + this.tableColumns.filter((h) => !h.value.startsWith('__')).filter((h) => h.exportable).length - 1
                 )
               }
             }
@@ -653,8 +699,9 @@
         } else if (r.type === 'expand') {
         } else if (r.type === 'item')
           this.tableColumns
-            .filter(h => !h.value.startsWith('__'))
-            .forEach(c => {
+            .filter((h) => !h.value.startsWith('__'))
+            .filter((h) => h.exportable)
+            .forEach((c) => {
               const cell = row.getCell(colNumber)
 
               if (!this.isGrouped(c.value)) {
@@ -689,8 +736,9 @@
           const row = ws.addRow([])
           let colNumber = 1
           this.tableColumns
-            .filter(h => !h.value.startsWith('__'))
-            .forEach(c => {
+            .filter((h) => !h.value.startsWith('__'))
+            .filter((h) => h.exportable)
+            .forEach((c) => {
               const cell = row.getCell(colNumber)
               cell.border = {
                 top: { style: 'thin' },
@@ -720,7 +768,7 @@
             }),
             'table'
           )
-          footerEl.querySelectorAll('tr').forEach(r => {
+          footerEl.querySelectorAll('tr').forEach((r) => {
             const row = ws.getRow(rowNumber)
             let colNumber = 1
             r.querySelectorAll('td').forEach((c, i) => {
@@ -739,7 +787,7 @@
                 let colOffset = 0
                 const colspan = Number(c.getAttribute('colspan')) || 1
                 const rowspan = Number(c.getAttribute('rowspan')) || 1
-                const selectionIndex = this.tableColumns.findIndex(h => h.value === '__selection')
+                const selectionIndex = this.tableColumns.findIndex((h) => h.value === '__selection')
                 if (selectionIndex >= 0 && colNumber - 1 <= selectionIndex && colNumber - 1 + colspan - 1 >= selectionIndex)
                   colOffset = 1
                 ws.mergeCells(rowNumber, colNumber, rowNumber + rowspan - 1, colNumber + colspan - 1 - colOffset)
@@ -769,7 +817,7 @@
         ws.getRow(i).font = { name: 'Times New Roman', size: 13, ...(ws.getRow(i).font || {}) }
       }
 
-      ws.columns.forEach(c => {
+      ws.columns.forEach((c) => {
         c.width = c.width || 12
         c.numFmt = '@'
       })
@@ -807,6 +855,7 @@
       //   this.vItemPerPage = itemPerPage
       //   this.vLoading = false
       // })
+      this.vLoading = false
     }
     kebabCase(v) {
       return _.kebabCase(v)

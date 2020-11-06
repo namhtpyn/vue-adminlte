@@ -54,5 +54,8 @@ export default class NTableProp extends Vue {
 
   @Prop({ type: String, default: '' }) readonly appendModalCaption!: string
   @Prop({ type: String, default: '' }) readonly exportTitle!: string
+  @Prop({ type: String }) readonly exportSheetName!: string
+  @Prop({ type: String }) readonly exportHeaderColor!: string
+  @Prop({ type: String }) readonly exportHeaderBgColor!: string
   @Prop({ type: Array, default: () => [] }) readonly exportAfterTitle!: ExportCellData[][]
 }

@@ -36,14 +36,16 @@ export class TableHeader {
   headerBgcolor: string = '#3c8dbc'
   headerColor: string = '#ffffff'
   summary?: string | Function
-  format = v => v
-  validate = [v => true]
+  format = (v) => v
+  validate = [(v) => true]
   editable: boolean = false
   children?: TableHeader[]
   encodeHtml: boolean = true
   grouped: boolean = false
   merged: boolean = false
   visible: boolean = true
+  hide: boolean = false
+  exportable: boolean = true
   _colspan: number = 1
   _rowspan: number = 1
 }

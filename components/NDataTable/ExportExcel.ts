@@ -8,7 +8,7 @@ export function stringToElement(str: string, tag: string = 'div') {
   return el
 }
 export function vnodeToElement(nodes: VNode[], tag: string = 'div') {
-  const strs: string[] = nodes.map(node => getFullTag(node))
+  const strs: string[] = _.isEmpty(nodes) ? [] : nodes.map(node => getFullTag(node))
   return stringToElement(strs.join(''), tag)
 }
 const unaryTags = [

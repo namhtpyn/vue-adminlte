@@ -18,33 +18,33 @@ export default class NTableData extends Mixins(NTableHeader) {
   }
   toggleSort(header: TableHeader) {
     if (!header.sortable) return
-    const index = this.vSort.findIndex(sort => sort.name === header.value)
+    const index = this.vSort.findIndex((sort) => sort.name === header.value)
     if (index < 0) this.multipleSort ? this.vSort.push(new TableSort(header.value)) : (this.vSort = [new TableSort(header.value)])
     else if (!this.vSort[index].desc) this.vSort.splice(index, 1, new TableSort(header.value, true))
     else this.vSort.splice(index, 1)
   }
   getSort(header: TableHeader) {
-    return this.vSort.find(sort => sort.name === header.value)
+    return this.vSort.find((sort) => sort.name === header.value)
   }
 
   getFilterValue(header: TableHeader) {
-    return (this.vFilter.find(f => f.name === header.value) || {}).value
+    return (this.vFilter.find((f) => f.name === header.value) || {}).value
   }
   isFiltered(header: TableHeader) {
-    return this.vFilter.find(f => f.name === header.value) ? true : false
+    return this.vFilter.find((f) => f.name === header.value) ? true : false
   }
 
   itemsFiltered(items: TableItem[]) {
     if (_.isEmpty(this.vFilter)) return items
-    items = items.filter(item => {
-      return !this.vFilter.map(filter => filter.value.includes(item.data[filter.name])).some(o => !o)
+    items = items.filter((item) => {
+      return !this.vFilter.map((filter) => filter.value.includes(item.data[filter.name])).some((o) => !o)
     })
     return items
   }
   itemsSearched(items: TableItem[]) {
     if (_.isEmpty(this.vSearch)) return items
-    const visibleFields = this.tableColumns.map(h => h.value)
-    return items.filter(item =>
+    const visibleFields = this.tableColumns.map((h) => h.value)
+    return items.filter((item) =>
       Object.values(_.pick(item.data, visibleFields)).some((field: any) =>
         _.isNil(field)
           ? false
@@ -56,7 +56,7 @@ export default class NTableData extends Mixins(NTableHeader) {
     if (_.isEmpty(this.vSort) && _.isEmpty(this.groupBy)) return items
     const sortAsc = natsort({ insensitive: true })
     const sortDesc = natsort({ desc: true, insensitive: true })
-    const sortArray = this.groupBy.map(f => new TableSort(f.value)).concat(this.vSort)
+    const sortArray = this.groupBy.map((f) => new TableSort(f.value)).concat(this.vSort)
     items.sort((a, b) => {
       for (const sort of sortArray) {
         const sortOrder = sort.desc
@@ -113,7 +113,7 @@ export default class NTableData extends Mixins(NTableHeader) {
     items = this.itemsPaginated(items)
     items = this.itemsExpanded(items)
     items = this.itemsGrouped(items)
-    items = items.filter(item => item.visible)
+    items = items.filter((item) => item.visible)
     return items
   }
 
