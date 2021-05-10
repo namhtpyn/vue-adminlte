@@ -21,6 +21,7 @@ import NSelect from '././NSelect.vue'
 import NSelect2 from '././NSelect2.vue'
 import NTab from '././NTab.vue'
 import NTabCollection from '././NTabCollection.vue'
+import NTable from '././NTable/NTable.vue'
 import NTabs from '././NTabs.vue'
 import NTextArea from '././NTextArea.vue'
 import NTextBox from '././NTextBox.vue'
@@ -50,6 +51,7 @@ Vue.component('NSelect', NSelect)
 Vue.component('NSelect2', NSelect2)
 Vue.component('NTab', NTab)
 Vue.component('NTabCollection', NTabCollection)
+Vue.component('NTable', NTable)
 Vue.component('NTabs', NTabs)
 Vue.component('NTextArea', NTextArea)
 Vue.component('NTextBox', NTextBox)

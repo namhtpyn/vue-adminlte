@@ -15,10 +15,10 @@
           selectable
           row-select
           hide-footer
-          hide-bottom
+          :hide-bottom="!paging"
           sticky-top
           @error="error"
-          @row-click="e => rowClick(e, data)"
+          @row-click="(e) => rowClick(e, data)"
         >
           <slot></slot>
         </n-data-table>
@@ -46,6 +46,7 @@
     @Prop({ type: String, default: 'value' }) itemValue!: string
     @Prop({ type: Boolean, default: false }) searchable!: boolean
     @Prop({ type: Boolean, default: false }) multiple!: boolean
+    @Prop({ type: Boolean, default: false }) paging!: boolean
 
     @Prop(String) label!: string
     @Prop({ type: Boolean, default: false }) small!: boolean
@@ -72,25 +73,25 @@
     get getText() {
       if (this.multiple) {
         return this.vItems
-          .filter(item => (this.vValue as any[]).includes(item[this.itemValue]))
-          .map(item => (item[this.itemText] || '').toString())
+          .filter((item) => (this.vValue as any[]).includes(item[this.itemValue]))
+          .map((item) => (item[this.itemText] || '').toString())
           .join('; ')
       } else {
-        const item = this.vItems.find(item => item[this.itemValue] === this.vValue)
+        const item = this.vItems.find((item) => item[this.itemValue] === this.vValue)
         if (item) return (item[this.itemText] || '').toString()
       }
       return ''
     }
     get errorText() {
       if (!this.valid && this.rules) {
-        const f = this.rules.find(r => r(this.vValue) !== true)
+        const f = this.rules.find((r) => r(this.vValue) !== true)
         return f ? f(this.vValue) : ''
       }
       return ''
     }
     validate(value) {
       this.valid = true
-      if (this.rules) this.valid = !this.rules.some(e => e(value) !== true)
+      if (this.rules) this.valid = !this.rules.some((e) => e(value) !== true)
       return this.valid
     }
 
@@ -112,13 +113,13 @@
 
     get selectedValue() {
       if (Array.isArray(this.vValue))
-        return this.vItems.filter(item => (this.vValue as any[]).includes(item[this.itemValue])) || []
-      else return this.vItems.find(item => item[this.itemValue] === this.vValue) || {}
+        return this.vItems.filter((item) => (this.vValue as any[]).includes(item[this.itemValue])) || []
+      else return this.vItems.find((item) => item[this.itemValue] === this.vValue) || {}
     }
     set selectedValue(values) {
       if (!_.isNil(values)) {
         let output: any
-        if (Array.isArray(values)) output = values.map(v => v[this.itemValue])
+        if (Array.isArray(values)) output = values.map((v) => v[this.itemValue])
         else output = values[this.itemValue]
 
         if (!_.isNil(output) && !_.isEqual(output, this.vValue)) this.vValue = output

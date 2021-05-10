@@ -58,13 +58,8 @@ export default class NTableComputed extends Mixins(NItems, NTableProp) {
         header.format = (v) => {
           if (!v) return v
           else if (v instanceof Date) return moment(v).format('DD/MM/YYYY HH:mm:ss')
-          else if (
-            typeof v === 'string' &&
-            moment(v, ['DD-MM-YYYY HH:mm:ss', 'MM-DD-YYYY HH:mm:ss', 'YYYY-MM-DDTHH:mm:ss.sss']).isValid()
-          )
-            return moment(v, ['DD-MM-YYYY HH:mm:ss', 'MM-DD-YYYY HH:mm:ss', 'YYYY-MM-DDTHH:mm:ss.sss']).format(
-              'DD/MM/YYYY HH:mm:ss'
-            )
+          else if (typeof v === 'string' && moment(v, ['DD-MM-YYYY HH:mm:ss', 'MM-DD-YYYY HH:mm:ss', moment.ISO_8601]).isValid())
+            return moment(v, ['DD-MM-YYYY HH:mm:ss', 'MM-DD-YYYY HH:mm:ss', moment.ISO_8601]).format('DD/MM/YYYY HH:mm:ss')
           else return v
         }
         break

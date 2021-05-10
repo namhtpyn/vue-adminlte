@@ -6,7 +6,7 @@
         <div class="title" v-if="caption" style="flex:auto">{{ caption }}</div>
         <div v-if="searchable" class="has-feedback" style="flex:auto">
           <div class="has-feedback">
-            <input ref="search" type="text" class="form-control" v-model="vSearch" />
+            <input ref="search" type="text" class="form-control" :value="vSearch" @input="onSearch" />
             <span class="glyphicon glyphicon-search form-control-feedback"></span>
           </div>
         </div>
@@ -859,6 +859,13 @@
     }
     kebabCase(v) {
       return _.kebabCase(v)
+    }
+    searchTimeout: any = null
+    onSearch(e) {
+      if (this.searchTimeout) clearTimeout(this.searchTimeout)
+      this.searchTimeout = setTimeout(() => {
+        this.vSearch = e.target.value
+      }, 500)
     }
   }
 </script>
